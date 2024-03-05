@@ -130,6 +130,7 @@ const Invoice = () => {
     <button id="preveiw-bill">Preveiw Bill</button>
     <button id="generate-bill">Generate Bill </button>
   </div></div>;
+    
 }
 
 
