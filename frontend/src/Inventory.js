@@ -1,9 +1,14 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './Inventory.css';
 import { Link } from "react-router-dom";
-
-class Inventory extends React.Component
+import AddItemDialog from './components/AddProduct';
+const Inventory = () =>
 {
+  const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
+  const toggleAddItemDialog = () => {
+    setAddItemDialogVisibility(!isAddItemDialogVisible);
+    console.log({isAddItemDialogVisible});
+  };
     // showAddItemDialog = () => {
     //     var dialog = document.getElementById("addItemDialog");
     //     dialog.showModal();
@@ -48,7 +53,7 @@ class Inventory extends React.Component
     //     hideAddItemDialog();
     // };
 
-    render() {
+  
 
         return (
             <>
@@ -93,10 +98,15 @@ class Inventory extends React.Component
   </div>
   <div className="main-container">
     <div className="add-button-container">
-      <button className="add-item-button" onclick="showAddItemDialog()">
+      <button className="add-item-button" onClick={toggleAddItemDialog}>
         <strong> Add New Item </strong>
       </button>
     </div>
+    <AddItemDialog
+        isVisible={isAddItemDialogVisible}
+        
+        onCancel={toggleAddItemDialog}
+      />
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search" />
@@ -130,7 +140,7 @@ class Inventory extends React.Component
       </tbody>
     </table>
     <dialog id="addItemDialog">
-      <form onsubmit="saveItem(); return false;">
+      <form onSubmit="saveItem(); return false;">
         <table>
           <tbody>
             <tr>
@@ -181,7 +191,7 @@ class Inventory extends React.Component
           </tbody>
         </table>
         <button type="submit">Save</button>
-        <button type="button" onclick="hideAddItemDialog()">
+        <button type="button" onClick="hideAddItemDialog()">
           Cancel
         </button>
       </form>
@@ -190,7 +200,7 @@ class Inventory extends React.Component
 </>
   );
 
-    }
+    
     
 }
 

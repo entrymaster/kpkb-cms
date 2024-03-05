@@ -1,0 +1,30 @@
+#addItemDialog {
+    align-items: center;
+    width: 800px; /* Set the desired width */
+    height: 400px;
+}
+
+#addItemDialog form {
+    padding: 20px; /* Add padding for better spacing */
+}
+#addItemDialog table {
+    padding-right: 100px;
+    border: none;
+
+}
+#addItemDialog label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#addItemDialog input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+#addItemDialog button {
+    padding: 10px 20px;
+    /* margin-right: 50px; */
+    margin-left: 200px;
+}
