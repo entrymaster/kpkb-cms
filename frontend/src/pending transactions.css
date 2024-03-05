@@ -1,0 +1,257 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    /* height: 100%;
+    margin-top: 200px; */
+    position: absolute;
+    box-sizing: border-box;
+    top:0px;
+    left:0px;
+    height: 100%;
+}
+.left{
+    width:240px;
+    color: white;
+}
+/* .left{
+    width:240px;
+    color: white;
+    background-color:#051d40;
+    display: flex;
+    flex-direction: column;
+} */
+.left-top-box{
+    background-color: #cfe8ff;
+    height: 90px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+.left-mid-box{
+    /* margin-top:100px; */
+    background-color:#0a305d;
+    height: 90px;
+    justify-content: left; 
+    align-items: center;
+    padding-top: 10px; 
+}
+.mid-text{
+    margin-top: -75px;
+    margin-left: 100px;
+}
+.nav-panel {
+    /* margin-top:200px; */
+    background-color:#051d40;
+    height: 100%;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+.top-panel {
+    margin-left: 240px;
+    height: 100px;
+    display: flex;
+    background-color: #145da0;
+    box-sizing: border-box;
+}
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    margin-bottom: 10px;
+}
+.main-container {
+    flex-grow: 1;
+    display: flex;
+    margin-left: 240px;
+    /* background-color: white; */
+}
+.main-left {
+    flex-grow: 1;
+    /* background-color: #e0e0e0; */
+    padding: 20px;
+   
+}
+.main-right {
+    flex-grow: 1;
+    /* background-color: #f0f0f0; */
+    padding: 20px;
+}
+.main-right h5{          
+    /* display: block;
+    font-size: 0.83em; */
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    /* margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold; */
+}
+.main-right input{
+    /* border: none; */
+    border-bottom: black;
+}
+#addCreditButton{
+    background-color:#e5f2ff;
+}
+.top {
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+}
+
+.search-bar-container {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.search-bar {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    width: 600px;
+    height: 30px;
+    background-color: #ccc;
+    font-size: 18px;
+}
+
+.search-bar::placeholder {
+    font-size: 20px;
+    color: #888;
+}
+.credit{
+    font-size: 30px;
+}
+.TotalCredit {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #89A8AF;
+    height:50px;
+    width:170px;
+}
+.credit-debit-heading{
+    display:flex;
+    justify-content: center;
+    
+    margin-left: 240px;
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 60px;
+    margin-bottom: 30px
+}
+.credit-debit-left {
+    flex-grow: 1;
+    background-color: #179151;
+    height: 60px;
+    /* padding: 20px; */
+   
+}
+.credit-debit-right {
+    flex-grow: 1;
+    background-color: #d9d9d9;
+    height: 60px;
+    /* padding: 20px; */
+}
+.credit-debit-heading a{
+    padding: 10px;
+    display: inline-block;
+}
+h1{
+    text-align: top;
+    margin-top:1px;
+    font-size: 20px;
+    margin-block-end: 0.2em;
+    text-decoration: underline;
+   
+}
+th{
+    width: 25%; /* Set equal width for each heading column */
+    text-align: center;
+    padding: 10px;
+}
+.First{
+    background-color:#E0E9F1;
+    padding-bottom: 10px;
+}
+.Second{
+    background-color:#E0E9F1;
+    padding-bottom: 10px;
+  
+}
+.Third{
+    background-color:#E0E9F1;
+    padding-bottom: 10px;
+  
+}
+table {
+    border-collapse:seperate;
+    width: 80%;
+    border: 1px solid #ddd;
+    margin-left:240px;
+    margin-right:10px;
+    padding-left:50px;
+    border-spacing: 0 15px;
+
+}
+#addCreditDialog {
+    width: 400px; /* Set the desired width */
+}
+
+#addCreditDialog form {
+    padding: 20px; /* Add padding for better spacing */
+}
+
+#addCreditDialog label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#addCreditDialog input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+#addCreditDialog button {
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+#add-credit-button {
+    background-color: #e5f2ff;
+    border-radius: 10px; /* Adjust the value for the desired rounded corner radius */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer; /* Add cursor style for better indication of clickability */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+
+    /* Optional: Add box-shadow for a subtle effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#add-credit-button:hover {
+    background-color: #b3d9ff; /* Change color on hover */
+}
+
+#add-credit-button:active {
+    background-color: #99c2ff; /* Change color on click */
+}
+
+th, td {
+text-align: left;
+padding: 16px;
+padding-left:50px;
+}
+.heading{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    margin-top: 50px;
+    font-size: 40px;
+    margin-left:0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
