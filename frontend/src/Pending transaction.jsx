@@ -1,4 +1,6 @@
 import React from 'react';
+import "./pending transactions.css";
+import { Link } from "react-router-dom";
 
 function showAddCreditDialog() {
   var dialog = document.getElementById("addCreditDialog");
@@ -57,37 +59,21 @@ function PendingTransactions()
         </div>
       </div>
       <div className="nav-panel">
-        <a href="#" className="nav-link">
-          Dashboard
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Invoice
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Inventory
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Pending Transactions
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Transaction History
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Reports
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          FAQs
-        </a>
-        <br />
-        <a href="#" className="nav-link">
-          Contact Us
-        </a>
+          <p>
+          <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          </p>
+          <p>
+          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
+          </p>
+          <p>
+          <Link to="/inventory" style={{color: "white", textDecoration: 'none'}}>Inventory</Link>
+          </p>
+          <p style={{ backgroundColor: "#E0E0F7" }}>
+          <Link to="/pendingTransactions" style={{color: "black", textDecoration: 'none'}}>Pending Transactions</Link>
+          </p>
+          <p>
+          <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
       </div>
     </div>
   </div>

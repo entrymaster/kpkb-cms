@@ -1,4 +1,6 @@
 import React from 'react';
+import './Inventory.css';
+import { Link } from "react-router-dom";
 
 class Inventory extends React.Component
 {
@@ -66,31 +68,21 @@ class Inventory extends React.Component
         </div>
       </div>
       <div className="nav-panel">
-        {/* <h2>Navigation</h2> */}
-        <a href="#" className="nav-link">
-          Dashboard
-        </a>
-        <a href="#" className="nav-link">
-          Invoice
-        </a>
-        <a href="#" className="nav-link">
-          Inventory
-        </a>
-        <a href="#" className="nav-link">
-          Pending Transactions
-        </a>
-        <a href="#" className="nav-link">
-          Transaction History
-        </a>
-        <a href="#" className="nav-link">
-          Reports
-        </a>
-        <a href="#" className="nav-link">
-          FAQs
-        </a>
-        <a href="#" className="nav-link">
-          Contact Us
-        </a>
+         <p>
+          <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          </p>
+          <p>
+          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
+          </p>
+          <p style={{ backgroundColor: "#E0E0F7" }}>
+          <Link to="/inventory" style={{color: "black", textDecoration: 'none'}}>Inventory</Link>
+          </p>
+          <p>
+          <Link to="/pendingTransactions" style={{color: "white", textDecoration: 'none'}}>Pending Transactions</Link>
+          </p>
+          <p>
+          <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
       </div>
     </div>
   </div>

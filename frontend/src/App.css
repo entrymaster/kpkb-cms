@@ -6,8 +6,6 @@ body, html {
 }
 .container {
     display: flex;
-    /* height: 100%;
-    margin-top: 200px; */
     position: absolute;
     box-sizing: border-box;
     top:0px;
@@ -18,13 +16,6 @@ body, html {
     width:240px;
     color: white;
 }
-/* .left{
-    width:240px;
-    color: white;
-    background-color:#051d40;
-    display: flex;
-    flex-direction: column;
-} */
 .left-top-box{
     background-color: #cfe8ff;
     height: 90px;
