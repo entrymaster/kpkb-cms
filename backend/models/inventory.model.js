@@ -40,10 +40,10 @@ const inventorySchema = new Schema({
         type: Number,
         required: true,
     },
-    batchList: {
-        type: [ { batchID: String, batchQty: Number, expiryDate: Date } ],
-        required: true,
-    },
+    // batchList: {
+    //     type: [ { batchID: String, batchQty: Number, expiryDate: Date } ],
+    //     required: true,
+    // },
     // batchExpiry: {
     //     type: Date,
     //     required: true,
