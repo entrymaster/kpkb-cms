@@ -1,4 +1,6 @@
 import React from 'react';
+import './Dashboard.css';
+import { Link } from "react-router-dom";
 
 function Dashboard() { 
   return (<>
@@ -18,33 +20,21 @@ function Dashboard() {
           </div>
         </div>
         <div className="nav-panel">
-          {/* <h2>Navigation</h2> */}
-          <div style={{ backgroundColor: "#E0E0F7" }}>
-            <a href="#" className="nav-link" style={{ color: "black" }}>
-              Dashboard
-            </a>
-          </div>
-          <a href="Invoice.jsx" className="nav-link">
-            Invoice
-          </a>
-          <a href="Inventory.jsx" className="nav-link">
-            Inventory
-          </a>
-          <a href="PendingTransactions.jsx" className="nav-link">
-            Pending Transactions
-          </a>
-          <a href="TransactionHistory.jsx" className="nav-link">
-            Transaction History
-          </a>
-          <a href="Reports.jsx" className="nav-link">
-            Reports
-          </a>
-          <a href="FAQs.jsx" className="nav-link">
-            FAQs
-          </a>
-          <a href="ContactUs.jsx" className="nav-link">
-            Contact Us
-          </a>
+          <p style={{ backgroundColor: "#E0E0F7" }}>
+          <Link to="/" style={{color: "black",  textDecoration: 'none'}}>Dashboard</Link>
+          </p>
+          <p>
+          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
+          </p>
+          <p>
+          <Link to="/inventory" style={{color: "white", textDecoration: 'none'}}>Inventory</Link>
+          </p>
+          <p>
+          <Link to="/pendingTransactions" style={{color: "white", textDecoration: 'none'}}>Pending Transactions</Link>
+          </p>
+          <p>
+          <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
         </div>
       </div>
     </div>
