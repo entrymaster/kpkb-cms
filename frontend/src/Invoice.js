@@ -37,66 +37,37 @@ const Invoice = () => {
       </div>
     </div>
   </div>
-  <div
-      className="top-panel"
-      style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
-    >
-      <span
-        style={{
-          paddingInlineStart: "0.2cm",
-          color: "white",
-          fontSize: "1cm",
-          fontFamily: '"Times New Roman"'
-        }}
-      >
-        {" "}
-        Invoice
-      </span>
-    </div>
+  <div className="top-panel">
+  <div style={{ backgroundColor: "#E0E0F7" }}>
+          <a
+            href=" /Invoice.js.html"
+            className="nav-link"
+            style={{ color: "black" }}
+          >
+            Invoice
+          </a>
+        </div>  </div>
   <div className="main-container">
     <div className="top">
       <div className="search-bar-container">
-        <input type="text" className="input-box" placeholder="Customer Name" /> &nbsp;
+        <input type="text" className="input-box" placeholder="Customer Name" />
         <input type="text" className="input-box" placeholder="Invoice Number" />
         <br />
         <br />
-        <input type="text" className="input-box" placeholder="Customer Email" /> &nbsp;
+        <input type="text" className="input-box" placeholder="Customer Email" />
         <input
           type="text"
           className="input-box"
           placeholder="Customer Phone No."
         />
         <br />
+        <br />
       </div>
     </div>
   </div>
-  <table>
-    <thead>
-      <tr className="headers">
-        <th>ITEM DETAILS</th>
-        <th>DISCOUNT</th>
-        <th>QUANTITY</th>
-        <th>RATE</th>
-        <th>AMOUNT</th>
-      </tr>
-    </thead>
-    <tbody id="new-item-table-body">
-      <tr className="First">
-        <td>Type or Click to select an item.</td>
-        <td>0%</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-      </tr>
-      {/* Add more rows as needed */}
-    </tbody>
-  </table>
   <button id="add-new-item" onclick="showAddNewItemDialog()">
     Add New Item
   </button>
-  <button id="add-as-credit">Add As Credit</button>
-  <button id="preveiw-bill">Preveiw Bill</button>
-  <button id="generate-bill">Generate Bill </button>
   <dialog id="addNewItemDialog">
     <form onsubmit="saveNewItem(); return false;">
       <label htmlFor="itemName">Item Name:</label>
@@ -129,16 +100,26 @@ const Invoice = () => {
       </button>
     </form>
   </dialog>
-  <div className="main-container">
-  <div className="customerNotes">
-  &nbsp; Customer Notes &nbsp; 
+  <button id="scan-using-barcode">Scan Using Barcode</button>
+  <div className="search-bar-container2">
+    {/* { <a>Customer Notes</a> } */}
+    <br />
     <input
       type="text"
       className="input-box"
       placeholder="Thanks for your visit. Come again!.."
     />
-  </div></div> </div> ;}
-  export default Invoice;
+  </div>
+  <div className="bottom">
+    <button id="add-as-credit">Add As Credit</button>
+    <button id="preveiw-bill">Preveiw Bill</button>
+    <button id="generate-bill">Generate Bill </button>
+  </div></div>;
+    
+}
+
+
+export default Invoice;
 
 
 
