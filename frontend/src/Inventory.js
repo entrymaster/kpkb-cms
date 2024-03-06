@@ -139,7 +139,7 @@ const Inventory = () =>
         {/* Add more rows as needed */}
       </tbody>
     </table>
-    <dialog id="addItemDialog">
+    {/* <dialog id="addItemDialog">
       <form onSubmit="saveItem(); return false;">
         <table>
           <tbody>
@@ -195,7 +195,7 @@ const Inventory = () =>
           Cancel
         </button>
       </form>
-    </dialog>
+    </dialog> */}
   </div>
 </>
   );
