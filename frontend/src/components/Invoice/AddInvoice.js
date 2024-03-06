@@ -50,6 +50,34 @@ const AddNewInvoice = () => {
       };
     
       return (
+        <>
+        {/* <div className="top">
+          <div className="search-bar-container">
+            <input type="text" className="input-box" placeholder="Customer Name" />
+            <input type="text" className="input-box" placeholder="Invoice Number" />
+            <br />
+            <br />
+            <input type="text" className="input-box" placeholder="Customer Email" />
+            <input type="text" className="input-box" placeholder="Customer Phone No." />
+            <br />
+            <br />
+          </div>
+          </div> */}
+          <div className="customer-details">
+            <table id="customerTable">
+              <tbody>
+                <tr>
+                  <td><input type="text" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                  <td><input type="text" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                </tr>
+                <tr>
+                  <td><input type="text" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                  <td><input type="text" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
         <div>
       <table id="invoiceTable">
         <thead>
@@ -86,6 +114,7 @@ const AddNewInvoice = () => {
         <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
         <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
       </div>
+      </>
       )
 }
 

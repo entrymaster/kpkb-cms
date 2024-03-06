@@ -1,11 +1,3 @@
-.Invoice .top {
-    justify-content: center; /* Center horizontally */
-    align-items: center;
-    flex-grow: 1;
-    padding: 20px;
-    display: flex;
-}
-
 .Invoice .bottom {
     justify-content: center; /* Center horizontally */
     align-items: center;

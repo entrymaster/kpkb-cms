@@ -79,7 +79,7 @@ const Invoice = () => {
         </div>
       </div>
       <div className="main-container">
-        <div className="top">
+        {/* <div className="top">
           <div className="search-bar-container">
             <input type="text" className="input-box" placeholder="Customer Name" />
             <input type="text" className="input-box" placeholder="Invoice Number" />
@@ -91,7 +91,7 @@ const Invoice = () => {
             <br />
           </div>
           </div>
-          <div>
+          <div> */}
     </div>
     {/* <div>
       <table id="invoiceTable">
@@ -150,7 +150,7 @@ const Invoice = () => {
       <button id="generate-bill">Generate Bill </button>
     </div> */}
   </div>
-  </div>);
+  );
     
 }
 

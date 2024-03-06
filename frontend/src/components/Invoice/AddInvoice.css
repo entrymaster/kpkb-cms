@@ -18,3 +18,11 @@
     font-family: 'Libre Baskerville', serif;
     
 }    
+
+.top {
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+}
