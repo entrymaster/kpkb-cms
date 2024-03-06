@@ -41,14 +41,14 @@ const invoiceSchema = new Schema({
     type: [ { itemID: String, itemName: String, quantity: Number, rate: Number, discount: Number, gst: Number, amount: Number } ],
     required: true,
   },
-  // createdAt:{
-  //   type: Date,
-  //   default: new Date(),
-  // },
   createdAt:{
-    type: String,
-    required: true,
+    type: Date,
+    default: new Date(),
   },
+  // createdAt:{
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Invoice", invoiceSchema);
