@@ -4,6 +4,7 @@ body.Invoice, html.Invoice {
     font-family: Arial, sans-serif;
 }
 .Invoice .container {
+.Invoice .container {
     display: flex;
     position: absolute;
     box-sizing: border-box;
@@ -12,9 +13,11 @@ body.Invoice, html.Invoice {
     height: 100%;
 }
 .Invoice .left{
+.Invoice .left{
     width:240px;
     color: white;
 }
+.Invoice .left-top-box{
 .Invoice .left-top-box{
     background-color: #cfe8ff;
     height: 90px;
@@ -23,12 +26,14 @@ body.Invoice, html.Invoice {
     padding-top: 10px;
 }
 .Invoice .left-mid-box{
+.Invoice .left-mid-box{
     background-color:#0a305d;
     height: 80px;
     justify-content: left; 
     align-items: center;
     padding-top: 1px;
 }
+.Invoice .mid-text{
 .Invoice .mid-text{
     margin-top: -75px;
     margin-left: 100px;
@@ -40,6 +45,7 @@ body.Invoice, html.Invoice {
     padding-left: 10px;
 }
 .Invoice .top-panel {
+.Invoice .top-panel {
     width: 100%;
     height: 100px;
     display: flex;
@@ -47,21 +53,25 @@ body.Invoice, html.Invoice {
     box-sizing: border-box;
 }
 .Invoice .nav-link {
+.Invoice .nav-link {
     text-decoration: none;
     color: #fff;
     display: block;
     margin-bottom: 10px;
 }
 .Invoice .main-container {
+.Invoice .main-container {
     display: flex;
     margin-left: 240px;
 }
 /*copied from Inventory.css*/
 .Invoice .main-left {
+.Invoice .main-left {
     flex-grow: 1;
     padding: 20px;
    
 }
+.Invoice .main-right {
 .Invoice .main-right {
     flex-grow: 1;
     padding: 20px;
@@ -75,6 +85,7 @@ body.Invoice, html.Invoice {
 }
 
 .Invoice .top {
+.Invoice .top {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
@@ -82,12 +93,14 @@ body.Invoice, html.Invoice {
     display: flex;
 }
 .Invoice .bottom {
+.Invoice .bottom {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
     padding: 20px;
     display: flex;
 }
+.Invoice .search-bar-container2 {
 .Invoice .search-bar-container2 {
     flex-grow: 1;
     padding: 20px;
@@ -97,7 +110,7 @@ body.Invoice, html.Invoice {
     margin-bottom: 4px;
 }
 
-#add-new-item{
+.Invoice #add-new-item{
     background-color: #cfe8ff;
     color: #051d40;
     border: none;
@@ -111,8 +124,10 @@ body.Invoice, html.Invoice {
     
 }
 .Invoice .add-button-container {
+.Invoice .add-button-container {
     margin-top: 20px;
 }
+.Invoice .top {
 .Invoice .top {
     justify-content: center; /* Center horizontally */
     align-items: center;
@@ -120,7 +135,7 @@ body.Invoice, html.Invoice {
     padding: 20px;
     display: flex;
 }
-#scan-using-barcode{
+.Invoice #scan-using-barcode{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -132,7 +147,7 @@ body.Invoice, html.Invoice {
     text-align: center;
     margin-bottom: 4px;
 }
-#add-as-credit{
+.Invoice #add-as-credit{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -144,7 +159,7 @@ body.Invoice, html.Invoice {
     text-align: center;
 
 }
-#preview-bill{
+.Invoice #preview-bill{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -156,7 +171,7 @@ body.Invoice, html.Invoice {
     text-align: center;
     
 }
-#generate-bill{
+.Invoice #generate-bill{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -176,7 +191,7 @@ padding: 8px; /* Adjust padding as needed */
 font-size: 16px; 
 width: 400px;
 }
-#footer {
+.Invoice #footer {
     width: 100%;
     height: 20px;
     font-size: 15px;
@@ -192,22 +207,22 @@ width: 400px;
     background-color: #b3d9ff; /* Change color on hover */
 }
 
-#add-new-item:active {
+.Invoice #add-new-item:active {
     background-color: #99c2ff; /* Change color on click */
 }    
 
-#invoiceTable {
+.Invoice #invoiceTable {
     padding-top: 200px;
     width: 80%; /* Set the desired width of the table */
     border-collapse: collapse;
 }
 
-#invoiceTable th, #invoiceTable td {
+.Invoice #invoiceTable th, #invoiceTable td {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
 }
 
-#invoiceTable th {
+.Invoice #invoiceTable th {
     background-color: #f2f2f2;
 }

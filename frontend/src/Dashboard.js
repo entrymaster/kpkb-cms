@@ -3,7 +3,7 @@ import './Dashboard.css';
 import { Link } from "react-router-dom";
 
 function Dashboard() { 
-  return (<>
+  return (<div className="Dashboard">
     <div className="container">
       <div className="left">
         <div className="left-top-box">
@@ -104,7 +104,7 @@ function Dashboard() {
         </p>
       </div>
     </div>
-  </>
+  </div>
   )
     }
 export default Dashboard;
