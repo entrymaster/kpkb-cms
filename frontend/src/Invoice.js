@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
 import AddRowDialog from './components/Invoice/AddRow';
+import {initialState} from './components/Invoice/initialState';
+
 const Invoice = () => {
   const [showDialog, setShowDialog] = useState(false);
-
+  const [invoiceData, setInvoiceData] = useState(initialState);
   const showAddNewItemDialog = () => {
     setShowDialog(true);
   };
@@ -12,66 +14,25 @@ const Invoice = () => {
   const hideAddNewItemDialog = () => {
     setShowDialog(false);
   };
-
-  function saveNewItem(event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+  const handleInputChange = (event, index, fieldName) => {
+    const { value } = event.target;
   
-    // Retrieve form input values
-    const itemName = document.getElementById("itemName").value;
-    const itemId = document.getElementById("itemId").value;
-    const itemQuantity = document.getElementById("itemQuantity").value;
-    const category = document.getElementById("category").value;
-    const salesPrice = document.getElementById("salesPrice").value;
-    const costPrice = document.getElementById("costPrice").value;
-    const GST = document.getElementById("GST").value;
-    const batchExpiry = document.getElementById("batchExpiry").value;
+    // Create a copy of the itemList array
+    const updatedItemList = [...invoiceData.itemList];
   
-    // Validate input values if necessary
-    // For example, check if required fields are not empty
-  
-    // Perform any necessary processing or data manipulation
-  
-    // Example: Construct a new item object
-    const newItem = {
-      itemName,
-      itemId,
-      itemQuantity,
-      category,
-      salesPrice,
-      costPrice,
-      GST,
-      batchExpiry
+    // Update the corresponding field for the item at the specified index
+    updatedItemList[index] = {
+      ...updatedItemList[index],
+      [fieldName]: value
     };
   
-    // Example: Make an API call to save the new item
-    // Replace this with your actual API call
-    // Assuming an async API call with fetch
-    fetch('/invoice/items', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newItem)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to save item');
-      }
-      // Handle success case
-      // For example, display a success message
-      alert('Item saved successfully');
-      // Optionally, reset the form or close the dialog
-      // ResetForm();
-      // hideAddNewItemDialog();
-    })
-    .catch(error => {
-      // Handle error case
-      // For example, display an error message
-      console.error('Error saving item:', error.message);
-      alert('Failed to save item');
+    // Update the state with the modified itemList array
+    setInvoiceData({
+      ...invoiceData,
+      itemList: updatedItemList
     });
-  }
+  };
+
     return (
     <>
       <div className="container">
@@ -126,7 +87,9 @@ const Invoice = () => {
             <br />
           </div>
           </div>
-          <table id="invoiceTable">
+          <div>
+    </div>
+          {/* <table id="invoiceTable">
         <thead>
             <tr class="headers">
                 <th>ITEM DETAILS</th>
@@ -145,8 +108,40 @@ const Invoice = () => {
                 <td>0.00</td>
             </tr>
         </tbody>
+      </table> */}
+    <div>
+      <table id="invoiceTable">
+        <thead>
+          <tr class="headers">
+            <th>ITEM DETAILS</th>
+            <th>QUANTITY</th>
+            <th>RATE</th>
+            <th>DISCOUNT</th>
+            <th>GST</th>
+            <th>AMOUNT</th>
+          </tr>
+        </thead>
+        <tbody>
+        {invoiceData.itemList.map((item, index) => (
+          <tr key={index}>
+            <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} /></td>
+            <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} /></td>
+            <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} /></td>
+            <td><input type="number" value={item.discount} onChange={(e) => handleInputChange(e, index, 'discount')} /></td>
+            <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} /></td>
+            <td><input type="number" value={item.amount} onChange={(e) => handleInputChange(e, index, 'amount')} /></td>
+          </tr>
+        ))}
+
+        </tbody>
       </table>
-        
+
+      {/* <ol>
+        {invoiceData.itemList.map((itemField, index) => (
+          
+        ))}
+      </ol> */}
+      </div>
         <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button>
       {/* {showDialog} */}
       <AddRowDialog 
