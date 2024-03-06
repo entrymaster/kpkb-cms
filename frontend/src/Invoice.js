@@ -35,7 +35,7 @@ const Invoice = () => {
   };
 
     return (
-    <>
+    <div className="Invoice">
       <div className="container">
         <div className="left">
           <div className="left-top-box">
@@ -143,7 +143,7 @@ const Invoice = () => {
       <button id="generate-bill">Generate Bill </button>
     </div> */}
   </div>
-  </>);
+  </div>);
     
 }
 
