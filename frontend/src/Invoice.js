@@ -125,7 +125,28 @@ const Invoice = () => {
             <br />
             <br />
           </div>
-        </div>
+          </div>
+          <table id="invoiceTable">
+        <thead>
+            <tr class="headers">
+                <th>ITEM DETAILS</th>
+                <th>DISCOUNT</th>
+                <th>QUANTITY</th>
+                <th>RATE</th>
+                <th>AMOUNT</th>
+            </tr>
+        </thead>
+        <tbody id="new-item-table-body">
+            <tr class="First">
+                <td>Type or Click to select an item.</td>
+                <td>0%</td>
+                <td>0.00</td>
+                <td>0.00</td>
+                <td>0.00</td>
+            </tr>
+        </tbody>
+      </table>
+        
         <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button>
       {showDialog && (
       // <dialog id="addNewItemDialog">
@@ -176,7 +197,7 @@ const Invoice = () => {
       <button id="preveiw-bill">Preveiw Bill</button>
       <button id="generate-bill">Generate Bill </button>
     </div>
-    </div>
+  </div>
   </>);
     
 }
