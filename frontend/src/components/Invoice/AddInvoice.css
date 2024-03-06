@@ -1,25 +1,20 @@
-#addNewItemDialog {
-    align-items: center;
-    width: 800px; /* Set the desired width */
-    height: 400px;
+#generate-bill-button:hover {
+    background-color: #b3d9ff; /* Change color on hover */
 }
 
-#addNewItemDialog form {
-    padding: 20px; /* Add padding for better spacing */
+#generate-bill-button:active {
+    background-color: #99c2ff; /* Change color on click */
 }
-
-#addNewItemDialog label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#addNewItemDialog input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-}
-
-#addNewItemDialog button {
-    padding: 10px 20px;
-    margin-right: 10px;
-}
+#generate-bill-button{
+    background-color: #cfe8ff;
+    color: #051d40;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-left: 20px;
+    font-family: 'Libre Baskerville', serif;
+    
+}    

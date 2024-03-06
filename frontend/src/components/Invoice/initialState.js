@@ -3,12 +3,12 @@
 export const initialState = {
     userID:'user',
     invoiceID:'abc001',
-    customerName:'',
-    phoneNo:'',
-    customerEmail:'',
+    customerName:'afa',
+    phoneNo:'asfa',
+    customerEmail:'afad',
     totalAmount:0,
-    notes:'',
-    paymentMode:'',
+    notes:'Thanks for your visit. Come Again!',
+    paymentMode:'Paid',
     itemList:[{ itemID:'', itemName:'', quantity:0, rate:0, discount:0, gst:0, amount:0 }],
-    createdAt:'',
+    createdAt: "abc",
 }

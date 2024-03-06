@@ -1,18 +1,22 @@
-const Row = require("../models/invoice.model");
+const Invoice = require("../models/invoice.model");
 
 // Add Post
-const addRow = async (req, res) => {
+const addInvoice = async (req, res) => {
     console.log("req: ", req.body.userId);
-    const addRow = new Row({
+    const addInvoice = new Invoice({
       userID: req.body.userID,
-      itemID: req.body.itemID,
-      itemName: req.body.itemName,
-      itemDisc: req.body.itemDisc,
-      item: req.body.quantity,
-      // batchList: req.body.batchList,
+      invoiceID: req.body.invoiceID,
+      customerName: req.body.customerName,
+      phoneNo: req.body.phoneNo,
+      customerEmail: req.body.customerEmail,
+      totalAmount: req.body.totalAmount,
+      notes: req.body.notes,
+      paymentMode: req.body.paymentMode,
+      itemList: req.body.itemList,
+      createdAt: req.body.createdAt,
     });
   
-    addRow
+    addInvoice
       .save()
       .then((result) => {
         res.status(200).send(result);
@@ -22,4 +26,4 @@ const addRow = async (req, res) => {
       });
   };
 
-module.exports={addRow};
+module.exports={addInvoice};

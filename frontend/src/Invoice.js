@@ -2,54 +2,40 @@ import React, { useState } from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
 // import AddRowDialog from './components/Invoice/AddRow';
-import {initialState} from './components/Invoice/initialState';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import {initialState} from './components/Invoice/initialState';
+// import DeleteIcon from '@mui/icons-material/Delete';
+import AddNewInvoice from './components/Invoice/AddInvoice';
 
 const Invoice = () => {
-  const [invoiceData, setInvoiceData] = useState(initialState);
-  const handleInputChange = (event, index, fieldName) => {
-    const { value } = event.target;
-    const updatedItemList = [...invoiceData.itemList];
-    updatedItemList[index] = {
-      ...updatedItemList[index],
-      [fieldName]: value
-    };
-    setInvoiceData({
-      ...invoiceData,
-      itemList: updatedItemList
-    });
-  };
-  const handleAddField = (e) => {
-    e.preventDefault()
-    setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
-  }
+  // const [invoiceData, setInvoiceData] = useState(initialState);
+  // const handleInputChange = (event, index, fieldName) => {
+  //   const { value } = event.target;
+  //   const updatedItemList = [...invoiceData.itemList];
+  //   updatedItemList[index] = {
+  //     ...updatedItemList[index],
+  //     [fieldName]: value
+  //   };
+  //   setInvoiceData({
+  //     ...invoiceData,
+  //     itemList: updatedItemList
+  //   });
+  // };
+  // const handleAddField = (e) => {
+  //   e.preventDefault()
+  //   setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+  // }
 
-  const handleDeleteRow = (index) => {
-    setInvoiceData((prevData) => {
-      const updatedItemList = [...prevData.itemList];
-      updatedItemList.splice(index, 1);
-      return {
-        itemList: updatedItemList,
-      };
-    });
-  };
+  // const handleDeleteRow = (index) => {
+  //   setInvoiceData((prevData) => {
+  //     const updatedItemList = [...prevData.itemList];
+  //     updatedItemList.splice(index, 1);
+  //     return {
+  //       itemList: updatedItemList,
+  //     };
+  //   });
+  // };
 
-  const addInvoice = () => {
-    fetch("http://localhost:5000/api/invoice/add", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(invoiceData),
-    })
-      .then((result) => {
-        alert("Invoice ADDED");
-        // handlePageUpdate();
-        //addProductModalSetting();
-        // onCancel();
-      })
-      .catch((err) => console.log(err));
-  };
+  
 
     return (
     <div className="Invoice">
@@ -107,7 +93,7 @@ const Invoice = () => {
           </div>
           <div>
     </div>
-    <div>
+    {/* <div>
       <table id="invoiceTable">
         <thead>
           <tr class="headers">
@@ -141,10 +127,12 @@ const Invoice = () => {
         </tbody>
       </table>
         <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-        <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
-      
-      </div>
-    
+        <button id="generate-bill-button" type = "button" onClick={AddNewInvoice.addInvoice}> <strong> Generate Bill </strong> </button>
+        {/* <AddNewInvoice 
+          invoiceData = {invoiceData}
+        />
+      </div> */}
+    <AddNewInvoice/>
     
     {/* <div className="search-bar-container2">
       {/* { <a>Customer Notes</a> } */}
