@@ -34,6 +34,23 @@ const Invoice = () => {
     });
   };
 
+  const addInvoice = () => {
+    fetch("http://localhost:5000/api/invoice/add", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(invoiceData),
+    })
+      .then((result) => {
+        alert("Invoice ADDED");
+        // handlePageUpdate();
+        //addProductModalSetting();
+        // onCancel();
+      })
+      .catch((err) => console.log(err));
+  };
+
     return (
     <div className="Invoice">
       <div className="container">
@@ -123,7 +140,9 @@ const Invoice = () => {
 
         </tbody>
       </table>
-      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
+        <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
+        <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
+      
       </div>
     
     
