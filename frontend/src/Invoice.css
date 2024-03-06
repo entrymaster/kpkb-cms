@@ -202,31 +202,7 @@ width: 400px;
     text-align: center;
     bottom: 0px;
 }
-#addNewItemDialog {
-    align-items: center;
-    width: 800px; /* Set the desired width */
-    height: 400px;
-}
 
-#addNewItemDialog form {
-    padding: 20px; /* Add padding for better spacing */
-}
-
-#addNewItemDialog label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#addNewItemDialog input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-}
-
-#addNewItemDialog button {
-    padding: 10px 20px;
-    margin-right: 10px;
-}
 
 /* #add-new-item-button {
     background-color: #e5f2ff;

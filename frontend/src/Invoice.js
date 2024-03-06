@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
-
+import AddRowDialog from './components/Invoice/AddRow';
 const Invoice = () => {
   const [showDialog, setShowDialog] = useState(false);
 
   const showAddNewItemDialog = () => {
-    setShowDialog(!showDialog);
+    setShowDialog(true);
   };
 
   const hideAddNewItemDialog = () => {
-    setShowDialog(!showDialog);
+    setShowDialog(false);
   };
 
   function saveNewItem(event) {
@@ -148,40 +148,11 @@ const Invoice = () => {
       </table>
         
         <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button>
-      {showDialog && (
-      // <dialog id="addNewItemDialog">
-        <form onSubmit={saveNewItem} >
-          <label htmlFor="itemName">Item Name:</label>
-          <input type="text" id="itemName" required="" />
-          <br />
-          <label htmlFor="itemId">Item Id :</label>
-          <input type="text" id="itemId" required="" />
-          <br />
-          <label htmlFor="itemQuantity">Quantity:</label>
-          <input type="text" id='itemQuantity"' required="" />
-          <br />
-          <label htmlFor="category">Category:</label>
-          <input type="text" id="category" />
-          <br />
-          <label htmlFor="salesPrice">Sales Price/unit :</label>
-          <input type="text" id="salesPrice" required="" />
-          <br />
-          <label htmlFor="costPrice">Cost Price/unit:</label>
-          <input type="text" id="costPrice" required="" />
-          <br />
-          <label htmlFor="GST">GST:</label>
-          <input type="text" id="GST" />
-          <br />
-          <label htmlFor="batchExpiry">Batch Expiry:</label>
-          <input type="text" id="batchExpiry" required="" />
-          <br />
-          <button type="submit">Save</button>
-          <button type="button" onClick={hideAddNewItemDialog}>
-            Cancel
-          </button>
-        </form>
-      // </dialog>
-    )}
+      {/* {showDialog} */}
+      <AddRowDialog 
+        showDialog = {showAddNewItemDialog}
+        onCancel = {hideAddNewItemDialog}
+      />
     <button id="scan-using-barcode">Scan Using Barcode</button>
     <div className="search-bar-container2">
       {/* { <a>Customer Notes</a> } */}
