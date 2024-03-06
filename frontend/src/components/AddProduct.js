@@ -38,6 +38,7 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
       /*<dialog isopen="true" id="addItemDialog">*/
         <form onSubmit={(e) => { e.preventDefault();  }}>
           <table>
+            
             <tbody>
             <tr>
               <td><input type="text" id="item-name" placeholder="Item Name" value={itemData.itemName} name="itemName" onChange={(e) =>
