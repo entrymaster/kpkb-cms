@@ -37,7 +37,7 @@ const Invoice = () => {
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
   }
     return (
-    <>
+    <div  className="Invoice">  
       <div className="container">
         <div className="left">
           <div className="left-top-box">
@@ -165,7 +165,7 @@ const Invoice = () => {
       <button id="generate-bill">Generate Bill </button>
     </div>
   </div>
-  </>);
+  </div>);
     
 }
 

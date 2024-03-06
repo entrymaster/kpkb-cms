@@ -1,79 +1,73 @@
-body, html {
+.Invoice .body, html {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
-    /* overflow-x: hidden; */
+    
 }
-.container {
+.Invoice .container {
     display: flex;
-    /* height: 100%;
-    margin-top: 200px; */
     position: absolute;
     box-sizing: border-box;
     top:0px;
     left:0px;
     height: 100%;
 }
-.left{
+.Invoice .left{
     width:240px;
     color: white;
 }
-.left-top-box{
+.Invoice .left-top-box{
     background-color: #cfe8ff;
     height: 90px;
     justify-content: center;
     align-items: center;
     padding-top: 10px;
 }
-.left-mid-box{
-    /* margin-top:100px; */
+.Invoice .left-mid-box{
     background-color:#0a305d;
     height: 80px;
     justify-content: left; 
     align-items: center;
     padding-top: 1px;
 }
-.mid-text{
+.Invoice .mid-text{
     margin-top: -75px;
     margin-left: 100px;
 }
-.nav-panel {
-    /* margin-top:200px; */
+.Invoice .nav-panel {  
     background-color:#051d40;
     height: 100%;
     padding-top: 20px;
     padding-left: 10px;
 }
-.top-panel {
+.Invoice .top-panel {
     width: 100%;
     height: 100px;
     display: flex;
     background-color: #145da0;
     box-sizing: border-box;
 }
-.nav-link {
+.Invoice .nav-link {
     text-decoration: none;
     color: #fff;
     display: block;
     margin-bottom: 10px;
 }
-.main-container {
+.Invoice .main-container {
     display: flex;
     margin-left: 240px;
 }
 /*copied from Inventory.css*/
-.main-left {
+.Invoice .main-left {
     flex-grow: 1;
-    /* background-color: #e0e0e0; */
     padding: 20px;
    
 }
-.main-right {
+.Invoice .main-right {
     flex-grow: 1;
-    /* background-color: #f0f0f0; */
     padding: 20px;
 }
-.main-right h5{          
+.Invoice .main-right h5{          
     /* display: block;
     font-size: 0.83em; */
     margin-block-start: 0.67em;
@@ -82,26 +76,26 @@ body, html {
     margin-inline-end: 0px;
     font-weight: bold; */
 }
-.main-right input{
+.Invoice .main-right input{
     /* border: none; */
     border-bottom: black;
 }
 
-.top {
+.Invoice .top {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
     padding: 20px;
     display: flex;
 }
-.bottom {
+.Invoice .bottom {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
     padding: 20px;
     display: flex;
 }
-.search-bar-container2 {
+.Invoice .search-bar-container2 {
     flex-grow: 1;
     padding: 20px;
     text-align: left;
@@ -110,7 +104,7 @@ body, html {
     margin-bottom: 4px;
 }
 
-#add-new-item{
+.Invoice #add-new-item{
     background-color: #cfe8ff;
     color: #051d40;
     border: none;
@@ -125,17 +119,17 @@ body, html {
     font-family: 'Libre Baskerville', serif;
     
 }
-.add-button-container {
+.Invoice .add-button-container {
     margin-top: 20px;
 }
-.top {
+.Invoice .top {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
     padding: 20px;
     display: flex;
 }
-#scan-using-barcode{
+.Invoice #scan-using-barcode{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -147,7 +141,7 @@ body, html {
     text-align: center;
     margin-bottom: 4px;
 }
-#add-as-credit{
+.Invoice #add-as-credit{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -159,7 +153,7 @@ body, html {
     text-align: center;
 
 }
-#preview-bill{
+.Invoice #preview-bill{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -171,7 +165,7 @@ body, html {
     text-align: center;
     
 }
-#generate-bill{
+.Invoice #generate-bill{
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -184,14 +178,14 @@ body, html {
     
 
 }
-.input-box {
+input-box.Invoice  {
 background-color: #f0f8ff;; /* Change this color to your preferred color */
 border: 1px solid #CCCCCC; /* Add border styles if needed */
 padding: 8px; /* Adjust padding as needed */
 font-size: 16px; 
 width: 400px;
 }
-#footer {
+.Invoice #footer {
     width: 100%;
     height: 20px;
     font-size: 15px;
@@ -204,37 +198,27 @@ width: 400px;
 }
 
 
-/* #add-new-item-button {
-    background-color: #e5f2ff;
-    border-radius: 10px; /* Adjust the value for the desired rounded corner radius */
-    /* padding: 10px 20px; Adjust padding as needed */
-    /* cursor: pointer; Add cursor style for better indication of clickability */
-    /* transition: background-color 0.3s; Smooth transition for background color */
-
-    /* Optional: Add box-shadow for a subtle effect */
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-/* } */
-#add-new-item:hover {
+.Invoice #add-new-item:hover {
     background-color: #b3d9ff; /* Change color on hover */
 }
 
-#add-new-item:active {
+.Invoice #add-new-item:active {
     background-color: #99c2ff; /* Change color on click */
 }    
 
-#invoiceTable {
+.Invoice #invoiceTable {
     padding-top: 200px;
     width: 80%; /* Set the desired width of the table */
     border-collapse: collapse;
     /* margin: 0 auto; Center the table horizontally */
 }
 
-#invoiceTable th, #invoiceTable td {
+.Invoice #invoiceTable th, #invoiceTable td {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
 }
 
-#invoiceTable th {
+.Invoice #invoiceTable th {
     background-color: #f2f2f2;
 }
