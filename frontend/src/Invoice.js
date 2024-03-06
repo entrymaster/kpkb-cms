@@ -78,77 +78,7 @@ const Invoice = () => {
           <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
         </div>
       </div>
-      <div className="main-container">
-        {/* <div className="top">
-          <div className="search-bar-container">
-            <input type="text" className="input-box" placeholder="Customer Name" />
-            <input type="text" className="input-box" placeholder="Invoice Number" />
-            <br />
-            <br />
-            <input type="text" className="input-box" placeholder="Customer Email" />
-            <input type="text" className="input-box" placeholder="Customer Phone No." />
-            <br />
-            <br />
-          </div>
-          </div>
-          <div> */}
-    </div>
-    {/* <div>
-      <table id="invoiceTable">
-        <thead>
-          <tr class="headers">
-            <th>ITEM DETAILS</th>
-            <th>QUANTITY</th>
-            <th>RATE</th>
-            <th>DISCOUNT</th>
-            <th>GST</th>
-            <th>AMOUNT</th>
-            <th>ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-        {invoiceData.itemList.map((item, index) => (
-          <tr key={index}>
-            <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} /></td>
-            <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} /></td>
-            <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} /></td>
-            <td><input type="number" value={item.discount} onChange={(e) => handleInputChange(e, index, 'discount')} /></td>
-            <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} /></td>
-            <td><input type="number" value={item.amount} onChange={(e) => handleInputChange(e, index, 'amount')} /></td>
-            <td>
-                <DeleteIcon
-                  style={{ color: 'red', cursor: 'pointer' }}
-                  onClick={() => handleDeleteRow(index)}
-                />
-              </td>
-          </tr>
-        ))}
-
-        </tbody>
-      </table>
-        <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-        <button id="generate-bill-button" type = "button" onClick={AddNewInvoice.addInvoice}> <strong> Generate Bill </strong> </button>
-        {/* <AddNewInvoice 
-          invoiceData = {invoiceData}
-        />
-      </div> */}
-    <AddNewInvoice/>
-    
-    {/* <div className="search-bar-container2">
-      {/* { <a>Customer Notes</a> } */}
-      {/* <br />
-      <input
-        type="text"
-        className="input-box"
-        placeholder="Thanks for your visit. Come again!.."
-      />
-    </div> */}
-    {/* <div className="bottom">
-    <button id="scan-using-barcode">Scan Using Barcode</button>
-      <button id="add-as-credit">Add As Credit</button>
-      <button id="preveiw-bill">Preveiw Bill</button>
-      <button id="generate-bill">Generate Bill </button>
-    </div> */}
+      <AddNewInvoice/>
   </div>
   );
     

@@ -49,6 +49,7 @@ const AddNewInvoice = () => {
         })
           .then((result) => {
             alert("Invoice ADDED");
+            setInvoiceData(initialState);
             // handlePageUpdate();
             //addProductModalSetting();
             // onCancel();

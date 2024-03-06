@@ -9,7 +9,7 @@ const invoiceSchema = new Schema({
     required: true,
   },
   invoiceID: {
-    type: String,
+    type: Number,
     required: true,
   },
   customerName: {
