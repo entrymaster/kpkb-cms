@@ -48,7 +48,6 @@ const ContactUs = () => {
         fontFamily: '"Times New Roman"'
       }}
     >
-      {" "}
       Contact Us
     </span>
   </div>
