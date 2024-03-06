@@ -1,6 +1,8 @@
 
 import Dashboard from "./Dashboard.js";
 import SignUp from "./SignUp.js";
+import Dashboard from "./Dashboard.js";
+import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
