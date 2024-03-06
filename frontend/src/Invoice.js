@@ -1,33 +1,19 @@
 import React, { useState } from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
-import AddRowDialog from './components/Invoice/AddRow';
+// import AddRowDialog from './components/Invoice/AddRow';
 import {initialState} from './components/Invoice/initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Invoice = () => {
-  const [showDialog, setShowDialog] = useState(false);
   const [invoiceData, setInvoiceData] = useState(initialState);
-  const showAddNewItemDialog = () => {
-    setShowDialog(true);
-  };
-
-  const hideAddNewItemDialog = () => {
-    setShowDialog(false);
-  };
   const handleInputChange = (event, index, fieldName) => {
     const { value } = event.target;
-  
-    // Create a copy of the itemList array
     const updatedItemList = [...invoiceData.itemList];
-  
-    // Update the corresponding field for the item at the specified index
     updatedItemList[index] = {
       ...updatedItemList[index],
       [fieldName]: value
     };
-  
-    // Update the state with the modified itemList array
     setInvoiceData({
       ...invoiceData,
       itemList: updatedItemList
@@ -104,26 +90,6 @@ const Invoice = () => {
           </div>
           <div>
     </div>
-          {/* <table id="invoiceTable">
-        <thead>
-            <tr class="headers">
-                <th>ITEM DETAILS</th>
-                <th>DISCOUNT</th>
-                <th>QUANTITY</th>
-                <th>RATE</th>
-                <th>AMOUNT</th>
-            </tr>
-        </thead>
-        <tbody id="new-item-table-body">
-            <tr class="First">
-                <td>Type or Click to select an item.</td>
-                <td>0%</td>
-                <td>0.00</td>
-                <td>0.00</td>
-                <td>0.00</td>
-            </tr>
-        </tbody>
-      </table> */}
     <div>
       <table id="invoiceTable">
         <thead>
@@ -157,32 +123,25 @@ const Invoice = () => {
 
         </tbody>
       </table>
-      {/* <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button> */}
-      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Item </strong> </button>
+      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
       </div>
-        
-      {/* {showDialog} */}
-      <AddRowDialog 
-        showDialog = {showAddNewItemDialog}
-        onCancel = {hideAddNewItemDialog}
-      />
-
     
-    <button id="scan-using-barcode">Scan Using Barcode</button>
-    <div className="search-bar-container2">
+    
+    {/* <div className="search-bar-container2">
       {/* { <a>Customer Notes</a> } */}
-      <br />
+      {/* <br />
       <input
         type="text"
         className="input-box"
         placeholder="Thanks for your visit. Come again!.."
       />
-    </div>
-    <div className="bottom">
+    </div> */}
+    {/* <div className="bottom">
+    <button id="scan-using-barcode">Scan Using Barcode</button>
       <button id="add-as-credit">Add As Credit</button>
       <button id="preveiw-bill">Preveiw Bill</button>
       <button id="generate-bill">Generate Bill </button>
-    </div>
+    </div> */}
   </div>
   </>);
     
