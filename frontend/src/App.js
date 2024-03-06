@@ -5,6 +5,7 @@ import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
 import PendingTransactions from "./Pending transaction.js";
+import "./App.css";
 import {
     BrowserRouter as Router,
     Routes,
