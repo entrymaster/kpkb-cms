@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const ContactUs = () => {
-    return <div> <div className="container">
+    return <div className="ContactUs"> <div className="container">
     <div className="left">
       <div className="left-top-box">
         <img src="logo1.png" alt="logo" width={220} height={80} />

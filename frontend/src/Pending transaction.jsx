@@ -42,7 +42,7 @@ function saveCredit() {
 function PendingTransactions() 
 {
     return (
-        <>
+        <div className="PendingTrans">
   <div className="container">
     <div className="left">
       <div className="left-top-box">
@@ -146,7 +146,7 @@ function PendingTransactions()
      </button>
     </form>
   </dialog>
-</>
+</div>
 
     )
 }

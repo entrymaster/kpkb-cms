@@ -56,7 +56,7 @@ const Inventory = () =>
   
 
         return (
-            <>
+            <div className="Inventory">
   <div className="container">
     <div className="left">
       <div className="left-top-box">
@@ -197,7 +197,7 @@ const Inventory = () =>
       </form>
     </dialog> */}
   </div>
-</>
+</div>
   );
 
     
