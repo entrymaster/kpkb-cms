@@ -1,42 +1,9 @@
 import React, { useState } from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
-// import AddRowDialog from './components/Invoice/AddRow';
-// import {initialState} from './components/Invoice/initialState';
-// import DeleteIcon from '@mui/icons-material/Delete';
 import AddNewInvoice from './components/Invoice/AddInvoice';
 
 const Invoice = () => {
-  // const [invoiceData, setInvoiceData] = useState(initialState);
-  // const handleInputChange = (event, index, fieldName) => {
-  //   const { value } = event.target;
-  //   const updatedItemList = [...invoiceData.itemList];
-  //   updatedItemList[index] = {
-  //     ...updatedItemList[index],
-  //     [fieldName]: value
-  //   };
-  //   setInvoiceData({
-  //     ...invoiceData,
-  //     itemList: updatedItemList
-  //   });
-  // };
-  // const handleAddField = (e) => {
-  //   e.preventDefault()
-  //   setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
-  // }
-
-  // const handleDeleteRow = (index) => {
-  //   setInvoiceData((prevData) => {
-  //     const updatedItemList = [...prevData.itemList];
-  //     updatedItemList.splice(index, 1);
-  //     return {
-  //       itemList: updatedItemList,
-  //     };
-  //   });
-  // };
-
-  
-
     return (
     <div className="Invoice">
       <div className="container">
