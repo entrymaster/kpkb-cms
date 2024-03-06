@@ -3,6 +3,7 @@ import './Invoice.css';
 import { Link } from "react-router-dom";
 import AddRowDialog from './components/Invoice/AddRow';
 import {initialState} from './components/Invoice/initialState';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Invoice = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -36,6 +37,17 @@ const Invoice = () => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
   }
+
+  const handleDeleteRow = (index) => {
+    setInvoiceData((prevData) => {
+      const updatedItemList = [...prevData.itemList];
+      updatedItemList.splice(index, 1);
+      return {
+        itemList: updatedItemList,
+      };
+    });
+  };
+
     return (
     <div  className="Invoice">  
       <div className="container">
@@ -134,7 +146,12 @@ const Invoice = () => {
             <td><input type="number" value={item.discount} onChange={(e) => handleInputChange(e, index, 'discount')} /></td>
             <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} /></td>
             <td><input type="number" value={item.amount} onChange={(e) => handleInputChange(e, index, 'amount')} /></td>
-            <td></td>
+            <td>
+                <DeleteIcon
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => handleDeleteRow(index)}
+                />
+              </td>
           </tr>
         ))}
 
@@ -149,6 +166,8 @@ const Invoice = () => {
         showDialog = {showAddNewItemDialog}
         onCancel = {hideAddNewItemDialog}
       />
+
+    
     <button id="scan-using-barcode">Scan Using Barcode</button>
     <div className="search-bar-container2">
       {/* { <a>Customer Notes</a> } */}
