@@ -166,6 +166,8 @@ const Invoice = () => {
         showDialog = {showAddNewItemDialog}
         onCancel = {hideAddNewItemDialog}
       />
+
+    
     <button id="scan-using-barcode">Scan Using Barcode</button>
     <div className="search-bar-container2">
       {/* { <a>Customer Notes</a> } */}
