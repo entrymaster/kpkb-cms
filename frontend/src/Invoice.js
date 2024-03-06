@@ -32,7 +32,10 @@ const Invoice = () => {
       itemList: updatedItemList
     });
   };
-
+  const handleAddField = (e) => {
+    e.preventDefault()
+    setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+  }
     return (
     <>
       <div className="container">
@@ -119,6 +122,7 @@ const Invoice = () => {
             <th>DISCOUNT</th>
             <th>GST</th>
             <th>AMOUNT</th>
+            <th>ACTION</th>
           </tr>
         </thead>
         <tbody>
@@ -130,19 +134,16 @@ const Invoice = () => {
             <td><input type="number" value={item.discount} onChange={(e) => handleInputChange(e, index, 'discount')} /></td>
             <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} /></td>
             <td><input type="number" value={item.amount} onChange={(e) => handleInputChange(e, index, 'amount')} /></td>
+            <td></td>
           </tr>
         ))}
 
         </tbody>
       </table>
-
-      {/* <ol>
-        {invoiceData.itemList.map((itemField, index) => (
-          
-        ))}
-      </ol> */}
+      {/* <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button> */}
+      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Item </strong> </button>
       </div>
-        <button id="add-new-item" type = "button" onClick={showAddNewItemDialog}> <strong> Add New Item </strong> </button>
+        
       {/* {showDialog} */}
       <AddRowDialog 
         showDialog = {showAddNewItemDialog}
