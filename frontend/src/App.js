@@ -1,10 +1,10 @@
 
-import Dashboard from "./Dashboard.jsx";
-import SignUp from "./SignUp.jsx";
+import Dashboard from "./Dashboard.js";
+import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
-import PendingTransactions from "./Pending transaction.jsx";
+import PendingTransactions from "./Pending transaction.js";
 import {
     BrowserRouter as Router,
     Routes,
