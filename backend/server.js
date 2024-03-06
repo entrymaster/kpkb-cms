@@ -15,8 +15,8 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/todoapiDB";
 any request that has a Content-Type of application/json. */
 app.use(express.json());
 app.use(cors());
-app.use("/api", inventoryRouter);
-app.use("/invoice", invoiceRouter);
+app.use("/api/inventory", inventoryRouter);
+app.use("/api/invoice", invoiceRouter);
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/", (req, res) => {
