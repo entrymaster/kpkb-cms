@@ -74,18 +74,18 @@ const AddNewInvoice = () => {
           return response.json();
         })
         .then(data => {
-          console.log(data);
-          setInvoiceData({...invoiceData, invoiceID: data + 1})
+          console.log(data.count);
+          setInvoiceData({...invoiceData, invoiceID: data.count})
         })
         .catch(error => {
           console.log('There was a problem with the fetch operation:', error);
         })
     }
     useEffect(() => {
-      if(incInvoiceID){
+      // if(incInvoiceID){
         getInvoiceCount(invoiceData.userID)
         .then(() => setIncInvoiceID(false))
-      }
+      // }
       
     },[incInvoiceID, invoiceData.userID]);
     return (
