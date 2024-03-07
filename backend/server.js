@@ -25,12 +25,26 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+
+
 /* Connecting to the database and then starting the server. */
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
-    app.listen(PORT, console.log("Server stated on port"));
+    app.listen(PORT, console.log("Server stated on port :" + PORT));
   })
   .catch((err) => {
     console.log(err);
+  });
+
+  mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+  });
+  
+  mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+  });
+  
+  mongoose.connection.on('disconnected', () => {
+    console.log('Disconnected from MongoDB');
   });
