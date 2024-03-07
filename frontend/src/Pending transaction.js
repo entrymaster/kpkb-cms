@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Pending transactions.css";
+import "./pending transactions.css";
 import { Link } from "react-router-dom";
 
 function showAddCreditDialog() {
