@@ -6,34 +6,49 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
+  const [subTotal, setSubTotal] = useState(0);
   
-  const handleInputChange = (event, index, fieldName) => {
+  const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
     const updatedItemList = [...invoiceData.itemList];
     updatedItemList[index] = {
       ...updatedItemList[index],
       [fieldName]: value,
     };
+    if (fieldName === 'quantity' || fieldName === 'rate' || fieldName === 'gst') {
+      const quantity = parseFloat(updatedItemList[index].quantity);
+      const rate = parseFloat(updatedItemList[index].rate);
+      const gst = parseFloat(updatedItemList[index].gst);
+      const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
+      updatedItemList[index].amount = amount;
+    }
+  
     setInvoiceData({
       ...invoiceData,
       itemList: updatedItemList
     });
   };
-// const handleTotal = (index) => {
-//   const updatedItemList = [...invoiceData.itemList];
-//   const item = updatedItemList[index];
-//     updatedItemList[index] = {
-//       ...updatedItemList[index],
-//       amount:(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100
-//     };
-//     setInvoiceData({
-//       ...invoiceData,
-//       itemList: updatedItemList
-//     });
-// }
 
-  const handleInputChangeCust = (event, fieldName) => {
+  const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
+    const subTotal = async() => {
+      const arr = invoiceData.itemList;
+      var subTotal = 0;
+      for(var i=0; i<arr.length; i++){
+        subTotal = subTotal + arr[i].amount;
+        setSubTotal(subTotal);
+      }
+      invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    }
+    subTotal();
+
+    // if (fieldName === 'discount'){
+    //   const disc = parseFloat(invoiceData.discount);
+    //   const subt = parseFloat(invoiceData.totalAmount);
+    //   const total = subt - subt*disc/100;
+    //   invoiceData.totalAmount = subt;
+    // }
+    
     setInvoiceData((prevData) => ({
       ...prevData,
       [fieldName] : value,
@@ -57,7 +72,7 @@ const AddNewInvoice = () => {
 
 
   const addInvoice = () => {
-      fetch("http://localhost:5000/api/invoice/add", {
+      fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -67,9 +82,6 @@ const AddNewInvoice = () => {
         .then((result) => {
           alert("Invoice ADDED");
           setInvoiceData(initialState);
-          // handlePageUpdate();
-          //addProductModalSetting();
-          // onCancel();
         })
         .then(()=>{
           setIncInvoiceID(true);
@@ -77,7 +89,7 @@ const AddNewInvoice = () => {
         .catch((err) => console.log(err));
     };
     const getInvoiceCount = async() =>{
-      fetch(`http://localhost:5000/api/invoice/count/${invoiceData.userID}`, {
+      fetch(`http://localhost:5050/api/invoice/count/${invoiceData.userID}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -104,12 +116,26 @@ const AddNewInvoice = () => {
       // }
       
     },[incInvoiceID, invoiceData.userID]);
+    
+    // useEffect(() => {
+    //   const subTotal = () => {
+    //     const arr = invoiceData.itemList;
+    //     var subTotal = 0;
+    //     for(var i=0; i<arr.length; i++){
+    //       subTotal = subTotal + arr[i].amount;
+    //       setSubTotal(subTotal);
+    //     }
+    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    //   }
+    //   subTotal();
+    // }, [invoiceData])
 
     // useEffect(() => {
-      
-    //   setInvoiceData()
-      
-    // },[invoiceData.itemList,index]);
+    //   const total = () => {
+    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    //   }
+    //   total();
+    // }, [invoiceData])
 
     return (
       <>
@@ -147,13 +173,8 @@ const AddNewInvoice = () => {
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
           <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
-          <td><input type="number" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount' disabled/>
-          {/* <input
-            type="hidden"
-            value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100}
-            name={`itemList[${index}].amount`}
-          /> */}</td>
-          {/* <td>{item.amount}</td> */}
+          <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td>
+
           <td>
               <DeleteIcon
                 style={{ color: 'red', cursor: 'pointer' }}
