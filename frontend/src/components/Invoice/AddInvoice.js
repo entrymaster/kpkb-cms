@@ -6,18 +6,32 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
+  
   const handleInputChange = (event, index, fieldName) => {
     const { value } = event.target;
     const updatedItemList = [...invoiceData.itemList];
     updatedItemList[index] = {
       ...updatedItemList[index],
-      [fieldName]: value
+      [fieldName]: value,
     };
     setInvoiceData({
       ...invoiceData,
       itemList: updatedItemList
     });
   };
+// const handleTotal = (index) => {
+//   const updatedItemList = [...invoiceData.itemList];
+//   const item = updatedItemList[index];
+//     updatedItemList[index] = {
+//       ...updatedItemList[index],
+//       amount:(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100
+//     };
+//     setInvoiceData({
+//       ...invoiceData,
+//       itemList: updatedItemList
+//     });
+// }
+
   const handleInputChangeCust = (event, fieldName) => {
     const { value } = event.target;
     setInvoiceData((prevData) => ({
@@ -39,6 +53,8 @@ const AddNewInvoice = () => {
       };
     });
   };
+
+
 
   const addInvoice = () => {
       fetch("http://localhost:5000/api/invoice/add", {
@@ -88,6 +104,13 @@ const AddNewInvoice = () => {
       // }
       
     },[incInvoiceID, invoiceData.userID]);
+
+    // useEffect(() => {
+      
+    //   setInvoiceData()
+      
+    // },[invoiceData.itemList,index]);
+
     return (
       <>
         <div className="customer-details">
@@ -121,10 +144,16 @@ const AddNewInvoice = () => {
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
           <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/></td>
-          <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} /></td>
-          <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} /></td>
-          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} /></td>
-          <td><input type="number" value={item.amount} onChange={(e) => handleInputChange(e, index, 'amount')} /></td>
+          <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
+          <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
+          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
+          <td><input type="number" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount' disabled/>
+          {/* <input
+            type="hidden"
+            value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100}
+            name={`itemList[${index}].amount`}
+          /> */}</td>
+          {/* <td>{item.amount}</td> */}
           <td>
               <DeleteIcon
                 style={{ color: 'red', cursor: 'pointer' }}
@@ -138,6 +167,12 @@ const AddNewInvoice = () => {
     </table>
       <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
       <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
+      <table className='totalAmt'>
+        <tr>
+          <td>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
+          <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
+        </tr>
+      </table>
     </div>
     </div>
     </>
