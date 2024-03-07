@@ -1,100 +1,4 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-.container {
-    display: flex;
-    /* height: 100%;
-    margin-top: 200px; */
-    position: absolute;
-    box-sizing: border-box;
-    top:0px;
-    left:0px;
-    height: 100%;
-}
-.left{
-    width:240px;
-    color: white;
-}
-/* .left{
-    width:240px;
-    color: white;
-    background-color:#051d40;
-    display: flex;
-    flex-direction: column;
-} */
-.left-top-box{
-    background-color: #cfe8ff;
-    height: 90px;
-    justify-content: center;
-    align-items: center;
-    padding-top: 10px;
-}
-.left-mid-box{
-    /* margin-top:100px; */
-    background-color:#0a305d;
-    height: 90px;
-    justify-content: left; 
-    align-items: center;
-    padding-top: 10px; 
-}
-.mid-text{
-    margin-top: -75px;
-    margin-left: 100px;
-}
-.nav-panel {
-    /* margin-top:200px; */
-    background-color:#051d40;
-    height: 100%;
-    padding-top: 20px;
-    padding-left: 10px;
-}
-.top-panel {
-    margin-left: 240px;
-    height: 100px;
-    display: flex;
-    background-color: #145da0;
-    box-sizing: border-box;
-}
-.nav-link {
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    margin-bottom: 10px;
-}
-.main-container {
-    flex-grow: 1;
-    display: flex;
-    margin-left: 240px;
-    /* background-color: white; */
-}
-.main-left {
-    flex-grow: 1;
-    /* background-color: #e0e0e0; */
-    padding: 20px;
-   
-}
-.main-right {
-    flex-grow: 1;
-    /* background-color: #f0f0f0; */
-    padding: 20px;
-}
-.main-right h5{          
-    /* display: block;
-    font-size: 0.83em; */
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    /* margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold; */
-}
-.main-right input{
-    /* border: none; */
-    border-bottom: black;
-}
-
-.add-item-button {
+.Inventory .add-item-button {
     background-color: #cfe8ff;
     color: #051d40;
     border: none;
@@ -104,15 +8,13 @@ body, html {
     font-size: 16px;
     margin-top: 0px;
     margin-left: 20px;
-    /* display: flex;
-    align-items: left; */
     font-family: 'Libre Baskerville', serif;
     
 }
-.add-button-container {
+.Inventory .add-button-container {
     margin-top: 20px;
 }
-.top {
+.Inventory .top {
     justify-content: center; /* Center horizontally */
     align-items: center;
     flex-grow: 1;
@@ -120,16 +22,14 @@ body, html {
     display: flex;
 }
 
-.search-bar-container {
-    /* flex-grow: 1; */
+.Inventory .search-bar-container {
     padding: 10px;
     width: 100%;
     margin-left: -10px;
     margin-top: -10px;
-    /* position: relative; */
 }
 
-.search-bar {
+.Inventory .search-bar {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -137,26 +37,23 @@ body, html {
     height: 30px;
     background-color: #ccc;
     font-size: 18px;
-    /* position: relative;  */
 }
 
-.search-icon {
+.Inventory .search-icon {
     font-size: 24px;
     margin-right: 10px;
     position: absolute;
     left: 270px;
     top: 195px;
-    /* transform: translateY(-50%); */
 }
 
-.search-bar::placeholder {
+.Inventory .search-bar::placeholder {
     font-size: 22px;
     color: #888;
     position:absolute;
     margin-left: 35px;
-    /* left: 100px; */
 }
-.circle {
+.Inventory .circle {
     width: 50px; /* Diameter is twice the radius */
     height: 50px;
     background-color: #ccc;
@@ -166,12 +63,12 @@ body, html {
     top: 212px;
     transform: translateY(-50%);
 }
-th{
+th.Inventory{
     width: 25%; /* Set equal width for each heading column */
     text-align: center;
     padding: 10px;
 }
-table {
+table.Inventory {
     border-collapse:seperate;
     width: 95%;
     border: 1px solid #ddd;
@@ -180,17 +77,10 @@ table {
     padding-left:55px;
     border-spacing: 0 15px;
 }
-/* .First{
-    background-color:#E0E9F1;
-    padding-bottom: 10px;
-    width: 80%;
-    /* margin-left: 15px;
-} */
-th, td {
+th.Inventory, td.Inventory {
 
     text-align: left;
     padding: 16px;
-    /* padding-left:50px; */
 }
 #addItemDialog {
     align-items: center;
@@ -198,15 +88,15 @@ th, td {
     height: 400px;
 }
 
-#addItemDialog form {
+ #addItemDialog form {
     padding: 20px; /* Add padding for better spacing */
 }
-#addItemDialog table {
+ #addItemDialog table {
     padding-right: 100px;
     border: none;
 
 }
-#addItemDialog label {
+ #addItemDialog label {
     display: block;
     margin-bottom: 10px;
 }
@@ -219,14 +109,28 @@ th, td {
 
 #addItemDialog button {
     padding: 10px 20px;
-    /* margin-right: 50px; */
     margin-left: 200px;
 }
 
-.add-item-button:hover {
+ .add-item-button:hover {
     background-color: #b3d9ff; /* Change color on hover */
 }
 
-.add-item-button:active {
+ .add-item-button:active {
     background-color: #99c2ff; /* Change color on click */
+}
+.Inventory #inventoryTable {
+    padding-top: 200px;
+    width: 80%; /* Set the desired width of the table */
+    border-collapse: collapse;
+}
+
+.Inventory #inventoryTable th, #inventoryTable td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.Inventory #inventoryTable th {
+    background-color: #f2f2f2;
 }

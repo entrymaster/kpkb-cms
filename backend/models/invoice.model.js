@@ -9,7 +9,7 @@ const invoiceSchema = new Schema({
     required: true,
   },
   invoiceID: {
-    type: String,
+    type: Number,
     required: true,
   },
   customerName: {
@@ -34,16 +34,25 @@ const invoiceSchema = new Schema({
   },
   paymentMode: {
     type: String,
-    required: true,
+    default: "Paid",
+    // required: true,
+  },
+  discount: {
+    type: Number,
+    default: 0,
   },
   itemList: {
-    type: [ { itemID: String, itemName: String, quantity: Number, rate: Number, discount: Number, amount: Number } ],
+    type: [ { itemID: String, itemName: String, quantity: Number, rate: Number, gst: Number, amount: Number } ],
     required: true,
   },
   createdAt:{
     type: Date,
     default: new Date(),
   },
+  // createdAt:{
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Invoice", invoiceSchema);

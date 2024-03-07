@@ -1,10 +1,12 @@
 
-import Dashboard from "./Dashboard.jsx";
-import SignUp from "./SignUp.jsx";
+import Dashboard from "./Dashboard.js";
+import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
-import PendingTransactions from "./Pending transaction.jsx";
+import PendingTransactions from "./Pending transaction.js";
+import Register from "./Register.js"
+import "./App.css";
 import {
     BrowserRouter as Router,
     Routes,
@@ -22,6 +24,7 @@ const App = () => {
                     <Route path="/invoice" element={<Invoice/>}/>
                     <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
                     <Route path="/contactUs" element={<ContactUs/>}/>
+                    <Route path="/register" element={<Register />} /> 
                 </Routes>
             </Router>
         </>

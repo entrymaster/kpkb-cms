@@ -1,9 +1,73 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import './Inventory.css';
 import { Link } from "react-router-dom";
-
-class Inventory extends React.Component
+import AddItemDialog from './components/AddProduct';
+import UpdateItemDialog from './components/UpdateProduct';
+import DeleteIcon from '@mui/icons-material/Delete';
+const Inventory = () =>
 {
+  const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
+  const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
+  const [products, setAllProducts] = useState([]);
+  const [updatePage, setUpdatePage] = useState(true);
+  const [updateProduct, setUpdateProduct] = useState([]);
+  const [itemName, setItemName] = useState();
+  const toggleAddItemDialog = () => {
+    setAddItemDialogVisibility(!isAddItemDialogVisible);
+    console.log({isAddItemDialogVisible});
+  };
+  const toggleUpdateItemDialog = () => {
+    setUpdateItemDialogVisibility(!isUpdateItemDialogVisible);
+    console.log({isUpdateItemDialogVisible});
+  };
+  const updateProductModalSetting = (selectedProductData) => {
+    console.log("Clicked: edit");
+    setUpdateProduct(selectedProductData);
+    toggleUpdateItemDialog ();
+  };
+
+  useEffect(() => {
+    fetchProductsData();
+    fetchSearchData();
+    // fetchSalesData();
+  }, [updatePage]);
+  const userId = "user";
+  const fetchProductsData = () => {
+    fetch(`http://localhost:5050/api/inventory/get/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAllProducts(data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const fetchSearchData = () => {
+    fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAllProducts(data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleItemName = (e) => {
+    setItemName(e.target.value);
+    fetchSearchData();
+  };
+  const deleteItem = (id) => {
+    // console.log("Product ID: ", id);
+    // console.log(http://localhost:5000/api/inventory/delete/${id});
+    fetch(`http://localhost:5050/api/inventory/delete/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUpdatePage(!updatePage);
+        // Display alert message
+        alert("Product deleted");
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+        // Handle error if necessary
+      });
+};
+  
     // showAddItemDialog = () => {
     //     var dialog = document.getElementById("addItemDialog");
     //     dialog.showModal();
@@ -48,10 +112,10 @@ class Inventory extends React.Component
     //     hideAddItemDialog();
     // };
 
-    render() {
+  
 
         return (
-            <>
+            <div className="Inventory">
   <div className="container">
     <div className="left">
       <div className="left-top-box">
@@ -93,17 +157,35 @@ class Inventory extends React.Component
   </div>
   <div className="main-container">
     <div className="add-button-container">
+<<<<<<< HEAD
       <button className="add-item-button" onClick="showAddItemDialog()">
+=======
+      <button className="add-item-button" onClick={toggleAddItemDialog}>
+>>>>>>> b8cda95ed4fea57387db727f5a05b6f9f1bf0231
         <strong> Add New Item </strong>
       </button>
     </div>
+    <AddItemDialog
+        isVisible={isAddItemDialogVisible}
+        
+        onCancel={toggleAddItemDialog}
+      />
+          <UpdateItemDialog
+    isVisible={isUpdateItemDialogVisible}
+    onCancel={toggleUpdateItemDialog}
+    element={updateProduct}
+    /> 
     <div className="top">
       <div className="search-bar-container">
-        <input type="text" className="search-bar" placeholder="Search" />
+        <input type="text" className="search-bar" placeholder="Search"
+        value={itemName}
+        onChange={handleItemName}
+        />
         <div className="search-icon">🔍</div>
         <div className="circle" />
       </div>
     </div>
+<<<<<<< HEAD
       <br></br>
     <table>
       <thead>
@@ -112,26 +194,52 @@ class Inventory extends React.Component
           <th>Sale Price</th>
           <th>Purchase Price</th>
           <th>Stock</th>
+=======
+    <table id="inventoryTable">
+        <thead>
+          <tr class="headers">
+          <th>ITEM ID</th>
+            <th>ITEM NAME</th>
+            <th>SALE PRICE</th>
+            <th>COST PRICE</th>
+            <th>STOCK</th>
+            <th>MORE ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+    {products.map((element, index) => {
+      return (
+        <tr key={element._id}>
+          <td>{element.itemID}</td>
+          <td>{element.itemName}</td>
+          <td>{element.salePrice}</td>
+          <td>{element.costPrice}</td>
+          <td>{element.quantity }</td>
+          <td>
+            <span
+              //className="text-green-700 cursor-pointer"
+              onClick={() => updateProductModalSetting(element)}
+            >
+              Edit{" "}
+            </span>
+            <span
+              //className="text-red-600 px-2 cursor-pointer"
+              //onClick={() => deleteItem(element._id)}
+            >
+              <DeleteIcon
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => deleteItem(element._id)}
+                />
+            </span>
+          </td> 
+>>>>>>> b8cda95ed4fea57387db727f5a05b6f9f1bf0231
         </tr>
-      </thead>
-      <tbody id="item-table-body">
-        <tr className="First">
-          <td>Lux Soap 50g</td>
-          <td>10</td>
-          <td>8</td>
-          <td>50</td>
-        </tr>
-        <tr className="Second">
-          <td>Maggie 70g</td>
-          <td>14</td>
-          <td>10</td>
-          <td>100</td>
-        </tr>
-        {/* Add more rows as needed */}
-      </tbody>
-    </table>
-    <dialog id="addItemDialog">
-      <form onsubmit="saveItem(); return false;">
+      );
+    })}
+  </tbody>
+      </table>
+    {/* <dialog id="addItemDialog">
+      <form onSubmit="saveItem(); return false;">
         <table>
           <tbody>
             <tr>
@@ -182,16 +290,16 @@ class Inventory extends React.Component
           </tbody>
         </table>
         <button type="submit">Save</button>
-        <button type="button" onclick="hideAddItemDialog()">
+        <button type="button" onClick="hideAddItemDialog()">
           Cancel
         </button>
       </form>
-    </dialog>
+    </dialog> */}
   </div>
-</>
+</div>
   );
 
-    }
+    
     
 }
 
