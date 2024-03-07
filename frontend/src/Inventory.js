@@ -93,7 +93,7 @@ class Inventory extends React.Component
   </div>
   <div className="main-container">
     <div className="add-button-container">
-      <button className="add-item-button" onclick="showAddItemDialog()">
+      <button className="add-item-button" onClick="showAddItemDialog()">
         <strong> Add New Item </strong>
       </button>
     </div>
@@ -104,6 +104,7 @@ class Inventory extends React.Component
         <div className="circle" />
       </div>
     </div>
+      <br></br>
     <table>
       <thead>
         <tr className="headers">
