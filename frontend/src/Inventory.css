@@ -119,3 +119,18 @@ th.Inventory, td.Inventory {
  .add-item-button:active {
     background-color: #99c2ff; /* Change color on click */
 }
+.Inventory #inventoryTable {
+    padding-top: 200px;
+    width: 80%; /* Set the desired width of the table */
+    border-collapse: collapse;
+}
+
+.Inventory #inventoryTable th, #inventoryTable td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.Inventory #inventoryTable th {
+    background-color: #f2f2f2;
+}

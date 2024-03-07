@@ -1,60 +1,64 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import './Inventory.css';
 import { Link } from "react-router-dom";
 import AddItemDialog from './components/AddProduct';
+import UpdateItemDialog from './components/UpdateProduct';
+import AddBatchDialog from './components/AddBatch';
+import DeleteIcon from '@mui/icons-material/Delete';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
+  const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
+  const [isAddBatchDialogVisible, setAddBatchDialogVisibility] = useState(false);
+  const [products, setAllProducts] = useState([]);
+  const [updatePage, setUpdatePage] = useState(true);
+  const [updateProduct, setUpdateProduct] = useState([]);
+  const[addBatch,setAddBatch]=useState([]);
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
   };
-    // showAddItemDialog = () => {
-    //     var dialog = document.getElementById("addItemDialog");
-    //     dialog.showModal();
-    // };
-    
-    // hideAddItemDialog = () => {
-    //     var dialog = document.getElementById("addItemDialog");
-    //     dialog.close();
-    // };
-    
-    // saveItem = () => {
-    //     // Get the input values from the form
-    //     var itemName = document.getElementById("item-name").value;
-    //     var itemID = document.getElementById("item-id").value;
-    //     var quantity = document.getElementById("quantity").value;
-    //     var salesPrice = document.getElementById("sales-price").value;
-    //     var costPrice = document.getElementById("cost-price").value;
-    //     var gst = document.getElementById("gst").value;
-    //     var category = document.getElementById("category").value;
-    //     var batchExpiry = document.getElementById("batch-expiry").value;
-    //     var discount = document.getElementById("discount").value;
+  const toggleUpdateItemDialog = () => {
+    setUpdateItemDialogVisibility(!isUpdateItemDialogVisible);
+    console.log({isUpdateItemDialogVisible});
+  };
+  const toggleAddBatchDialog = () => {
+    setAddBatchDialogVisibility(!isAddBatchDialogVisible);
+    console.log({isAddBatchDialogVisible});
+  };
+  const updateProductModalSetting = (selectedProductData) => {
+    console.log("Clicked: edit");
+    setUpdateProduct(selectedProductData);
+    toggleUpdateItemDialog ();
+  };
+  const addBatchModalSetting = (selectedProductData) => {
+    console.log("Clicked:add batch");
+    setAddBatch(selectedProductData._id);
+    toggleAddBatchDialog ();
+  };
 
-    //     // Get the table body
-    //     var tableBody = document.getElementById("item-table-body");
-
-    //     // Create a new row
-    //     var newRow = tableBody.insertRow();
-
-    //     // Create cells for the new row
-    //     var cell1 = newRow.insertCell(0);
-    //     var cell2 = newRow.insertCell(1);
-    //     var cell3 = newRow.insertCell(2);
-    //     var cell4 = newRow.insertCell(3);
-
-    //     // Add content to the cells
-    //     cell1.textContent = itemName;
-    //     cell2.textContent = salesPrice;
-    //     cell3.textContent = costPrice;
-    //     cell4.textContent = quantity;
-
-    //     // Close the dialog
-    //     hideAddItemDialog();
-    // };
-
-  
-
+  useEffect(() => {
+    fetchProductsData();
+    // fetchSalesData();
+  }, [updatePage]);
+  const userId = "user";
+  const fetchProductsData = () => {
+    fetch('http://localhost:5000/api/inventory/get/${userId}')
+    .then((response) => response.json())
+    .then((data) => {
+      setAllProducts(data);
+    })
+    .catch((err) => console.log(err));
+};
+const deleteItem = (id) => {
+  // console.log("Product ID: ", id);
+  // console.log(`http://localhost:5000/api/inventory/delete/${id}`);
+  fetch(`http://localhost:5000/api/inventory/delete/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setUpdatePage(!updatePage);
+    });
+};
         return (
             <div className="Inventory">
   <div className="container">
@@ -107,6 +111,16 @@ const Inventory = () =>
         
         onCancel={toggleAddItemDialog}
       />
+    <UpdateItemDialog
+    isVisible={isUpdateItemDialogVisible}
+    onCancel={toggleUpdateItemDialog}
+    element={updateProduct}
+    /> 
+    <AddBatchDialog
+    isVisible={isAddBatchDialogVisible}
+    onCancel={toggleAddBatchDialog}
+    element={addBatch}
+    /> 
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search" />
@@ -114,31 +128,53 @@ const Inventory = () =>
         <div className="circle" />
       </div>
     </div>
-    <table>
-      <thead>
-        <tr className="headers">
-          <th>Item Name/ID</th>
-          <th>Sale Price</th>
-          <th>Purchase Price</th>
-          <th>Stock</th>
+    <table id="inventoryTable">
+        <thead>
+          <tr class="headers">
+          <th>ITEM ID</th>
+            <th>ITEM NAME</th>
+            <th>SALE PRICE</th>
+            <th>COST PRICE</th>
+            <th>STOCK</th>
+          </tr>
+        </thead>
+        <tbody>
+    {products.map((element, index) => {
+      return (
+        <tr key={element._id}>
+          <td>{element.itemID}</td>
+          <td>{element.itemName}</td>
+          <td>{element.salePrice}</td>
+          <td>{element.costPrice}</td>
+          <td>{element.quantity }</td>
+           <td>
+            <span
+              //className="text-green-700 cursor-pointer"
+              onClick={() => updateProductModalSetting(element)}
+            >
+              Edit{" "}
+            </span>
+            <span
+              //className="text-green-700 cursor-pointer"
+              onClick={() => addBatchModalSetting(element)}
+            >
+              AddBatch{" "}
+            </span>
+            <span
+              //className="text-red-600 px-2 cursor-pointer"
+              //onClick={() => deleteItem(element._id)}
+            >
+              <DeleteIcon
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => deleteItem(element._id)}
+                />
+            </span>
+          </td> 
         </tr>
-      </thead>
-      <tbody id="item-table-body">
-        <tr className="First">
-          <td>Lux Soap 50g</td>
-          <td>10</td>
-          <td>8</td>
-          <td>50</td>
-        </tr>
-        <tr className="Second">
-          <td>Maggie 70g</td>
-          <td>14</td>
-          <td>10</td>
-          <td>100</td>
-        </tr>
-        {/* Add more rows as needed */}
-      </tbody>
-    </table>
+      );
+    })}
+  </tbody>
+      </table>
     {/* <dialog id="addItemDialog">
       <form onSubmit="saveItem(); return false;">
         <table>
@@ -204,4 +240,4 @@ const Inventory = () =>
     
 }
 
-export default Inventory;
+export default Inventory;// main inventory.js
