@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
+const pendingTransactionsRouter = require("./routes/pendingTransactions.route");
 const app = express();
 
 /* Loading the environment variables from the .env file. */
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
+app.use("/api/pendingTransactions",pendingTransactionsRouter);
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/", (req, res) => {

@@ -1,46 +1,16 @@
-import React from 'react';
-import "./Pending transactions.css";
+import React, {useState} from 'react';
+import "./pending transactions.css";
+import "./components/PendingTransactions/AddNewEntry";
+import "./components/PendingTransactions/UpdateEntry";
 import { Link } from "react-router-dom";
 
-function showAddCreditDialog() {
-  var dialog = document.getElementById("addCreditDialog");
-  dialog.showModal();
-}
+const PendingTransactions = () => {
+  const [isAddCreditDialogVisible, setAddCreditDialogVisibility] = useState(false);
+  const toggleAddCreditDialog = () => {
+    setAddCreditDialogVisibility(!isAddCreditDialogVisible);
+    console.log({isAddCreditDialogVisible});
+  };
 
-function hideAddCreditDialog() {
-  var dialog = document.getElementById("addCreditDialog");
-  dialog.close();
-}
-function saveCredit() {
-  // Get the input values from the form
-  var customerName = document.getElementById("customerName").value;
-  var phoneNo = document.getElementById("phoneNo").value;
-  var amount = document.getElementById("amount").value;
-  var addBill = document.getElementById("addBill").value;
-
-  // Get the table body
-  var tableBody = document.getElementById("credit-table-body");
-
-  // Create a new row
-  var newRow = tableBody.insertRow();
-
-  // Create cells for the new row
-  var cell1 = newRow.insertCell(0);
-  var cell2 = newRow.insertCell(1);
-  var cell3 = newRow.insertCell(2);
-  var cell4 = newRow.insertCell(3);
-
-  // Add content to the cells
-  cell1.textContent = customerName;
-  cell2.textContent = phoneNo;
-  cell3.textContent = amount;
-  cell4.textContent = addBill;
-
-  // Close the dialog
-  hideAddCreditDialog();
-}
-function PendingTransactions() 
-{
     return (
         <div className="PendingTrans">
   <div className="container">
@@ -105,9 +75,12 @@ function PendingTransactions()
         <th>Customer Name/ID</th>
         <th>Phone No.</th>
         <th>Amount</th>
-        <th id="add-credit-button" onclick="showAddCreditDialog()">
+        <th id="add-credit-button" onClick={toggleAddCreditDialog}>
           Add New Credit
         </th>
+         <AddNewEntry
+        isVisible={isAddCreditDialogVisible} onCancel={toggleAddCreditDialog} entryType="Customer"
+       /> 
       </tr>
     </thead>
     <tbody id="credit-table-body">
