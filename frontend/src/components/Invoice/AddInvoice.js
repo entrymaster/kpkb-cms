@@ -7,23 +7,18 @@ const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
   
-  // const handleInputChange = (event, index, fieldName) => {
-  //   const { value } = event.target;
-  //   const updatedItemList = [...invoiceData.itemList];
-  //   updatedItemList[index] = {
-  //     ...updatedItemList[index],
-  //     [fieldName]: value,
-  //   };
-  //   setInvoiceData({
-  //     ...invoiceData,
-  //     itemList: updatedItemList
-  //   });
-  // };
-  const handleInputChange = (index, e) => {
-    const values = [...invoiceData.itemList]
-    values[index][e.target.name] = e.target.value
-    setInvoiceData({...invoiceData, itemList: values})
-  }
+  const handleInputChange = (event, index, fieldName) => {
+    const { value } = event.target;
+    const updatedItemList = [...invoiceData.itemList];
+    updatedItemList[index] = {
+      ...updatedItemList[index],
+      [fieldName]: value,
+    };
+    setInvoiceData({
+      ...invoiceData,
+      itemList: updatedItemList
+    });
+  };
 // const handleTotal = (index) => {
 //   const updatedItemList = [...invoiceData.itemList];
 //   const item = updatedItemList[index];
@@ -62,7 +57,7 @@ const AddNewInvoice = () => {
 
 
   const addInvoice = () => {
-      fetch("http://localhost:5050/api/invoice/add", {
+      fetch("http://localhost:5000/api/invoice/add", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -82,7 +77,7 @@ const AddNewInvoice = () => {
         .catch((err) => console.log(err));
     };
     const getInvoiceCount = async() =>{
-      fetch(`http://localhost:5050/api/invoice/count/${invoiceData.userID}`, {
+      fetch(`http://localhost:5000/api/invoice/count/${invoiceData.userID}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -148,17 +143,16 @@ const AddNewInvoice = () => {
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
-          <td><input type="text" value={item.itemName} name='itemName' onChange={(e) => handleInputChange(index, e)} placeholder='Item Name'/></td>
-          <td><input type="number" value={item.quantity} name='quantity' onChange={(e) => handleInputChange(index, e)} placeholder='Quantity'/></td>
-          <td><input type="number" value={item.rate} name='rate' onChange={(e) => handleInputChange(index, e)} placeholder='Price/unit'/></td>
-          <td><input type="number" value={item.gst} name='gst' onChange={(e) => handleInputChange(index, e)} placeholder='GST (%)'/></td>
-          <td><input type="number" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} name='amount' onChange={(e) => handleInputChange(index, e)} placeholder='Amount' disabled/>
+          <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/></td>
+          <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
+          <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
+          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
+          <td><input type="number" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount' disabled/>
           {/* <input
             type="hidden"
             value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100}
-            name={itemList[${index}].amount}
-          /> */}
-          </td>
+            name={`itemList[${index}].amount`}
+          /> */}</td>
           {/* <td>{item.amount}</td> */}
           <td>
               <DeleteIcon

@@ -12,7 +12,7 @@ const app = express();
 /* Loading the environment variables from the .env file. */
 require("dotenv").config();
 
-const PORT = process.env.PORT || 5050;
+const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/todoapiDB";
 
     /* Telling the application to use the express.json() middleware. This middleware will parse the body of
