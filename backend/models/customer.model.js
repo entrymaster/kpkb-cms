@@ -24,7 +24,7 @@ const customerSchema = new Schema({
     type: Number,
     required: false,
   },
-  invoceList: {
+  invoiceList: {
     type: [ { invoiceID: String } ],
     required: true,
   },

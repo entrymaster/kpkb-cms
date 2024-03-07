@@ -157,7 +157,11 @@ const Inventory = () =>
   </div>
   <div className="main-container">
     <div className="add-button-container">
+<<<<<<< HEAD
+      <button className="add-item-button" onClick="showAddItemDialog()">
+=======
       <button className="add-item-button" onClick={toggleAddItemDialog}>
+>>>>>>> b8cda95ed4fea57387db727f5a05b6f9f1bf0231
         <strong> Add New Item </strong>
       </button>
     </div>
@@ -181,6 +185,16 @@ const Inventory = () =>
         <div className="circle" />
       </div>
     </div>
+<<<<<<< HEAD
+      <br></br>
+    <table>
+      <thead>
+        <tr className="headers">
+          <th>Item Name/ID</th>
+          <th>Sale Price</th>
+          <th>Purchase Price</th>
+          <th>Stock</th>
+=======
     <table id="inventoryTable">
         <thead>
           <tr class="headers">
@@ -218,6 +232,7 @@ const Inventory = () =>
                 />
             </span>
           </td> 
+>>>>>>> b8cda95ed4fea57387db727f5a05b6f9f1bf0231
         </tr>
       );
     })}
