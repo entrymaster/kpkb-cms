@@ -1,24 +1,27 @@
-import React,{useState} from 'react';
-import './AddProduct.css'
-const AddItemDialog = ({ isVisible, onCancel }) => {
-    const [itemData, setItemData] = useState({
-        userID: 'user',
-        itemID: '',
-        itemName: '',
-        salePrice: 0,
-        costPrice: 0,
-        itemGST: 0,
-        category: '',
-        discount: 0,
-        quantity: 0,
-        // batchList: [],
-      });
+import React, { useState, useEffect } from 'react';
+import './AddProduct.css';
+
+const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
+  const { _id, itemID, itemName, salePrice, costPrice, itemGST, category, discount, quantity } = element;
+
+  const [itemData, setItemData] = useState({
+    _id: _id,
+    itemID: itemID,
+    itemName: itemName,
+    salePrice: salePrice,
+    costPrice: costPrice,
+    itemGST: itemGST,
+    category: category,
+    discount: discount,
+    quantity: quantity,
+    // batchList: [],
+  });
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
       };
-      const addProduct = () => {
-        fetch("http://localhost:5050/api/inventory/add", {
+      const updateProduct = () => {
+        fetch("http://localhost:5050/api/inventory/update", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -43,13 +46,13 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
             <tr>
               <td><input type="text" id="item-name" placeholder="Item Name" value={itemData.itemName} name="itemName" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="text" id="item-id" placeholder="Item ID" value={itemData.itemID} name="itemID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
             </tr>
             <tr>
               <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
@@ -65,18 +68,18 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
             <tr>
               <td><input type="text" id="category" placeholder="Category" value={itemData.category} name="category" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="text" id="batch-expiry" placeholder="Batch Expiry" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="number" id="discount" placeholder="Discount (%)" value={itemData.discount} name="discount" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
             </tr>
             </tbody>
           </table>
 
-          <button type="submit" onClick={addProduct}>Save</button>
+          <button type="submit" onClick={updateProduct}>Save</button>
           <button type="button" onClick={onCancel}>Cancel</button>
         </form>
       </dialog>
@@ -84,4 +87,4 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
   );
 };
 
-export default AddItemDialog;
+export default UpdateItemDialog;
