@@ -33,7 +33,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
         console.log(itemData);
       };
       const updateProduct = () => {
-        fetch("http://localhost:5000/api/inventory/update", {
+        fetch("http://localhost:5050/api/inventory/update", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

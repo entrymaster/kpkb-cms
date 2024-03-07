@@ -18,7 +18,7 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
         console.log(itemData);
       };
       const addProduct = () => {
-        fetch("http://localhost:5000/api/inventory/add", {
+        fetch("http://localhost:5050/api/inventory/add", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

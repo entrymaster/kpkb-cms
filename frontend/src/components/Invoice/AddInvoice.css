@@ -1,25 +1,105 @@
-#addNewItemDialog {
+#generate-bill-button:hover {
+    background-color: #b3d9ff; /* Change color on hover */
+}
+
+#generate-bill-button:active {
+    background-color: #99c2ff; /* Change color on click */
+}
+#generate-bill-button{
+    background-color: #cfe8ff;
+    color: #051d40;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-left: 20px;
+    font-family: 'Libre Baskerville', serif;
+    
+}    
+
+.customer-details {
+    justify-content: center; /* Center horizontally */
     align-items: center;
-    width: 800px; /* Set the desired width */
-    height: 400px;
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+}
+#customerTable {
+    flex-grow: 1;
+    padding: 20px;
+    text-align: left;
+    margin-left: 250px;
+    width: 200px;
+    margin-bottom: 4px;
+}
+.input-box {
+    background-color: #f0f8ff;; /* Change this color to your preferred color */
+    border: 1px solid #CCCCCC; /* Add border styles if needed */
+    padding: 8px; /* Adjust padding as needed */
+    font-size: 16px; 
+    width: 400px;
+}
+#customerTable input[type="text"],
+#customerTable input[type="number"] {
+  border: none;
+  background-color: #f0f8ff;
+  height: 25px;
+  width: 400px;
+  font-size: 18px;
+}
+#invoiceTable input[type="text"],
+#invoiceTable input[type="number"] {
+  border: none;
+  height: 30px;
+  width: auto;
+  font-size: 18px;
+}
+.itemListContainer {
+    width: calc(100%-50px);
+    /* padding-right: 50px; */
+    padding-left: 50px; /*Adjust padding as needed*/
+    /* padding-right: 20px; Adjust padding as needed */
 }
 
-#addNewItemDialog form {
-    padding: 20px; /* Add padding for better spacing */
+#invoiceTable {
+    /* width: 50px; /* Set the table width to 100% to make it fill the container 
+    column-width: 50px; */
+    padding-top: 200px;
+    width: 70%; /* Set the desired width of the table */
+    border-collapse: collapse;
 }
 
-#addNewItemDialog label {
-    display: block;
-    margin-bottom: 10px;
+#invoiceTable th,
+#invoiceTable td {
+    /* width: 50px; Allow the columns to adjust their width automatically */
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+    
+}
+#invoiceTable th {
+    background-color: #f2f2f2;
+}
+#add-new-item{
+    background-color: #cfe8ff;
+    color: #051d40;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-left: 20px;
+    font-family: 'Libre Baskerville', serif;
+    
 }
 
-#addNewItemDialog input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+#add-new-item:hover {
+    background-color: #b3d9ff; /* Change color on hover */
 }
 
-#addNewItemDialog button {
-    padding: 10px 20px;
-    margin-right: 10px;
-}
+#add-new-item:active {
+    background-color: #99c2ff; /* Change color on click */
+}    

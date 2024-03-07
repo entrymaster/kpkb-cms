@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const inventory = require("../controllers/invoice.controller");
+const invoice = require("../controllers/invoice.controller");
 
-// app.post("/add", invoice.addRow);
+app.post("/add", invoice.addInvoice);
+app.get("/count/:userID", invoice.getInvoiceCount);
 module.exports = app;

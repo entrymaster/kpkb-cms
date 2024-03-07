@@ -14,6 +14,7 @@ const Inventory = () =>
   const [updatePage, setUpdatePage] = useState(true);
   const [updateProduct, setUpdateProduct] = useState([]);
   const[addBatch,setAddBatch]=useState([]);
+  const [itemName, setItemName] = useState();
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
@@ -123,7 +124,10 @@ const deleteItem = (id) => {
     /> 
     <div className="top">
       <div className="search-bar-container">
-        <input type="text" className="search-bar" placeholder="Search" />
+        <input type="text" className="search-bar" placeholder="Search"
+        value={itemName}
+        onChange={handleItemName}
+        />
         <div className="search-icon">🔍</div>
         <div className="circle" />
       </div>
@@ -136,6 +140,7 @@ const deleteItem = (id) => {
             <th>SALE PRICE</th>
             <th>COST PRICE</th>
             <th>STOCK</th>
+            <th>MORE ACTIONS</th>
           </tr>
         </thead>
         <tbody>
