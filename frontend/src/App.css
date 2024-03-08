@@ -55,7 +55,7 @@ body, html {
 }
  .main-container {
     flex-grow: 1;
-    display: flex;
+    /* display: flex; */
     margin-left: 240px;
 }
  .main-left {

@@ -67,7 +67,7 @@
     /* width: 50px; /* Set the table width to 100% to make it fill the container 
     column-width: 50px; */
     padding-top: 200px;
-    width: 70%; /* Set the desired width of the table */
+    width: 80%; /* Set the desired width of the table */
     border-collapse: collapse;
 }
 

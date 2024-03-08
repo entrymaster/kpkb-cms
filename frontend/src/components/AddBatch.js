@@ -39,12 +39,29 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
               alert("Batch ADDED");
               handlePageUpdate();
               onCancel();
+              setItemData({
+                _id: element,
+                batchID: '',
+                batchQty: '',
+                expiryDate: '',
+              });
             } else {
               alert("Failed to add batch");
             }
           })
           .catch((err) => console.log(err));
       };
+      const handleCancel = () => {
+        onCancel();
+        setItemData({
+          _id: element,
+          batchID: '',
+          batchQty: '',
+          expiryDate: '',
+        });
+        
+      };
+    
       useEffect(() => {
         console.log("Updated itemData:", itemData);
       }, [itemData]);
@@ -72,7 +89,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
           </table>
 
           <button type="submit" onClick={addBatch}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
     )

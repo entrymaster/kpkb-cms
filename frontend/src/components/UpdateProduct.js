@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
 const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
-    //const { _id, itemID, itemName, salePrice, costPrice, itemGST, category, discount, quantity } = element;
     useEffect(() => {
         setItemData((prevItemData) => ({
           ...prevItemData,
@@ -19,13 +18,13 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
     const [itemData, setItemData] = useState({
       _id: '',
       itemID: '',
-    //   itemName: itemName,
-    //   salePrice: salePrice,
-    //   costPrice: costPrice,
-    //   itemGST: itemGST,
-    //   category: category,
-    //   discount: discount,
-    //   quantity: quantity,
+     itemName: '',
+     salePrice: '',
+     costPrice: '',
+     itemGST: '',
+    category: '',
+    discount: '',
+     quantity: '',
       // batchList: [],
     });
     const handleInputChange = (key, value) => {
@@ -42,7 +41,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
         })
           .then((result) => {
             alert("Product ADDED");
-            // handlePageUpdate();
+            //handlePageUpdate();
             //addProductModalSetting();
             onCancel();
           })
@@ -91,7 +90,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
             </tbody>
           </table>
 
-          <button type="submit" onClick={updateProduct}>Save</button>
+          <button type="submit" onClick={ updateProduct}>Save</button>
           <button type="button" onClick={onCancel}>Cancel</button>
         </form>
       </dialog>
