@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
-const AddBatchDialog = ({ isVisible, onCancel, element }) => {
+const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
     useEffect(() => {
         setItemData((prevItemData) => ({
           ...prevItemData,
@@ -37,13 +37,31 @@ const AddBatchDialog = ({ isVisible, onCancel, element }) => {
           .then((result) => {
             if (result.ok) {
               alert("Batch ADDED");
+              handlePageUpdate();
               onCancel();
+              setItemData({
+                _id: element,
+                batchID: '',
+                batchQty: '',
+                expiryDate: '',
+              });
             } else {
               alert("Failed to add batch");
             }
           })
           .catch((err) => console.log(err));
       };
+      const handleCancel = () => {
+        onCancel();
+        setItemData({
+          _id: element,
+          batchID: '',
+          batchQty: '',
+          expiryDate: '',
+        });
+        
+      };
+    
       useEffect(() => {
         console.log("Updated itemData:", itemData);
       }, [itemData]);
@@ -71,7 +89,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element }) => {
           </table>
 
           <button type="submit" onClick={addBatch}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
     )

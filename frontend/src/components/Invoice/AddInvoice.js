@@ -6,7 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
-  const [subTotal, setSubTotal] = useState(0);
+  const [totalChange, setTotalChange] = useState(false);
+  const [items, setAllItems] = useState([]);
+  const [updatePage, setUpdatePage] = useState(true);
   
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -27,33 +29,28 @@ const AddNewInvoice = () => {
       ...invoiceData,
       itemList: updatedItemList
     });
+    setTotalChange(true);
   };
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
-    const subTotal = async() => {
-      const arr = invoiceData.itemList;
-      var subTotal = 0;
-      for(var i=0; i<arr.length; i++){
-        subTotal = subTotal + arr[i].amount;
-        setSubTotal(subTotal);
-      }
-      invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    }
-    subTotal();
-
-    // if (fieldName === 'discount'){
-    //   const disc = parseFloat(invoiceData.discount);
-    //   const subt = parseFloat(invoiceData.totalAmount);
-    //   const total = subt - subt*disc/100;
-    //   invoiceData.totalAmount = subt;
-    // }
-    
     setInvoiceData((prevData) => ({
       ...prevData,
       [fieldName] : value,
     }));
-  }
+    setTotalChange(true);
+  };
+
+  useEffect(()=>{
+    const arr = invoiceData.itemList;
+    var subTotal = 0;
+    for(var i=0; i<arr.length; i++){
+      subTotal = subTotal + arr[i].amount;
+    }
+    invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    setTotalChange(false);
+  }, [totalChange])
+
   const handleAddField = (e) => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
@@ -68,8 +65,6 @@ const AddNewInvoice = () => {
       };
     });
   };
-
-
 
   const addInvoice = () => {
       fetch("http://localhost:5050/api/invoice/add", {
@@ -87,7 +82,24 @@ const AddNewInvoice = () => {
           setIncInvoiceID(true);
         })
         .catch((err) => console.log(err));
+
+        setUpdatePage(false);
     };
+
+    const updateInventory = () => {
+      fetch("http://localhost:5050/api/invoice/updateItemQuantity",{
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(invoiceData.itemList),
+      })
+      .then(() => {
+        setUpdatePage(false);
+      })
+
+    }
+
     const getInvoiceCount = async() =>{
       fetch(`http://localhost:5050/api/invoice/count/${invoiceData.userID}`, {
         method: "GET",
@@ -116,26 +128,26 @@ const AddNewInvoice = () => {
       // }
       
     },[incInvoiceID, invoiceData.userID]);
-    
-    // useEffect(() => {
-    //   const subTotal = () => {
-    //     const arr = invoiceData.itemList;
-    //     var subTotal = 0;
-    //     for(var i=0; i<arr.length; i++){
-    //       subTotal = subTotal + arr[i].amount;
-    //       setSubTotal(subTotal);
-    //     }
-    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    //   }
-    //   subTotal();
-    // }, [invoiceData])
 
-    // useEffect(() => {
-    //   const total = () => {
-    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    //   }
-    //   total();
-    // }, [invoiceData])
+    useEffect(() => {
+      fetchItemsData();
+      // fetchSalesData();
+    }, [updatePage]);
+    const userId='user';
+    const fetchItemsData = () => {
+      fetch(`http://localhost:5050/api/inventory/get/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setAllItems(data);
+      })
+      .catch((err) => console.log(err));
+    };
+    // useEffect(()=>{
+    //   console.log("items");
+    //   console.log(items);
+    // },[items])
+
+
 
     return (
       <>
@@ -173,7 +185,8 @@ const AddNewInvoice = () => {
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
           <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
-          <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td>
+          {/* <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td> */}
+          <td>{item.amount}</td>
 
           <td>
               <DeleteIcon
@@ -187,7 +200,7 @@ const AddNewInvoice = () => {
       </tbody>
     </table>
       <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-      <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
+      <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
       <table className='totalAmt'>
         <tr>
           <td>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>

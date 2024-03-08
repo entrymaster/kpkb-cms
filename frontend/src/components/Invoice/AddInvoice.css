@@ -1,11 +1,11 @@
-#generate-bill-button:hover {
+#total-button, #generate-bill-button:hover {
     background-color: #b3d9ff; /* Change color on hover */
 }
 
-#generate-bill-button:active {
+#total-button, #generate-bill-button:active {
     background-color: #99c2ff; /* Change color on click */
 }
-#generate-bill-button{
+#total-button, #generate-bill-button{
     background-color: #cfe8ff;
     color: #051d40;
     border: none;
@@ -67,7 +67,7 @@
     /* width: 50px; /* Set the table width to 100% to make it fill the container 
     column-width: 50px; */
     padding-top: 200px;
-    width: 70%; /* Set the desired width of the table */
+    width: 80%; /* Set the desired width of the table */
     border-collapse: collapse;
 }
 

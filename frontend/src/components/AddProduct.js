@@ -5,11 +5,11 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
         userID: 'user',
         itemID: '',
         itemName: '',
-        salePrice: 0,
-        costPrice: 0,
-        itemGST: 0,
+        salePrice: '',
+        costPrice: '',
+        itemGST: '',
         category: '',
-        discount: 0,
+        discount: '',
         quantity: 0,
         // batchList: [],
       });
@@ -30,8 +30,33 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             handlePageUpdate();
             //addProductModalSetting();
             onCancel();
+            setItemData({ // Resetting fields to initial state
+              userID: 'user',
+              itemID: '',
+              itemName: '',
+              salePrice: '',
+              costPrice: '',
+              itemGST: '',
+              category: '',
+              discount: '',
+              quantity: 0,
+            });
           })
           .catch((err) => console.log(err));
+      };
+      const handleCancel = () => {
+        onCancel();
+        setItemData({ // Resetting fields to initial state
+          userID: 'user',
+          itemID: '',
+          itemName: '',
+          salePrice: '',
+          costPrice: '',
+          itemGST: '',
+          category: '',
+          discount: '',
+          quantity: 0,
+        });
       };
   return (
     isVisible && (
@@ -47,9 +72,10 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
               <td><input type="text" id="item-id" placeholder="Item ID" value={itemData.itemID} name="itemID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               }/></td>
-              <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
+              {/* <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              }/></td> */}
+            <td><input type="text" value="Quantity = 0" readOnly /> </td>
             </tr>
             <tr>
               <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
@@ -77,7 +103,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           </table>
 
           <button type="submit" onClick={addProduct}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
     )
