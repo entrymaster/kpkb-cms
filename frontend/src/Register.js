@@ -3,12 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
+  //va confirmpassword = ""
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
+    confirmpassword: "",
     gstno: "",
+    shopname: "",
+    shopaddress: "",
   });
 
   const navigate = useNavigate();
@@ -18,6 +22,12 @@ function Register() {
   };
 
   const registerUser = () => {
+    // Check if passwords match
+    if (form.password !== form.confirmpassword) {
+      alert("Password and Confirm Password do not match");
+      return; // Exit function if passwords don't match
+    }
+  
     fetch("http://localhost:5050/api/register/reg", {
       method: "POST",
       headers: {
@@ -39,8 +49,9 @@ function Register() {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
-        <div className="w-full max-w-md space-y-8 p-10 rounded-lg" class="center">
-          <div class="shift">
+      <div id="sign-up">
+        <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
+          <div>
             <img 
               class = "fit-picture"
             src="logo1.png" alt = "Billing360 Logo"
@@ -50,7 +61,6 @@ function Register() {
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div id="sign-up" class="center">
               <div className="flex gap-4" >
                 <input
                   name="firstname"
@@ -85,7 +95,28 @@ function Register() {
                   value={form.email}
                   onChange={handleInputChange}
                 />
-               
+                <br></br>
+                <br></br>
+              <input
+                  name="shopname"
+                  type="text"
+                  required
+                  className="input-box"
+                  placeholder="Shop Name"
+                  value={form.shopname}
+                  onChange={handleInputChange}
+                /> 
+              <input
+                  name="shopaddress"
+                  type="text"
+                  required
+                  className="input-box"
+                  placeholder="Shop Address"
+                  value={form.shopaddress}
+                  onChange={handleInputChange}
+                />  
+                <br></br>
+                <br></br>
               <input
                   name="gstno"
                   type="text"
@@ -98,21 +129,30 @@ function Register() {
                 />
               </div>
               <br></br>
-              <div>
-                
+              <div>   
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="off"
                   required
                   className="input-box"
                   placeholder="Password"
                   value={form.password}
                   onChange={handleInputChange}
                 />
+                <input
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  type="password"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Confirm Password"
+                  value={form.confirmpassword}
+                  onChange={handleInputChange}
+                />
               </div>
-            </div>
             <br></br>
             <div className="flex items-center justify-between" class="center">
               <div className="flex items-center" id="rememberme">
@@ -152,6 +192,7 @@ function Register() {
         <footer id="footer">
           <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
         </footer>
+      </div>
       </div>
     </>
   );

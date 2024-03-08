@@ -28,6 +28,15 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    shopname: {
+        type: String,
+        required: true,
+    },
+    shopaddress: {
+        type: String,
+        required: true,
+    }
+
 });
 
 module.exports = mongoose.model("User", userSchema);

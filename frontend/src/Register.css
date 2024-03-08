@@ -8,7 +8,7 @@
     padding: 10px;
   }
   .shift{
-    margin-left : 220px;
+    margin-left : 0px;
 }
 html,body{
     height: 100%;
@@ -53,7 +53,7 @@ html,body{
     background-color: rgb(44, 44, 131);
     /* Adjust the margin to position the button slightly to the left */
 
-    margin-left : 140px; /* Adjust this value to move the button to the left */
+    margin-left : 0px; /* Adjust this value to move the button to the left */
     /* Optional: Adjust the margin-top to position the button vertically */
     margin-top: 0px; /* You can adjust this value as needed */
 }

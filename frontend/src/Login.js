@@ -28,10 +28,11 @@ function Login() {
           authContext.signin(data._id, () => {
             navigate("/");
           });
-        })
+        })  
         .catch((err) => {
-          alert("Wrong credentials, Try again")
           console.log(err);
+          alert("Wrong credentials, Try again")
+          
         });
     }, 3000);
   };

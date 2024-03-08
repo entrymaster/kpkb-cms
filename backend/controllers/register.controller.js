@@ -9,6 +9,8 @@ const registerUser = async (req, res) => {
         email: req.body.email,
         password: req.body.password,
         gstno: req.body.gstno,
+        shopname: req.body.shopname,
+        shopaddress: req.body.shopaddress,
     });
   
     registerUser
