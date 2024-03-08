@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
-const AddBatchDialog = ({ isVisible, onCancel, element }) => {
+const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
     useEffect(() => {
         setItemData((prevItemData) => ({
           ...prevItemData,
@@ -37,6 +37,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element }) => {
           .then((result) => {
             if (result.ok) {
               alert("Batch ADDED");
+              handlePageUpdate();
               onCancel();
             } else {
               alert("Failed to add batch");

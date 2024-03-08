@@ -85,7 +85,12 @@ const addBatchList = async (req, res) => {
     const { batchID, batchQty, expiryDate } = req.body;
     const updatedProduct = await Product.findByIdAndUpdate(
       { _id: req.body._id },
-      { $push: { batchList: { batchID, batchQty, expiryDate } } },
+      // 
+      { 
+        $push: { batchList: { batchID, batchQty, expiryDate } },
+        $inc: { quantity: batchQty } // Increment the stock by batchQty
+      },
+      
       { new: true }
     );
     res.json({ message: 'BatchList added successfully', product: updatedProduct });

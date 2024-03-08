@@ -138,6 +138,7 @@ const deleteItem = (id) => {
     isVisible={isAddBatchDialogVisible}
     onCancel={toggleAddBatchDialog}
     element={addBatch}
+    handlePageUpdate = {handlePageUpdate}
     /> 
     <div className="top">
       <div className="search-bar-container">
