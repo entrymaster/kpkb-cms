@@ -30,7 +30,7 @@ app.use("/api/login" , loginRouter);
 
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
-app.get("/", (req, res) => {
+app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
 
