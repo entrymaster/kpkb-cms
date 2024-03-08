@@ -113,7 +113,7 @@ const deleteItem = (id) => {
     </div>
   </div>
   <div className="top-panel">
-    <div style={{ textAlign: "left", marginLeft: 250, marginTop: 15 }}>
+    <div style={{ textAlign: "left", marginTop: 15 }}>
       <h1 style={{ color: "#fff", fontSize: 40 }}>Inventory</h1>
     </div>
   </div>
@@ -198,63 +198,7 @@ const deleteItem = (id) => {
     })}
   </tbody>
       </table>
-    {/* <dialog id="addItemDialog">
-      <form onSubmit="saveItem(); return false;">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <input type="text" id="item-name" placeholder="Item Name" />
-              </td>
-              <td>
-                <input type="text" id="item-id" placeholder="Item ID" />
-              </td>
-              <td>
-                <input type="text" id="quantity" placeholder="Quantity" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  id="sales-price"
-                  placeholder="Sales Price/unit"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="cost-price"
-                  placeholder="Cost Price/unit"
-                />
-              </td>
-              <td>
-                <input type="text" id="gst" placeholder="GST" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="text" id="category" placeholder="Category" />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="batch-expiry"
-                  placeholder="Batch Expiry"
-                />
-              </td>
-              <td>
-                <input type="text" id="discount" placeholder="Discount (%)" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="submit">Save</button>
-        <button type="button" onClick="hideAddItemDialog()">
-          Cancel
-        </button>
-      </form>
-    </dialog> */}
+
   </div>
 </div>
   );

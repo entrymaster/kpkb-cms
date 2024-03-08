@@ -123,6 +123,7 @@ th.Inventory, td.Inventory {
     padding-top: 200px;
     width: 80%; /* Set the desired width of the table */
     border-collapse: collapse;
+    margin: 20px;
 }
 
 .Inventory #inventoryTable th, #inventoryTable td {
