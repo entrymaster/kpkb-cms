@@ -10,7 +10,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
         itemGST: '',
         category: '',
         discount: '',
-        quantity: '',
+        quantity: 0,
         // batchList: [],
       });
     const handleInputChange = (key, value) => {
@@ -39,7 +39,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
               itemGST: '',
               category: '',
               discount: '',
-              quantity: '',
+              quantity: 0,
             });
           })
           .catch((err) => console.log(err));
@@ -55,7 +55,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           itemGST: '',
           category: '',
           discount: '',
-          quantity: '',
+          quantity: 0,
         });
       };
   return (
@@ -72,9 +72,10 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
               <td><input type="text" id="item-id" placeholder="Item ID" value={itemData.itemID} name="itemID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               }/></td>
-              <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
+              {/* <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              }/></td> */}
+            <td><input type="text" value="Quantity = 0" readOnly /> </td>
             </tr>
             <tr>
               <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
