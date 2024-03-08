@@ -5,6 +5,22 @@
 html,body{
     height: 100%;
 }
+
+.shift{
+    margin-left : 220px;
+}
+.shift2{
+    margin-left : 140px;
+}
+.shift3{
+    margin-left : 220px;
+}
+.shift4{
+    margin-left : 170px;
+}
+.shift5{
+    margin-left : 30px;
+}
 .center2 {
     margin: auto;
     width: 50%;
@@ -88,3 +104,6 @@ html,body{
     display: flex;
     height: 100vh; /* 100% of the viewport height */
 }
+.fit-picture {
+    width: 250px;
+  }

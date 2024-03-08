@@ -71,8 +71,9 @@ function Login() {
           {/* <img src={require("../assets/signup.jpg")} alt="" /> */}
         </div>
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg" >
-          <div class="center2">
+          <div class="shift">
             <img
+            class="fit-picture"
               src="logo1.png"
               //alt="Your Company"
             />
@@ -114,8 +115,9 @@ function Login() {
             </div>
 
             <div className="flex items-center justify-between" class="center2">
-              <div className="flex items-center" class="center2">
+              <div className="flex items-center" class="shift2">
                 <input
+                   
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
@@ -132,7 +134,7 @@ function Login() {
               
             </div>
 
-            <div id="center2" class="center2"> 
+            <div id="center2" class="shift3"> 
               <button
                 type="submit"
                 id="btn2"
@@ -149,7 +151,7 @@ function Login() {
               </button>
               </div>
               <br></br>
-              <div class="center2">
+              <div class="shift4">
               <div className="text-sm" class="center2">
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -157,7 +159,7 @@ function Login() {
                   Forgot your password?
                 </span>
               </div>
-              <p className="mt-2 text-center text-sm text-gray-600">
+              <p className="mt-2 text-center text-sm text-gray-600" class="shift5">
                 Or{" "}
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"

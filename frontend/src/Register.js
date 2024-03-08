@@ -40,12 +40,12 @@ function Register() {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg" class="center">
-          <div >
-            <img
+          <div class="shift">
+            <img 
               class = "fit-picture"
             src="logo1.png" alt = "Billing360 Logo"
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900" class="center">
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Register your account
             </h2>
           </div>
