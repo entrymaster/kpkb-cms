@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import './AddProduct.css'
-const AddItemDialog = ({ isVisible, onCancel }) => {
+const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
     const [itemData, setItemData] = useState({
         userID: 'user',
         itemID: '',
@@ -27,7 +27,7 @@ const AddItemDialog = ({ isVisible, onCancel }) => {
         })
           .then((result) => {
             alert("Product ADDED");
-            // handlePageUpdate();
+            handlePageUpdate();
             //addProductModalSetting();
             onCancel();
           })
