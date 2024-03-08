@@ -38,9 +38,9 @@ function Register() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg" class="center">
-          <div class="center">
+          <div >
             <img
               class = "fit-picture"
             src="logo1.png" alt = "Billing360 Logo"
@@ -50,8 +50,8 @@ function Register() {
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div id="sign-up">
-              <div className="flex gap-4">
+            <div id="sign-up" class="center">
+              <div className="flex gap-4" >
                 <input
                   name="firstname"
                   type="text"
@@ -114,13 +114,13 @@ function Register() {
               </div>
             </div>
             <br></br>
-            <div className="flex items-center justify-between" >
-              <div className="flex items-center" class="center">
+            <div className="flex items-center justify-between" class="center">
+              <div className="flex items-center" id="rememberme">
                 <label
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-900"
                 >
-                  I Agree to the Terms & Conditons
+                    I Agree to the Terms & Conditons
                 </label>
                 <input type="checkbox" id="rememberMe" name="rememberMe"></input>
               </div>
@@ -133,11 +133,12 @@ function Register() {
                 type="submit" 
                 id="btn1"
                 onClick={registerUser}
+                
               >
                 Sign up
               </button>
               <br></br>
-              <p className="mt-2 text-center text-sm text-gray-600">
+              <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
                 Or{" "}
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
