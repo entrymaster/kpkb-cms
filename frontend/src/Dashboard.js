@@ -35,6 +35,9 @@ function Dashboard() {
           <p>
           <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
           </p>
+          <p>
+          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
+          </p>
         </div>
       </div>
     </div>
