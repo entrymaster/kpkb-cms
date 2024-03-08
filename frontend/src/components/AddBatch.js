@@ -22,7 +22,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element }) => {
       const addBatch = () => {
         const { batchID, batchQty, expiryDate } = itemData; // Destructure itemData
       
-        fetch("http://localhost:5000/api/inventory/addBatchList", {
+        fetch("http://localhost:5050/api/inventory/addBatchList", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
