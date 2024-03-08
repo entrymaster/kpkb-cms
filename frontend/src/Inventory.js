@@ -32,6 +32,7 @@ const Inventory = () =>
     setUpdateProduct(selectedProductData);
     toggleUpdateItemDialog ();
   };
+
   const addBatchModalSetting = (selectedProductData) => {
     console.log("Clicked:add batch");
     setAddBatch(selectedProductData._id);
@@ -44,17 +45,29 @@ const Inventory = () =>
   }, [updatePage]);
   const userId = "user";
   const fetchProductsData = () => {
-    fetch('http://localhost:5000/api/inventory/get/${userId}')
+    fetch('http://localhost:5050/api/inventory/get/${userId}')
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
     })
     .catch((err) => console.log(err));
 };
+const fetchSearchData = () => {
+  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setAllProducts(data);
+    })
+    .catch((err) => console.log(err));
+};
+const handleItemName = (e) => {
+  setItemName(e.target.value);
+  fetchSearchData();
+};
 const deleteItem = (id) => {
   // console.log("Product ID: ", id);
   // console.log(`http://localhost:5000/api/inventory/delete/${id}`);
-  fetch(`http://localhost:5000/api/inventory/delete/${id}`)
+  fetch(`http://localhost:5050/api/inventory/delete/${id}`)
     .then((response) => response.json())
     .then((data) => {
       setUpdatePage(!updatePage);

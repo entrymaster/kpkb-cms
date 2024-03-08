@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import "./pending transactions.css";
+import "./Pending transactions.css";
 import { Link } from "react-router-dom";
 
 function PendingTransactions() 
