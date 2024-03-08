@@ -5,12 +5,12 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
         userID: 'user',
         itemID: '',
         itemName: '',
-        salePrice: 0,
-        costPrice: 0,
-        itemGST: 0,
+        salePrice: '',
+        costPrice: '',
+        itemGST: '',
         category: '',
-        discount: 0,
-        quantity: 0,
+        discount: '',
+        quantity: '',
         // batchList: [],
       });
     const handleInputChange = (key, value) => {
@@ -30,8 +30,33 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             handlePageUpdate();
             //addProductModalSetting();
             onCancel();
+            setItemData({ // Resetting fields to initial state
+              userID: 'user',
+              itemID: '',
+              itemName: '',
+              salePrice: '',
+              costPrice: '',
+              itemGST: '',
+              category: '',
+              discount: '',
+              quantity: '',
+            });
           })
           .catch((err) => console.log(err));
+      };
+      const handleCancel = () => {
+        onCancel();
+        setItemData({ // Resetting fields to initial state
+          userID: 'user',
+          itemID: '',
+          itemName: '',
+          salePrice: '',
+          costPrice: '',
+          itemGST: '',
+          category: '',
+          discount: '',
+          quantity: '',
+        });
       };
   return (
     isVisible && (
@@ -77,7 +102,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           </table>
 
           <button type="submit" onClick={addProduct}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
     )

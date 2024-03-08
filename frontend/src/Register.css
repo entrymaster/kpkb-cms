@@ -1,4 +1,4 @@
-* {
+/* * {
     margin:0;
     padding: 0;
 }
@@ -24,9 +24,9 @@ html,body{
     font-size: 60px;
 }
 .input-box {
-    background-color: #cfe8ff;; /* Change this color to your preferred color */
-    border: 1px solid #CCCCCC; /* Add border styles if needed */
-    padding: 8px; /* Adjust padding as needed */
+    background-color: #cfe8ff;
+    border: 1px solid #CCCCCC; 
+    padding: 8px;
     font-size: 16px; 
     width: 300px;
     margin-right: 10px;
@@ -61,4 +61,4 @@ html,body{
 .fit-picture {
     width: 250px;
   }
-  
+   */
