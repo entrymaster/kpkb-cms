@@ -32,6 +32,9 @@ const Inventory = () =>
     setUpdateProduct(selectedProductData);
     toggleUpdateItemDialog ();
   };
+  const handlePageUpdate = () => {
+    setUpdatePage(!updatePage);
+  };
 
   const addBatchModalSetting = (selectedProductData) => {
     console.log("Clicked:add batch");
@@ -124,6 +127,7 @@ const deleteItem = (id) => {
         isVisible={isAddItemDialogVisible}
         
         onCancel={toggleAddItemDialog}
+        handlePageUpdate={handlePageUpdate}
       />
     <UpdateItemDialog
     isVisible={isUpdateItemDialogVisible}
@@ -142,7 +146,7 @@ const deleteItem = (id) => {
         onChange={handleItemName}
         />
         <div className="search-icon">🔍</div>
-        <div className="circle" />
+        {/* <div className="circle" /> */}
       </div>
     </div>
     <table id="inventoryTable">
