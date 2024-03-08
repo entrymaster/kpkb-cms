@@ -31,7 +31,7 @@ const fixedSalt = '$2b$10$abcdefghijklmnopqrstuv';
 
 
 const registerUser = async (req, res) => {
-  const { firstname, lastname, email, password, gstno } = req.body;
+  const { firstname, lastname, email, password, gstno , shopname , shopaddress } = req.body;
 
   try {
     // Check if the user with the given email already exists
