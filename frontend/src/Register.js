@@ -27,7 +27,7 @@ function Register() {
     })
       .then((result) => {
         alert("Successfully Registered, Now Login with your details");
-        navigate('/login');
+        navigate('/');
       })
       .catch((err) => console.log(err));
   };
