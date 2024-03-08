@@ -5,6 +5,7 @@ const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
 const { updateSearchIndex } = require("./models/invoice.model");
 const registerRouter = require("./routes/register.route")
+const loginRouter = require("./routes/login.route")
 //const {User} = require("./models/user.model")
 // const registerRouter = require("./routes/register.route");
 const app = express();
@@ -22,27 +23,11 @@ app.use(cors());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
 app.use("/api/register" , registerRouter);
+app.use("/api/login" , loginRouter);
 
-// Registration API
-// app.post("/api/register", async (req, res) => {
-//   //console.log(req.body)
-//   const registerUser = new User({
-//     firstname: req.body.firstname,
-//     lastname: req.body.lastname,
-//     email: req.body.email,
-//     password: req.body.password,
-//     gstno: req.body.gstno,
-//   });
 
-//   registerUser
-//     .save()
-//     .then((result) => {
-//       res.status(200).send(result);
-//       // alert("Signup Successfull kundan");
-//     })
-//     .catch((err) => console.log("Signup: ", err));
-//   console.log("request: ", req.body);
-// });
+
+
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/", (req, res) => {
