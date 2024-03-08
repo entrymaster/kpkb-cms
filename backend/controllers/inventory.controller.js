@@ -15,7 +15,6 @@ const addProduct = async (req, res) => {
     quantity: req.body.quantity,
     //batchList: req.body.batchList,
   });
-
   addProduct
     .save()
     .then((result) => {
@@ -27,8 +26,8 @@ const addProduct = async (req, res) => {
 };
 const updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await Product.findItemAndUpdate(
-      { _id: req.body.itemID},
+    const updatedProduct = await Product.findByIdAndUpdate(
+      { _id: req.body._id},
       {
         costPrice: req.body.costPrice,
         salePrice: req.body.salePrice,
@@ -50,7 +49,7 @@ const getAllProducts = async (req, res) => {
   }).sort({ itemName: 1 }); 
   // -1 for descending;
   res.json(findAllProducts);
-  console.log(findAllProducts);
+  //console.log(findAllProducts);
 };
 
 const searchProduct = async (req, res) => {
@@ -88,6 +87,7 @@ const addBatchList = async (req, res) => {
       { $push: { batchList: { batchID, batchQty, expiryDate } } },
       { new: true }
     );
+    console.log(Product);
     res.json({ message: 'BatchList added successfully', product: updatedProduct });
   } catch (error) {
     res.status(500).json({ error: 'Error adding batchList', message: error.message });
