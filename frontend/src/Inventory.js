@@ -128,7 +128,7 @@ const deleteItem = (id) => {
     </div>
   </div>
   <div className="top-panel">
-    <div style={{ textAlign: "left", marginLeft: 250, marginTop: 15 }}>
+    <div style={{ textAlign: "left", marginTop: 15 }}>
       <h1 style={{ color: "#fff", fontSize: 40 }}>Inventory</h1>
     </div>
   </div>
