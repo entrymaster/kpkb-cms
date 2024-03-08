@@ -5,15 +5,18 @@ import AddItemDialog from './components/AddProduct';
 import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateBatchDialog from './components/UpdateBatch';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
   const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
+  const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] = useState(false);
   const [isAddBatchDialogVisible, setAddBatchDialogVisibility] = useState(false);
   const [products, setAllProducts] = useState([]);
   const [updatePage, setUpdatePage] = useState(true);
   const [updateProduct, setUpdateProduct] = useState([]);
   const[addBatch,setAddBatch]=useState([]);
+  const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
@@ -23,6 +26,10 @@ const Inventory = () =>
     setUpdateItemDialogVisibility(!isUpdateItemDialogVisible);
     console.log({isUpdateItemDialogVisible});
   };
+  const toggleUpdateBatchDialog = () => {
+    setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
+    console.log({isUpdateBatchDialogVisible});
+  }
   const toggleAddBatchDialog = () => {
     setAddBatchDialogVisibility(!isAddBatchDialogVisible);
     console.log({isAddBatchDialogVisible});
@@ -38,8 +45,14 @@ const Inventory = () =>
 
   const addBatchModalSetting = (selectedProductData) => {
     console.log("Clicked:add batch");
+    console.log(selectedProductData);
     setAddBatch(selectedProductData._id);
     toggleAddBatchDialog ();
+  };
+  const updateBatchModalSetting = (selectedProductData) => {
+    console.log("Clicked:update batch");
+    setUpdateBatch(selectedProductData);
+    toggleUpdateBatchDialog ();
   };
 
   useEffect(() => {
@@ -52,11 +65,13 @@ const Inventory = () =>
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
+      console.log(data);
     })
     .catch((err) => console.log(err));
+
 };
 const fetchSearchData = () => {
-  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
+  fetch('http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}')
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -67,9 +82,9 @@ const handleItemName = (e) => {
   setItemName(e.target.value);
   fetchSearchData();
 };
+
 const deleteItem = (id) => {
-  // console.log("Product ID: ", id);
-  // console.log(`http://localhost:5000/api/inventory/delete/${id}`);
+  console.log("Product ID: ", id);
   fetch(`http://localhost:5050/api/inventory/delete/${id}`)
     .then((response) => response.json())
     .then((data) => {
@@ -140,6 +155,12 @@ const deleteItem = (id) => {
     element={addBatch}
     handlePageUpdate = {handlePageUpdate}
     /> 
+    <UpdateBatchDialog
+    isVisible={isUpdateBatchDialogVisible}
+    onCancel={toggleUpdateBatchDialog}
+    batches={updateBatch.batchList}
+    // id = {updateBatch._id}
+    /> 
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search"
@@ -162,7 +183,7 @@ const deleteItem = (id) => {
           </tr>
         </thead>
         <tbody>
-    {products.map((element, index) => {
+    {products && products.map((element, index) => {
       return (
         <tr key={element._id}>
           <td>{element.itemID}</td>
@@ -184,6 +205,12 @@ const deleteItem = (id) => {
               AddBatch{" "}
             </span>
             <span
+              //className="text-green-700 cursor-pointer"
+              onClick={() => updateBatchModalSetting(element)}
+            >
+              EditBatch{" "}
+            </span>
+            <span
               //className="text-red-600 px-2 cursor-pointer"
               //onClick={() => deleteItem(element._id)}
             >
@@ -198,63 +225,6 @@ const deleteItem = (id) => {
     })}
   </tbody>
       </table>
-    {/* <dialog id="addItemDialog">
-      <form onSubmit="saveItem(); return false;">
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <input type="text" id="item-name" placeholder="Item Name" />
-              </td>
-              <td>
-                <input type="text" id="item-id" placeholder="Item ID" />
-              </td>
-              <td>
-                <input type="text" id="quantity" placeholder="Quantity" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  id="sales-price"
-                  placeholder="Sales Price/unit"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="cost-price"
-                  placeholder="Cost Price/unit"
-                />
-              </td>
-              <td>
-                <input type="text" id="gst" placeholder="GST" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="text" id="category" placeholder="Category" />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="batch-expiry"
-                  placeholder="Batch Expiry"
-                />
-              </td>
-              <td>
-                <input type="text" id="discount" placeholder="Discount (%)" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="submit">Save</button>
-        <button type="button" onClick="hideAddItemDialog()">
-          Cancel
-        </button>
-      </form>
-    </dialog> */}
   </div>
 </div>
   );
