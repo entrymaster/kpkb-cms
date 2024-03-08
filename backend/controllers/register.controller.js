@@ -31,16 +31,6 @@ const fixedSalt = '$2b$10$abcdefghijklmnopqrstuv';
 
 
 const registerUser = async (req, res) => {
-<<<<<<< HEAD
-    const registerUser = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password,
-        gstno: req.body.gstno,
-        shopname: req.body.shopname,
-        shopaddress: req.body.shopaddress,
-=======
   const { firstname, lastname, email, password, gstno } = req.body;
 
   try {
@@ -63,7 +53,8 @@ const registerUser = async (req, res) => {
       email,
       password, // Store the hashed password
       gstno,
->>>>>>> 7f5efe97dcb071dc1df5b06eb01cfc9d577c4a4c
+      shopname,
+      shopaddress,
     });
     console.log(password)
     // Save the user to the database

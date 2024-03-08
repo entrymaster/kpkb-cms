@@ -183,7 +183,7 @@ function Register() {
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Already Have an Account? <Link to="/login">Sign in</Link>
+                  Already Have an Account? <Link to="/">Sign in</Link>
                 </span>
               </p>
             </div>
