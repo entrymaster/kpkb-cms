@@ -50,7 +50,7 @@ html,body{
     background-color: rgb(44, 44, 131);
     /* Adjust the margin to position the button slightly to the left */
 
-    margin-left  140px; /* Adjust this value to move the button to the left */
+    margin-left : 140px; /* Adjust this value to move the button to the left */
     /* Optional: Adjust the margin-top to position the button vertically */
     margin-top: 0px; /* You can adjust this value as needed */
 }

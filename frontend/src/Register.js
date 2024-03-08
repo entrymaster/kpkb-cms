@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import "./Register.css";
+import "./Register.css";
 
 function Register() {
   const [form, setForm] = useState({
@@ -45,7 +45,7 @@ function Register() {
               class = "fit-picture"
             src="logo1.png" alt = "Billing360 Logo"
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900" class="center">
               Register your account
             </h2>
           </div>
