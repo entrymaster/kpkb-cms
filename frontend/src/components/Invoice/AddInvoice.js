@@ -6,7 +6,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
-  const [subTotal, setSubTotal] = useState(0);
   const [totalChange, setTotalChange] = useState(false);
   
   const handleInputChange = async(event, index, fieldName) => {
@@ -22,7 +21,6 @@ const AddNewInvoice = () => {
       const gst = parseFloat(updatedItemList[index].gst);
       const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
       updatedItemList[index].amount = amount;
-      // invoiceData.totalAmount+=amount 
     }
   
     setInvoiceData({
@@ -34,42 +32,23 @@ const AddNewInvoice = () => {
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
-    // const subTotal = async() => {
-    //   const arr = invoiceData.itemList;
-    //   var subTotal = 0;
-    //   for(var i=0; i<arr.length; i++){
-    //     subTotal = subTotal + arr[i].amount;
-    //     setSubTotal(subTotal);
-    //   }
-    //   invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    // }
-    // subTotal();
-
-    // if (fieldName === 'discount'){
-    //   const disc = parseFloat(invoiceData.discount);
-    //   const subt = parseFloat(invoiceData.totalAmount);
-    //   const total = subt - subt*disc/100;
-    //   invoiceData.totalAmount = subt;
-    // }
     setInvoiceData((prevData) => ({
       ...prevData,
       [fieldName] : value,
     }));
     setTotalChange(true);
-  }
+  };
+
   useEffect(()=>{
     const arr = invoiceData.itemList;
-        var subTotal = 0;
-        for(var i=0; i<arr.length; i++){
-          subTotal = subTotal + arr[i].amount;
-        }
-        invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    // setInvoiceData((prevData) => ({
-    //   ...prevData,
-    //   totalAmount : prevData.totalAmount - prevData.totalAmount*prevData.discount/100,
-    // }));
+    var subTotal = 0;
+    for(var i=0; i<arr.length; i++){
+      subTotal = subTotal + arr[i].amount;
+    }
+    invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
     setTotalChange(false);
   }, [totalChange])
+
   const handleAddField = (e) => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
@@ -85,10 +64,7 @@ const AddNewInvoice = () => {
     });
   };
 
-
-
   const addInvoice = () => {
-
       fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
@@ -134,34 +110,6 @@ const AddNewInvoice = () => {
       // }
       
     },[incInvoiceID, invoiceData.userID]);
-    
-    // useEffect(() => {
-    //   const subTotal = () => {
-    //     const arr = invoiceData.itemList;
-    //     var subTotal = 0;
-    //     for(var i=0; i<arr.length; i++){
-    //       subTotal = subTotal + arr[i].amount;
-    //       setSubTotal(subTotal);
-    //     }
-    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    //   }
-    //   subTotal();
-    // })
-    // const getTotal = async() => {
-    //   const arr = invoiceData.itemList;
-    //     var subTotal = 0;
-    //     for(var i=0; i<arr.length; i++){
-    //       subTotal = subTotal + arr[i].amount;
-    //       setSubTotal(subTotal);
-    //     }
-    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    // }
-    // useEffect(() => {
-    //   const total = () => {
-    //     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    //   }
-    //   total();
-    // })
 
     return (
       <>
@@ -213,7 +161,6 @@ const AddNewInvoice = () => {
       </tbody>
     </table>
       <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-      {/* <button id="total-button" type = "button" onClick={getTotal}> <strong> Calculate Total </strong> </button> */}
       <button id="generate-bill-button" type = "button" onClick={addInvoice}> <strong> Generate Bill </strong> </button>
       <table className='totalAmt'>
         <tr>
