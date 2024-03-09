@@ -27,4 +27,29 @@
     padding: 10px 20px;
     /* margin-right: 50px; */
     margin-left: 200px;
-} 
+} .confirmation-dialog {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    width:400px;
+    height:150px
+  }
+  
+  .confirmation-dialog p {
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-dialog button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  
+

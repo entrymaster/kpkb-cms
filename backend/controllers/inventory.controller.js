@@ -158,6 +158,29 @@ const deleteProduct =  async (req, res) => {
   );
   res.json({ deleteProduct});
 };
+const deleteBatch = async (req, res) => {
+  const { id, Batchid } = req.params; // Use _id instead of id
+  console.log(id);
+  console.log(Batchid);
+
+  try {
+    const updatedInventory = await Product.findOneAndUpdate(
+      { _id: id }, // Use _id here
+      { $pull: { batchList: { _id: Batchid } } },
+      { new: true }
+    );
+
+    if (!updatedInventory) {
+      return res.status(404).json({ error: 'Inventory not found' });
+    }
+
+    res.json(updatedInventory);
+  } catch (error) {
+    console.error('Error deleting batch:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 const addBatchList = async (req, res) => {
   try {
     const { batchID, batchQty, expiryDate } = req.body;
@@ -274,5 +297,6 @@ module.exports={
   deleteProduct,
   addBatchList,
   updateBatch,
+  deleteBatch 
   //updateItemQuantityInInvoice
    };

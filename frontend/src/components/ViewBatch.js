@@ -7,40 +7,58 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
   const productId = id;
   const [updateBatch, setUpdateBatch] = useState([]);
-  const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] =
-    useState(false);
+  const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] = useState(false);
   const [updatePage, setUpdatePage] = useState(true);
+  const [batchList, setBatchList] = useState(batches);
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
+  const [batchIdToDelete, setBatchIdToDelete] = useState(null);
+
   useEffect(() => {
     setBatchList(batches);
   }, [batches]);
 
-  //     const [batchList, setBatchList] = useState({
-  //         batchList:[{ batchID:'',batchQty:'',expiryDate:'', _id:''}],
-
-  // });
   const handlePageUpdate = () => {
     setUpdatePage(!updatePage);
   };
 
-  const [batchList, setBatchList] = useState(batches);
-  console.log(batches);
+  const deleteBatch = (Batchid) => {
+    console.log("Batch ID: ", Batchid);
+    setBatchIdToDelete(Batchid);
+    setConfirmationOpen(true);
+  
+  };
+
+  const confirmDelete = () => {
+    // Call the deleteBatch function when the user confirms
+    fetch(`http://localhost:5050/api/inventory/deleteBatch/${id}/${batchIdToDelete}`, {
+      method: 'GET', // or 'DELETE' depending on your server implementation
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUpdatePage(!updatePage);
+        setConfirmationOpen(false);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
   const handleInputChange = (key, value) => {
     setBatchList({ ...batchList, [key]: value });
-    console.log(batchList);
   };
+
   const toggleUpdateBatchDialog = () => {
     setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
-    console.log({ isUpdateBatchDialogVisible });
   };
+  
+
 
   const updateBatchModalSetting = (selectedProductData) => {
     console.log("Clicked: edit");
     setUpdateBatch(selectedProductData);
     toggleUpdateBatchDialog();
   };
-  useEffect(() => {
-    console.log("Updated itemData:", batchList);
-  }, [batchList]);
+
   return (
     isVisible && (
       <dialog open id="addItemDialog">
@@ -53,33 +71,28 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
             isVisible={isUpdateBatchDialogVisible}
             onCancel={toggleUpdateBatchDialog}
             element={updateBatch}
-            id = {productId}
+            id={productId}
           />
+          {isConfirmationOpen && (
+            
+            <div className="confirmation-dialog">
+              <p>Are you sure you want to delete this batch?</p>
+              <button onClick={confirmDelete}
+             style={{ marginLeft: '20px' }} >Yes</button>
+              <button onClick={() => setConfirmationOpen(false)}>No</button>
+            </div>
+          )}
+
           <table>
             <thead>
-              <tr class="headers">
+              <tr className="headers">
                 <th>BATCH ID</th>
-                {/* <th>ITEM NAME</th> */}
                 <th>BATCH QUANTITY</th>
                 <th>BATCH EXPIRY</th>
-
                 <th>MORE ACTIONS</th>
               </tr>
             </thead>
             <tbody>
-              {/* <tr>
-              <td><input type="text" id="item-name" placeholder="batchID" value={itemData.batchID} name="batchID" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              } /></td>
-              <td><input type="text" id="item-id" placeholder="batchQty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              } /></td>
-            </tr>
-            <tr>
-              <td><input type="date" id="expiryDate" placeholder="expiryDate" value={itemData.expiryDate} name="expiryDate" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-            </tr> */}
               {batchList &&
                 batchList.map((element, index) => {
                   return (
@@ -87,34 +100,16 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
                       <td>{element.batchID}</td>
                       <td>{element.batchQty}</td>
                       <td>{element.expiryDate}</td>
-                      {/* <td>{element.costPrice}</td>
-          <td>{element.quantity }</td> */}
                       <td>
-                        {/* <span
-              //className="text-green-700 cursor-pointer"
-              //onClick={() => updateProductModalSetting(element)}
-            >
-              Edit{" "}
-            </span> */}
-                        {/* <span
-              //className="text-green-700 cursor-pointer"
-              //onClick={() => addBatchModalSetting(element)}
-            >
-              AddBatch{" "}
-            </span> */}
                         <span
-                        //className="text-green-700 cursor-pointer"
-                        onClick={() => updateBatchModalSetting(element)}
+                          onClick={() => updateBatchModalSetting(element)}
                         >
                           EditBatch{" "}
                         </span>
-                        <span
-                        //className="text-red-600 px-2 cursor-pointer"
-                        //onClick={() => deleteItem(element._id)}
-                        >
+                        <span>
                           <DeleteIcon
                             style={{ color: "red", cursor: "pointer" }}
-                            //onClick={() => deleteItem(element._id)}
+                            onClick={() => deleteBatch(element._id)}
                           />
                         </span>
                       </td>
@@ -124,7 +119,6 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
             </tbody>
           </table>
 
-          {/* <button type="submit" onClick={addBatch}>Save</button> */}
           <button type="button" onClick={onCancel}>
             Cancel
           </button>
