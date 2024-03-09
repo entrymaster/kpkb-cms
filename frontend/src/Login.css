@@ -5,6 +5,40 @@
 html,body{
     height: 100%;
 }
+.left-section {
+    flex: 1;
+    width: 500px;
+    height: 100%;
+    margin: 0% auto 0;
+    background-color: #F0F8FF;
+}
+.right-section {
+    flex: 1;
+    text-align: center;
+    height: 100%;
+    width: 700px;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+    background-color: #F0F8FF;
+    padding: 20px;
+    margin: 0% auto 0;
+    text-align: center
+}
+
+.shift{
+    margin-left : 220px;
+}
+.shift2{
+    margin-left : 140px;
+}
+.shift3{
+    margin-left : 220px;
+}
+.shift4{
+    margin-left : 170px;
+}
+.shift5{
+    margin-left : 30px;
+}
 .center2 {
     margin: auto;
     width: 50%;
@@ -88,3 +122,6 @@ html,body{
     display: flex;
     height: 100vh; /* 100% of the viewport height */
 }
+.fit-picture {
+    width: 250px;
+  }

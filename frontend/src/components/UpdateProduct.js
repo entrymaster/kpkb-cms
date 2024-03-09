@@ -27,6 +27,19 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
      quantity: '',
       // batchList: [],
     });
+    const resetFields = () => {
+        setItemData({
+          _id: '',
+          itemID: '',
+          itemName: '',
+          salePrice: '',
+          costPrice: '',
+          itemGST: '',
+          category: '',
+          discount: '',
+          quantity: '',
+        });
+      };
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
@@ -41,11 +54,16 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
         })
           .then((result) => {
             alert("Product ADDED");
+            resetFields();
             //handlePageUpdate();
             //addProductModalSetting();
             onCancel();
           })
           .catch((err) => console.log(err));
+      };
+      const handleCancel = () => {
+        onCancel();
+        resetFields();
       };
   return (
     isVisible && (
@@ -91,7 +109,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
           </table>
 
           <button type="submit" onClick={ updateProduct}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
     )

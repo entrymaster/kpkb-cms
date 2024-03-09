@@ -1,93 +1,48 @@
-import React, { useState }  from 'react';
+import React, {useState} from 'react';
 import "./Pending transactions.css";
+import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
+import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
 
-function PendingTransactions() 
-{  const [isAddCreditDialogOpen1, setIsAddCreditDialogOpen1] = useState(false);
-  const [isAddCreditDialogOpen2, setIsAddCreditDialogOpen2] = useState(false);
-  const [isCustomerDialogOpen, setIsCustomerDialogOpen] = useState(false);
-  const [selectedCustomerType, setSelectedCustomerType] = useState('new'); // Initial customer type
-  const [tableData, setTableData] = useState([
-    // Initial data for existing rows
-    { name: 'Ramlal', phone: '900XXXXXXX', amount: 5000 },
-    { name: 'Shymlal', phone: '80XXXXXXXX', amount: 50000 },
-  ]);
-  
-  const showCustomerDialog = () => {
-    setIsAddCreditDialogOpen1(false);
-    setIsAddCreditDialogOpen2(false);
+const PendingTransactions = () => {
 
+  const [activeTab, setActiveTab] = useState('credit-tab');
 
-    setIsCustomerDialogOpen(true);
-  };
-  const showAddCreditDialog1 = () => {
-      setIsCustomerDialogOpen(false);
-
-    setIsAddCreditDialogOpen1(true);
-  };
-  const showAddCreditDialog2 = () => {
-    setIsCustomerDialogOpen(false);
-
-  setIsAddCreditDialogOpen2(true);
-};
-  const hideCustomerDialog = () => {
-    setIsCustomerDialogOpen(false);
-  };
-  const hideAddCreditDialog1 = () => {
-    setIsAddCreditDialogOpen1(false);
-  };
-  const hideAddCreditDialog2 = () => {
-    setIsAddCreditDialogOpen2(false);
-  };
-   const handleCustomerTypeChange = (event) => {
-    setSelectedCustomerType(event.target.value);
+  const openTab = (tabName) => {
+    setActiveTab(tabName);
   };
 
-  // const saveCredit = (event) => {
-  //   event.preventDefault(); // Prevent default form submission
 
-  //   // Get the input values from the form (same logic as before)
-  //   var customerName = document.getElementById("customerName").value;
-  //   var phoneNo = document.getElementById("phoneNo").value;
-  //   var amount = document.getElementById("amount").value;
-  //   var addBill = document.getElementById("addBill").value;
-  
-  //   // Get the table body
-  //   var tableBody = document.getElementById("credit-table-body");
-  
-  //   // Create a new row
-  //   var newRow = tableBody.insertRow();
-  
-  //   // Create cells for the new row
-  //   var cell1 = newRow.insertCell(0);
-  //   var cell2 = newRow.insertCell(1);
-  //   var cell3 = newRow.insertCell(2);
-  //   var cell4 = newRow.insertCell(3);
-  
-  //   // Add content to the cells
-  //   cell1.textContent = customerName;
-  //   cell2.textContent = phoneNo;
-  //   cell3.textContent = amount;
-  //   cell4.textContent = addBill;
+  const [isAddNewDialogOpen, setIsAddNewDialogOpen] = useState(false);
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [isSelectTypeDialogOpen, setSelectTypeDialogOpen] = useState(false);
 
-  //   // Close the dialog after saving
-  //   hideAddCreditDialog();
-  // };
-  const saveCredit = (customerName, phoneNo,Email, InvoiceID ,amount) => {
-    // event.preventDefault(); // Assuming this is passed from the form
-
-    const newTableData = [...tableData, {
-      name: customerName,
-      phone: phoneNo,
-      // email:Email,
-      // InvoiceID:InvoiceID,
-      amount: amount,
-
-    }];
-
-    setTableData(newTableData);
-   // hideAddCreditDialog();
+  const showSelectTypeDialog = () => {
+    setIsAddNewDialogOpen(false);
+    setIsUpdateDialogOpen(false);
+    setSelectTypeDialogOpen(true);
   };
+  const showAddNewDialog = () => {
+    setSelectTypeDialogOpen(false);
+    setIsAddNewDialogOpen(true);
+  };
+  const showUpdateDialog = () => {
+    setSelectTypeDialogOpen(false);
+    setIsUpdateDialogOpen(true);
+  };
+  const hideSelectTypeDialog = () => {
+    setSelectTypeDialogOpen(false);
+  };
+  const hideAddNewDialog = () => {
+    setIsAddNewDialogOpen(false);
+  };
+  const hideUpdateDialog = () => {
+    setIsUpdateDialogOpen(false);
+  };
+
+
+
     return (
         <div className="PendingTrans">
   <div className="container">
@@ -138,154 +93,71 @@ function PendingTransactions()
       </div>
     </div>
   </div>
+
   <div className="credit-debit-heading">
-    <div className="credit-debit-left">
+    <button className={activeTab === 'credit-tab' ? 'active-tablinks' : 'tablinks'} onClick={() => openTab('credit-tab')}>
       <h2>Credit</h2>
-    </div>
-    <div className="credit-debit-right">
+    </button>
+    <button className={activeTab === 'debit-tab' ? 'active-tablinks' : 'tablinks'} onClick={() => openTab('debit-tab')}>
       <h2>Debit</h2>
-    </div>
+    </button>
   </div>
+
+  <div id="credit-tab" className={activeTab === 'credit-tab' ? 'tabcontent-active' : 'tabcontent'}>
   <table>
     <thead>
       <tr className="headers">
         <th>Customer Name/ID</th>
         <th>Phone No.</th>
         <th>Amount</th>
-        <th>
-        <button onClick={showCustomerDialog}>Add New Credit</button>
+        <th id="add-credit-button" onClick={showSelectTypeDialog}>
+              Add New Credit
         </th>
       </tr>
     </thead>
-    <tbody id="credit-table-body">
-      {/* <tr className="First">
-        <td>Ramlal</td>
-        <td>900XXXXXXX</td>
-        <td>5000</td>
-        <td>View Bills</td>
-      </tr>
-      <tr className="Second">
-        <td>Shymlal</td>
-        <td>80XXXXXXXX</td>
-        <td>50000</td>
-        <td>View Bills</td>
-      </tr>
-      Add more rows as needed */}
-      {tableData.map((row) => (
-            <tr key={row.name}>
-              <td>{row.name}</td>
-              <td>{row.phone}</td>
-              {/* <td>{row.email}</td>
-              <td>{row.InvoiceID}</td> */}
-              <td>{row.amount}</td>
-
-              <td>View Bills</td>
-            </tr>
-          ))}
-    </tbody>
   </table>
-  {/* <dialog id="addCreditDialog" open={isAddCreditDialogOpen}>
-    <form onSubmit="saveCredit(); return false;">
-    <form onSubmit={() => saveCredit(document.getElementById("customerName/Id").value, document.getElementById("phoneNo").value, document.getElementById("Email").value, document.getElementById("InvoiceID").value, document.getElementById("amount").value)}>
-      <label htmlFor="customerName/Id">Customer Name/ID:</label>
-      <input type="text" id="customerName/Id" required="" />
-      <br />
-      <label htmlFor="phoneNo">Phone No.:</label>
-      <input type="text" id="phoneNo" required="" />
-      <br />
-      <label htmlFor="Email">Email:</label>
-      <input type="text" id="Email" required="" />
-      <br />
-      <label htmlFor="InvoiceID">Invoice Id:</label>
-      <input type="text" id="InvoiceID" required="" />
-      <br />
-      <label htmlFor="amount">Amount:</label>
-      <input type="text" id="amount" required="" />
-      <br />
-      
-      <button type="submit">Save</button>
-      <button type="button" onClick={hideAddCreditDialog}>
-      Cancel
-     </button>
-    </form>
+  </div>
 
-  </dialog> */}
+  <div id="debit-tab" className={activeTab === 'debit-tab' ? 'tabcontent-active' : 'tabcontent'}>
+  <table>
+    <thead>
+      <tr className="headers">
+        <th>Supplier Name/ID</th>
+        <th>Phone No.</th>
+        <th>Amount</th>
+        <th id="add-credit-button" onClick={showSelectTypeDialog}>
+              Add New Debit
+        </th>
+      </tr>
+    </thead>
+  </table>
+  </div>
 
-<dialog id="addCustomerDialog" open={isCustomerDialogOpen}>
-{/* <label>
-              Customer Type:
-              <select value={selectedCustomerType} onChange={handleCustomerTypeChange}>
-                <option value="new">New Customer</option>
-                <option value="existing">Existing Customer</option>
-              </select>
-            </label> */}
-            <button onClick={showAddCreditDialog1}>Add New Entry</button> <br/>
+  <Modal
+        isOpen={isSelectTypeDialogOpen}
+        contentLabel="Select Type Dialog"
+        shouldCloseOnOverlayClick={true}
+        ariaHideApp={false}
+      >
+        <button onClick={showAddNewDialog}>
+          Add New Entry
+        </button>
+       <br/>
+        <button onClick={showUpdateDialog}>
+          Update Entry
+        </button>
+       <br/>
+        <button onClick={hideSelectTypeDialog}>Close</button>
+    </Modal>
 
-            <button onClick={showAddCreditDialog2}>Update Existing Entry</button>
-            </dialog>
-            
-<dialog id="addCreditDialog1" open={isAddCreditDialogOpen1}>
+    <AddNewEntry
+        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+       /> 
 
-    <form onSubmit={() => saveCredit(document.getElementById("customerName/Id").value, document.getElementById("phoneNo").value, document.getElementById("Email").value, document.getElementById("InvoiceID").value, document.getElementById("amount").value)}>
-            <h2>Add Credit</h2> {/* Heading */}
-            {/* Render fields for new customer */}
-              <>
-                <label htmlFor="customerName">Customer Name/ID:</label>
-                <input type="text" id="customerName" required="" />
-                <br />
-                <label htmlFor="phoneNo">Phone No.:</label>
-                <input type="text" id="phoneNo" required="" />
-                <br />
-                <label htmlFor="Email">Email.:</label>
-                <input type="text" id="Email" required="" />
-                <br />
-                <label htmlFor="InvoiceID">Invoice Id:</label>
-      <input type="text" id="InvoiceID" required="" />
-      <br />
-                <label htmlFor="amount">Amount:</label>
-                <input type="text" id="amount" required="" />
-                <br />
-
-              </>
-              
-            <button type="button" onClick={hideAddCreditDialog1}>
-              Cancel
-            </button>
-            <button type="submit"  disabled={false}> {/* Button disabled by default form submission prevention */}
-              {selectedCustomerType === 'new' ? 'Save' : 'Save'}
-            </button>
-          </form>
-        </dialog>
-
-              <dialog id="addCreditDialog2" open={isAddCreditDialogOpen2}>
-
-<form onSubmit={() => saveCredit(document.getElementById("customerName/Id").value, document.getElementById("phoneNo").value, document.getElementById("Email").value, document.getElementById("InvoiceID").value, document.getElementById("amount").value)}>
-        <h2>Add Credit</h2> {/* Heading */}
-               <>
-                <label htmlFor="customerName">Customer Name/ID:</label>
-                <input type="text" id="customerName" required="" />
-                <br />
-               <label htmlFor="InvoiceID">Invoice Id:</label>
-     <input type="text" id="InvoiceID" required="" />
-     <br />
-               <label htmlFor="amount">Amount:</label>
-               <input type="text" id="amount" required="" />
-               <br />
-
-             </>
-
-            <button type="button" onClick={hideAddCreditDialog2}>
-              Cancel
-            </button>
-            <button type="submit"  disabled={false}> {/* Button disabled by default form submission prevention */}
-             Update
-            </button>
-          </form>
-        </dialog>
-     
-  
+    <UpdateEntry
+        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+       /> 
 </div>
-
     )
 }
 export default PendingTransactions;

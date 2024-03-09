@@ -5,11 +5,14 @@ import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
+import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
 import Register from "./Register.js"
 import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
+import ProtectedWrapper from "./ProtectedWrapper";
+// import Layout from "./Layout.js";
 import "./App.css";
 import {
     BrowserRouter as Router,
@@ -23,13 +26,13 @@ const App = () => {
     const [user, setUser] = useState("");
     const [loader, setLoader] = useState(true);
     let myLoginUser = JSON.parse(localStorage.getItem("user"));
-    // console.log("USER: ",user)
+    console.log("USER: ",user)
   
     useEffect(() => {
       if (myLoginUser) {
         setUser(myLoginUser._id);
         setLoader(false);
-        // console.log("inside effect", myLoginUser)
+        console.log("inside effect", myLoginUser)
       } else {
         setUser("");
         setLoader(false);
@@ -51,33 +54,35 @@ const App = () => {
   
     let value = { user, signin, signout };
   
-    // if (loader)
-    //   return (
-    //     <div
-    //       style={{
-    //         flex: 1,
-    //         display: "flex",
-    //         justifyContent: "center",
-    //         alignItems: "center",
-    //       }}
-    //     >
-    //       <h1>LOADING...</h1>
-    //     </div>
-    //   );
+    if (loader)
+      return (
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <h1>LOADING...</h1>
+        </div>
+      );
     return (
-        //<AuthContext.Provider value = {value}>
+        <AuthContext.Provider value = {value}>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Dashboard/>}/>
-                    <Route path="/inventory" element={<Inventory/>}/>
-                    <Route path="/invoice" element={<Invoice/>}/>
-                    <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
-                    <Route path="/contactUs" element={<ContactUs/>}/>
+                    <Route path="/" element={<Login/>} />
                     <Route path="/register" element={<Register />} /> 
-                    <Route path="/login" element={<Login/>} />
+                      <Route path="/dashboard" element={<Dashboard/>}/> 
+                      <Route path="/inventory" element={<Inventory/>}/>
+                      <Route path="/invoice" element={<Invoice/>}/>
+                      <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
+                      <Route path="/contactUs" element={<ContactUs/>}/>
+
+                      <Route path="/pdf-viewer" element={<InvoicePDF/>} />
                 </Routes>
             </Router>
-        //</AuthContext.Provider>
+        </AuthContext.Provider>
     )
 }
 
