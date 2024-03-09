@@ -237,46 +237,62 @@ const addBatchList = async (req, res) => {
 };*/
 /*const updateItemQuantityInInvoice = async (req, res) => {
   try {
-    const { itemName, requestedQuantity } = req.body;
+    const itemsToUpdate = req.body; // Assuming req.body is an array of items [{ itemName, requestedQuantity }, ...]
 
-    const inventoryItem = await Inventory.findOne({ 'itemName': itemName });
+    // Fetch inventory items for all requested items
+    const inventoryItems = await Promise.all(
+      itemsToUpdate.map(async ({ itemName }) => {
+        const item = await Inventory.findOne({ 'itemName': itemName });
+        return item;
+      })
+    );
 
-    if (!inventoryItem) {
-      return res.status(404).json({ error: 'Inventory item not found' });
-    }
+    for (let i = 0; i < itemsToUpdate.length; i++) {
+      const { itemName, requestedQuantity } = itemsToUpdate[i];
+      const inventoryItem = inventoryItems[i];
 
-    for (let batch of inventory.item.batchList) {
-      const availableQuantity = batchList.batchQty;
-
-      // If the requested quantity is less than or equal to the available quantity in the current batch
-      if (remainingQuantity <= availableQuantity) {
-        batchList.batchQty -= remainingQuantity;
-        remainingQuantity = 0; // Requested quantity fulfilled
-      } else {
-        // Move to the next batch
-        batchList.batchQty = 0;
-        remainingQuantity -= availableQuantity;
+      if (!inventoryItem) {
+        return res.status(404).json({ error: `Inventory item not found for ${itemName}` });
       }
 
-      // If the updated quantity is 0, remove the batch from the batchList
-      if (batchList.batchQty === 0) {
-        inventory.items[itemIndex].batchList = inventory.items[itemIndex].batchList.filter(b => b.expiry !== batch.expiry);
+      let remainingQuantity = requestedQuantity;
+
+      for (let batchList of inventoryItem.batchList) {
+        const availableQuantity = batchList.batchQty;
+
+        // If the requested quantity is less than or equal to the available quantity in the current batch
+        if (remainingQuantity <= availableQuantity) {
+          batch.batchQty -= remainingQuantity;
+          remainingQuantity = 0; // Requested quantity fulfilled
+        } else {
+          // Move to the next batch
+          batchList.batchQty = 0;
+          remainingQuantity -= availableQuantity;
+        }
+
+        // If the updated quantity is 0, remove the batch from the batchList
+        if (batchList.batchQty === 0) {
+          inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batch.expiry);
+        }
+
+        if (remainingQuantity === 0) {
+          break; // Exit the loop as the quantity has been updated for the current item
+        }
       }
 
-      if (remainingQuantity === 0) {
-        break; // Exit the loop as the quantity has been updated
+      if (remainingQuantity > 0) {
+        return res.status(400).json({ error: `Insufficient quantity in batchList for ${itemName}. Requested ${requestedQuantity}, available ${requestedQuantity - remainingQuantity}.` });
       }
     }
 
-    if (remainingQuantity > 0) {
-      return res.status(400).json({ error: `Insufficient quantity in batchList for ${itemName}. Requested ${requestedQuantity}, available ${requestedQuantity - remainingQuantity}.` });
-    }
+    const updatedInventoryItems = await Promise.all(inventoryItems.map(item => item.save()));
 
-    const updatedInvoice = await invoice.save();
+    // Assuming you have an invoice model and want to save it
+    // const updatedInvoice = await invoice.save();
 
-    res.json({ message: 'Item quantity in the inventory updated successfully', inventory: updatedInventory });
+    res.json({ message: 'Item quantities in the inventory updated successfully', inventory: updatedInventoryItems });
   } catch (error) {
-    console.error('Error updating item quantity in invoice:', error);
+    console.error('Error updating item quantities in invoice:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };*/
@@ -289,6 +305,6 @@ module.exports={
   deleteProduct,
   addBatchList,
   updateBatch,
-  deleteBatch 
+  deleteBatch, 
   //updateItemQuantityInInvoice
    };
