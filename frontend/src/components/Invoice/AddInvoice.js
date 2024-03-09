@@ -17,26 +17,12 @@ const AddNewInvoice = () => {
     const { value } = event.target;
       console.log(value)
       const updatedItemList = [...invoiceData.itemList];
-      // updatedItemList[index] = {
-      //   ...updatedItemList[index]
-      // };
       console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
         updatedItemList[index].rate=value['salePrice']
         updatedItemList[index].gst=value['itemGST']
-
-        // updatedItemList[index].amount = amount;
       }
-    // const searchItem = () => {
-    //   fetch(`http://localhost:5050/api/inventory/search/${userId}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setCurrItem(data);
-    //   })
-    //   console.log(currItem)
-    //   .catch((err) => console.log(err));
-    // }
     if (fieldName === 'quantity') {
       const quantity = parseFloat(value)
       const rate = parseFloat(updatedItemList[index].rate);
@@ -164,17 +150,8 @@ const AddNewInvoice = () => {
       .then((data) => {
         setAllItems(data);
       })
-      // .then(()=>{
-      //   console.log(items)
-      // })
       .catch((err) => console.log(err));
     };
-    // useEffect(()=>{
-    //   console.log("items");
-    //   console.log(items);
-    // },[items])
-
-
 
     return (
       <>
