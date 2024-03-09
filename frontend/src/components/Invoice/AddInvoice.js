@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import './AddInvoice.css';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchableDropdown from './SearchableDropdown';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
@@ -181,10 +182,21 @@ const AddNewInvoice = () => {
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
-          <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/></td>
+          <td>
+            {/* <input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/> */}
+            <SearchableDropdown
+              options={items} // Pass the list of items as options
+              label="itemName" // Specify the label for each option
+              id={`dropdown-${index}`} // Provide a unique id for each dropdown
+              selectedVal={item.itemName} // Pass the selected item name as the selected value
+              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} // Function to handle dropdown selection
+            />
+          </td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
-          <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
-          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
+          {/* <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
+          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td> */}
+          <td>{item.rate}</td>
+          <td>{item.gst}</td>
           {/* <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td> */}
           <td>{item.amount}</td>
 
