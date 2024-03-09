@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-pdf/renderer": "^3.3.8"
+    "@react-pdf/renderer": "^3.3.8",
+    "react-modal": "^3.16.1"
   }
 }

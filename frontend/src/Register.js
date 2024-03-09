@@ -1,9 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
-  //va confirmpassword = ""
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
@@ -18,7 +17,10 @@ function Register() {
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const maxLength = 25; // Maximum allowed length
+    const name = e.target.name;
+    const value = e.target.value.slice(0, maxLength); // Truncate the input if it exceeds maxLength
+    setForm({ ...form, [name]: value });
   };
 
   const registerUser = () => {
@@ -27,7 +29,14 @@ function Register() {
       alert("Password and Confirm Password do not match");
       return; // Exit function if passwords don't match
     }
-  
+    if (!form.email.includes("@")) {
+      alert("Invalid Email, doesn't include @");
+      return; // Exit function if email is invalid
+    }
+    if (form.password.length < 6) {
+      alert("Password should be at least 6 characters");
+      return; // Exit function if password is too short
+    }
     fetch("http://localhost:5050/api/register/reg", {
       method: "POST",
       headers: {
@@ -37,7 +46,7 @@ function Register() {
     })
       .then((result) => {
         alert("Successfully Registered, Now Login with your details");
-        navigate('/');
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
@@ -48,20 +57,21 @@ function Register() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
-      <div id="sign-up">
-        <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
-          <div>
-            <img 
-              class = "fit-picture"
-            src="logo1.png" alt = "Billing360 Logo"
-            />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Register your account
-            </h2>
-          </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div className="flex gap-4" >
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
+        <div id="sign-up">
+          <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
+            <div>
+              <img
+                className="fit-picture"
+                src="logo1.png"
+                alt="Billing360 Logo"
+              />
+              <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                Register your account
+              </h2>
+            </div>
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+              <div className="flex gap-4">
                 <input
                   name="firstname"
                   type="text"
@@ -71,7 +81,7 @@ function Register() {
                   value={form.firstname}
                   onChange={handleInputChange}
                 />
-                
+
                 <input
                   name="lastname"
                   type="text"
@@ -97,7 +107,7 @@ function Register() {
                 />
                 <br></br>
                 <br></br>
-              <input
+                <input
                   name="shopname"
                   type="text"
                   required
@@ -105,8 +115,8 @@ function Register() {
                   placeholder="Shop Name"
                   value={form.shopname}
                   onChange={handleInputChange}
-                /> 
-              <input
+                />
+                <input
                   name="shopaddress"
                   type="text"
                   required
@@ -114,10 +124,10 @@ function Register() {
                   placeholder="Shop Address"
                   value={form.shopaddress}
                   onChange={handleInputChange}
-                />  
+                />
                 <br></br>
                 <br></br>
-              <input
+                <input
                   name="gstno"
                   type="text"
                   autoComplete="off"
@@ -129,7 +139,7 @@ function Register() {
                 />
               </div>
               <br></br>
-              <div>   
+              <div>
                 <input
                   id="password"
                   name="password"
@@ -153,46 +163,43 @@ function Register() {
                   onChange={handleInputChange}
                 />
               </div>
-            <br></br>
-            <div className="flex items-center justify-between" class="center">
-              <div className="flex items-center" id="rememberme">
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                    I Agree to the Terms & Conditons
-                </label>
-                <input type="checkbox" id="rememberMe" name="rememberMe"></input>
-              </div>
-
-              
-            </div>  
-           <br></br>
-            <div class="center">
-              <button 
-                type="submit" 
-                id="btn1"
-                onClick={registerUser}
-                
-              >
-                Sign up
-              </button>
               <br></br>
-              <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
-                Or{" "}
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+              <div className="flex items-center justify-between" class="center">
+                <div className="flex items-center" id="rememberme">
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-900"
+                  >
+                    I Agree to the Terms & Conditons
+                  </label>
+                  <input type="checkbox" id="rememberMe" name="rememberMe"></input>
+                </div>
+              </div>
+              <br></br>
+              <div class="center">
+                <button
+                  type="submit"
+                  id="btn1"
+                  onClick={registerUser}
                 >
-                  Already Have an Account? <Link to="/">Sign in</Link>
-                </span>
-              </p>
-            </div>
-          </form>
+                  Sign up
+                </button>
+                <br></br>
+                <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
+                  Or{" "}
+                  <span
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Already Have an Account? <Link to="/">Sign in</Link>
+                  </span>
+                </p>
+              </div>
+            </form>
+          </div>
+          <footer id="footer">
+            <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
+          </footer>
         </div>
-        <footer id="footer">
-          <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
-        </footer>
-      </div>
       </div>
     </>
   );

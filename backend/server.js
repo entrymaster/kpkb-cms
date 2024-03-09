@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
+const pendingTransactionsRouter = require("./routes/pendingTransactions.route");
 const { updateSearchIndex } = require("./models/invoice.model");
 const registerRouter = require("./routes/register.route")
 const loginRouter = require("./routes/login.route")
@@ -13,7 +14,7 @@ const app = express();
 /* Loading the environment variables from the .env file. */
 require("dotenv").config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/todoapiDB";
 
     /* Telling the application to use the express.json() middleware. This middleware will parse the body of
@@ -22,12 +23,16 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
+<<<<<<< HEAD
+app.use("/api/pendingTransactions",pendingTransactionsRouter);
+=======
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 
 
 
 
+>>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/api/login", (req, res) => {
