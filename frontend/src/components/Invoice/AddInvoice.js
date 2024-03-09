@@ -173,9 +173,9 @@ const AddNewInvoice = () => {
         <tr class="headers">
           <th>ITEM DETAILS</th>
           <th>QUANTITY</th>
-          <th>RATE</th>
-          <th>GST</th>
-          <th>AMOUNT</th>
+          <th>Price (per unit)</th>
+          <th>GST (%)</th>
+          <th>AMOUNT (&#8377;)</th>
           <th>ACTION</th>
         </tr>
       </thead>
@@ -211,15 +211,42 @@ const AddNewInvoice = () => {
 
       </tbody>
     </table>
-      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-      <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
-      <table className='totalAmt'>
+      {/* <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button> */}
+      <div className="bottom-controls">
+        <button id="add-new-item" type="button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
+        <div className='discount-input'>
+          Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
+        </div>
+      </div>
+      {/* <table className='totalAmt'>
         <tr>
-          <td>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
+          <td><button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td className='discount-input'>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
           <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
         </tr>
-      </table>
+      </table> */}
+      <div className="customer-notes">
+        <label htmlFor="customerNotes">Customer Notes:</label><br />
+        <textarea id="customerNotes" value={invoiceData.notes} onChange={handleAddField} placeholder="Enter notes here..." rows="4" cols="50"></textarea>
+      </div>
+      <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
+      {/* <table className='totalAmt'>
+        <tr>
+          <td className='discount-input'>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
+          <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
+        </tr>
+      </table> */}
+      <div className="bill-buttons">
+        <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
+        <button id="preview-bill" type = "button" onClick={handleAddField}> <strong> Preview Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
+      </div>
+    
     </div>
     </>
     )

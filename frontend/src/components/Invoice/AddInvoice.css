@@ -1,11 +1,11 @@
-#total-button, #generate-bill-button:hover {
+#preview-bill, #add-as-credit, #generate-bill-button:hover {
     background-color: #b3d9ff; /* Change color on hover */
 }
 
-#total-button, #generate-bill-button:active {
+#preview-bill, #add-as-credit, #generate-bill-button:active {
     background-color: #99c2ff; /* Change color on click */
 }
-#total-button, #generate-bill-button{
+#preview-bill, #add-as-credit, #generate-bill-button {
     background-color: #cfe8ff;
     color: #051d40;
     border: none;
@@ -18,7 +18,47 @@
     font-family: 'Libre Baskerville', serif;
     
 }    
-
+.customer-notes {
+    margin-top: 20px;
+}
+  
+.customer-notes label {
+    font-weight: bold;
+}
+  
+.customer-notes textarea {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+.discount-input {
+    margin-top: 20px;
+    margin-left: 550px;
+    font-size: 20px;
+}
+  
+.discount-input input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 20px;
+}
+.total-amt-box {
+    font-size: 24px;
+}
+.bill-buttons {
+    /* position: fixed;
+    bottom: 20px;
+    right: 20px; */
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-right: 50px;
+}
+  
 .customer-details {
     justify-content: center; /* Center horizontally */
     align-items: center;
@@ -44,7 +84,7 @@
 #customerTable input[type="text"],
 #customerTable input[type="number"] {
   border: none;
-  background-color: #f0f8ff;
+  background-color: #cfe8ff;
   height: 25px;
   width: 400px;
   font-size: 18px;
@@ -59,8 +99,9 @@
 .itemListContainer {
     width: calc(100%-50px);
     /* padding-right: 50px; */
-    padding-left: 50px; /*Adjust padding as needed*/
-    /* padding-right: 20px; Adjust padding as needed */
+    padding-left: 50px;
+    /* display: flex;
+    justify-content: center; */
 }
 
 #invoiceTable {
@@ -103,3 +144,11 @@
 #add-new-item:active {
     background-color: #99c2ff; /* Change color on click */
 }    
+
+.bottom-controls {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-top: 0px;
+
+}
