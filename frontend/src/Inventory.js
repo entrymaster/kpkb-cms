@@ -5,7 +5,7 @@ import AddItemDialog from './components/AddProduct';
 import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateBatchDialog from './components/UpdateBatch';
+import UpdateBatchDialog from './components/ViewBatch';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
@@ -159,7 +159,7 @@ const deleteItem = (id) => {
     isVisible={isUpdateBatchDialogVisible}
     onCancel={toggleUpdateBatchDialog}
     batches={updateBatch.batchList}
-    // id = {updateBatch._id}
+    id = {updateBatch._id}
     /> 
     <div className="top">
       <div className="search-bar-container">

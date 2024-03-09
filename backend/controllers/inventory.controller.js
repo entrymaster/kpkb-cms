@@ -42,6 +42,64 @@ const updateProduct = async (req, res) => {
     res.status(402).send("Error");
   }
 };
+// const updateBatch = async (req, res) => {
+//   try {
+//     const { batchID, batchQty, expiryDate } = req.body;
+
+//     const updatedBatch = await Product.findOneAndUpdate(
+//       { "batchList._id": req.body._id }, // Find the product with the matching batchList _id
+//       { 
+//         $set: {
+//           "batchList.$.batchID": batchID,
+//           "batchList.$.batchQty": batchQty,
+//           "batchList.$.expiryDate": expiryDate,
+//         }
+//       },
+//       { new: true }
+//     );
+
+//     console.log(updatedBatch);
+//     res.json(updatedBatch);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(402).send("Error");
+//   }
+// };
+const updateBatch = async (req, res) => {
+  try {
+    const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
+
+    // Find the initial batchQty
+    
+    
+
+    // Find the difference (new batchQty - initial batchQty)
+    const quantityDifference = batchQty - initialBatchQty;
+
+    // Update the batch
+    const updatedBatch = await Product.findOneAndUpdate(
+      { "batchList._id": _id }, // Find the product with the matching batchList _id
+      { 
+        $set: {
+          "batchList.$.batchID": batchID,
+          "batchList.$.batchQty": batchQty,
+          "batchList.$.expiryDate": expiryDate,
+        }
+      },
+      { new: true }
+    );
+
+    // Increment the quantity by the difference (p) using MongoDB's incrementer
+    await Product.findByIdAndUpdate(_idProduct, { $inc: { quantity: quantityDifference } });
+
+    console.log(updatedBatch);
+    res.json(updatedBatch);
+  } catch (error) {
+    console.log(error);
+    res.status(402).send("Error");
+  }
+};
+
 const getAllProducts = async (req, res) => {
   const findAllProducts = await Product.find({
     //userID: req.params.userID,
@@ -52,6 +110,27 @@ const getAllProducts = async (req, res) => {
   //console.log(findAllProducts);
 };
 
+// const getAllProducts = async (req, res) => {
+//   try {
+//     const products = await Product.find({ userID: "user" });
+
+//     // Loop through each product and calculate the total quantity
+//     products.forEach(product => {
+//       let totalQuantity = 0;
+//       product.batchList.forEach(batch => {
+//         totalQuantity += batch.batchQty;
+//       });
+//       product.quantity = totalQuantity;
+//       // Save the updated product with the new quantity
+//       product.save();
+//     });
+
+//     res.json(products);
+//   } catch (error) {
+//     console.error('Error fetching products:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
 const searchProduct = async (req, res) => {
   try {
     const { userID, itemName } = req.query;
@@ -194,5 +273,6 @@ module.exports={
   searchProduct,
   deleteProduct,
   addBatchList,
+  updateBatch,
   //updateItemQuantityInInvoice
    };
