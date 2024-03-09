@@ -17,6 +17,7 @@ import {
     Route,
     Navigate,
 } from "react-router-dom";
+import { setSignout } from './auth';
 
 const App = () => {
     const [user, setUser] = useState("");
@@ -39,11 +40,14 @@ const App = () => {
       setUser(newUser);
       callback();
     };
-  
-    const signout = () => {
+
+    const signout = (navigate) => {
       setUser(null);
       localStorage.removeItem("user");
+      navigate("/Login", { replace: true });
     };
+  
+    setSignout(signout);
   
     let value = { user, signin, signout };
   
