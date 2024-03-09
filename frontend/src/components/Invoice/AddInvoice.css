@@ -27,7 +27,7 @@
 }
   
 .customer-notes textarea {
-    width: 80%;
+    width: 95%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -35,7 +35,7 @@
 }
 .discount-input {
     margin-top: 20px;
-    margin-left: 550px;
+    margin-left: 700px;
     font-size: 20px;
 }
   
@@ -48,6 +48,7 @@
 }
 .total-amt-box {
     font-size: 24px;
+    margin-left: 975px;
 }
 .bill-buttons {
     /* position: fixed;
@@ -108,7 +109,7 @@
     /* width: 50px; /* Set the table width to 100% to make it fill the container 
     column-width: 50px; */
     padding-top: 200px;
-    width: 80%; /* Set the desired width of the table */
+    width: 96.5%; /* Set the desired width of the table */
     border-collapse: collapse;
 }
 

@@ -171,12 +171,12 @@ const AddNewInvoice = () => {
     <table id="invoiceTable">
       <thead>
         <tr class="headers">
-          <th>ITEM DETAILS</th>
-          <th>QUANTITY</th>
+          <th>Item Details</th>
+          <th>Quantity</th>
           <th>Price (per unit)</th>
           <th>GST (%)</th>
-          <th>AMOUNT (&#8377;)</th>
-          <th>ACTION</th>
+          <th>Amount (&#8377;)</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
