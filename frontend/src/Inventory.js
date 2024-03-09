@@ -180,6 +180,7 @@ const deleteItem = (id) => {
             <th>COST PRICE</th>
             <th>STOCK</th>
             <th>MORE ACTIONS</th>
+            <th>DELETE</th>
           </tr>
         </thead>
         <tbody>
@@ -191,26 +192,32 @@ const deleteItem = (id) => {
           <td>{element.salePrice}</td>
           <td>{element.costPrice}</td>
           <td>{element.quantity }</td>
-           <td>
+          <td>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => updateProductModalSetting(element)}
             >
-              Edit{" "}
+              EditItem{" "}
             </span>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => addBatchModalSetting(element)}
             >
               AddBatch{" "}
             </span>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => updateBatchModalSetting(element)}
             >
               EditBatch{" "}
             </span>
+            </td>
+            <td> 
             <span
+            
               //className="text-red-600 px-2 cursor-pointer"
               //onClick={() => deleteItem(element._id)}
             >

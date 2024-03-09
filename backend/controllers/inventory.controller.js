@@ -160,26 +160,40 @@ const deleteProduct =  async (req, res) => {
 };
 const deleteBatch = async (req, res) => {
   const { id, Batchid } = req.params; // Use _id instead of id
-  console.log(id);
-  console.log(Batchid);
 
   try {
-    const updatedInventory = await Product.findOneAndUpdate(
-      { _id: id }, // Use _id here
-      { $pull: { batchList: { _id: Batchid } } },
-      { new: true }
-    );
+    // Find the product in the inventory
+    const product = await Product.findOne({ _id: id });
 
-    if (!updatedInventory) {
-      return res.status(404).json({ error: 'Inventory not found' });
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
     }
 
-    res.json(updatedInventory);
+    // Find the batch in the product's batchList
+    const batch = product.batchList.find((batch) => batch._id == Batchid);
+
+    if (!batch) {
+      return res.status(404).json({ error: 'Batch not found' });
+    }
+
+    // Decrease the product's quantity by the batchQty
+    product.quantity -= batch.batchQty;
+
+    // Remove the batch from the batchList
+    product.batchList = product.batchList.filter(
+      (batch) => batch._id != Batchid
+    );
+
+    // Save the updated product
+    const updatedProduct = await product.save();
+
+    res.json(updatedProduct);
   } catch (error) {
     console.error('Error deleting batch:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 const addBatchList = async (req, res) => {
   try {

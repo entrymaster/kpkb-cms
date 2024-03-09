@@ -67,9 +67,9 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
       }, [itemData]);
   return (
     isVisible && (
-      <dialog open id="addItemDialog">
+      <dialog open id="addItemDialog" style={{width: '50%' ,height:'250px'}}>
         <form onSubmit={(e) => { e.preventDefault();  }}>
-          <table>
+          <table style={{ width: '100%' ,height:'110px'}}>
             
             <tbody>
             <tr>

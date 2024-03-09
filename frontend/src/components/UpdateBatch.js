@@ -61,7 +61,7 @@ const UpdateBatchDialog = ({ isVisible, onCancel, element, id }) => {
       };
   return (
     isVisible && (
-      <dialog open id="addItemDialog">
+      <dialog open id="addItemDialog" style={{ width: '100%' ,height:'150px'}}>
         <form onSubmit={(e) => { e.preventDefault();  }}>
           <table>
             
@@ -73,7 +73,7 @@ const UpdateBatchDialog = ({ isVisible, onCancel, element, id }) => {
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
               <td><input type="text" id="expiry date"  value= {`Batch Expiry Date :  ${itemData.expiryDate}`} 
-                               readOnly/></td>
+                               readOnly  className="read-only-input"/></td>
             </tr>
             {/* <tr>
               <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
