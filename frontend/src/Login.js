@@ -15,7 +15,10 @@ function Login() {
 
 
   const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const maxLength = 15; // Maximum allowed length
+    const name = e.target.name;
+    const value = e.target.value.slice(0, maxLength); // Truncate the input if it exceeds maxLength
+    setForm({ ...form, [name]: value });
   };
 
   const authCheck = () => {
