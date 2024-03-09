@@ -249,45 +249,50 @@ const addBatchList = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };*/
-/*const updateItemQuantityInInvoice = async (req, res) => {
+const updateItemQuantityInInvoice = async (req, res) => {
   try {
     const itemsToUpdate = req.body; // Assuming req.body is an array of items [{ itemName, requestedQuantity }, ...]
 
     // Fetch inventory items for all requested items
     const inventoryItems = await Promise.all(
       itemsToUpdate.map(async ({ itemName }) => {
-        const item = await Inventory.findOne({ 'itemName': itemName });
+        const item = await Product.findOne({ 'itemName': itemName });
         return item;
       })
     );
 
     for (let i = 0; i < itemsToUpdate.length; i++) {
-      const { itemName, requestedQuantity } = itemsToUpdate[i];
+      //const { itemName, requestedQuantity } = itemsToUpdate[i];
+      const itemName=itemsToUpdate[i].itemName;
+      const requestedQuantity=itemsToUpdate[i].quantity;
+      console.log("itemname down");
+      console.log(itemName);
       const inventoryItem = inventoryItems[i];
-
       if (!inventoryItem) {
         return res.status(404).json({ error: `Inventory item not found for ${itemName}` });
       }
 
       let remainingQuantity = requestedQuantity;
-
+      console.log("remaining quantity down");
+      console.log(remainingQuantity);
       for (let batchList of inventoryItem.batchList) {
         const availableQuantity = batchList.batchQty;
-
+        console.log(batchList.expiryDate)
         // If the requested quantity is less than or equal to the available quantity in the current batch
         if (remainingQuantity <= availableQuantity) {
-          batch.batchQty -= remainingQuantity;
+          batchList.batchQty -= remainingQuantity;
           remainingQuantity = 0; // Requested quantity fulfilled
         } else {
           // Move to the next batch
           batchList.batchQty = 0;
           remainingQuantity -= availableQuantity;
         }
-
+        console.log(remainingQuantity);
+        console.log(batchList.batchQty);
         // If the updated quantity is 0, remove the batch from the batchList
-        if (batchList.batchQty === 0) {
-          inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batch.expiry);
-        }
+        // if (batchList.batchQty === 0) {
+        //   inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batchList.expiry);
+        // }
 
         if (remainingQuantity === 0) {
           break; // Exit the loop as the quantity has been updated for the current item
@@ -309,7 +314,7 @@ const addBatchList = async (req, res) => {
     console.error('Error updating item quantities in invoice:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};*/
+};
 
 module.exports={
   addProduct, 
@@ -320,5 +325,5 @@ module.exports={
   addBatchList,
   updateBatch,
   deleteBatch, 
-  //updateItemQuantityInInvoice
+  updateItemQuantityInInvoice,
    };
