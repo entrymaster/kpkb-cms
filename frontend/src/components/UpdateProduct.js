@@ -1,24 +1,51 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
-const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
+const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
+    useEffect(() => {
+        setItemData((prevItemData) => ({
+          ...prevItemData,
+          _id: element._id,
+          itemID: element.itemID,
+             itemName: element.itemName,
+      salePrice: element.salePrice,
+      costPrice: element.costPrice,
+      itemGST: element.itemGST,
+      category: element.category,
+      discount: element.discount,
+      quantity: element.quantity,
+        }));
+      }, [element]);
     const [itemData, setItemData] = useState({
-        userID: 'user',
-        itemID: '',
-        itemName: '',
-        salePrice: '',
-        costPrice: '',
-        itemGST: '',
-        category: '',
-        discount: '',
-        quantity: 0,
-        // batchList: [],
-      });
+      _id: '',
+      itemID: '',
+     itemName: '',
+     salePrice: '',
+     costPrice: '',
+     itemGST: '',
+    category: '',
+    discount: '',
+     quantity: '',
+      // batchList: [],
+    });
+    const resetFields = () => {
+        setItemData({
+          _id: '',
+          itemID: '',
+          itemName: '',
+          salePrice: '',
+          costPrice: '',
+          itemGST: '',
+          category: '',
+          discount: '',
+          quantity: '',
+        });
+      };
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
       };
-      const addProduct = () => {
-        fetch("http://localhost:5050/api/inventory/add", {
+      const updateProduct = () => {
+        fetch("http://localhost:5050/api/inventory/update", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -27,36 +54,16 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
         })
           .then((result) => {
             alert("Product ADDED");
-            handlePageUpdate();
+            resetFields();
+            //handlePageUpdate();
             //addProductModalSetting();
             onCancel();
-            setItemData({ // Resetting fields to initial state
-              userID: 'user',
-              itemID: '',
-              itemName: '',
-              salePrice: '',
-              costPrice: '',
-              itemGST: '',
-              category: '',
-              discount: '',
-              quantity: 0,
-            });
           })
           .catch((err) => console.log(err));
       };
       const handleCancel = () => {
         onCancel();
-        setItemData({ // Resetting fields to initial state
-          userID: 'user',
-          itemID: '',
-          itemName: '',
-          salePrice: '',
-          costPrice: '',
-          itemGST: '',
-          category: '',
-          discount: '',
-          quantity: 0,
-        });
+        resetFields();
       };
   return (
     isVisible && (
@@ -68,14 +75,13 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             <tr>
               <td><input type="text" id="item-name" placeholder="Item Name" value={itemData.itemName} name="itemName" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="text" id="item-id" placeholder="Item ID" value={itemData.itemID} name="itemID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              {/* <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
+                              } readonly/></td>
+              <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td> */}
-            <td><input type="text" value="Quantity = 0" readOnly /> </td>
+                              } readonly/></td>
             </tr>
             <tr>
               <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
@@ -91,18 +97,18 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             <tr>
               <td><input type="text" id="category" placeholder="Category" value={itemData.category} name="category" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="text" id="batch-expiry" placeholder="Batch Expiry" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
               <td><input type="number" id="discount" placeholder="Discount (%)" value={itemData.discount} name="discount" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
-                              }/></td>
+                              } readonly/></td>
             </tr>
             </tbody>
           </table>
 
-          <button type="submit" onClick={addProduct}>Save</button>
+          <button type="submit" onClick={ updateProduct}>Save</button>
           <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
@@ -110,4 +116,4 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
   );
 };
 
-export default AddItemDialog;
+export default UpdateItemDialog;

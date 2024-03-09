@@ -1,26 +1,43 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import UploadImage from "../components/UploadImage";
+import "./Register.css";
 
-function Register(){
+function Register() {
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
     email: "",
     password: "",
+    confirmpassword: "",
     gstno: "",
+    shopname: "",
+    shopaddress: "",
   });
 
   const navigate = useNavigate();
 
-  // Handling Input change for registration form.
   const handleInputChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const maxLength = 25; // Maximum allowed length
+    const name = e.target.name;
+    const value = e.target.value.slice(0, maxLength); // Truncate the input if it exceeds maxLength
+    setForm({ ...form, [name]: value });
   };
 
-  // Register User
   const registerUser = () => {
-    fetch("http://localhost:5000/api/register/reg", {
+    // Check if passwords match
+    if (form.password !== form.confirmpassword) {
+      alert("Password and Confirm Password do not match");
+      return; // Exit function if passwords don't match
+    }
+    if (!form.email.includes("@")) {
+      alert("Invalid Email, doesn't include @");
+      return; // Exit function if email is invalid
+    }
+    if (form.password.length < 6) {
+      alert("Password should be at least 6 characters");
+      return; // Exit function if password is too short
+    }
+    fetch("http://localhost:5050/api/register/reg", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -29,56 +46,53 @@ function Register(){
     })
       .then((result) => {
         alert("Successfully Registered, Now Login with your details");
-        navigate('/login')
-        
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
-  // ------------------
-
-  // Uploading image to cloudinary
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  }
+  };
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen  items-center place-items-center">
-        <div className="w-full max-w-md space-y-8  p-10 rounded-lg">
-          <div>
-            <img
-              className="mx-auto h-12 w-auto"
-            //   src={require("../assets/logo.png")}
-              alt="Your Company"
-            />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Register your account
-            </h2>
-          </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            {/* <input type="hidden" name="remember" defaultValue="true"  /> */}
-            <div className="flex flex-col gap-4 -space-y-px rounded-md shadow-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
+        <div id="sign-up">
+          <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
+            <div>
+              <img
+                className="fit-picture"
+                src="logo1.png"
+                alt="Billing360 Logo"
+              />
+              <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                Register your account
+              </h2>
+            </div>
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="flex gap-4">
                 <input
                   name="firstname"
                   type="text"
                   required
-                  className="relative block w-full rounded-t-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="input-box"
                   placeholder="First Name"
                   value={form.firstname}
                   onChange={handleInputChange}
                 />
+
                 <input
                   name="lastname"
                   type="text"
                   required
-                  className="relative block w-full rounded-t-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="input-box"
                   placeholder="Last Name"
                   value={form.lastname}
                   onChange={handleInputChange}
                 />
               </div>
+              <br></br>
               <div>
                 <input
                   id="email-address"
@@ -86,95 +100,106 @@ function Register(){
                   type="email"
                   autoComplete="email"
                   required
-                  className="relative block w-full rounded-t-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="input-box"
                   placeholder="Email address"
                   value={form.email}
                   onChange={handleInputChange}
                 />
+                <br></br>
+                <br></br>
+                <input
+                  name="shopname"
+                  type="text"
+                  required
+                  className="input-box"
+                  placeholder="Shop Name"
+                  value={form.shopname}
+                  onChange={handleInputChange}
+                />
+                <input
+                  name="shopaddress"
+                  type="text"
+                  required
+                  className="input-box"
+                  placeholder="Shop Address"
+                  value={form.shopaddress}
+                  onChange={handleInputChange}
+                />
+                <br></br>
+                <br></br>
+                <input
+                  name="gstno"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Enter GST No."
+                  value={form.gstno}
+                  onChange={handleInputChange}
+                />
               </div>
+              <br></br>
               <div>
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete="off"
                   required
-                  className="relative block w-full rounded-b-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="input-box"
                   placeholder="Password"
                   value={form.password}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div>
-              <input
-                name="gstno"
-                type="text"  
-                autoComplete="off"  
-                required
-                className="relative block w-full rounded-b-md border-0 py-1.5 px-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                placeholder="Enter GST No."  
-                value={form.gstno}
-                onChange={handleInputChange}
+                <input
+                  id="confirmpassword"
+                  name="confirmpassword"
+                  type="password"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Confirm Password"
+                  value={form.confirmpassword}
+                  onChange={handleInputChange}
                 />
               </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                {/* <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  checked
-                  required
-                /> */}
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  I Agree Terms & Conditons
-                </label>
+              <br></br>
+              <div className="flex items-center justify-between" class="center">
+                <div className="flex items-center" id="rememberme">
+                  <label
+                    htmlFor="remember-me"
+                    className="ml-2 block text-sm text-gray-900"
+                  >
+                    I Agree to the Terms & Conditons
+                  </label>
+                  <input type="checkbox" id="rememberMe" name="rememberMe"></input>
+                </div>
               </div>
-
-              <div className="text-sm">
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+              <br></br>
+              <div class="center">
+                <button
+                  type="submit"
+                  id="btn1"
+                  onClick={registerUser}
                 >
-                  Forgot your password?
-                </span>
+                  Sign up
+                </button>
+                <br></br>
+                <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
+                  Or{" "}
+                  <span
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Already Have an Account? <Link to="/">Sign in</Link>
+                  </span>
+                </p>
               </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={registerUser}
-              >
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                  {/* <LockClosedIcon
-                      className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                      aria-hidden="true"
-                    /> */}
-                </span>
-                Sign up
-              </button>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                Or{" "}
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Already Have an Account, Please
-                  <Link to="/login"> Signin now </Link>
-                </span>
-              </p>
-            </div>
-          </form>
+            </form>
+          </div>
+          <footer id="footer">
+            <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
+          </footer>
         </div>
-        {/* <div className="flex justify-center order-first sm:order-last">
-          <img src={require("../assets/Login.png")} alt="" />
-        </div>  */}
       </div>
     </>
   );

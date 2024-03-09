@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 /* Creating a new schema for the user model. */
@@ -20,10 +20,6 @@ const userSchema = new Schema({
         type: String,
         required: true,   
     },
-    // firmName: {
-    //     type: String,
-    //     required: true,
-    // },
     password: {
         type: String,
         required: true,
@@ -32,26 +28,24 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    // phoneNo: {
-    //     type: String,
-    //     required: true,
-    // },
-    // firmAddress: {
-    //     type: String,
-    //     required: true,
-    // },
-    // settings: {
-    //     type: { userNotiPref: Boolean, custNotiPref: Boolean },
-    //     required: true,
-    // },
-    // stats: {
-    //     type: { todaySales: Number, yestSales: Number, todayProfit: Number, todayCust: Number, currDateTime: Date },
-    //     required: true,
-    // },
-    // profilePhoto: {
-    //     type: Buffer/String,
-    //     required: true,
-    // },
+    shopname: {
+        type: String,
+        required: true,
+    },
+    shopaddress: {
+        type: String,
+        required: true,
+    }
+
 });
+
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password') || this.isNew) {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      this.password = hashedPassword;
+    }
+    next();
+  });
+
 
 module.exports = mongoose.model("User", userSchema);

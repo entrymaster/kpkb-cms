@@ -1,32 +1,11 @@
 import React, {useState} from 'react';
-import "./pending transactions.css";
+import "./Pending transactions.css";
 import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 
 const PendingTransactions = () => {
-
-  // const [isAddCreditDialogVisible, setAddCreditDialogVisibility] = useState(false);
-
-  // const toggleAddCreditDialog = () => {
-  //   setAddCreditDialogVisibility(!isAddCreditDialogVisible);
-  //   console.log({isAddCreditDialogVisible});
-  // };
-
-  // const customStyles = {
-  //   content: {
-  //     top: "50%",
-  //     left: "50%",
-  //     right: "auto",
-  //     bottom: "auto",
-  //     marginRight: "-50%",
-  //     transform: "translate(-50%, -50%)",
-  //     padding: 20,
-  //     border: "1px solid #ccc",
-  //     backgroundColor: "white",
-  //   },
-  // };
 
   const [activeTab, setActiveTab] = useState('credit-tab');
 

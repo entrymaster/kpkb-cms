@@ -2,7 +2,7 @@
 
 export const initialState = {
     userID:'user',
-    invoiceID:'000',
+    invoiceID:0,
     customerName:'',
     phoneNo:'',
     customerEmail:'',
