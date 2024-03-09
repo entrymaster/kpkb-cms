@@ -4,6 +4,7 @@ import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
 
+
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
@@ -11,6 +12,7 @@ const AddNewInvoice = () => {
   const [items, setAllItems] = useState([]);
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
+  // const history = useHistory();
   
 
   const handleInputChange = async(event, index, fieldName) => {
@@ -153,6 +155,17 @@ const AddNewInvoice = () => {
       .catch((err) => console.log(err));
     };
 
+    const handleOpenPDF = () => {
+      window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
+    };
+    // const handleOpenPDF = () => {
+    //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
+    //   history.push({
+    //     pathname: '/invoice/pdf-viewer',
+    //     search: `?data=${encodeURIComponent(JSON.stringify(invoiceData))}`,
+    //   });
+    // };
+
     return (
       <>
         <div className="customer-details">
@@ -223,7 +236,7 @@ const AddNewInvoice = () => {
     </div>
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
-        <button id="preview-bill" type = "button" onClick={handleAddField}> <strong> Preview Bill </strong> </button>
+        <button id="preview-bill" type = "button" onClick={handleOpenPDF}> <strong> Preview Bill </strong> </button>
         <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
       </div>
     

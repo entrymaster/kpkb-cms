@@ -28,7 +28,7 @@ const addInvoice = async (req, res) => {
 };
 
 const getInvoiceCount = async (req, res) => {
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
   try{
     const userID = req.params.userID;
     const count = await Invoice.countDocuments({userID : userID});
@@ -39,4 +39,12 @@ const getInvoiceCount = async (req, res) => {
     res.status(500).json({ error: "Error fetching invoice count" });
   }
 };
+
+// const generatePDF = async (req, res) => {
+//   const invoiceData=req.body;
+//   const pdfDoc= await PDFDocument.create();
+//   const page = pdfDoc.addPage([600, 400]);
+
+// }
+
 module.exports={addInvoice, getInvoiceCount};

@@ -23,7 +23,7 @@ const Invoice = () => {
           </div>
           <div className="nav-panel">
             <p>
-              <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+              <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
             </p>
             <p style={{ backgroundColor: "#E0E0F7" }}>
               <Link to="/invoice" style={{color: "black", textDecoration: 'none'}}>Invoice</Link>

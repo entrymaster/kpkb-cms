@@ -5,6 +5,7 @@ import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
+import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
 import Register from "./Register.js"
 import Login from "./Login.js";
@@ -73,6 +74,8 @@ const App = () => {
                       <Route path="/invoice" element={<Invoice/>}/>
                       <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
                       <Route path="/contactUs" element={<ContactUs/>}/>
+
+                      <Route path="/pdf-viewer" element={<InvoicePDF/>} />
                 </Routes>
             </Router>
         </AuthContext.Provider>
