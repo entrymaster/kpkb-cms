@@ -9,6 +9,7 @@ const SearchableDropdown = ({
 }) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const inputRef = useRef(null);
 
@@ -19,7 +20,8 @@ const SearchableDropdown = ({
 
   const selectOption = (option) => {
     setQuery(() => "");
-    handleChange(option[label]);
+    handleChange(option);
+    setSelectedItem(option);
     setIsOpen((isOpen) => !isOpen);
   };
 
@@ -28,6 +30,7 @@ const SearchableDropdown = ({
   }
 
   const getDisplayValue = () => {
+    if(selectedItem) return selectedItem[label];
     if (query) return query;
     if (selectedVal) return selectedVal;
 

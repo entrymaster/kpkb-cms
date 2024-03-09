@@ -47,8 +47,8 @@
     font-size: 20px;
 }
 .total-amt-box {
-    font-size: 24px;
-    margin-left: 975px;
+    font-size: 20px;
+    margin-left: 900px;
 }
 .bill-buttons {
     /* position: fixed;
@@ -81,6 +81,7 @@
     padding: 8px; /* Adjust padding as needed */
     font-size: 16px; 
     width: 400px;
+    size:auto;
 }
 #customerTable input[type="text"],
 #customerTable input[type="number"] {
@@ -111,6 +112,7 @@
     padding-top: 200px;
     width: 96.5%; /* Set the desired width of the table */
     border-collapse: collapse;
+    font-size: 18px;
 }
 
 #invoiceTable th,

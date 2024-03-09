@@ -9,21 +9,41 @@ const AddNewInvoice = () => {
   const [incInvoiceID, setIncInvoiceID] = useState(false);
   const [totalChange, setTotalChange] = useState(false);
   const [items, setAllItems] = useState([]);
+  const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
   
+
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
-    const updatedItemList = [...invoiceData.itemList];
-    updatedItemList[index] = {
-      ...updatedItemList[index],
-      [fieldName]: value,
-    };
-    if (fieldName === 'quantity' || fieldName === 'rate' || fieldName === 'gst') {
-      const quantity = parseFloat(updatedItemList[index].quantity);
+      console.log(value)
+      const updatedItemList = [...invoiceData.itemList];
+      // updatedItemList[index] = {
+      //   ...updatedItemList[index]
+      // };
+      console.log(value['itemName'])
+      if(fieldName==='itemName'){
+        updatedItemList[index].itemName = value['itemName'];
+        updatedItemList[index].rate=value['salePrice']
+        updatedItemList[index].gst=value['itemGST']
+
+        // updatedItemList[index].amount = amount;
+      }
+    // const searchItem = () => {
+    //   fetch(`http://localhost:5050/api/inventory/search/${userId}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setCurrItem(data);
+    //   })
+    //   console.log(currItem)
+    //   .catch((err) => console.log(err));
+    // }
+    if (fieldName === 'quantity') {
+      const quantity = parseFloat(value)
       const rate = parseFloat(updatedItemList[index].rate);
       const gst = parseFloat(updatedItemList[index].gst);
       const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
       updatedItemList[index].amount = amount;
+      updatedItemList[index].quantity = quantity;
     }
   
     setInvoiceData({
@@ -55,6 +75,7 @@ const AddNewInvoice = () => {
   const handleAddField = (e) => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+    // setCurrItem();
   }
 
   const handleDeleteRow = (index) => {
@@ -79,8 +100,9 @@ const AddNewInvoice = () => {
           alert("Invoice ADDED");
           setInvoiceData(initialState);
         })
-        .then(()=>{
+        .then(() => {
           setIncInvoiceID(true);
+          window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
@@ -97,6 +119,7 @@ const AddNewInvoice = () => {
       })
       .then(() => {
         setUpdatePage(false);
+        window.location.reload(); // Reload the webpage
       })
 
     }
@@ -141,6 +164,9 @@ const AddNewInvoice = () => {
       .then((data) => {
         setAllItems(data);
       })
+      // .then(()=>{
+      //   console.log(items)
+      // })
       .catch((err) => console.log(err));
     };
     // useEffect(()=>{
@@ -182,22 +208,17 @@ const AddNewInvoice = () => {
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
-          <td>
-            {/* <input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/> */}
+          <td placeholder='Select Item'>
             <SearchableDropdown
-              options={items} // Pass the list of items as options
-              label="itemName" // Specify the label for each option
-              id={`dropdown-${index}`} // Provide a unique id for each dropdown
-              selectedVal={item.itemName} // Pass the selected item name as the selected value
-              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} // Function to handle dropdown selection
-            />
-          </td>
+              options={items}
+              label="itemName"
+              id={`dropdown-${index}`}
+              selectedVal={currItem}
+              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} 
+            /></td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
-          {/* <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
-          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td> */}
           <td>{item.rate}</td>
           <td>{item.gst}</td>
-          {/* <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td> */}
           <td>{item.amount}</td>
 
           <td>
@@ -231,7 +252,7 @@ const AddNewInvoice = () => {
       </table> */}
       <div className="customer-notes">
         <label htmlFor="customerNotes">Customer Notes:</label><br />
-        <textarea id="customerNotes" value={invoiceData.notes} onChange={handleAddField} placeholder="Enter notes here..." rows="4" cols="50"></textarea>
+        <textarea id="customerNotes" value={invoiceData.notes} onChange={(e) => handleInputChangeCust(e, 'notes')} placeholder="Enter notes here..." rows="4" cols="50"></textarea>
       </div>
       <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
