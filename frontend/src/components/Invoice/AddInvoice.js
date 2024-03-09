@@ -232,36 +232,18 @@ const AddNewInvoice = () => {
 
       </tbody>
     </table>
-      {/* <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button> */}
       <div className="bottom-controls">
         <button id="add-new-item" type="button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
         <div className='discount-input'>
           Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
         </div>
       </div>
-      {/* <table className='totalAmt'>
-        <tr>
-          <td><button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td className='discount-input'>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
-          <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
-        </tr>
-      </table> */}
       <div className="customer-notes">
         <label htmlFor="customerNotes">Customer Notes:</label><br />
         <textarea id="customerNotes" value={invoiceData.notes} onChange={(e) => handleInputChangeCust(e, 'notes')} placeholder="Enter notes here..." rows="4" cols="50"></textarea>
       </div>
       <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
-      {/* <table className='totalAmt'>
-        <tr>
-          <td className='discount-input'>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
-          <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
-        </tr>
-      </table> */}
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
         <button id="preview-bill" type = "button" onClick={handleAddField}> <strong> Preview Bill </strong> </button>
