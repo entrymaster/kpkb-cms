@@ -98,9 +98,9 @@ const updateSupplier  = async (req, res) => {
     }
   };
 
-export default {
+module.exports={
   addNewCredit,
   addNewDebit,
   updateCustomer ,
-  updateSupplier,
+  updateSupplier
 };
