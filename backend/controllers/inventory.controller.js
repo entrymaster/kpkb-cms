@@ -295,6 +295,7 @@ const updateItemQuantityInInvoice = async (req, res) => {
         // }
 
         if (remainingQuantity === 0) {
+          inventoryItem.quantity-=requestedQuantity;
           break; // Exit the loop as the quantity has been updated for the current item
         }
       }
