@@ -61,7 +61,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
 
   return (
     isVisible && (
-      <dialog open id="addItemDialog">
+      <dialog open id="addItemDialog" >
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -83,13 +83,14 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
             </div>
           )}
 
-          <table>
+          <table  id="inventoryTable">
             <thead>
               <tr className="headers">
                 <th>BATCH ID</th>
                 <th>BATCH QUANTITY</th>
                 <th>BATCH EXPIRY</th>
-                <th>MORE ACTIONS</th>
+                <th>MORE ACTIONS </th>
+                <th>DELETE</th>
               </tr>
             </thead>
             <tbody>
@@ -102,10 +103,13 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
                       <td>{element.expiryDate}</td>
                       <td>
                         <span
+                          className="action-button"
                           onClick={() => updateBatchModalSetting(element)}
                         >
                           EditBatch{" "}
                         </span>
+                        </td>
+                        <td>
                         <span>
                           <DeleteIcon
                             style={{ color: "red", cursor: "pointer" }}
