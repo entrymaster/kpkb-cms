@@ -1,9 +1,9 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import './AddInvoice.css';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
-
+import AuthContext from '../../AuthContext';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
@@ -13,7 +13,7 @@ const AddNewInvoice = () => {
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
   // const history = useHistory();
-  
+  const authContext = useContext(AuthContext);
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;

@@ -23,16 +23,13 @@ const addNewCredit = async (req, res) => {
 // Add New Debit
 const addNewDebit = async (req, res) => {
     try {
-      const {  userID,supplierName, phoneNo, email, amount, invoiceID} = req.body;
-  
       const newDebit = new Supplier({
-        userID,
-        supplierName,
-        phoneNo,
-        email,
-        amount,
+        userID: req.body.partyID,
+        name: req.body.partyName,
+        phoneNo: req.body.phoneNumber,
+        email: req.body.email,
+        debitAmount: req.body.amount,
       });
-  
       const savedDebit = await newDebit.save();
       res.status(201).json(savedDebit);
     } catch (error) {
