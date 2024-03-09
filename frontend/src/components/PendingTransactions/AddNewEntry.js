@@ -1,13 +1,14 @@
 import React,{useState} from 'react';
+import Modal from "react-modal";
 
-const AddNewEntryDialog = ({ isVisible, onCancel, entryType }) => {
+const AddNewEntry = ({ isVisible, onCancel, entryType }) => {
     const [Data, setData] = useState({
-        partyID: '',
-        partyName: '',
-        phoneNumber: '',
-        email:'',
+        partyID: "",
+        partyName: "",
+        phoneNumber: "",
+        email:"",
         amount:0,
-        invoiceList:[]
+        invoiceID:""
     });
 
 const handleInputChange = (key, value) => {
@@ -17,13 +18,13 @@ const handleInputChange = (key, value) => {
 
 const handleSave = () => {
         if(entryType === "Customer")
-          addNewCredit
+          addNewCredit();
         else
-          addNewDebit
+          addNewDebit();
 };
 
 const addNewCredit = () => {
-        fetch("http://localhost:5000/api/pendingTransactions/addNewCredit", {
+        fetch("http://localhost:5050/api/pendingTransactions/addNewCredit", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -32,13 +33,12 @@ const addNewCredit = () => {
         })
           .then((result) => {
             alert("Successfully added new customer!");
-            onCancel();
           })
           .catch((err) => console.log(err));
       };
 
   const addNewDebit = () => {
-        fetch("http://localhost:5000/api/pendingTransactions/addNewDebit", {
+        fetch("http://localhost:5050/api/pendingTransactions/addNewDebit", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -47,58 +47,50 @@ const addNewCredit = () => {
         })
           .then((result) => {
             alert("Successfully added new supplier!");
-            onCancel();
           })
           .catch((err) => console.log(err));
       };
-  return (
-    isVisible && (
-      /*<dialog isopen="true" id="addItemDialog">*/
-        <form onSubmit={(e) => { e.preventDefault();  }}>
-          <table>
-            
-            <tbody>
-            <tr>
-              <td><input type="text" id="item-name" placeholder="Item Name" value={itemData.itemName} name="itemName" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="text" id="item-id" placeholder="Item ID" value={itemData.itemID} name="itemID" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="number" id="quantity" placeholder="Quantity" value={itemData.quantity} name="quantity" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-            </tr>
-            <tr>
-              <td><input type="number" id="sales-price" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="number" id="cost-price" placeholder="Cost Price/unit" value={itemData.costPrice} name="costPrice"onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="number" id="gst" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-            </tr>
-            <tr>
-              <td><input type="text" id="category" placeholder="Category" value={itemData.category} name="category" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="text" id="batch-expiry" placeholder="Batch Expiry" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-              <td><input type="number" id="discount" placeholder="Discount (%)" value={itemData.discount} name="discount" onChange={(e) =>
-                                handleInputChange(e.target.name, e.target.value)
-                              }/></td>
-            </tr>
-            </tbody>
-          </table>
 
-          <button type="submit" onClick={handleSave}>Save</button>
-          <button type="button" onClick={onCancel}>Cancel</button>
-        </form>
+  return (
+    (
+<Modal
+isOpen={isVisible}
+contentLabel="New Entry Dialog"
+shouldCloseOnOverlayClick={true}
+ariaHideApp={false}
+>
+<h2>New Entry</h2> {/* Heading */}
+<form
+  onSubmit={(e) => {e.preventDefault();handleSave();onCancel();}}
+>
+              <label htmlFor="customerID"> ID:</label>
+              <input type="text" value={Data.partyID} name="partyID" onChange={(e) => handleInputChange(e.target.name, e.target.value) } />
+              <br />
+              <label htmlFor="customerName"> Name:</label>
+              <input type="text" value={Data.partyName} name="partyName" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
+              <br />
+              <label htmlFor="phoneNo">Phone Number:</label>
+              <input type="text" value={Data.phoneNumber} name="phoneNumber" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
+              <br />
+              <label htmlFor="Email">Email:</label>
+              <input type="text" value={Data.email} name="email" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
+              <br />
+              <label htmlFor="InvoiceID">Invoice Id:</label>
+              <input type="text" value={Data.invoiceID} name="invoiceID" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
+              <br />
+              <label htmlFor="amount">Amount:</label>
+              <input type="text" value={Data.amount} name="amount" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
+              <br />
+            <button type="submit">
+              Save
+            </button>
+            <button type="button" onClick={onCancel}>
+              Cancel
+            </button>
+          </form>
+          </Modal>
     )
-  );
+  )
 };
 
-export default AddNewEntryDialog;
+export default AddNewEntry;

@@ -1,15 +1,68 @@
 import React, {useState} from 'react';
 import "./pending transactions.css";
-import "./components/PendingTransactions/AddNewEntry";
-import "./components/PendingTransactions/UpdateEntry";
+import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
+import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
 
 const PendingTransactions = () => {
-  const [isAddCreditDialogVisible, setAddCreditDialogVisibility] = useState(false);
-  const toggleAddCreditDialog = () => {
-    setAddCreditDialogVisibility(!isAddCreditDialogVisible);
-    console.log({isAddCreditDialogVisible});
+
+  // const [isAddCreditDialogVisible, setAddCreditDialogVisibility] = useState(false);
+
+  // const toggleAddCreditDialog = () => {
+  //   setAddCreditDialogVisibility(!isAddCreditDialogVisible);
+  //   console.log({isAddCreditDialogVisible});
+  // };
+
+  // const customStyles = {
+  //   content: {
+  //     top: "50%",
+  //     left: "50%",
+  //     right: "auto",
+  //     bottom: "auto",
+  //     marginRight: "-50%",
+  //     transform: "translate(-50%, -50%)",
+  //     padding: 20,
+  //     border: "1px solid #ccc",
+  //     backgroundColor: "white",
+  //   },
+  // };
+
+  const [activeTab, setActiveTab] = useState('credit-tab');
+
+  const openTab = (tabName) => {
+    setActiveTab(tabName);
   };
+
+
+  const [isAddNewDialogOpen, setIsAddNewDialogOpen] = useState(false);
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [isSelectTypeDialogOpen, setSelectTypeDialogOpen] = useState(false);
+
+  const showSelectTypeDialog = () => {
+    setIsAddNewDialogOpen(false);
+    setIsUpdateDialogOpen(false);
+    setSelectTypeDialogOpen(true);
+  };
+  const showAddNewDialog = () => {
+    setSelectTypeDialogOpen(false);
+    setIsAddNewDialogOpen(true);
+  };
+  const showUpdateDialog = () => {
+    setSelectTypeDialogOpen(false);
+    setIsUpdateDialogOpen(true);
+  };
+  const hideSelectTypeDialog = () => {
+    setSelectTypeDialogOpen(false);
+  };
+  const hideAddNewDialog = () => {
+    setIsAddNewDialogOpen(false);
+  };
+  const hideUpdateDialog = () => {
+    setIsUpdateDialogOpen(false);
+  };
+
+
 
     return (
         <div className="PendingTrans">
@@ -61,66 +114,71 @@ const PendingTransactions = () => {
       </div>
     </div>
   </div>
+
   <div className="credit-debit-heading">
-    <div className="credit-debit-left">
+    <button className={activeTab === 'credit-tab' ? 'active-tablinks' : 'tablinks'} onClick={() => openTab('credit-tab')}>
       <h2>Credit</h2>
-    </div>
-    <div className="credit-debit-right">
+    </button>
+    <button className={activeTab === 'debit-tab' ? 'active-tablinks' : 'tablinks'} onClick={() => openTab('debit-tab')}>
       <h2>Debit</h2>
-    </div>
+    </button>
   </div>
+
+  <div id="credit-tab" className={activeTab === 'credit-tab' ? 'tabcontent-active' : 'tabcontent'}>
   <table>
     <thead>
       <tr className="headers">
         <th>Customer Name/ID</th>
         <th>Phone No.</th>
         <th>Amount</th>
-        <th id="add-credit-button" onClick={toggleAddCreditDialog}>
-          Add New Credit
+        <th id="add-credit-button" onClick={showSelectTypeDialog}>
+              Add New Credit
         </th>
-         <AddNewEntry
-        isVisible={isAddCreditDialogVisible} onCancel={toggleAddCreditDialog} entryType="Customer"
-       /> 
       </tr>
     </thead>
-    <tbody id="credit-table-body">
-      <tr className="First">
-        <td>Ramlal</td>
-        <td>900XXXXXXX</td>
-        <td>5000</td>
-        <td>View Bills</td>
-      </tr>
-      <tr className="Second">
-        <td>Shymlal</td>
-        <td>80XXXXXXXX</td>
-        <td>50000</td>
-        <td>View Bills</td>
-      </tr>
-      {/* Add more rows as needed */}
-    </tbody>
   </table>
-  <dialog id="addCreditDialog">
-    <form onSubmit="saveCredit(); return false;">
-      <label htmlFor="customerName">Customer Name/ID:</label>
-      <input type="text" id="customerName" required="" />
-      <br />
-      <label htmlFor="phoneNo">Phone No.:</label>
-      <input type="text" id="phoneNo" required="" />
-      <br />
-      <label htmlFor="amount">Amount:</label>
-      <input type="text" id="amount" required="" />
-      <br />
-      <label htmlFor="addBill">Add Bill Option:</label>
-      <input type="text" id="addBill" />
-      <br />
-      <button type="submit">Save</button>
-      <button type="button" onClick={hideAddCreditDialog}>
-      Cancel
-     </button>
-    </form>
-  </dialog>
-</div>
+  </div>
 
+  <div id="debit-tab" className={activeTab === 'debit-tab' ? 'tabcontent-active' : 'tabcontent'}>
+  <table>
+    <thead>
+      <tr className="headers">
+        <th>Supplier Name/ID</th>
+        <th>Phone No.</th>
+        <th>Amount</th>
+        <th id="add-credit-button" onClick={showSelectTypeDialog}>
+              Add New Debit
+        </th>
+      </tr>
+    </thead>
+  </table>
+  </div>
+
+  <Modal
+        isOpen={isSelectTypeDialogOpen}
+        contentLabel="Select Type Dialog"
+        shouldCloseOnOverlayClick={true}
+        ariaHideApp={false}
+      >
+        <button onClick={showAddNewDialog}>
+          Add New Entry
+        </button>
+       <br/>
+        <button onClick={showUpdateDialog}>
+          Update Entry
+        </button>
+       <br/>
+        <button onClick={hideSelectTypeDialog}>Close</button>
+    </Modal>
+
+    <AddNewEntry
+        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+       /> 
+
+    <UpdateEntry
+        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+       /> 
+</div>
     )
 }
 export default PendingTransactions;
