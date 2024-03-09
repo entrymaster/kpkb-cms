@@ -239,21 +239,13 @@ const addBatchList = async (req, res) => {
   try {
     const { itemName, requestedQuantity } = req.body;
 
-    const inventory = await Inventory.findOne({ 'items.itemName': itemName });
+    const inventoryItem = await Inventory.findOne({ 'itemName': itemName });
 
-    if (!inventory) {
-      return res.status(404).json({ error: 'Inventory not found' });
+    if (!inventoryItem) {
+      return res.status(404).json({ error: 'Inventory item not found' });
     }
 
-    const itemIndex = inventory.items.findIndex(item => item.itemName === itemName);
-
-    if (itemIndex === -1) {
-      return res.status(404).json({ error: 'Item not found in the inventory' });
-    }
-
-    let remainingQuantity = requestedQuantity;
-
-    for (let batch of inventory.items[itemIndex].batchList) {
+    for (let batch of inventory.item.batchList) {
       const availableQuantity = batchList.batchQty;
 
       // If the requested quantity is less than or equal to the available quantity in the current batch
