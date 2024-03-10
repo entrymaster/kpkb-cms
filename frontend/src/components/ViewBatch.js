@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import UpdateBatchDialog from '../components/UpdateBatch';
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
+const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }) => {
   const productId = id;
   const [updateBatch, setUpdateBatch] = useState([]);
   const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] = useState(false);
@@ -17,9 +17,9 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
     setBatchList(batches);
   }, [batches]);
 
-  const handlePageUpdate = () => {
-    setUpdatePage(!updatePage);
-  };
+  // const handlePageUpdate = () => {
+  //   setUpdatePage(!updatePage);
+  // };
 
   const deleteBatch = (Batchid) => {
     console.log("Batch ID: ", Batchid);
@@ -35,6 +35,9 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        const updatedBatchList = batchList.filter(batch => batch._id !== batchIdToDelete);
+        setBatchList(updatedBatchList);
+        handlePageUpdate();
         setUpdatePage(!updatePage);
         setConfirmationOpen(false);
       })
@@ -43,9 +46,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
       });
   };
 
-  const handleInputChange = (key, value) => {
-    setBatchList({ ...batchList, [key]: value });
-  };
+  
 
   const toggleUpdateBatchDialog = () => {
     setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
@@ -69,7 +70,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id }) => {
         >
           <UpdateBatchDialog
             isVisible={isUpdateBatchDialogVisible}
-            onCancel={toggleUpdateBatchDialog}
+            on_Cancel={toggleUpdateBatchDialog}
             element={updateBatch}
             id={productId}
           />

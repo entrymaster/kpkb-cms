@@ -5,13 +5,13 @@ import AddItemDialog from './components/AddProduct';
 import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateBatchDialog from './components/ViewBatch';
+import ViewBatchDialog from './components/ViewBatch';
 import AuthContext from './AuthContext';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
   const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
-  const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] = useState(false);
+  const [isViewBatchDialogVisible, setViewBatchDialogVisibility] = useState(false);
   const [isAddBatchDialogVisible, setAddBatchDialogVisibility] = useState(false);
   const [products, setAllProducts] = useState([]);
   const [updatePage, setUpdatePage] = useState(true);
@@ -28,9 +28,9 @@ const Inventory = () =>
     setUpdateItemDialogVisibility(!isUpdateItemDialogVisible);
     console.log({isUpdateItemDialogVisible});
   };
-  const toggleUpdateBatchDialog = () => {
-    setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
-    console.log({isUpdateBatchDialogVisible});
+  const toggleViewBatchDialog = () => {
+    setViewBatchDialogVisibility(!isViewBatchDialogVisible);
+    console.log({isViewBatchDialogVisible});
   }
   const toggleAddBatchDialog = () => {
     setAddBatchDialogVisibility(!isAddBatchDialogVisible);
@@ -51,14 +51,15 @@ const Inventory = () =>
     setAddBatch(selectedProductData._id);
     toggleAddBatchDialog ();
   };
-  const updateBatchModalSetting = (selectedProductData) => {
+  const viewBatchModalSetting = (selectedProductData) => {
     console.log("Clicked:update batch");
     setUpdateBatch(selectedProductData);
-    toggleUpdateBatchDialog ();
+    toggleViewBatchDialog ();
   };
 
   useEffect(() => {
     fetchProductsData();
+
     // fetchSalesData();
   }, [updatePage]);
   //const userId = "user";
@@ -153,6 +154,7 @@ const deleteItem = (id) => {
     isVisible={isUpdateItemDialogVisible}
     onCancel={toggleUpdateItemDialog}
     element={updateProduct}
+    handlePageUpdate = {handlePageUpdate}
     /> 
     <AddBatchDialog
     isVisible={isAddBatchDialogVisible}
@@ -160,11 +162,12 @@ const deleteItem = (id) => {
     element={addBatch}
     handlePageUpdate = {handlePageUpdate}
     /> 
-    <UpdateBatchDialog
-    isVisible={isUpdateBatchDialogVisible}
-    onCancel={toggleUpdateBatchDialog}
+    <ViewBatchDialog
+    isVisible={isViewBatchDialogVisible}
+    onCancel={toggleViewBatchDialog}
     batches={updateBatch.batchList}
     id = {updateBatch._id}
+    handlePageUpdate = {handlePageUpdate}
     /> 
     <div className="top">
       <div className="search-bar-container">
@@ -215,9 +218,9 @@ const deleteItem = (id) => {
             <span
             className="action-button"
               //className="text-green-700 cursor-pointer"
-              onClick={() => updateBatchModalSetting(element)}
+              onClick={() => viewBatchModalSetting(element)}
             >
-              EditBatch{" "}
+              ViewBatch{" "}
             </span>
             </td>
             <td> 
