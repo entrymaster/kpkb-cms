@@ -5,7 +5,7 @@ import AddItemDialog from './components/AddProduct';
 import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateBatchDialog from './components/UpdateBatch';
+import UpdateBatchDialog from './components/ViewBatch';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
@@ -159,7 +159,7 @@ const deleteItem = (id) => {
     isVisible={isUpdateBatchDialogVisible}
     onCancel={toggleUpdateBatchDialog}
     batches={updateBatch.batchList}
-    // id = {updateBatch._id}
+    id = {updateBatch._id}
     /> 
     <div className="top">
       <div className="search-bar-container">
@@ -180,6 +180,7 @@ const deleteItem = (id) => {
             <th>COST PRICE</th>
             <th>STOCK</th>
             <th>MORE ACTIONS</th>
+            <th>DELETE</th>
           </tr>
         </thead>
         <tbody>
@@ -191,26 +192,32 @@ const deleteItem = (id) => {
           <td>{element.salePrice}</td>
           <td>{element.costPrice}</td>
           <td>{element.quantity }</td>
-           <td>
+          <td>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => updateProductModalSetting(element)}
             >
-              Edit{" "}
+              EditItem{" "}
             </span>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => addBatchModalSetting(element)}
             >
               AddBatch{" "}
             </span>
             <span
+            className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => updateBatchModalSetting(element)}
             >
               EditBatch{" "}
             </span>
+            </td>
+            <td> 
             <span
+            
               //className="text-red-600 px-2 cursor-pointer"
               //onClick={() => deleteItem(element._id)}
             >

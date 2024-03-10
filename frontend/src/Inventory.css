@@ -77,6 +77,11 @@ table.Inventory {
     padding-left:55px;
     border-spacing: 0 15px;
 }
+.action-button {
+    cursor: pointer;
+    color: #ba3726; /* Green color, change as needed */
+    margin-right: 10px; /* Adjust spacing between buttons */
+  }
 th.Inventory, td.Inventory {
 
     text-align: left;
@@ -130,6 +135,7 @@ th.Inventory, td.Inventory {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
+   
 }
 
 .Inventory #inventoryTable th {

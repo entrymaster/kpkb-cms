@@ -1,9 +1,9 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import './AddInvoice.css';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
-
+import AuthContext from '../../AuthContext';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
@@ -13,7 +13,7 @@ const AddNewInvoice = () => {
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
   // const history = useHistory();
-  
+  const authContext = useContext(AuthContext);
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -98,7 +98,7 @@ const AddNewInvoice = () => {
     };
 
     const updateInventory = () => {
-      fetch("http://localhost:5050/api/invoice/updateItemQuantity",{
+      fetch("http://localhost:5050/api/inventory/updateItemQuantity",{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -237,7 +237,7 @@ const AddNewInvoice = () => {
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
         <button id="preview-bill" type = "button" onClick={handleOpenPDF}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); console.log(invoiceData.itemList)}}> <strong> Generate Bill </strong> </button>
       </div>
     
     </div>

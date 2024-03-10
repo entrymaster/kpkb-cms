@@ -137,7 +137,7 @@
 .PendingTrans th, td {
 text-align: left;
 padding: 16px;
-padding-left:50px;
+/* padding-left:50px; */
 }
 .PendingTrans .heading{
     text-decoration: none;
