@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef, useContext} from 'react';
 import './AddInvoice.css';
+import axios from 'axios';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
@@ -43,6 +44,8 @@ const AddNewInvoice = () => {
     });
     setTotalChange(true);
   };
+
+  
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
@@ -93,12 +96,30 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          window.location.reload(); // Reload the webpage
+          // window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
     };
+
+    const handleGeneratePDF = async () => {
+      try {
+        // console.log(invoiceData);
+        const response = await axios.post('http://localhost:5050/api/invoice/generate-pdf', 
+        {invoiceData}, { responseType: 'blob' });
+  
+        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+  
+        // Open the PDF in a new window
+        const newWindow=window.open();
+        newWindow.location.href = pdfUrl;
+        // window.open(pdfUrl, '_blank');
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     const updateInventory = () => {
       fetch("http://localhost:5050/api/inventory/updateItemQuantity",{
@@ -110,7 +131,7 @@ const AddNewInvoice = () => {
       })
       .then(() => {
         setUpdatePage(false);
-        window.location.reload(); // Reload the webpage
+        // window.location.reload(); // Reload the webpage
       })
 
     }
@@ -239,8 +260,8 @@ const AddNewInvoice = () => {
     </div>
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
-        <button id="preview-bill" type = "button" onClick={handleOpenPDF}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); console.log(invoiceData.itemList)}}> <strong> Generate Bill </strong> </button>
+        <button id="preview-bill" type = "button" onClick={ handleGeneratePDF}> <strong> Preview Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
       </div>
     
     </div>
@@ -248,4 +269,4 @@ const AddNewInvoice = () => {
     )
 }
 
-export default AddNewInvoice
+export default AddNewInvoice;

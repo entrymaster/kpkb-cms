@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require('body-parser');
+
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
 const pendingTransactionsRouter = require("./routes/pendingTransactions.route");
@@ -21,6 +23,7 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/todoapiDB";
 any request that has a Content-Type of application/json. */
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
 app.use("/api/pendingTransactions",pendingTransactionsRouter);
