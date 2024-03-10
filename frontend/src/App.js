@@ -11,7 +11,11 @@ import Register from "./Register.js"
 import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
+import TransactionHistory from "./TransactionHistory.js";
+
 import ProtectedWrapper from "./ProtectedWrapper";
+import Verify from "./Verify.js"
+import VerifyOtp from "./otpverify.js"
 // import Layout from "./Layout.js";
 import "./App.css";
 import {
@@ -72,13 +76,15 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Login/>} />
+                    <Route path = "/otp" element = {<VerifyOtp/>}/>
+                    <Route path = "/verify" element = {<Verify/>}/>
                     <Route path="/register" element={<Register />} /> 
                       <Route path="/dashboard" element={<Dashboard/>}/> 
                       <Route path="/inventory" element={<Inventory/>}/>
                       <Route path="/invoice" element={<Invoice/>}/>
                       <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
                       <Route path="/contactUs" element={<ContactUs/>}/>
-
+                      <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
                       <Route path="/pdf-viewer" element={<InvoicePDF/>} />
                 </Routes>
             </Router>
