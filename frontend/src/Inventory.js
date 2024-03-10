@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import './Inventory.css';
 import { Link } from "react-router-dom";
 import AddItemDialog from './components/AddProduct';
@@ -6,6 +6,7 @@ import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateBatchDialog from './components/ViewBatch';
+import AuthContext from './AuthContext';
 const Inventory = () =>
 {
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
@@ -18,6 +19,7 @@ const Inventory = () =>
   const[addBatch,setAddBatch]=useState([]);
   const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
+  const authContext = useContext(AuthContext);
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
@@ -59,9 +61,12 @@ const Inventory = () =>
     fetchProductsData();
     // fetchSalesData();
   }, [updatePage]);
-  const userId = "user";
+  //const userId = "user";
+  const userId=authContext.user;
+  console.log(userId);
   const fetchProductsData = () => {
     fetch('http://localhost:5050/api/inventory/get/${userId}')
+    // fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
