@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require('body-parser');
+const { PDFDocument,rgb } = require('pdf-lib');
 
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
@@ -40,6 +41,32 @@ app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
 
+app.post('/api/generate-pdf', async (req, res) => {
+  try {
+    const { invoiceData } = req.body;
+
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+    const { width, height } = page.getSize();
+    page.drawText("hello ");
+    page.drawText('Invoice Details:', { x: 50, y: height - 100, color: rgb(0, 0, 0) });
+    page.drawText(`Customer Name: ${invoiceData.customerName}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+    page.drawText(`Invoice ID: ${invoiceData.invoiceID}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+    page.drawText(`Total Amount: ${invoiceData.totalAmount}`, { x: 50, y: height - 140, color: rgb(0, 0, 0) });
+
+    // Serialize the PDF to a buffer
+    const pdfBytes = await pdfDoc.save();
+
+    // Send the PDF as a response
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+    res.send(pdfBytes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 /* Connecting to the database and then starting the server. */

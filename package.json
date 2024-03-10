@@ -2,6 +2,7 @@
   "dependencies": {
     "@react-pdf/renderer": "^3.3.8",
     "bcrypt": "^5.1.1",
+    "file-saver": "^2.0.5",
     "react-modal": "^3.16.1"
   }
 }
