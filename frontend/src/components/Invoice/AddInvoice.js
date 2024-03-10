@@ -5,7 +5,7 @@ import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
 import AuthContext from '../../AuthContext';
-
+import { saveAs } from 'file-saver';
 const AddNewInvoice = () => {
   // const reload = () => {window.location.reload()};
   // reload();
@@ -118,6 +118,27 @@ const AddNewInvoice = () => {
       } catch (error) {
         console.error(error);
       }
+    }
+    const createPdf = () => {
+      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl,'_blank');
+        // saveAs(pdfBlob, 'invoice.pdf');
+      })
+      
+    }
+    
+    const downloadPdf = () => {
+      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
+      })
+      
     }
 
     const updateInventory = () => {
@@ -259,8 +280,8 @@ const AddNewInvoice = () => {
     </div>
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
-        <button id="preview-bill" type = "button" onClick={ handleGeneratePDF}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
+        <button id="preview-bill" type = "button" onClick={createPdf}> <strong> Preview Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button>
       </div>
     
     </div>
