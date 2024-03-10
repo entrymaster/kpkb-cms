@@ -19,9 +19,9 @@ const AddNewInvoice = () => {
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
-      console.log(value)
+      // console.log(value)
       const updatedItemList = [...invoiceData.itemList];
-      console.log(value['itemName'])
+      // console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
         updatedItemList[index].rate=value['salePrice'];
@@ -88,6 +88,7 @@ const AddNewInvoice = () => {
         body: JSON.stringify(invoiceData),
       })
         .then((result) => {
+          console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
         })
@@ -129,7 +130,7 @@ const AddNewInvoice = () => {
           return response.json();
         })
         .then(data => {
-          console.log(data.count);
+          // console.log(data.count);
           setInvoiceData({...invoiceData, invoiceID: data.count})
         })
         .catch(error => {
@@ -240,7 +241,7 @@ const AddNewInvoice = () => {
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
         <button id="preview-bill" type = "button" onClick={handleOpenPDF}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); console.log(invoiceData.itemList)}}> <strong> Generate Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); /*console.log(invoiceData.itemList)*/}}> <strong> Generate Bill </strong> </button>
       </div>
     
     </div>
