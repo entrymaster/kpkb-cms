@@ -20,9 +20,9 @@ const AddNewInvoice = () => {
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
-      console.log(value)
+      // console.log(value)
       const updatedItemList = [...invoiceData.itemList];
-      console.log(value['itemName'])
+      // console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
         updatedItemList[index].rate=value['salePrice'];
@@ -91,6 +91,7 @@ const AddNewInvoice = () => {
         body: JSON.stringify(invoiceData),
       })
         .then((result) => {
+          console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
         })
@@ -150,7 +151,7 @@ const AddNewInvoice = () => {
           return response.json();
         })
         .then(data => {
-          console.log(data.count);
+          // console.log(data.count);
           setInvoiceData({...invoiceData, invoiceID: data.count})
         })
         .catch(error => {

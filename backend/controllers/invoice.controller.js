@@ -1,10 +1,11 @@
 const Invoice = require("../models/invoice.model");
+const Customer = require("../models/customer.model");
 const { PDFDocument, rgb } = require('pdf-lib');
 
 // Add Post
 
 const addInvoice = async (req, res) => {
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
   
   const addInvoice = new Invoice({
     userID: req.body.userID,
@@ -20,9 +21,46 @@ const addInvoice = async (req, res) => {
     createdAt: req.body.createdAt,
   });
 
-  addInvoice
-    .save()
-    .then((result) => {
+  addInvoice.save()
+    .then(async(result) => {
+      const newInvoiceId = result._id;
+      console.log(newInvoiceId);
+      const savedInvoice = await Invoice.findById(newInvoiceId);
+      console.log(savedInvoice);
+      // const newCustomer = new Customer({
+      //   userID: 'user',
+      //   name: savedInvoice.customerName,
+      //   phoneNo: savedInvoice.phoneNo,
+      //   email: savedInvoice.customerEmail,
+      //   creditAmount: 0,
+      //   invoiceList: [savedInvoice._id], // Create a new array with the new invoice _id
+      // });
+      // const savedCustomer = await newCustomer.save();
+      // console.log(savedCustomer);
+
+      // Check if customer exists
+      const existingCustomer = await Customer.findOne({ email: savedInvoice.customerEmail,});
+
+      if (existingCustomer) {
+        // Update existing customer document
+        existingCustomer.invoiceList.push(savedInvoice._id); // Add new invoice _id to the customer's invoices array
+        const savedCustomer = await existingCustomer.save();
+        console.log(savedCustomer);
+      } else {
+        // Create a new customer document
+        const newCustomer = new Customer({
+          userID: 'user',
+          name: result.customerName,
+          phoneNo: result.phoneNo,
+          email: result.customerEmail,
+          creditAmount: 0,
+          invoiceList: [savedInvoice._id], // Create a new array with the new invoice _id
+        });
+        // console.log(newCustomer);
+        const savedCustomer = await newCustomer.save();
+        console.log(savedCustomer);
+      }
+
       res.status(200).send(result);
     })
     .catch((err) => {
