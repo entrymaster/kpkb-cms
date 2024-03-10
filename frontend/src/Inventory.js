@@ -61,8 +61,8 @@ const Inventory = () =>
     fetchProductsData();
     // fetchSalesData();
   }, [updatePage]);
-  //const userId = "user";
-  const userId=authContext.user;
+  const userId = "user";
+  // const userId=authContext.user;
   console.log(userId);
   const fetchProductsData = () => {
     fetch('http://localhost:5050/api/inventory/get/${userId}')
@@ -128,6 +128,12 @@ const deleteItem = (id) => {
           </p>
           <p>
           <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
+          <p>
+          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
+          </p>
+          <p>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
           </p>
       </div>
     </div>

@@ -106,7 +106,7 @@ const getAllProducts = async (req, res) => {
     userID: "user",
   }).sort({ itemName: 1 }); 
   // -1 for descending;
-  // console.log(req.params.userId);
+  console.log(req.params.userId);
   res.json(findAllProducts);
   //console.log(findAllProducts);
 };

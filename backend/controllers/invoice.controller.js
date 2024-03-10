@@ -80,7 +80,16 @@ const getInvoiceCount = async (req, res) => {
     res.status(500).json({ error: "Error fetching invoice count" });
   }
 };
-
+const getAllInvoice = async (req, res) => {
+  const findAllInvoices = await Invoice.find({
+    // userID: req.params.userId,
+    userID: "user",
+  }).sort({ customerName: 1 }); 
+  // -1 for descending;1 for ascending;
+  // console.log(req.params.userId);
+  res.json(findAllInvoices);
+  // console.log(findAllInvoices);
+};
 // const generatePDF = async (req, res) => {
 //   const invoiceData=req.body;
 //   const pdfDoc= await PDFDocument.create();
@@ -115,4 +124,4 @@ const getInvoiceCount = async (req, res) => {
 // }
 
 
-module.exports={addInvoice, getInvoiceCount};
+module.exports={addInvoice, getInvoiceCount,getAllInvoice};

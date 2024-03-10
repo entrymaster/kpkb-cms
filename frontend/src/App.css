@@ -14,6 +14,7 @@ body, html {
  .left{
     width:240px;
     color: white;
+    height:800px;
 }
  .left-top-box{
     background-color: #cfe8ff;

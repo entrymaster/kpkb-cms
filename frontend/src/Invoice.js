@@ -37,6 +37,12 @@ const Invoice = () => {
             <p>
               <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
             </p>
+            <p>
+          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
+          </p>
+          <p>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          </p>
           </div>
         </div>
       </div>
