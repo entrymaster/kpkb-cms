@@ -40,11 +40,11 @@ const getInvoiceCount = async (req, res) => {
   }
 };
 
-// const generatePDF = async (req, res) => {
-//   const invoiceData=req.body;
-//   const pdfDoc= await PDFDocument.create();
-//   const page = pdfDoc.addPage([600, 400]);
+const generatePDF = async (req, res) => {
+  const invoiceData=req.body;
+  const pdfDoc= await PDFDocument.create();
+  const page = pdfDoc.addPage([600, 400]);
 
-// }
+}
 
 module.exports={addInvoice, getInvoiceCount};

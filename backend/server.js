@@ -23,16 +23,12 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
-<<<<<<< HEAD
 app.use("/api/pendingTransactions",pendingTransactionsRouter);
-=======
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 
 
 
-
->>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/api/login", (req, res) => {
