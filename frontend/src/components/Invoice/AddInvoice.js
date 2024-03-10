@@ -6,6 +6,8 @@ import SearchableDropdown from './SearchableDropdown';
 import AuthContext from '../../AuthContext';
 
 const AddNewInvoice = () => {
+  // const reload = () => {window.location.reload()};
+  // reload();
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
   const [totalChange, setTotalChange] = useState(false);
@@ -22,8 +24,9 @@ const AddNewInvoice = () => {
       console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
-        updatedItemList[index].rate=value['salePrice']
-        updatedItemList[index].gst=value['itemGST']
+        updatedItemList[index].rate=value['salePrice'];
+        updatedItemList[index].gst=value['itemGST'];
+        updatedItemList[index]._id=value['_id'];
       }
     if (fieldName === 'quantity') {
       const quantity = parseFloat(value)

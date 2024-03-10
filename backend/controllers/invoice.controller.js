@@ -3,6 +3,7 @@ const Invoice = require("../models/invoice.model");
 // Add Post
 const addInvoice = async (req, res) => {
   console.log("req: ", req.body);
+  
   const addInvoice = new Invoice({
     userID: req.body.userID,
     invoiceID: req.body.invoiceID,

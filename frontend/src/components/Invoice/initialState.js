@@ -10,6 +10,6 @@ export const initialState = {
     notes:'Thanks for your visit. Come Again!',
     paymentMode:'Paid',
     discount: 0,
-    itemList:[{ _id:'', itemID:'', itemName:'', quantity:0, rate:0, gst:0, amount:0 }],
+    itemList:[{ _id: '', itemID:'', itemName:'', quantity:0, rate:0, gst:0, amount:0 }],
     createdAt: new Date(),
 }
