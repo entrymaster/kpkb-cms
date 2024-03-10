@@ -106,17 +106,15 @@ const AddNewInvoice = () => {
 
     const handleGeneratePDF = async () => {
       try {
-        // console.log(invoiceData);
-        const response = await axios.post('http://localhost:5050/api/invoice/generate-pdf', 
+        const response = await axios.post('http://localhost:5050/api/generate-pdf', 
         {invoiceData}, { responseType: 'blob' });
-  
+        // console.log('Response from server:', response);
         const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
         const pdfUrl = URL.createObjectURL(pdfBlob);
-  
-        // Open the PDF in a new window
-        const newWindow=window.open();
-        newWindow.location.href = pdfUrl;
-        // window.open(pdfUrl, '_blank');
+        console.log(pdfUrl);
+        // const newWindow=window.open();
+        // newWindow.location.href = pdfUrl;
+        window.open(pdfUrl, '_blank');
       } catch (error) {
         console.error(error);
       }

@@ -88,29 +88,31 @@ const getInvoiceCount = async (req, res) => {
 
 // }
 
-const generatePDF= async (req, res) => {
-  try {
-    const { invoiceData} = req.body;
-    console.log(invoiceData);
-    // Create a new PDF document
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage();
-    const { width, height } = page.getSize();
-    // page.drawText("hello ");
-    page.drawText('Invoice Details:', { x: 50, y: height - 100, color: rgb(0, 0, 0) });
-    page.drawText(`Customer Name: ${invoiceData.customerName}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
-    page.drawText(`Invoice ID: ${invoiceData.invoiceID}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
-    page.drawText(`Total Amount: ${invoiceData.totalAmount}`, { x: 50, y: height - 140, color: rgb(0, 0, 0) });
-    const pdfBytes = await pdfDoc.save();
+// const generatePDF= async (req, res) => {
+//   try {
+//     const { invoiceData} = req.body;
+//     const pdfDoc = await PDFDocument.create();
+//     const page = pdfDoc.addPage();
+//     const { width, height } = page.getSize();
+//     page.drawText("hello ");
+//     page.drawText('Invoice Details:', { x: 50, y: height - 100, color: rgb(0, 0, 0) });
+//     page.drawText(`Customer Name: ${invoiceData.customerName}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+//     page.drawText(`Invoice ID: ${invoiceData.invoiceID}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+//     page.drawText(`Total Amount: ${invoiceData.totalAmount}`, { x: 50, y: height - 140, color: rgb(0, 0, 0) });
+//     const pdfBytes = await pdfDoc.save();
+//     res.setHeader('Content-Type', 'application/pdf');
+//     res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+//     res.send(pdfBytes);
+//     // console.log(pdfBytes);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// };
 
-    // Send the PDF as a response
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
-    res.send(pdfBytes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-};
+// const fetchPDF= async (req, res) => {
+//   res.sendFile(`${__dirname}/invoice.pdf`)
+// }
 
-module.exports={addInvoice, getInvoiceCount, generatePDF};
+
+module.exports={addInvoice, getInvoiceCount};
