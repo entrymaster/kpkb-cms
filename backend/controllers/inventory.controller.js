@@ -102,10 +102,11 @@ const updateBatch = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   const findAllProducts = await Product.find({
-    //userID: req.params.userID,
+    // userID: req.params.userId,
     userID: "user",
   }).sort({ itemName: 1 }); 
   // -1 for descending;
+  // console.log(req.params.userId);
   res.json(findAllProducts);
   //console.log(findAllProducts);
 };
