@@ -1,8 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require('body-parser');
+const { PDFDocument,rgb } = require('pdf-lib');
+
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
+const pendingTransactionsRouter = require("./routes/pendingTransactions.route");
 const { updateSearchIndex } = require("./models/invoice.model");
 const registerRouter = require("./routes/register.route")
 const loginRouter = require("./routes/login.route")
@@ -14,27 +18,56 @@ const app = express();
 /* Loading the environment variables from the .env file. */
 require("dotenv").config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/todoapiDB";
 
     /* Telling the application to use the express.json() middleware. This middleware will parse the body of
 any request that has a Content-Type of application/json. */
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 app.use("/api/inventory", inventoryRouter);
 app.use("/api/invoice", invoiceRouter);
+app.use("/api/pendingTransactions",pendingTransactionsRouter);
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 app.use("/api/otp" , verifyRouter);
 
 
 
+// >>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
 
+app.post('/api/generate-pdf', async (req, res) => {
+  try {
+    const { invoiceData } = req.body;
+
+    // Create a new PDF document
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage();
+    const { width, height } = page.getSize();
+    page.drawText("hello ");
+    page.drawText('Invoice Details:', { x: 50, y: height - 100, color: rgb(0, 0, 0) });
+    page.drawText(`Customer Name: ${invoiceData.customerName}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+    page.drawText(`Invoice ID: ${invoiceData.invoiceID}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
+    page.drawText(`Total Amount: ${invoiceData.totalAmount}`, { x: 50, y: height - 140, color: rgb(0, 0, 0) });
+
+    // Serialize the PDF to a buffer
+    const pdfBytes = await pdfDoc.save();
+
+    // Send the PDF as a response
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
+    res.send(pdfBytes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 /* Connecting to the database and then starting the server. */

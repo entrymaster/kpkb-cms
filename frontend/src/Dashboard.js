@@ -1,9 +1,17 @@
 import React from 'react';
 import './Dashboard.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { performSignout } from './auth';
 
 function Dashboard() { 
-  return (<div className="Dashboard">
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    performSignout(navigate);
+  };
+
+  return (
+  <div className="Dashboard">
     <div className="container">
       <div className="left">
         <div className="left-top-box">
@@ -38,6 +46,9 @@ function Dashboard() {
           <p>
           <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
           </p>
+          <p>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          </p>
         </div>
       </div>
     </div>
@@ -56,6 +67,9 @@ function Dashboard() {
         {" "}
         Dashboard
       </span>
+      <div>
+          <button id="signOutBtn" onClick = {handleSignout}>Sign Out</button>
+      </div>
     </div>
     <div
       className="main-container"

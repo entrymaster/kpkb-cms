@@ -42,6 +42,64 @@ const updateProduct = async (req, res) => {
     res.status(402).send("Error");
   }
 };
+// const updateBatch = async (req, res) => {
+//   try {
+//     const { batchID, batchQty, expiryDate } = req.body;
+
+//     const updatedBatch = await Product.findOneAndUpdate(
+//       { "batchList._id": req.body._id }, // Find the product with the matching batchList _id
+//       { 
+//         $set: {
+//           "batchList.$.batchID": batchID,
+//           "batchList.$.batchQty": batchQty,
+//           "batchList.$.expiryDate": expiryDate,
+//         }
+//       },
+//       { new: true }
+//     );
+
+//     console.log(updatedBatch);
+//     res.json(updatedBatch);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(402).send("Error");
+//   }
+// };
+const updateBatch = async (req, res) => {
+  try {
+    const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
+
+    // Find the initial batchQty
+    
+    
+
+    // Find the difference (new batchQty - initial batchQty)
+    const quantityDifference = batchQty - initialBatchQty;
+
+    // Update the batch
+    const updatedBatch = await Product.findOneAndUpdate(
+      { "batchList._id": _id }, // Find the product with the matching batchList _id
+      { 
+        $set: {
+          "batchList.$.batchID": batchID,
+          "batchList.$.batchQty": batchQty,
+          "batchList.$.expiryDate": expiryDate,
+        }
+      },
+      { new: true }
+    );
+
+    // Increment the quantity by the difference (p) using MongoDB's incrementer
+    await Product.findByIdAndUpdate(_idProduct, { $inc: { quantity: quantityDifference } });
+
+    console.log(updatedBatch);
+    res.json(updatedBatch);
+  } catch (error) {
+    console.log(error);
+    res.status(402).send("Error");
+  }
+};
+
 const getAllProducts = async (req, res) => {
   const findAllProducts = await Product.find({
     //userID: req.params.userID,
@@ -52,6 +110,27 @@ const getAllProducts = async (req, res) => {
   //console.log(findAllProducts);
 };
 
+// const getAllProducts = async (req, res) => {
+//   try {
+//     const products = await Product.find({ userID: "user" });
+
+//     // Loop through each product and calculate the total quantity
+//     products.forEach(product => {
+//       let totalQuantity = 0;
+//       product.batchList.forEach(batch => {
+//         totalQuantity += batch.batchQty;
+//       });
+//       product.quantity = totalQuantity;
+//       // Save the updated product with the new quantity
+//       product.save();
+//     });
+
+//     res.json(products);
+//   } catch (error) {
+//     console.error('Error fetching products:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
 const searchProduct = async (req, res) => {
   try {
     const { userID, itemName } = req.query;
@@ -79,6 +158,43 @@ const deleteProduct =  async (req, res) => {
   );
   res.json({ deleteProduct});
 };
+const deleteBatch = async (req, res) => {
+  const { id, Batchid } = req.params; // Use _id instead of id
+
+  try {
+    // Find the product in the inventory
+    const product = await Product.findOne({ _id: id });
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Find the batch in the product's batchList
+    const batch = product.batchList.find((batch) => batch._id == Batchid);
+
+    if (!batch) {
+      return res.status(404).json({ error: 'Batch not found' });
+    }
+
+    // Decrease the product's quantity by the batchQty
+    product.quantity -= batch.batchQty;
+
+    // Remove the batch from the batchList
+    product.batchList = product.batchList.filter(
+      (batch) => batch._id != Batchid
+    );
+
+    // Save the updated product
+    const updatedProduct = await product.save();
+
+    res.json(updatedProduct);
+  } catch (error) {
+    console.error('Error deleting batch:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 const addBatchList = async (req, res) => {
   try {
     const { batchID, batchQty, expiryDate } = req.body;
@@ -133,59 +249,73 @@ const addBatchList = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };*/
-/*const updateItemQuantityInInvoice = async (req, res) => {
+const updateItemQuantityInInvoice = async (req, res) => {
   try {
-    const { itemName, requestedQuantity } = req.body;
+    const itemsToUpdate = req.body; // Assuming req.body is an array of items [{ itemName, requestedQuantity }, ...]
 
-    const inventory = await Inventory.findOne({ 'items.itemName': itemName });
+    // Fetch inventory items for all requested items
+    const inventoryItems = await Promise.all(
+      itemsToUpdate.map(async ({ itemName }) => {
+        const item = await Product.findOne({ 'itemName': itemName });
+        return item;
+      })
+    );
 
-    if (!inventory) {
-      return res.status(404).json({ error: 'Inventory not found' });
-    }
-
-    const itemIndex = inventory.items.findIndex(item => item.itemName === itemName);
-
-    if (itemIndex === -1) {
-      return res.status(404).json({ error: 'Item not found in the inventory' });
-    }
-
-    let remainingQuantity = requestedQuantity;
-
-    for (let batch of inventory.items[itemIndex].batchList) {
-      const availableQuantity = batchList.batchQty;
-
-      // If the requested quantity is less than or equal to the available quantity in the current batch
-      if (remainingQuantity <= availableQuantity) {
-        batchList.batchQty -= remainingQuantity;
-        remainingQuantity = 0; // Requested quantity fulfilled
-      } else {
-        // Move to the next batch
-        batchList.batchQty = 0;
-        remainingQuantity -= availableQuantity;
+    for (let i = 0; i < itemsToUpdate.length; i++) {
+      //const { itemName, requestedQuantity } = itemsToUpdate[i];
+      const itemName=itemsToUpdate[i].itemName;
+      const requestedQuantity=itemsToUpdate[i].quantity;
+      console.log("itemname down");
+      console.log(itemName);
+      const inventoryItem = inventoryItems[i];
+      if (!inventoryItem) {
+        return res.status(404).json({ error: `Inventory item not found for ${itemName}` });
       }
 
-      // If the updated quantity is 0, remove the batch from the batchList
-      if (batchList.batchQty === 0) {
-        inventory.items[itemIndex].batchList = inventory.items[itemIndex].batchList.filter(b => b.expiry !== batch.expiry);
+      let remainingQuantity = requestedQuantity;
+      console.log("remaining quantity down");
+      console.log(remainingQuantity);
+      for (let batchList of inventoryItem.batchList) {
+        const availableQuantity = batchList.batchQty;
+        console.log(batchList.expiryDate)
+        // If the requested quantity is less than or equal to the available quantity in the current batch
+        if (remainingQuantity <= availableQuantity) {
+          batchList.batchQty -= remainingQuantity;
+          remainingQuantity = 0; // Requested quantity fulfilled
+        } else {
+          // Move to the next batch
+          batchList.batchQty = 0;
+          remainingQuantity -= availableQuantity;
+        }
+        console.log(remainingQuantity);
+        console.log(batchList.batchQty);
+        // If the updated quantity is 0, remove the batch from the batchList
+        // if (batchList.batchQty === 0) {
+        //   inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batchList.expiry);
+        // }
+
+        if (remainingQuantity === 0) {
+          inventoryItem.quantity-=requestedQuantity;
+          break; // Exit the loop as the quantity has been updated for the current item
+        }
       }
 
-      if (remainingQuantity === 0) {
-        break; // Exit the loop as the quantity has been updated
+      if (remainingQuantity > 0) {
+        return res.status(400).json({ error: `Insufficient quantity in batchList for ${itemName}. Requested ${requestedQuantity}, available ${requestedQuantity - remainingQuantity}.` });
       }
     }
 
-    if (remainingQuantity > 0) {
-      return res.status(400).json({ error: `Insufficient quantity in batchList for ${itemName}. Requested ${requestedQuantity}, available ${requestedQuantity - remainingQuantity}.` });
-    }
+    const updatedInventoryItems = await Promise.all(inventoryItems.map(item => item.save()));
 
-    const updatedInvoice = await invoice.save();
+    // Assuming you have an invoice model and want to save it
+    // const updatedInvoice = await invoice.save();
 
-    res.json({ message: 'Item quantity in the inventory updated successfully', inventory: updatedInventory });
+    res.json({ message: 'Item quantities in the inventory updated successfully', inventory: updatedInventoryItems });
   } catch (error) {
-    console.error('Error updating item quantity in invoice:', error);
+    console.error('Error updating item quantities in invoice:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-};*/
+};
 
 module.exports={
   addProduct, 
@@ -194,5 +324,7 @@ module.exports={
   searchProduct,
   deleteProduct,
   addBatchList,
-  //updateItemQuantityInInvoice
+  updateBatch,
+  deleteBatch, 
+  updateItemQuantityInInvoice,
    };

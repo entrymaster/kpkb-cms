@@ -27,4 +27,54 @@
     padding: 10px 20px;
     /* margin-right: 50px; */
     margin-left: 200px;
-} 
+} .confirmation-dialog {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    width:400px;
+    height:150px
+  }
+  
+  .confirmation-dialog p {
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-dialog button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  
+
+.label-cell {
+  text-align: left;
+  font-size: 12px; /* Adjust the font size as needed */
+  font-weight: bold; /* Optionally make it bold */
+  padding-right: 10px; /* Adjust spacing between label and input */
+}
+.label-cell1 {
+    text-align: left;
+    background-color: #f0f0f0; 
+    font-size: 12px; /* Adjust the font size as needed */
+    font-weight: bold; /* Optionally make it bold */
+    padding-right: 10px; /* Adjust spacing between label and input */
+  }
+
+/* Additional styles for input cells */
+input {
+  width: 100%; /* Make the input take up the full width of the cell */
+
+/* Include padding and border in the width */
+}
+/* Add this to your existing CSS */
+.read-only-input {
+    background-color: #f0f0f0; /* Set background color to light white */
+  }
+  

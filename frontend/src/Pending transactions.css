@@ -49,16 +49,7 @@
     height: 60px;
     margin-bottom: 30px
 }
-.PendingTrans .credit-debit-left {
-    flex-grow: 1;
-    background-color: #179151;
-    height: 60px; 
-}
-.PendingTrans .credit-debit-right {
-    flex-grow: 1;
-    background-color: #d9d9d9;
-    height: 60px;
-}
+
 .PendingTrans .credit-debit-heading a{
     padding: 10px;
     display: inline-block;
@@ -146,7 +137,7 @@
 .PendingTrans th, td {
 text-align: left;
 padding: 16px;
-padding-left:50px;
+/* padding-left:50px; */
 }
 .PendingTrans .heading{
     text-decoration: none;
@@ -156,4 +147,28 @@ padding-left:50px;
     font-size: 40px;
     margin-left:0px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.PendingTrans .active-tablinks
+{
+    flex-grow: 1;
+    background-color: #179151;
+    height: 60px; 
+}
+
+.PendingTrans .tablinks
+{
+    flex-grow: 1;
+    background-color: #d9d9d9;
+    height: 60px;
+}
+
+.PendingTrans .tabcontent-active
+{
+    display:block;
+}
+
+.PendingTrans .tabcontent
+{
+    display:none;
 }

@@ -24,10 +24,11 @@ const supplierSchema = new Schema({
     type: Number,
     required: false,
   },
-  invoceList: {
-    type: [ { invoiceID: String } ],
-    required: false,
-  },
+  
 });
 
+// invoceList: {
+//   type: [ String ],
+//   required: false,
+// },
 module.exports = mongoose.model("Supplier", supplierSchema);

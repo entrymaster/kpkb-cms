@@ -1,28 +1,41 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import './AddInvoice.css';
+import axios from 'axios';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchableDropdown from './SearchableDropdown';
+import AuthContext from '../../AuthContext';
 
 const AddNewInvoice = () => {
+  // const reload = () => {window.location.reload()};
+  // reload();
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
   const [totalChange, setTotalChange] = useState(false);
   const [items, setAllItems] = useState([]);
+  const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
-  
+  // const history = useHistory();
+  const authContext = useContext(AuthContext);
+
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
-    const updatedItemList = [...invoiceData.itemList];
-    updatedItemList[index] = {
-      ...updatedItemList[index],
-      [fieldName]: value,
-    };
-    if (fieldName === 'quantity' || fieldName === 'rate' || fieldName === 'gst') {
-      const quantity = parseFloat(updatedItemList[index].quantity);
+      // console.log(value)
+      const updatedItemList = [...invoiceData.itemList];
+      // console.log(value['itemName'])
+      if(fieldName==='itemName'){
+        updatedItemList[index].itemName = value['itemName'];
+        updatedItemList[index].rate=value['salePrice'];
+        updatedItemList[index].gst=value['itemGST'];
+        updatedItemList[index]._id=value['_id'];
+      }
+    if (fieldName === 'quantity') {
+      const quantity = parseFloat(value)
       const rate = parseFloat(updatedItemList[index].rate);
       const gst = parseFloat(updatedItemList[index].gst);
       const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
       updatedItemList[index].amount = amount;
+      updatedItemList[index].quantity = quantity;
     }
   
     setInvoiceData({
@@ -31,6 +44,8 @@ const AddNewInvoice = () => {
     });
     setTotalChange(true);
   };
+
+  
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
@@ -54,6 +69,7 @@ const AddNewInvoice = () => {
   const handleAddField = (e) => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+    // setCurrItem();
   }
 
   const handleDeleteRow = (index) => {
@@ -75,19 +91,37 @@ const AddNewInvoice = () => {
         body: JSON.stringify(invoiceData),
       })
         .then((result) => {
+          console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
         })
-        .then(()=>{
+        .then(() => {
           setIncInvoiceID(true);
+          // window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
     };
 
+    const handleGeneratePDF = async () => {
+      try {
+        const response = await axios.post('http://localhost:5050/api/generate-pdf', 
+        {invoiceData}, { responseType: 'blob' });
+        // console.log('Response from server:', response);
+        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        console.log(pdfUrl);
+        // const newWindow=window.open();
+        // newWindow.location.href = pdfUrl;
+        window.open(pdfUrl, '_blank');
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     const updateInventory = () => {
-      fetch("http://localhost:5050/api/invoice/updateItemQuantity",{
+      fetch("http://localhost:5050/api/inventory/updateItemQuantity",{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -96,6 +130,7 @@ const AddNewInvoice = () => {
       })
       .then(() => {
         setUpdatePage(false);
+        // window.location.reload(); // Reload the webpage
       })
 
     }
@@ -114,7 +149,7 @@ const AddNewInvoice = () => {
           return response.json();
         })
         .then(data => {
-          console.log(data.count);
+          // console.log(data.count);
           setInvoiceData({...invoiceData, invoiceID: data.count})
         })
         .catch(error => {
@@ -142,12 +177,17 @@ const AddNewInvoice = () => {
       })
       .catch((err) => console.log(err));
     };
-    // useEffect(()=>{
-    //   console.log("items");
-    //   console.log(items);
-    // },[items])
 
-
+    const handleOpenPDF = () => {
+      window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
+    };
+    // const handleOpenPDF = () => {
+    //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
+    //   history.push({
+    //     pathname: '/invoice/pdf-viewer',
+    //     search: `?data=${encodeURIComponent(JSON.stringify(invoiceData))}`,
+    //   });
+    // };
 
     return (
       <>
@@ -170,22 +210,28 @@ const AddNewInvoice = () => {
     <table id="invoiceTable">
       <thead>
         <tr class="headers">
-          <th>ITEM DETAILS</th>
-          <th>QUANTITY</th>
-          <th>RATE</th>
-          <th>GST</th>
-          <th>AMOUNT</th>
-          <th>ACTION</th>
+          <th>Item Details</th>
+          <th>Quantity</th>
+          <th>Price (per unit)</th>
+          <th>GST (%)</th>
+          <th>Amount (&#8377;)</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
-          <td><input type="text" value={item.itemName} onChange={(e) => handleInputChange(e, index, 'itemName')} placeholder='Item Name'/></td>
+          <td placeholder='Select Item'>
+            <SearchableDropdown
+              options={items}
+              label="itemName"
+              id={`dropdown-${index}`}
+              selectedVal={currItem}
+              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} 
+            /></td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
-          <td><input type="number" value={item.rate} onChange={(e) => handleInputChange(e, index, 'rate')} placeholder='Price/unit'/></td>
-          <td><input type="number" value={item.gst} onChange={(e) => handleInputChange(e, index, 'gst')} placeholder='GST (%)'/></td>
-          {/* <td><input type="false" value={(item.quantity * item.rate) + ((item.quantity * item.rate) * item.gst) / 100} onChange={(e) => handleInputChange(e, index, 'amount')} placeholder='Amount'/></td> */}
+          <td>{item.rate}</td>
+          <td>{item.gst}</td>
           <td>{item.amount}</td>
 
           <td>
@@ -199,18 +245,27 @@ const AddNewInvoice = () => {
 
       </tbody>
     </table>
-      <button id="add-new-item" type = "button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
-      <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
-      <table className='totalAmt'>
-        <tr>
-          <td>Discount: <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/></td>
-          <td className="total-amt-box">Total Amount: {invoiceData.totalAmount}</td>
-        </tr>
-      </table>
+      <div className="bottom-controls">
+        <button id="add-new-item" type="button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
+        <div className='discount-input'>
+          Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
+        </div>
+      </div>
+      <div className="customer-notes">
+        <label htmlFor="customerNotes">Customer Notes:</label><br />
+        <textarea id="customerNotes" value={invoiceData.notes} onChange={(e) => handleInputChangeCust(e, 'notes')} placeholder="Enter notes here..." rows="4" cols="50"></textarea>
+      </div>
+      <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
+      <div className="bill-buttons">
+        <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
+        <button id="preview-bill" type = "button" onClick={ handleGeneratePDF}> <strong> Preview Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
+      </div>
+    
     </div>
     </>
     )
 }
 
-export default AddNewInvoice
+export default AddNewInvoice;

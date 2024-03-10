@@ -5,11 +5,14 @@ import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import Invoice from  "./Invoice.js";
+import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
 import Register from "./Register.js"
 import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
+import TransactionHistory from "./TransactionHistory.js";
+
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js"
 import VerifyOtp from "./otpverify.js"
@@ -21,6 +24,7 @@ import {
     Route,
     Navigate,
 } from "react-router-dom";
+import { setSignout } from './auth';
 
 const App = () => {
     const [user, setUser] = useState("");
@@ -43,11 +47,14 @@ const App = () => {
       setUser(newUser);
       callback();
     };
-  
-    const signout = () => {
+
+    const signout = (navigate) => {
       setUser(null);
       localStorage.removeItem("user");
+      navigate("/Login", { replace: true });
     };
+  
+    setSignout(signout);
   
     let value = { user, signin, signout };
   
@@ -77,6 +84,8 @@ const App = () => {
                       <Route path="/invoice" element={<Invoice/>}/>
                       <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
                       <Route path="/contactUs" element={<ContactUs/>}/>
+                      <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
+                      <Route path="/pdf-viewer" element={<InvoicePDF/>} />
                 </Routes>
             </Router>
         </AuthContext.Provider>

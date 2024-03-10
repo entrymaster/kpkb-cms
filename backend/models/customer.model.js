@@ -24,10 +24,14 @@ const customerSchema = new Schema({
     type: Number,
     required: false,
   },
+
   invoiceList: {
-    type: [ { invoiceID: String } ],
-    required: true,
+    type: [ {type : mongoose.Schema.Types.ObjectId, ref: 'Invoice'} ],
+    default: []
   },
+  
 });
+
+
 
 module.exports = mongoose.model("Customer", customerSchema);
