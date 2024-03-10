@@ -11,6 +11,8 @@ import Register from "./Register.js"
 import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
+import TransactionHistory from "./TransactionHistory.js";
+
 import ProtectedWrapper from "./ProtectedWrapper";
 // import Layout from "./Layout.js";
 import "./App.css";
@@ -78,7 +80,7 @@ const App = () => {
                       <Route path="/invoice" element={<Invoice/>}/>
                       <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
                       <Route path="/contactUs" element={<ContactUs/>}/>
-
+                      <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
                       <Route path="/pdf-viewer" element={<InvoicePDF/>} />
                 </Routes>
             </Router>
