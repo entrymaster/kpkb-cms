@@ -20,6 +20,7 @@ const AddNewInvoice = () => {
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
+    if(value != null){
       // console.log(value)
       const updatedItemList = [...invoiceData.itemList];
       // console.log(value['itemName'])
@@ -29,20 +30,22 @@ const AddNewInvoice = () => {
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
       }
-    if (fieldName === 'quantity') {
-      const quantity = parseFloat(value)
-      const rate = parseFloat(updatedItemList[index].rate);
-      const gst = parseFloat(updatedItemList[index].gst);
-      const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
-      updatedItemList[index].amount = amount;
-      updatedItemList[index].quantity = quantity;
-    }
+      if (fieldName === 'quantity') {
+        const quantity = parseFloat(value)
+        const rate = parseFloat(updatedItemList[index].rate);
+        const gst = parseFloat(updatedItemList[index].gst);
+        const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
+        updatedItemList[index].amount = amount;
+        updatedItemList[index].quantity = quantity;
+      }
   
-    setInvoiceData({
-      ...invoiceData,
-      itemList: updatedItemList
-    });
-    setTotalChange(true);
+      setInvoiceData({
+        ...invoiceData,
+        itemList: updatedItemList
+      });
+      setTotalChange(true);
+    }
+      
   };
 
   
@@ -190,6 +193,7 @@ const AddNewInvoice = () => {
       // fetchSalesData();
     }, [updatePage]);
     const userId='user';
+
     const fetchItemsData = () => {
       fetch(`http://localhost:5050/api/inventory/get/${userId}`)
       .then((response) => response.json())
@@ -248,7 +252,7 @@ const AddNewInvoice = () => {
               label="itemName"
               id={`dropdown-${index}`}
               selectedVal={currItem}
-              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} 
+              handleChange={(selectedItem) => handleInputChange({ target:{ value: selectedItem } }, index, 'itemName')} 
             /></td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td>{item.rate}</td>
