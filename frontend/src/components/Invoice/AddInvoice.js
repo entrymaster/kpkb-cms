@@ -16,8 +16,14 @@ const AddNewInvoice = () => {
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
   const [isPaid, setIsPaid] = useState(true);
+  const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   // const history = useHistory();
   const authContext = useContext(AuthContext);
+
+  const handleItemSelection = (selectedItem) => {
+    // Assuming selectedItem is an object containing the selected item details including available quantity
+    setAvailableQuantity(selectedItem.quantity);
+  };
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -30,14 +36,25 @@ const AddNewInvoice = () => {
         updatedItemList[index].rate=value['salePrice'];
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
-        const quantity = parseFloat(updatedItemList[index].quantity);
+        handleItemSelection(value);
+        let quantity = parseFloat(updatedItemList[index].quantity);
+        if(quantity > value['quantity']) {
+          alert("Quantity entered exceeds available stock !");
+          updatedItemList[index].quantity = 0;
+          quantity = 0;
+        };
         const rate = parseFloat(updatedItemList[index].rate);
         const gst = parseFloat(updatedItemList[index].gst);
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
         updatedItemList[index].amount = amount;
       }
       if (fieldName === 'quantity') {
-        const quantity = parseFloat(value)
+        let quantity = parseFloat(value);
+        if(quantity > availableQuantity) {
+          alert("Quantity entered exceeds available stock !");
+          updatedItemList[index].quantity = 0;
+          quantity = 0;
+        };
         const rate = parseFloat(updatedItemList[index].rate);
         const gst = parseFloat(updatedItemList[index].gst);
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
