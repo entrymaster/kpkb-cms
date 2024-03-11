@@ -15,6 +15,7 @@ const AddNewInvoice = () => {
   const [items, setAllItems] = useState([]);
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
+  const [isPaid, setIsPaid] = useState(true);
   // const history = useHistory();
   const authContext = useContext(AuthContext);
 
@@ -29,13 +30,18 @@ const AddNewInvoice = () => {
         updatedItemList[index].rate=value['salePrice'];
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
+        const quantity = parseFloat(updatedItemList[index].quantity);
+        const rate = parseFloat(updatedItemList[index].rate);
+        const gst = parseFloat(updatedItemList[index].gst);
+        const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
+        updatedItemList[index].amount = amount;
       }
       if (fieldName === 'quantity') {
         const quantity = parseFloat(value)
         const rate = parseFloat(updatedItemList[index].rate);
         const gst = parseFloat(updatedItemList[index].gst);
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
-        updatedItemList[index].amount = amount;
+        updatedItemList[index].amount = isNaN(amount) ? 0 : amount;
         updatedItemList[index].quantity = quantity;
       }
   
@@ -43,12 +49,10 @@ const AddNewInvoice = () => {
         ...invoiceData,
         itemList: updatedItemList
       });
-      setTotalChange(true);
     }
+    setTotalChange(true);
       
   };
-
-  
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
@@ -66,6 +70,7 @@ const AddNewInvoice = () => {
       subTotal = subTotal + arr[i].amount;
     }
     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : invoiceData.totalAmount;
     setTotalChange(false);
   }, [totalChange])
 
@@ -97,6 +102,7 @@ const AddNewInvoice = () => {
           console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
+          setCurrItem(null);
         })
         .then(() => {
           setIncInvoiceID(true);
@@ -214,6 +220,14 @@ const AddNewInvoice = () => {
     //   });
     // };
 
+    const togglePaymentMode = () => {
+      setInvoiceData(prevData => ({
+        ...prevData,
+        paymentMode: isPaid ? 'Credit' : 'Paid'
+      }));
+      setIsPaid(prevState => !prevState);
+    };
+
     return (
       <>
         <div className="customer-details">
@@ -283,7 +297,7 @@ const AddNewInvoice = () => {
       <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
       <div className="bill-buttons">
-        <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
+        <button id="add-as-credit" type = "button" onClick={togglePaymentMode}> <strong> {isPaid ? 'Add as Credit' : 'Set as Paid'} </strong> </button>
         <button id="preview-bill" type = "button" onClick={createPdf}> <strong> Preview Bill </strong> </button>
         <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button>
       </div>
