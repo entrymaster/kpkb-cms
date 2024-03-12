@@ -30,9 +30,9 @@ function Reports() {
             </div>
           </div>
           <div className="nav-panel">
-            <p style={{ backgroundColor: "#E0E0F7" }}>
-              <Link to="/" style={{ color: "black", textDecoration: "none" }}>
-                Reports
+            <p >
+              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                Dashboard
               </Link>
             </p>
             <p>
@@ -83,10 +83,10 @@ function Reports() {
                 Transaction History
               </Link>
             </p>
-            <p>
+            <p style={{ backgroundColor: "#E0E0F7" }}>
               <Link
                 to="/Reports"
-                style={{ color: "white", textDecoration: "none" }}
+                style={{ color: "black", textDecoration: "none" }}
               >
                 Reports
               </Link>
@@ -109,6 +109,11 @@ function Reports() {
           {" "}
           Reports
         </span>
+
+
+
+
+
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import ContactUs from "./ContactUs.js";
 import Invoice from "./Invoice.js";
 import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
+import Reports from "./Reports.js";
 import Register from "./Register.js";
 import Login from "./Login.js";
 import { useEffect, useState } from "react";
@@ -84,9 +85,10 @@ const App = () => {
           <Route
             path="/pendingTransactions"
             element={<PendingTransactions />}
-          /> 
+          />
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
+          <Route path="/Reports" element={<Reports />} />
           <Route path="/pdf-viewer" element={<InvoicePDF />} />
         </Routes>
       </Router>
