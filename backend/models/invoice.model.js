@@ -35,7 +35,7 @@ const invoiceSchema = new Schema({
   paymentMode: {
     type: String,
     default: "Paid",
-    // required: true,
+    required: false,
   },
   discount: {
     type: Number,

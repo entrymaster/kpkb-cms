@@ -31,7 +31,7 @@
 .PendingTrans .credit{
     font-size: 30px;
 }
-.PendingTrans .TotalCredit {
+.PendingTrans .TotalAmount {
     flex-grow: 1;
     padding: 20px;
     background-color: #89A8AF;
@@ -63,7 +63,6 @@
    
 }
 .PendingTrans th{
-    width: 25%; /* Set equal width for each heading column */
     text-align: center;
     padding: 10px;
 }

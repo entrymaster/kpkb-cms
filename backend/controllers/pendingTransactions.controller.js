@@ -1,11 +1,12 @@
 const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
+const mongoose = require("mongoose");
 
 //Add New Credit
 const addNewCredit = async (req, res) => {
    try{
     const newCredit = new Customer({
-      userID: req.body.partyID,
+      userID: 'user',
       name: req.body.partyName,
       phoneNo: req.body.phoneNumber,
       email: req.body.email,
@@ -24,7 +25,7 @@ const addNewCredit = async (req, res) => {
 const addNewDebit = async (req, res) => {
     try {
       const newDebit = new Supplier({
-        userID: req.body.partyID,
+        userID: 'user',
         name: req.body.partyName,
         phoneNo: req.body.phoneNumber,
         email: req.body.email,
@@ -95,9 +96,62 @@ const updateSupplier  = async (req, res) => {
     }
   };
 
+  const getCreditCustomers = async (req, res) => {
+    try{
+    const CreditCustomers = await Customer.find({ creditAmount : {$gt : 0}, userID : req.params.userID}).sort({ creditAmountmount: -1});
+    console.log(CreditCustomers); 
+    res.json(CreditCustomers);
+    }
+    catch (error) {
+      console.error("Error finding customers with credit:",error);
+      res.status(400).json({ error: "Failed to find customers with credit"});
+    }
+  };
+
+  const getDebitSuppliers = async (req, res) => {
+    try{
+    const DebitSuppliers = await Supplier.find({ debitAmount : {$gt : 0}, userID : req.params.userID}).sort({ debitAmount: -1 });
+    console.log(DebitSuppliers); 
+    res.json(DebitSuppliers);
+    }
+    catch (error) {
+      console.error("Error finding suppliers to debit:",error);
+      res.status(400).json({ error: "Failed to find suppliers to debit"});
+    }
+    console.log(req.params.userID);
+  };
+
+  const updateCustomerAmount = async (req, res) => {
+    try {
+     const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
+     console.log(updatedCust);
+     res.json(updatedCust);
+    }
+    catch(error) {
+     console.error("Error updating customer amount", error);
+     res.status(400).json({error: "Failed to update customer amount"});
+    }
+  };
+ 
+  const updateSupplierAmount = async (req, res) => {
+   try {
+    const updatedSupp = await Supplier.findByIdAndUpdate({ _id: req.body._id},{$inc : {debitAmount: req.body.amount}},{new:true});
+    console.log(updatedSupp);
+    res.json(updatedSupp);
+   }
+   catch(error) {
+    console.error("Error updating supplier amount", error);
+    res.status(400).json({error: "Failed to update supplier amount"});
+   }
+ };
+
 module.exports={
   addNewCredit,
   addNewDebit,
   updateCustomer ,
-  updateSupplier
+  updateSupplier,
+  getCreditCustomers,
+  getDebitSuppliers,
+  updateCustomerAmount,
+  updateSupplierAmount,
 };

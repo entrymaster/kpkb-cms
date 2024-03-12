@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./Pending transactions.css";
 import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
+import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 
@@ -11,8 +12,70 @@ const PendingTransactions = () => {
 
   const openTab = (tabName) => {
     setActiveTab(tabName);
+    handlePageUpdate();
   };
 
+  const [Entries, setEntries] = useState([]);
+
+  const userID = "user";
+
+  const [updatePage, setUpdatePage] = useState(true);
+
+  const [delay, setDelay] = useState(true);
+
+  const handlePageUpdate = () => {
+    setUpdatePage(!updatePage);
+  };
+
+  useEffect(() => {
+    fetchEntriesData();
+  }, [updatePage]);
+
+  const fetchEntriesData = () => {
+    if(activeTab === 'credit-tab')
+    {
+      fetchCreditCustomers();
+      handleTotalAmt();
+    }
+    else
+    {
+      fetchDebitSuppliers();
+      handleTotalAmt();
+    }
+  };
+
+  const fetchCreditCustomers = () => {
+    fetch(`http://localhost:5050/api/pendingTransactions/getCust/${userID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setEntries(data);
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const fetchDebitSuppliers = () => {
+    fetch(`http://localhost:5050/api/pendingTransactions/getSupp/${userID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setEntries(data);
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const [entryType, setEntryType] = useState("Customer");
+  const [operationType, setOperationType] = useState("Subtraction");
+  const [entryID, setEntryID] = useState([]);
+  const [isUpdateAmtDialogOpen, setIsUpdateAmtDialogOpen] = useState(false);
+
+  const showUpdateAmtDialog = () => {
+    setIsUpdateAmtDialogOpen(true);
+  };
+
+  const hideUpdateAmtDialog = () => {
+    setIsUpdateAmtDialogOpen(false);
+  };
 
   const [isAddNewDialogOpen, setIsAddNewDialogOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
@@ -41,7 +104,13 @@ const PendingTransactions = () => {
     setIsUpdateDialogOpen(false);
   };
 
-
+  const [totalAmt, setTotalAmt] = useState(0);
+  
+  const handleTotalAmt = () => {
+  const amounts = activeTab === 'credit-tab' ? Entries.map(Entry => Entry.creditAmount) : Entries.map(Entry => Entry.debitAmount);
+  const total = amounts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  setTotalAmt(total);
+  };
 
     return (
         <div className="PendingTrans">
@@ -93,9 +162,9 @@ const PendingTransactions = () => {
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search" />
       </div>
-      <div className="TotalCredit">
-        <h1>Total Credit:</h1>
-        <a className="credit"> 10000</a>
+      <div className="TotalAmount">
+        <h1>{activeTab === 'credit-tab' ? 'Total Credit' : 'Total Debit'}</h1>
+        <a className="credit">{totalAmt}</a>
       </div>
     </div>
   </div>
@@ -113,14 +182,35 @@ const PendingTransactions = () => {
   <table>
     <thead>
       <tr className="headers">
-        <th>Customer Name/ID</th>
+        <th>Customer Name</th>
         <th>Phone No.</th>
+        <th>Email</th>
         <th>Amount</th>
-        <th id="add-credit-button" onClick={showSelectTypeDialog}>
-              Add New Credit
+        <th id="add-credit-button" onClick={showAddNewDialog}>
+              Add New Customer
         </th>
       </tr>
     </thead>
+    <tbody>
+    {Entries && Entries.map((element, index) => {
+      return (
+        <tr key={element._id}>
+          <td>{element.name}</td>
+          <td>{element.phoneNo}</td>
+          <td>{element.email}</td>
+          <td>{element.creditAmount}</td>
+          <td> <button id="add-credit-button" onClick={()=>{setEntryType("Customer");setEntryID(element._id);setOperationType("Subtraction");showUpdateAmtDialog();}}>
+              Clear Dues
+              </button>
+          {"  "} {" "}
+          <button id="add-credit-button" onClick={()=>{setEntryType("Customer");setEntryID(element._id);setOperationType("Addition");showUpdateAmtDialog();}}>
+              Add to Credit
+              </button>
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
   </table>
   </div>
 
@@ -128,14 +218,35 @@ const PendingTransactions = () => {
   <table>
     <thead>
       <tr className="headers">
-        <th>Supplier Name/ID</th>
+        <th>Supplier Name</th>
         <th>Phone No.</th>
+        <th>Email</th>
         <th>Amount</th>
-        <th id="add-credit-button" onClick={showSelectTypeDialog}>
-              Add New Debit
+        <th id="add-credit-button" onClick={showAddNewDialog}>
+              Add New Supplier
         </th>
       </tr>
     </thead>
+    <tbody>
+    {Entries && Entries.map((element, index) => {
+      return (
+        <tr key={element._id}>
+          <td>{element.name}</td>
+          <td>{element.phoneNo}</td>
+          <td>{element.email}</td>
+          <td>{element.debitAmount}</td>
+          <td> <button id="add-credit-button" onClick={()=>{setEntryType("Supplier");setEntryID(element._id);setOperationType("Subtraction");showUpdateAmtDialog();}}>
+              Remove Amount
+              </button>
+          {"  "} {" "}
+          <button id="add-credit-button" onClick={()=>{setEntryType("Supplier");setEntryID(element._id);setOperationType("Addition");showUpdateAmtDialog();}}>
+              Add Amount
+              </button>
+          </td>
+        </tr>
+      );
+    })}
+    </tbody>
   </table>
   </div>
 
@@ -157,12 +268,14 @@ const PendingTransactions = () => {
     </Modal>
 
     <AddNewEntry
-        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'} handlePageUpdate={handlePageUpdate}
        /> 
 
     <UpdateEntry
-        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'}
+        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'} handlePageUpdate={handlePageUpdate}
        /> 
+
+    <UpdateAmt isVisible={isUpdateAmtDialogOpen} onCancel={hideUpdateAmtDialog} entryType={entryType} operationType={operationType} entryID={entryID} handlePageUpdate={handlePageUpdate}/>
 </div>
     )
 }

@@ -1,14 +1,12 @@
 import React,{useState} from 'react';
 import Modal from "react-modal";
 
-const AddNewEntry = ({ isVisible, onCancel, entryType }) => {
+const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
     const [Data, setData] = useState({
-        partyID: "",
         partyName: "",
         phoneNumber: "",
         email:"",
         amount:0,
-        invoiceID:""
     });
 
 const handleInputChange = (key, value) => {
@@ -33,7 +31,33 @@ const addNewCredit = () => {
         })
           .then((result) => {
             alert("Successfully added new customer!");
+            fetch("http://localhost:5050/api/invoice/add", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+                userID: result.body.userID,
+                invoiceID: 0,
+                customerName: result.body.name,
+                phoneNo: result.body.phoneNo,
+                customerEmail: result.body.email,
+                totalAmount: Data.amount,
+                notes: "Amount added to credit",
+                paymentMode: "Credit",
+                discount:0,
+                itemList: [],
+                createdAt: new Date(),
+            }
+            ),
           })
+            .then((result) => {
+              alert("Invoice ADDED");
+              console.log(result);
+              handlePageUpdate();
+            })
+            .catch((err) => console.log(err));
+      })
           .catch((err) => console.log(err));
       };
 
@@ -47,6 +71,7 @@ const addNewCredit = () => {
         })
           .then((result) => {
             alert("Successfully added new supplier!");
+            handlePageUpdate();
           })
           .catch((err) => console.log(err));
       };
@@ -63,9 +88,6 @@ ariaHideApp={false}
 <form
   onSubmit={(e) => {e.preventDefault();handleSave();onCancel();}}
 >
-              <label htmlFor="customerID"> ID:</label>
-              <input type="text" value={Data.partyID} name="partyID" onChange={(e) => handleInputChange(e.target.name, e.target.value) } />
-              <br />
               <label htmlFor="customerName"> Name:</label>
               <input type="text" value={Data.partyName} name="partyName" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
               <br />
@@ -74,9 +96,6 @@ ariaHideApp={false}
               <br />
               <label htmlFor="Email">Email:</label>
               <input type="text" value={Data.email} name="email" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
-              <br />
-              <label htmlFor="InvoiceID">Invoice Id:</label>
-              <input type="text" value={Data.invoiceID} name="invoiceID" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
               <br />
               <label htmlFor="amount">Amount:</label>
               <input type="text" value={Data.amount} name="amount" onChange={(e) =>handleInputChange(e.target.name, e.target.value)} />
