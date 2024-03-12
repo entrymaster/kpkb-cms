@@ -1,12 +1,31 @@
-
 import React from "react";
+import { useState } from "react";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
-
-
+import BarChart from "./components/Charts/BarChart1.js";
+import LineChart from "./components/Charts/LineChart1.js";
+import PieChart from "./components/Charts/PieChart.js";
+import { UserData } from "./Data";
 
 function Reports() {
-
+  const [userData, setUserData] = useState({
+    labels: UserData.map((data) => data.year),
+    datasets: [
+      {
+        label: "Users Gained",
+        data: UserData.map((data) => data.userGain),
+        backgroundColor: [
+          "rgba(75,192,192,1)",
+          "#ecf0f1",
+          "#50AF95",
+          "#f3ba2f",
+          "#2a71d0",
+        ],
+        borderColor: "black",
+        borderWidth: 2,
+      },
+    ],
+  });
   return (
     <div className="Reports">
       <div className="container">
@@ -30,7 +49,7 @@ function Reports() {
             </div>
           </div>
           <div className="nav-panel">
-            <p >
+            <p>
               <Link to="/" style={{ color: "white", textDecoration: "none" }}>
                 Dashboard
               </Link>
@@ -109,12 +128,20 @@ function Reports() {
           {" "}
           Reports
         </span>
-
-
-
-
-
       </div>
+        <div className="main-container">
+        <div style={{ width: 300 }}>
+            <PieChart chartData={userData} />
+          </div>
+          <div style={{ width: 300 }}>
+            <BarChart chartData={userData} />
+          </div>
+          <div style={{ width: 500 }}>
+            <LineChart chartData={userData} />
+          </div>
+          
+        </div>
+       
     </div>
   );
 }
