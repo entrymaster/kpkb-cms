@@ -49,6 +49,9 @@ function Dashboard() {
           <p>
           <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
           </p>
+          <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
+          </p>
         </div>
       </div>
     </div>
@@ -120,6 +123,32 @@ function Dashboard() {
           <br />₹ 1,18,729
         </p>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
   )

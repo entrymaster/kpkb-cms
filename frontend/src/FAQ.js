@@ -58,7 +58,7 @@ function FAQ() {
       className="main-container"
       style={{ display: "flex", justifyContent: "space-around", paddingTop: 20 }}
     >
-      // Change Password Section
+      {/* // Change Password Section */}
             <div>
             <p>
                 <strong>Q. How to change my password?</strong>
@@ -68,7 +68,7 @@ function FAQ() {
             </p>
             </div>
 
-            // Edit Profile Section
+            {/* // Edit Profile Section */}
             <div>
             <p>
                 <strong>Q. How to edit my profile?</strong>
@@ -78,7 +78,7 @@ function FAQ() {
             </p>
             </div>
 
-            // Notifications Section
+            {/* // Notifications Section */}
             <div>
             <p>
                 <strong>Q. How to switch OFF/ON the notifications?</strong>
@@ -88,7 +88,7 @@ function FAQ() {
             </p>
             </div>
 
-            // Inventory Search Section
+            {/* // Inventory Search Section */}
             <div>
             <p>
                 <strong>Q. How do I search items in the inventory?</strong>
@@ -96,7 +96,7 @@ function FAQ() {
                 <strong>A. Type the name of the item in the search box to search for it. You can also search by applying various filters using the filters icon.</strong>
             </div>
 
-            // Preview Bill Section
+            {/* // Preview Bill Section */}
             <div>
             <p>
                 <strong>Q. What is meant by Preview Bill on the Invoice Tab?</strong>
@@ -106,7 +106,7 @@ function FAQ() {
             </p>
             </div>
 
-            // Reporting Problems Section
+            {/* // Reporting Problems Section */}
             <div>
             <p>
                 <strong>Q. What to do in case of any problem with the software?</strong>
