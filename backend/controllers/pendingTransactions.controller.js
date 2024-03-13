@@ -1,5 +1,6 @@
 const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
+const Invoice = require("../models/invoice.model");
 const mongoose = require("mongoose");
 
 //Add New Credit
@@ -97,13 +98,39 @@ const updateSupplier  = async (req, res) => {
   const updateCustomerAmount = async (req, res) => {
     try {
      const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
+     const id=updatedCust.userID;
      console.log(updatedCust);
      res.json(updatedCust);
+     const count = await Invoice.countDocuments({userID : id});
+     const addInvoice = new Invoice({
+       userID: updatedCust.userID,
+       //invoiceID: req.body.invoiceID,
+       invoiceID: count,
+       customerName: updatedCust.name,
+       phoneNo: updatedCust.phoneNo,
+       customerEmail: updatedCust.email,
+       totalAmount: -req.body.amount,
+       //notes: req.body.notes,
+       paymentMode: "Credit dues cleared",
+       itemList: [],
+       //createdAt: req.body.createdAt,
+     });
+     addInvoice.save()
+     .then(async(result)=> {
+       const newInvoiceId = result._id;
+       updatedCust.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
+       const savedCustomer = await updatedCust.save();
+       console.log(savedCustomer);
+     })
+     .catch((err) => {
+       console.log(err);
+     });
     }
     catch(error) {
      console.error("Error updating customer amount", error);
      res.status(400).json({error: "Failed to update customer amount"});
     }
+
   };
  
   const updateSupplierAmount = async (req, res) => {
