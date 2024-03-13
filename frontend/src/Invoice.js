@@ -47,7 +47,7 @@ const Invoice = () => {
         </div>
       </div>
       <div className="top-panel">
-        <div style={{ textAlign: "left", marginLeft: 250, marginTop: 15 }}>
+        <div style={{ textAlign: "left", marginLeft: 10, marginTop: 15 }}>
           <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
         </div>
       </div>
