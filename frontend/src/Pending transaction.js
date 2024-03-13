@@ -3,8 +3,8 @@ import "./Pending transactions.css";
 import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
-import Modal from "react-modal";
 
 const PendingTransactions = () => {
 
@@ -20,8 +20,6 @@ const PendingTransactions = () => {
   const userID = "user";
 
   const [updatePage, setUpdatePage] = useState(true);
-
-  const [delay, setDelay] = useState(true);
 
   const handlePageUpdate = () => {
     setUpdatePage(!updatePage);
@@ -39,7 +37,7 @@ const PendingTransactions = () => {
   };
 
   const fetchCreditCustomers = () => {
-    fetch(`http://localhost:5050/api/pendingTransactions/getCust/${userID}`)
+    fetch(http://localhost:5050/api/pendingTransactions/getCust/${userID})
     .then((response) => response.json())
     .then((data) => {
       setEntries(data);
@@ -49,7 +47,7 @@ const PendingTransactions = () => {
   };
 
   const fetchDebitSuppliers = () => {
-    fetch(`http://localhost:5050/api/pendingTransactions/getSupp/${userID}`)
+    fetch(http://localhost:5050/api/pendingTransactions/getSupp/${userID})
     .then((response) => response.json())
     .then((data) => {
       setEntries(data);
@@ -61,6 +59,7 @@ const PendingTransactions = () => {
   const [entryType, setEntryType] = useState("Customer");
   const [operationType, setOperationType] = useState("Subtraction");
   const [entryID, setEntryID] = useState([]);
+  const [entry, setEntry] = useState([]);
   const [isUpdateAmtDialogOpen, setIsUpdateAmtDialogOpen] = useState(false);
 
   const showUpdateAmtDialog = () => {
@@ -73,23 +72,12 @@ const PendingTransactions = () => {
 
   const [isAddNewDialogOpen, setIsAddNewDialogOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
-  const [isSelectTypeDialogOpen, setSelectTypeDialogOpen] = useState(false);
 
-  const showSelectTypeDialog = () => {
-    setIsAddNewDialogOpen(false);
-    setIsUpdateDialogOpen(false);
-    setSelectTypeDialogOpen(true);
-  };
   const showAddNewDialog = () => {
-    setSelectTypeDialogOpen(false);
     setIsAddNewDialogOpen(true);
   };
   const showUpdateDialog = () => {
-    setSelectTypeDialogOpen(false);
     setIsUpdateDialogOpen(true);
-  };
-  const hideSelectTypeDialog = () => {
-    setSelectTypeDialogOpen(false);
   };
   const hideAddNewDialog = () => {
     setIsAddNewDialogOpen(false);
@@ -202,6 +190,10 @@ const PendingTransactions = () => {
           <button id="add-credit-button" onClick={()=>{setEntryType("Customer");setEntryID(element._id);setOperationType("Addition");showUpdateAmtDialog();}}>
               Add to Credit
               </button>
+           {" "} {" "}
+           <EditIcon style={{ color: 'blue', cursor: 'pointer' }}
+             onClick = {()=>{setEntryType("Customer");setEntry(element);showUpdateDialog();}}
+           />
           </td>
         </tr>
       );
@@ -238,6 +230,10 @@ const PendingTransactions = () => {
           <button id="add-credit-button" onClick={()=>{setEntryType("Supplier");setEntryID(element._id);setOperationType("Addition");showUpdateAmtDialog();}}>
               Add Amount
               </button>
+              {" "} {" "}{" "}{" "}
+           <EditIcon style={{ color: 'blue', cursor: 'pointer'}}
+             onClick = {()=>{setEntryType("Supplier");setEntry(element);showUpdateDialog();}}
+           />
           </td>
         </tr>
       );
@@ -246,32 +242,16 @@ const PendingTransactions = () => {
   </table>
   </div>
 
-  <Modal
-        isOpen={isSelectTypeDialogOpen}
-        contentLabel="Select Type Dialog"
-        shouldCloseOnOverlayClick={true}
-        ariaHideApp={false}
-      >
-        <button onClick={showAddNewDialog}>
-          Add New Entry
-        </button>
-       <br/>
-        <button onClick={showUpdateDialog}>
-          Update Entry
-        </button>
-       <br/>
-        <button onClick={hideSelectTypeDialog}>Close</button>
-    </Modal>
-
     <AddNewEntry
-        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'} handlePageUpdate={handlePageUpdate}
+        isVisible={isAddNewDialogOpen} onCancel={hideAddNewDialog} entryType= {entryType} handlePageUpdate={handlePageUpdate}
        /> 
 
     <UpdateEntry
-        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {activeTab === 'credit-tab' ? 'Customer' : 'Supplier'} handlePageUpdate={handlePageUpdate}
+        isVisible={isUpdateDialogOpen} onCancel={hideUpdateDialog} entryType= {entryType} entry={entry} handlePageUpdate={handlePageUpdate}
        /> 
 
     <UpdateAmt isVisible={isUpdateAmtDialogOpen} onCancel={hideUpdateAmtDialog} entryType={entryType} operationType={operationType} entryID={entryID} handlePageUpdate={handlePageUpdate}/>
+
 </div>
     )
 }
