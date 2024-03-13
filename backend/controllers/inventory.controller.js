@@ -102,15 +102,22 @@ const updateBatch = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  const findAllProducts = await Product.find({
-    // userID: req.params.userId,
-    userID: "user",
-  }).sort({ itemName: 1 }); 
-  // -1 for descending;
-  console.log(req.params.userId);
-  res.json(findAllProducts);
-  //console.log(findAllProducts);
+  try {
+    const allProducts = await Product.find({ userID: "user" });
+
+    // Sort the products based on the expiry date of the first batch in each item
+    allProducts.sort((a, b) => {
+      const expiryDateA = a.batchList.length > 0 ? new Date(a.batchList[0].expiryDate) : new Date();
+      const expiryDateB = b.batchList.length > 0 ? new Date(b.batchList[0].expiryDate) : new Date();
+      return expiryDateA - expiryDateB;
+    });
+
+    res.json(allProducts);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching products', message: error.message });
+  }
 };
+
 
 // const getAllProducts = async (req, res) => {
 //   try {
@@ -202,12 +209,10 @@ const addBatchList = async (req, res) => {
     const { batchID, batchQty, expiryDate } = req.body;
     const updatedProduct = await Product.findByIdAndUpdate(
       { _id: req.body._id },
-      // 
       { 
-        $push: { batchList: { batchID, batchQty, expiryDate } },
+        $push: { batchList: { $each: [{ batchID, batchQty, expiryDate }], $sort: { expiryDate: 1 } } },
         $inc: { quantity: batchQty } // Increment the stock by batchQty
       },
-      
       { new: true }
     );
     console.log(Product);
@@ -216,6 +221,7 @@ const addBatchList = async (req, res) => {
     res.status(500).json({ error: 'Error adding batchList', message: error.message });
   }
 };
+
 /*const updateBatchList = async (req, res) => {
   try {
     const { batchId, batchQty, expiryDate } = req.body;
@@ -295,7 +301,10 @@ const updateItemQuantityInInvoice = async (req, res) => {
         // if (batchList.batchQty === 0) {
         //   inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batchList.expiry);
         // }
-
+        if (batchList.batchQty === 0) {
+          // Remove the batch from the batchList if quantity becomes zero
+          inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiryDate !== batchList.expiryDate);
+        }
         if (remainingQuantity === 0) {
           inventoryItem.quantity-=requestedQuantity;
           break; // Exit the loop as the quantity has been updated for the current item
