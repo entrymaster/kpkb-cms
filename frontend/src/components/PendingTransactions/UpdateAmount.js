@@ -22,7 +22,7 @@ const UpdateAmt = ({isVisible, onCancel, entryType, operationType, entryID, hand
             setData({...Data, amount: Data.amount < 0 ? Data.amount : -Data.amount});
     };
 
-    useEffect(() => {setAmountSign();},[Data]);
+    useEffect(() => {setAmountSign();},[DisplayData]);
 
     const updateAmount = () => {
         onCancel();
