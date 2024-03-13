@@ -66,7 +66,7 @@ const handleCustomerName = (e) => {
           </div>
           <div className="nav-panel">
              <p>
-              <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+              <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
               </p>
               <p>
               <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
