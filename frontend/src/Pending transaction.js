@@ -37,7 +37,7 @@ const PendingTransactions = () => {
   };
 
   const fetchCreditCustomers = () => {
-    fetch(http://localhost:5050/api/pendingTransactions/getCust/${userID})
+    fetch('http://localhost:5050/api/pendingTransactions/getCust/${userID}')
     .then((response) => response.json())
     .then((data) => {
       setEntries(data);
@@ -47,7 +47,7 @@ const PendingTransactions = () => {
   };
 
   const fetchDebitSuppliers = () => {
-    fetch(http://localhost:5050/api/pendingTransactions/getSupp/${userID})
+    fetch('http://localhost:5050/api/pendingTransactions/getSupp/${userID}')
     .then((response) => response.json())
     .then((data) => {
       setEntries(data);
