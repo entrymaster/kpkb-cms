@@ -7,6 +7,8 @@ const TransactionHistory = () =>
 {
   const [updatePage, setUpdatePage] = useState(true);
   const [transactions, setAllTransactions] = useState([]);
+  const [customerName, setCustomerName] = useState();
+  // const [products, setAllProducts] = useState([]);
   const authContext = useContext(AuthContext);
 
 
@@ -31,14 +33,20 @@ const TransactionHistory = () =>
     .catch((err) => console.log(err));
    
 };
-// const fetchSearchData = () => {
-//   fetch('http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}')
-//     .then((response) => response.json())
-//     .then((data) => {
-//       setAllProducts(data);
-//     })
-//     .catch((err) => console.log(err));
-// };
+const fetchSearchData = () => {
+  fetch(`http://localhost:5050/api/invoice/search/${userId}?customerName=${customerName}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setAllTransactions(data);
+      console.log(data);
+     
+    })
+    .catch((err) => console.log(err));
+};
+const handleCustomerName = (e) => {
+  setCustomerName(e.target.value);
+  fetchSearchData();
+};
     return (
       <div className="TransactionHistory">
       <div className="container">
@@ -92,8 +100,8 @@ const TransactionHistory = () =>
         <div className="top">
           <div className="search-bar-container">
             <input type="text" className="search-bar" placeholder="Search"
-            // value={itemName}
-            // onChange={handleItemName}
+            value={customerName}
+            onChange={handleCustomerName}
             />
             <div className="search-icon">🔍</div>
             {/* <div className="circle" /> */}
