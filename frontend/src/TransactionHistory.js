@@ -80,12 +80,12 @@ const handleCustomerName = (e) => {
               <p>
               <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
               </p>
-              <p>
-              <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
-              </p>
               <p style={{ backgroundColor: "#E0E0F7" }}>
               <Link to="/TransactionHistory" style={{color: "black", textDecoration: 'none'}}>Transaction History</Link>
               </p>
+              <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
+          </p>
           </div>
         </div>
       </div>
