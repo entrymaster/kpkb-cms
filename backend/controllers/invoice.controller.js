@@ -83,6 +83,7 @@ const getInvoiceCount = async (req, res) => {
 const getAllInvoice = async (req, res) => {
   const findAllInvoices = await Invoice.find({
     // userID: req.params.userId,
+
     userID: "user",
   }).sort({ customerName: 1 }); 
   // -1 for descending;1 for ascending;
@@ -97,8 +98,8 @@ const searchInvoice = async (req, res) => {
 
     // Create a query object based on parameters
     const query = {
-      // userID: "user",
-      userID: req.params.userID,
+      userID: "user",
+      // userID: req.params.userID,
       customerName: { $regex: new RegExp(customerName, 'i') }, // Case-insensitive string search
     };
 

@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
@@ -15,6 +16,9 @@ function Register() {
   });
 
   const navigate = useNavigate();
+  
+  const location = useLocation();
+  const { email } = location.state || {}; // Destructure email from location state
 
   const handleInputChange = (e) => {
     const maxLength = 35; // Maximum allowed length
@@ -53,8 +57,11 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    registerUser();
   };
-
+  if (!(location.state && location.state.email)) {
+    return <Navigate to="/verify" replace/>;
+  }
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
@@ -94,7 +101,7 @@ function Register() {
               </div>
               <br></br>
               <div>
-                <input
+              <input
                   id="email-address"
                   name="email"
                   type="email"
@@ -102,8 +109,8 @@ function Register() {
                   required
                   className="input-box"
                   placeholder="Email address"
-                  value={form.email}
-                  onChange={handleInputChange}
+                  value={email || ''} // Set value to email received from location state
+                  disabled // Disable input to prevent user modification
                 />
                 <br></br>
                 <br></br>
@@ -180,7 +187,6 @@ function Register() {
                 <button
                   type="submit"
                   id="btn1"
-                  onClick={registerUser}
                 >
                   Sign up
                 </button>
