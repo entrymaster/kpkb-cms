@@ -71,7 +71,7 @@ const handleCustomerName = (e) => {
               <p>
               <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
               </p>
-              <p style={{ backgroundColor: "#E0E0F7" }}>
+              <p>
               <Link to="/inventory" style={{color: "white", textDecoration: 'none'}}>Inventory</Link>
               </p>
               <p>
@@ -83,7 +83,7 @@ const handleCustomerName = (e) => {
               <p>
               <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
               </p>
-              <p>
+              <p style={{ backgroundColor: "#E0E0F7" }}>
               <Link to="/TransactionHistory" style={{color: "black", textDecoration: 'none'}}>Transaction History</Link>
               </p>
           </div>
