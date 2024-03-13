@@ -33,15 +33,9 @@ const PendingTransactions = () => {
 
   const fetchEntriesData = () => {
     if(activeTab === 'credit-tab')
-    {
       fetchCreditCustomers();
-      handleTotalAmt();
-    }
     else
-    {
       fetchDebitSuppliers();
-      handleTotalAmt();
-    }
   };
 
   const fetchCreditCustomers = () => {
@@ -111,6 +105,8 @@ const PendingTransactions = () => {
   const total = amounts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   setTotalAmt(total);
   };
+
+  useEffect(() => {handleTotalAmt();},[Entries]);
 
     return (
         <div className="PendingTrans">

@@ -15,10 +15,18 @@ const handleInputChange = (key, value) => {
       };
 
 const handleSave = () => {
+  if(Data.amount > 0)
+  {
         if(entryType === "Customer")
           addNewCredit();
         else
           addNewDebit();
+  }
+  else
+  {
+    onCancel();
+    alert("Amount must greater than zero!");
+  }
 };
 
 const addNewCredit = () => {
@@ -55,6 +63,8 @@ const addNewCredit = () => {
               alert("Invoice ADDED");
               console.log(result);
               handlePageUpdate();
+              onCancel();
+              setData({partyName:"", phoneNumber:"",email:"",amount:0});
             })
             .catch((err) => console.log(err));
       })
@@ -72,6 +82,8 @@ const addNewCredit = () => {
           .then((result) => {
             alert("Successfully added new supplier!");
             handlePageUpdate();
+            onCancel();
+            setData({partyName:"", phoneNumber:"",email:"",amount:0});
           })
           .catch((err) => console.log(err));
       };
