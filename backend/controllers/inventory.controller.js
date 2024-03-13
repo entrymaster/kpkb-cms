@@ -4,7 +4,8 @@ const Product = require("../models/inventory.model");
 const addProduct = async (req, res) => {
   console.log("req: ", req.body.userID);
   const addProduct = new Product({
-    userID: req.body.userID,
+    // userID: req.body.userID,
+    userID:"user",
     itemID: req.body.itemID,
     itemName: req.body.itemName,
     salePrice: req.body.salePrice,
@@ -134,17 +135,17 @@ const getAllProducts = async (req, res) => {
 // };
 const searchProduct = async (req, res) => {
   try {
-    const { userID, itemName } = req.query;
+    const {userID, itemName } = req.query;
 
     // Create a query object based on parameters
     const query = {
-      userID: req.params.userID,
+      // userID: req.params.userID,
+      userID: "user",
       itemName: { $regex: new RegExp(itemName, 'i') }, // Case-insensitive string search
     };
 
     // Execute the query
     const records = await Product.find(query);
-
     // Send the results
     res.json(records);
   } catch (error) {

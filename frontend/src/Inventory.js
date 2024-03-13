@@ -77,10 +77,11 @@ const Inventory = () =>
 
 };
 const fetchSearchData = () => {
-  fetch('http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}')
+  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
+      console.log(data);
     })
     .catch((err) => console.log(err));
 };
