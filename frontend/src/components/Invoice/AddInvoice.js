@@ -262,12 +262,26 @@ const AddNewInvoice = () => {
     
     
     const downloadPdf = () => {
-      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      getUserData()
+        .then(() => {
+          // userData will be available here as getUserData() has completed execution
+          // console.log(userData);
+          
+          const requestData = {
+            invoiceData: invoiceData,
+            userData: userData
+          };
+          console.log(requestData);
+          return requestData;
+        })
+        .then((requestData) => {
+      axios.post('http://localhost:5050/api/create-pdf', requestData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
       })
+        })
     }
 
     const updateInventory = () => {
