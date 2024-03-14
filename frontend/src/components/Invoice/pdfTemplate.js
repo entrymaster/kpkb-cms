@@ -1,6 +1,30 @@
+/**
+ * Generates an HTML template for an invoice.
+ * @param {object} params - An object containing the invoice data.
+ * @param {string} params.userID - The ID of the user.
+ * @param {string} params.invoiceID - The ID of the invoice.
+ * @param {string} params.customerName - The name of the customer.
+ * @param {string} params.phoneNo - The phone number of the customer.
+ * @param {string} params.customerEmail - The email address of the customer.
+ * @param {number} params.totalAmount - The total amount of the invoice.
+ * @param {string} params.notes - Any notes related to the invoice.
+ * @param {string} params.paymentMode - The payment mode of the invoice (e.g., 'Credit' or 'Paid').
+ * @param {number} params.discount - The discount applied to the invoice.
+ * @param {Array<object>} params.itemList - An array of item objects representing the items in the invoice.
+ * @param {Date} params.createdAt - The date when the invoice was created.
+ * @returns {string} The generated HTML template for the invoice.
+ */
+
 module.exports = ({userID, invoiceID, customerName, phoneNo, customerEmail, totalAmount, notes, paymentMode, discount, itemList, createdAt }) => {
     const today = new Date();
-
+    const itemRows = itemList.map((item, index) => `
+        <tr>
+            <td>${item.itemName}</td>
+            <td>${item.quantity}</td>
+            <td>${item.rate}</td>
+            <td>${item.amount}</td>
+        </tr>
+    `).join('');
     return `<!DOCTYPE html>
 <html>
 <head>
@@ -135,12 +159,7 @@ img {
     <th>Price</th>
     <th style="text-align: center">Amount</th>
   </tr>
-  <tr>
-    <td>Heroku single Dyno (Hobby) </td>
-    <td>1</td>
-    <td>84.00</td>
-    <td style="text-align: center">84.00</td>
-  </tr>
+  ${itemRows}
 
 </table>
 
