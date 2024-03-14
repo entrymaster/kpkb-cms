@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -14,14 +14,40 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import './Navbar.css';
-
+import { performSignout } from './auth';
 const iconSize = 32;
+
 
 const Navbar = () => {
     const location = useLocation();
-    const isActive = (pathname) => {
-        return location.pathname === pathname ? 'active' : '';
+    const navigate = useNavigate();
+
+const handleSignout = () => {
+  performSignout(navigate);
+};
+    const getPageTitle = () => {
+        switch(location.pathname) {
+            case '/dashboard':
+                return 'Dashboard';
+            case '/invoice':
+                return 'Invoice';
+            case '/inventory':
+                return 'Inventory';
+            case '/pendingTransactions':
+                return 'Pending Transactions';
+            case '/TransactionHistory':
+                return 'Transaction History';
+            case '/Reports':
+                return 'Reports';
+            case '/FAQs':
+                return 'FAQs';
+            case '/contactUs':
+                return 'Contact Us';
+            default:
+                return '';
+        }
     };
+
     return (
         <>
         <div className="container">
@@ -91,7 +117,7 @@ const Navbar = () => {
       </div>
       <div className="top-panel">
         <div style={{ textAlign: "left", left: 10, marginLeft: 10, marginTop: 25 }}>
-            <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
+            <h1 style={{ color: "#fff", fontSize: 40 }}>{getPageTitle()}</h1>
         </div>
         <div style={{ position: 'absolute', top: 60, right: 10 }}>
           <Tooltip title="Notifications">
@@ -106,7 +132,9 @@ const Navbar = () => {
               </Link>
           </Tooltip>
           <Tooltip title="Logout">
-              <LogoutIcon style={{ color: "#fff", fontSize: iconSize }} />
+          <button onClick={handleSignout} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+        <LogoutIcon style={{ color: "#fff", fontSize: iconSize }} />
+      </button>
           </Tooltip>
         </div>
       </div>
