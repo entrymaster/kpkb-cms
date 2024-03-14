@@ -181,13 +181,21 @@ const getDashboardData = async (req, res) => {
     // Get today's date
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const startOfYesterday = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
     console.log("today");
     console.log(today);
     console.log(startOfDay);
+    console.log(startOfYesterday);
     // Find all invoices for the user with today's date
     const invoices = await Invoice.find({
       userID: userId,
       createdAt: { $gte: startOfDay }
+    });
+    const yesterdayInvoices = await Invoice.find({
+      userID: userId,
+      createdAt: { $gte: startOfYesterday, $lt: startOfDay }
     });
     console.log(invoices);
     // Calculate the sum of selling prices
@@ -195,9 +203,10 @@ const getDashboardData = async (req, res) => {
     // Calculate the sum of cost prices
     
     const totalCostPrice = invoices.reduce((total, invoice) => total + invoice.totalCostPrice, 0);
-
+    const numberOfInvoices = invoices.length;
+    const totalSellingPriceYesterday = yesterdayInvoices.reduce((total, invoice) => total + invoice.totalSales, 0);
     // Return the sums as response
-    res.json({ totalSellingPrice, totalCostPrice });
+    res.json({ totalSellingPrice, totalCostPrice, numberOfInvoices, totalSellingPriceYesterday });
   } catch (error) {
     console.error('Error fetching invoices:', error);
     res.status(500).json({ error: 'Internal server error' });

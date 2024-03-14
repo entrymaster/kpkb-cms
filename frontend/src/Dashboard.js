@@ -31,6 +31,8 @@ function Dashboard() {
       // setAllProducts(data);
       setTodayProfit(data.totalSellingPrice-data.totalCostPrice);
       setTodaySales(data.totalSellingPrice);
+      setTodayBills(data.numberOfInvoices);
+      setYesterdaySales(data.totalSellingPriceYesterday)
       console.log(data);
     })
     .catch((err) => console.log(err));
@@ -108,8 +110,8 @@ function Dashboard() {
             fontFamily: '"Times New Roman", Times, serif'
           }}
         >
-          Today's Sales {todaySales}
-          <br />₹ 1,08,324
+          Today's Sales 
+          <br />₹ {todaySales}
         </p>
       </div>
       <div className="data-box">
@@ -119,8 +121,8 @@ function Dashboard() {
             fontFamily: '"Times New Roman", Times, serif'
           }}
         >
-          Today's Profit {todayProfit}
-          <br />₹ 15,240
+          Today's Profit
+          <br />₹ {todayProfit}
         </p>
       </div>
       <div className="data-box">
@@ -132,7 +134,7 @@ function Dashboard() {
         >
           Today's Bills
           <br />
-          40
+          {todayBills}
         </p>
       </div>
       <div className="data-box">
@@ -143,7 +145,7 @@ function Dashboard() {
           }}
         >
           Yesterday's Sales
-          <br />₹ 1,18,729
+          <br />₹ {yesterdaySales}
         </p>
       </div>
 
