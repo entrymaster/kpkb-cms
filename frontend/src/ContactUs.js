@@ -1,106 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./ContactUs.css";
-
+import Navbar from "./Navbar";
+import "./ContactUs.css"; 
 const ContactUs = () => {
   return (
     <div className="ContactUs">
-      {" "}
-      <div className="container">
-        <div className="left">
-          <div className="left-top-box">
-            <img src="logo1.png" alt="logo" width={220} height={80} />
-          </div>
-          <div className="left-mid-box">
-            <img
-              src="profile_icon.png"
-              alt="Profile icon"
-              width={80}
-              height={80}
-            />
-            <div className="mid-text">
-              <p>
-                Firm Name
-                <br />
-                GST Number
-              </p>
-            </div>
-          </div>
-          <div className="nav-panel">
-            <p>
-              <Link
-                to="/dashboard"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Dashboard
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/invoice"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Invoice
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/inventory"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Inventory
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/pendingTransactions"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Pending Transactions
-              </Link>
-            </p>
-            <p style={{ backgroundColor: "#E0E0F7" }}>
-              <Link
-                to="/contactUs"
-                style={{ color: "black", textDecoration: "none" }}
-              >
-                Contact Us
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/TransactionHistory"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Transaction History
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/Reports"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Reports
-              </Link>
-            </p>
-          </div>
+      <Navbar />
+      {/* <div className="container">
+    <div className="left">
+      <div className="left-top-box">
+        <img src="logo1.png" alt="logo" width={220} height={80} />
+      </div>
+      <div className="left-mid-box">
+        <img src="profile_icon.png" alt="Profile icon" width={80} height={80} />
+        <div className="mid-text">
+          <p>
+            Firm Name
+            <br />
+            GST Number
+          </p>
         </div>
       </div>
-      <div
-        className="top-panel"
-        style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
-      >
-        <span
-          style={{
-            paddingInlineStart: "0.2cm",
-            color: "white",
-            fontSize: "1cm",
-            fontFamily: '"Times New Roman"',
-          }}
-        >
-          Contact Us
-        </span>
+      <div className="nav-panel">
+      <p>
+          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          </p>
+          <p>
+          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
+          </p>
+          <p>
+          <Link to="/inventory" style={{color: "white", textDecoration: 'none'}}>Inventory</Link>
+          </p>
+          <p>
+          <Link to="/pendingTransactions" style={{color: "white", textDecoration: 'none'}}>Pending Transactions</Link>
+          </p>
+          <p style={{ backgroundColor: "#E0E0F7" }}>
+          <Link to="/contactUs" style={{color: "black", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
+          <p>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          </p>
+          <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
+          </p>
       </div>
+    </div>
+  </div>
+  <div
+    className="top-panel"
+    style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
+  >
+    <span
+      style={{
+        paddingInlineStart: "0.2cm",
+        color: "white",
+        fontSize: "1cm",
+        fontFamily: '"Times New Roman"'
+      }}
+    >
+      Contact Us
+    </span>
+  </div> */}
       <div className="main-container">
         <div className="contact-section">
           <h2>&nbsp; GET IN TOUCH</h2>
@@ -126,10 +86,9 @@ const ContactUs = () => {
               &nbsp; Address : &nbsp;
               <i className="fa fa-map-marker-alt" /> Billing 360
               <br />
-              &nbsp; &nbsp; &emsp; &ensp; &ensp; &ensp; RM Building, IIT Kanpur
+              &nbsp; &nbsp; &nbsp;      RM Building, IIT Kanpur
               <br />
-              &nbsp; &nbsp; &emsp; &ensp; &ensp; &ensp; Kanpur, Uttar Pradesh
-              208016
+              &nbsp; &nbsp; &nbsp;      Kanpur, Uttar Pradesh 208016
             </div>
             <div className="form-group">
               <form onsubmit="SendEmail(); reset(); return false;">
@@ -148,10 +107,7 @@ const ContactUs = () => {
                 />
                 <br />
                 <br />
-                <label htmlFor="email">
-                  {" "}
-                  &nbsp; Email : &nbsp; &nbsp;&nbsp;&nbsp;
-                </label>
+                <label htmlFor="email"> &nbsp; Email : &nbsp; &nbsp;</label>
                 <input
                   type="email"
                   id="email"
@@ -163,10 +119,10 @@ const ContactUs = () => {
                 />
                 <br />
                 <br />
-                <label htmlFor="message"> &nbsp; Message : &nbsp; </label>
+                <label htmlFor="message"> &nbsp; Message :</label>
                 <textarea
                   rows={5}
-                  cols={50}
+                  cols={42}
                   placeholder=" How can we help you? "
                   required=""
                   defaultValue={""}
@@ -174,7 +130,6 @@ const ContactUs = () => {
               </form>
             </div>
             <br />
-            &nbsp; &nbsp;{" "}
             <button type="submit" className="pushable">
               <span className="front"> Send Message </span>
             </button>

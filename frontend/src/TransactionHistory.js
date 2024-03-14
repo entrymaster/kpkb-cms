@@ -56,14 +56,23 @@ const createPdf = () => {
       window.open(pdfUrl, '_blank');
     });
 };
-const handleCustomerName = (e) => {
-  setCustomerName(e.target.value);
+const handleCustomerName = async (e) => {
+  await setCustomerName(e.target.value);
   fetchSearchData();
 };
+// const populateInvoiceData = async (element) => {
+//   await setInvoiceData(element);
+//   createPdf();
+// };
 const populateInvoiceData = (element) => {
   setInvoiceData(element);
-  createPdf();
 };
+
+useEffect(() => {
+  if (invoiceData) {
+    createPdf();
+  }
+}, [invoiceData]);
     return (
       <div className="TransactionHistory">
       <div className="container">

@@ -32,7 +32,7 @@ module.exports = (options) => {
               margin-right:15px;
               padding: 0;
               font-family: 'Roboto', sans-serif;
-              width: 1000px;
+              //width: 700px;
           }
 
           table {
