@@ -63,6 +63,7 @@ const AddNewInvoice = () => {
   
       setInvoiceData({
         ...invoiceData,
+        userID: authContext.user,
         itemList: updatedItemList
       });
     }
@@ -88,11 +89,15 @@ const AddNewInvoice = () => {
     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
     invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : invoiceData.totalAmount;
     setTotalChange(false);
-  }, [totalChange])
+  }, [totalChange]);
+  // useEffect(() => {
+  //   setInvoiceData((prevState) => ({...prevState, userID: authContext.user}))
 
+  //   // fetchSalesData();
+  // }, []);
   const handleAddField = (e) => {
     e.preventDefault()
-    setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+    setInvoiceData((prevState) => ({...prevState,userID:authContext.user, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
   }
 
   const handleDeleteRow = (index) => {
@@ -258,7 +263,7 @@ const AddNewInvoice = () => {
     }
 
     const getInvoiceCount = async() =>{
-      fetch(`http://localhost:5050/api/invoice/count/${invoiceData.userID}`, {
+      fetch(`http://localhost:5050/api/invoice/count/${authContext.user}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -293,7 +298,7 @@ const AddNewInvoice = () => {
     const userId='user';
 
     const fetchItemsData = () => {
-      fetch(`http://localhost:5050/api/inventory/get/${userId}`)
+      fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllItems(data);
