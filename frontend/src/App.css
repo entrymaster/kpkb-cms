@@ -39,6 +39,9 @@ body, html {
     background-color:#051d40;
     height: 100%;
     padding-top: 20px;
+    /* padding-left: 10px; */
+}
+.nav-panel p {
     padding-left: 10px;
 }
  .top-panel {

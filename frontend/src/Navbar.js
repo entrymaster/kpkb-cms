@@ -1,7 +1,5 @@
 import React from 'react';
-import './Invoice.css';
-import { Link } from "react-router-dom";
-import AddNewInvoice from './components/Invoice/AddInvoice';
+import { Link, useLocation } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -13,16 +11,20 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
+import './Navbar.css';
 
-import Navbar from './Navbar';
 const iconSize = 32;
 
-const Invoice = () => {
+const Navbar = () => {
+    const location = useLocation();
+    const isActive = (pathname) => {
+        return location.pathname === pathname ? 'active' : '';
+    };
     return (
-    <div className="Invoice">
-      <Navbar/>
-      {/* <div className="container">
+        <>
+        <div className="container">
         <div className="left">
           <div className="left-top-box">
             <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -38,48 +40,52 @@ const Invoice = () => {
             </div>
           </div>
           <div className="nav-panel" style = {{}}>
-            <p>
+            <p className={location.pathname === "/dashboard" ? "active" : ""}>
               <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                 <HomeIcon style={{ marginRight: '5px' }}/><strong>Dashboard</strong>
               </Link>
             </p>
-            <p style={{ backgroundColor: "#517f89" }}>
+            <p className={location.pathname === "/invoice" ? "active" : ""}>
               <Link to="/invoice" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                 <ReceiptIcon style={{ marginRight: '5px' }}/><strong>Invoice</strong>
               </Link>
             </p>
-            <p>
-            <Link to="/inventory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-              <InventoryIcon style={{ marginRight: '5px' }} />
-              <strong>Inventory</strong>
-            </Link>
+            <p className={location.pathname === "/inventory" ? "active" : ""}>
+                <Link to="/inventory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <InventoryIcon style={{ marginRight: '5px' }} />
+                <strong>Inventory</strong>
+                </Link>
             </p>
-            <p>
-            <Link to="/pending-transactions" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-              <PendingTransactionsIcon style={{ marginRight: '5px' }} />
-              <strong>Pending Transactions</strong>
-            </Link>
-
+            <p className={location.pathname === "/pendingTransactions" ? "active" : ""}>
+                <Link to="/pendingTransactions" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <PendingTransactionsIcon style={{ marginRight: '5px' }} />
+                <strong>Pending Transactions</strong>
+                </Link>
             </p>
-            <p>
-            <Link to="/contact-us" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-              <SupportAgentIcon style={{ marginRight: '5px' }} />
-              <strong>Contact Us</strong>
-            </Link>
-
+            <p className={location.pathname === "/TransactionHistory" ? "active" : ""}>
+                <Link to="/TransactionHistory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <SupportAgentIcon style={{ marginRight: '5px' }} />
+                <strong>Transaction History</strong>
+                </Link>
             </p>
-          <p>
-          <Link to="/transaction-history" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-            <HistoryIcon style={{ marginRight: '5px' }} />
-            <strong>Transaction History</strong>
-          </Link>
-          </p>
-          <p>
-          <Link to="/reports" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-            <BarChartIcon style={{ marginRight: '5px' }} />
-            <strong>Reports</strong>
-          </Link>
-          </p>
+            <p className={location.pathname === "/Reports" ? "active" : ""}>
+                <Link to="/Reports" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                    <HistoryIcon style={{ marginRight: '5px' }} />
+                    <strong>Reports</strong>
+                </Link>
+            </p>
+            <p className={location.pathname === "/FAQs" ? "active" : ""}>
+                <Link to="/FAQs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                    <HelpOutlineIcon style={{ marginRight: '5px' }} />
+                    <strong>FAQs</strong>
+                </Link>
+            </p>
+            <p className={location.pathname === "/contactUs" ? "active" : ""}>
+                <Link to="/contactUs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                    <BarChartIcon style={{ marginRight: '5px' }} />
+                    <strong>Contact Us</strong>
+                </Link>
+            </p>
           </div>
         </div>
       </div>
@@ -103,29 +109,9 @@ const Invoice = () => {
               <LogoutIcon style={{ color: "#fff", fontSize: iconSize }} />
           </Tooltip>
         </div>
-      </div> */}
-      {/* <div className="top-panel">
-      <div style={{ textAlign: "left" }}>
-            <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
-          </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight:'100px' }}>
-          
-          <div>
-            <NotificationsIcon style={{ color: "#fff", marginRight: '100px' }} />
-            <SettingsIcon style={{ color: "#fff", marginRight: '15px' }} />
-            <AccountCircleIcon style={{ color: "#fff", marginRight: '15px' }} />
-            <LogoutIcon style={{ color: "#fff", marginRight: '100px' }} />
-          </div>
-        </div>
-      </div> */}
-      {/* <div className="top-panel">
-        <div style={{ textAlign: "left", marginLeft: 10, marginTop: 15 }}>
-          <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
-        </div>
-      </div> */}
-      <AddNewInvoice/>
-    </div>
-  );
+      </div>
+      </>
+    );
 }
 
-export default Invoice;
+export default Navbar;
