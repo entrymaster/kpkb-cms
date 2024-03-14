@@ -29,9 +29,14 @@ function Register() {
 
   const registerUser = () => {
     // Check if passwords match
+    form.email = email;
     if (form.password !== form.confirmpassword) {
       alert("Password and Confirm Password do not match");
       return; // Exit function if passwords don't match
+    }
+    if (!form.email.includes("@")) {
+      alert("Invalid Email, doesn't include @");
+      return; // Exit function if email is invalid
     }
     if (form.password.length < 6) {
       alert("Password should be at least 6 characters");
