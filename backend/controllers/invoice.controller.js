@@ -6,7 +6,14 @@ const { PDFDocument, rgb } = require('pdf-lib');
 
 const addInvoice = async (req, res) => {
   console.log("req: ", req.body);
-  
+  let totalSales = 0;
+  let totalCost = 0;
+  for(let i = 0; i < req.body.itemList.length; i++){
+    totalSales += req.body.itemList[i].quantity * req.body.itemList[i].rate;
+    totalCost += req.body.itemList[i].quantity * req.body.itemList[i].costPrice;
+  }
+  // console.log(totalCost);
+  // console.log(totalSales);
   const addInvoice = new Invoice({
     userID: req.body.userID,
     invoiceID: req.body.invoiceID,
@@ -19,6 +26,8 @@ const addInvoice = async (req, res) => {
     discount: req.body.discount,
     itemList: req.body.itemList,
     createdAt: req.body.createdAt,
+    totalSales: totalSales,
+    totalCostPrice: totalCost
   });
 
   addInvoice.save()
