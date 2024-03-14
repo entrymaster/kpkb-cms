@@ -90,7 +90,6 @@ const TransactionHistory = () => {
         console.error('Error creating PDF:', error);
       });
   };
-
   const handleCustomerName = async (e) => {
     await setCustomerName(e.target.value);
     fetchSearchData();

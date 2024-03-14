@@ -100,12 +100,12 @@ const searchInvoice = async (req, res) => {
     // Create a query object based on parameters
     const query = {
       // userID: "user",
-      userID: req.params.userID,
+      userID: req.params.userId,
       customerName: { $regex: new RegExp(customerName, 'i') }, // Case-insensitive string search
     };
 
     // Execute the query
-    const records = await Invoice.find(query);
+    const records = await Invoice.find(query).exec();
     // Send the results
     res.json(records);
     console.log(records);
