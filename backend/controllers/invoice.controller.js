@@ -85,7 +85,7 @@ const getAllInvoice = async (req, res) => {
     // userID: req.params.userId,
 
     userID: "user",
-  }).sort({ customerName: 1 }); 
+  }).sort({ invoiceID: -1 }); 
   // -1 for descending;1 for ascending;
   // console.log(req.params.userId);
   res.json(findAllInvoices);
