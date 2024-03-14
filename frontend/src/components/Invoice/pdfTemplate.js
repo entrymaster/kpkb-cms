@@ -27,12 +27,14 @@
  */
   
 const User = require('../../../../backend/models/user.model');
-
+const formatDate = (date) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(date).toLocaleDateString('en-IN', options);
+};
 const invoicePDF = (requestData) => {
     
-  const today = new Date();
+    const billDate = formatDate(requestData.invoiceData.createdAt); 
   // console.log(invoice.itemList[0].itemName);
-
   
   return `<!DOCTYPE html>
   <html>
@@ -156,8 +158,8 @@ const invoicePDF = (requestData) => {
               </div>
               <p class="title">Status</p>
               <h3>${requestData.invoiceData.paymentMode}</h3>
-              <p class="title">Date</p>
-              <p>${requestData.invoiceData.createdAt}</p>
+              <p class="title">Date & Time</p>
+              <p>${billDate}</p>
               <p class="title">Amount</p>
               <h3>&#8377;${requestData.invoiceData.totalAmount}</h3>
           </div>

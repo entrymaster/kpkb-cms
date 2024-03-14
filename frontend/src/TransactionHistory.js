@@ -16,7 +16,7 @@ const TransactionHistory = () =>
   const authContext = useContext(AuthContext);
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
-  
+
 
   const handlePageUpdate = () => {
     setUpdatePage(!updatePage);
@@ -50,7 +50,6 @@ const fetchSearchData = () => {
     .catch((err) => console.log(err));
 
 };
-
 const getUserData = () => {
   return new Promise((resolve, reject) => {
     console.log(authContext.user);
@@ -86,7 +85,6 @@ const getUserData = () => {
     });
   });
 }
-
 const createPdf = () => {
   getUserData()
     .then(() => {
@@ -111,7 +109,7 @@ const createPdf = () => {
     .catch((error) => {
       console.error('Error creating PDF:', error);
     });
-}
+};
 const handleCustomerName = async (e) => {
   await setCustomerName(e.target.value);
   fetchSearchData();
@@ -123,7 +121,10 @@ const handleCustomerName = async (e) => {
 const populateInvoiceData = (element) => {
   setInvoiceData(element);
 };
-
+const formatDate = (date) => {
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return new Date(date).toLocaleDateString('en-IN', options);
+};
 useEffect(() => {
   if (invoiceData) {
     createPdf();
@@ -204,7 +205,7 @@ useEffect(() => {
         {transactions && transactions.map((element, index) => {
           return (
             <tr key={element._id}>
-              <td>{element.createdAt}</td>
+              <td>{formatDate(element.createdAt)}</td>
               <td>{element.customerName}</td>
               <td>{element.paymentMode}</td>
               <td>{element.totalAmount}</td>
