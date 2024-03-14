@@ -5,7 +5,7 @@ const { PDFDocument, rgb } = require('pdf-lib');
 // Add Post
 
 const addInvoice = async (req, res) => {
-  // console.log("req: ", req.body);
+  console.log("req: ", req.body);
   
   const addInvoice = new Invoice({
     userID: req.body.userID,

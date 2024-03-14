@@ -124,7 +124,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          // window.location.reload(); // Reload the webpage
+          window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
