@@ -68,11 +68,11 @@
   }
 
 /* Additional styles for input cells */
-input {
+/* input {
   width: 100%; /* Make the input take up the full width of the cell */
 
 /* Include padding and border in the width */
-}
+/* } */ */
 /* Add this to your existing CSS */
 .read-only-input {
     background-color: #f0f0f0; /* Set background color to light white */

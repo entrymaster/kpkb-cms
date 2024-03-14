@@ -5,6 +5,7 @@ import AuthContext from './AuthContext';
 import axios from 'axios';
 import {initialState} from './components/Invoice/initialState';
 import Navbar from './Navbar';
+import { saveAs } from 'file-saver';
 
 const TransactionHistory = () =>
 {
@@ -14,6 +15,7 @@ const TransactionHistory = () =>
   // const [products, setAllProducts] = useState([]);
   const authContext = useContext(AuthContext);
   const [invoiceData, setInvoiceData] = useState(initialState);
+  const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
 
   const handlePageUpdate = () => {
@@ -46,14 +48,66 @@ const fetchSearchData = () => {
      
     })
     .catch((err) => console.log(err));
+
 };
+const getUserData = () => {
+  return new Promise((resolve, reject) => {
+    console.log(authContext.user);
+    fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+   
+    .then(response => {
+      console.log(response);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // console.log(data);
+      // setUserData(data);
+      userData.firstname = data.firstname;
+      userData.lastname = data.lastname;
+      userData.email = data.email;
+      userData.password = data.password;
+      userData.gstno = data.gstno;
+      userData.shopname = data.shopname;
+      userData.shopaddress = data.shopaddress;
+      resolve(data); // Resolve the promise with the user data
+    })
+    .catch(error => {
+      console.log('There was a problem with the fetch operation:', error);
+      reject(error); // Reject the promise with the error
+    });
+  });
+}
 const createPdf = () => {
-  axios.post('http://localhost:5050/api/create-pdf', invoiceData)
-    .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob' }))
+  getUserData()
+    .then(() => {
+      // userData will be available here as getUserData() has completed execution
+      // console.log(userData);
+      
+      const requestData = {
+        invoiceData: invoiceData,
+        userData: userData
+      };
+      console.log(requestData);
+    
+      // Send the combined data in the request body
+      return axios.post('http://localhost:5050/api/create-pdf', requestData);
+    })
+    .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
     .then((res) => {
       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
       const pdfUrl = URL.createObjectURL(pdfBlob);
-      window.open(pdfUrl, '_blank');
+      window.open(pdfUrl,'_blank');
+    })
+    .catch((error) => {
+      console.error('Error creating PDF:', error);
     });
 };
 const handleCustomerName = async (e) => {
@@ -67,7 +121,10 @@ const handleCustomerName = async (e) => {
 const populateInvoiceData = (element) => {
   setInvoiceData(element);
 };
-
+const formatDate = (date) => {
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return new Date(date).toLocaleDateString('en-IN', options);
+};
 useEffect(() => {
   if (invoiceData) {
     createPdf();
@@ -148,7 +205,7 @@ useEffect(() => {
         {transactions && transactions.map((element, index) => {
           return (
             <tr key={element._id}>
-              <td>{element.createdAt}</td>
+              <td>{formatDate(element.createdAt)}</td>
               <td>{element.customerName}</td>
               <td>{element.paymentMode}</td>
               <td>{element.totalAmount}</td>

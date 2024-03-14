@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useContext, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -15,13 +15,52 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import './Navbar.css';
 import { performSignout } from './auth';
+import AuthContext from './AuthContext';
 const iconSize = 32;
+
 
 
 const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
+    const authContext = useContext(AuthContext);
+    const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''});
+    const getUserData = () => {
+      return new Promise((resolve, reject) => {
+        console.log(authContext.user);
+        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+       
+        .then(response => {
+          console.log(response);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setUserData(data); // Set userData state with fetched data
+          resolve(data); // Resolve the promise with the user data
+        })
+        .catch(error => {
+          console.log('There was a problem with the fetch operation:', error);
+          reject(error); // Reject the promise with the error
+        });
+      });
+    }
+    
+    useEffect(() => {
+      getUserData(); // Call getUserData on component mount and whenever authContext.user changes
+    }, []);
+    
+    
+    
+     
+    
 const handleSignout = () => {
   performSignout(navigate);
 };
@@ -61,9 +100,9 @@ const handleSignout = () => {
             <img src="profile_icon.png" alt="Profile icon" width={80} height={80} />
             <div className="mid-text">
               <p>
-                Firm Name
+                {userData.shopname}
                 <br/>
-                GST Number
+                {userData.gstno}
               </p>
             </div>
           </div>

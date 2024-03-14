@@ -20,7 +20,7 @@ import VerifyOtp from "./otpverify.js";
 import Forgototpverify from "./Forgototpverify.js"
 import Forgotpass from "./ForgotPass.js"
 import Forgotverify from "./Forgotverify.js"
-
+import Profile from "./profile.js"
 
 
 // import Layout from "./Layout.js";
@@ -92,6 +92,8 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/FAQ" element={<FAQ/>} />
           <Route
             path="/pendingTransactions"
             element={<PendingTransactions />}

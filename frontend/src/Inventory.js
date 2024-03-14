@@ -22,6 +22,7 @@ const Inventory = () =>
   const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
   const authContext = useContext(AuthContext);
+    console.log(authContext.user);
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});

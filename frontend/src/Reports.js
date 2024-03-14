@@ -16,19 +16,6 @@ const Reports = () => {
   const [flag, setFlag] = useState(0); 
 
 
-  // const fetchSalesData = () => {
-  //   if (startDate && endDate) {
-  //     fetch(`http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
-  //       .then((response) => {
-  //         setChartData(response.data);
-  //         setFlag(1);
-  //         console.log(response);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching sales data:', error);
-  //       });
-  //   }
-  // };
   
   // useEffect(() => {
   //   fetchSalesData();
@@ -84,20 +71,20 @@ const Reports = () => {
     <div className="Reports">
         <Navbar/>
      
-        <div className="main-container">
-          <div>
+        <div className="main-container" style={{ paddingTop: '120px' }}>
+          <div >
             <label>Start Date:</label>
-            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ width: '30%' }} />
           </div>
           <div>
             <label>End Date:</label>
-            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} style={{ width: '30%' }} />
           </div>
           <div>
             <button onClick={fetchSalesData}>Fetch Sales Data</button>
             </div>
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
-            <div style={{ width: 500 }}>
+            <div style={{ width: '500px' }}>
               <LineChart1 Data={chartData} />
             </div>
           )}
