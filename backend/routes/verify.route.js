@@ -5,5 +5,4 @@ const verify = require("../controllers/verify.controller");
 console.log("hiii")
 app.post("/gen", verify.senOtp);
 app.post("/ver" , verify.verOtp);
-app.get
 module.exports = app;

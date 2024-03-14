@@ -39,10 +39,12 @@ const handleSignout = () => {
                 return 'Transaction History';
             case '/Reports':
                 return 'Reports';
-            case '/FAQs':
+            case '/FAQ':
                 return 'FAQs';
             case '/contactUs':
                 return 'Contact Us';
+                case '/profile':
+                return 'Profile';
             default:
                 return '';
         }
@@ -90,25 +92,25 @@ const handleSignout = () => {
             </p>
             <p className={location.pathname === "/TransactionHistory" ? "active" : ""}>
                 <Link to="/TransactionHistory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                <SupportAgentIcon style={{ marginRight: '5px' }} />
+                <HistoryIcon style={{ marginRight: '5px' }} />
                 <strong>Transaction History</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/Reports" ? "active" : ""}>
                 <Link to="/Reports" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <HistoryIcon style={{ marginRight: '5px' }} />
+                    <BarChartIcon style={{ marginRight: '5px' }} />
                     <strong>Reports</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/FAQs" ? "active" : ""}>
-                <Link to="/FAQs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <Link to="/FAQ" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                     <HelpOutlineIcon style={{ marginRight: '5px' }} />
                     <strong>FAQs</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/contactUs" ? "active" : ""}>
                 <Link to="/contactUs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <BarChartIcon style={{ marginRight: '5px' }} />
+                    <SupportAgentIcon style={{ marginRight: '5px' }} />
                     <strong>Contact Us</strong>
                 </Link>
             </p>

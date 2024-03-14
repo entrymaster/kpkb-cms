@@ -19,8 +19,9 @@ const AddNewInvoice = () => {
   const [isPaid, setIsPaid] = useState(true);
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   const [isLoading, setIsLoading] = useState(false);
-  // const history = useHistory();
   const authContext = useContext(AuthContext);
+  const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
+  // const [userData, setUserData] = useState();
 
   const handleItemSelection = (selectedItem) => {
     // Assuming selectedItem is an object containing the selected item details including available quantity
@@ -97,6 +98,7 @@ const AddNewInvoice = () => {
   const handleAddField = (e) => {
     e.preventDefault()
     setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+    // console.log(authContext.user);
     // setCurrItem();
   }
 
@@ -109,7 +111,7 @@ const AddNewInvoice = () => {
       };
     });
   };
-
+  
   const addInvoice = () => {
     if (invoiceData.paymentMode === 'Credit') {
       // If payment mode is Credit, add invoice data to pending transactions
@@ -123,7 +125,7 @@ const AddNewInvoice = () => {
         body: JSON.stringify(invoiceData),
       })
         .then((result) => {
-          console.log(invoiceData);
+          // console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
           setCurrItem(null);
@@ -137,28 +139,149 @@ const AddNewInvoice = () => {
         setUpdatePage(false);
     };
 
+    // const createPdf = () => {
+    //   // console.log(invoiceData);
+    //   // setIsLoading(true);
+    //   // invoiceData.userID=userData;
+    //   axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+    //   .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+    //   .then((res) => {
+    //     const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //     const pdfUrl = URL.createObjectURL(pdfBlob);
+    //     window.open(pdfUrl,'_blank');
+    //     // setIsLoading(false);
+    //     // saveAs(pdfBlob, 'invoice.pdf');
+    //   })
+    // }
+
+    // const getUserData = () => {
+    //   fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+    //       method: "GET",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //     })
+    //     .then(response => {
+    //       if(!response.ok){
+    //         throw new Error('Network response was not ok');
+    //       }
+    //       return response.json();
+    //     })
+    //     .then(data => {
+    //       console.log(data);
+    //       setUserData(data);
+    //     })
+    //     .catch(error => {
+    //       console.log('There was a problem with the fetch operation:', error);
+    //     })
+    // }
+
+    const getUserData = () => {
+      return new Promise((resolve, reject) => {
+        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // console.log(data);
+          // setUserData(data);
+          userData.firstname = data.firstname;
+          userData.lastname = data.lastname;
+          userData.email = data.email;
+          userData.password = data.password;
+          userData.gstno = data.gstno;
+          userData.shopname = data.shopname;
+          userData.shopaddress = data.shopaddress;
+          resolve(data); // Resolve the promise with the user data
+        })
+        .catch(error => {
+          console.log('There was a problem with the fetch operation:', error);
+          reject(error); // Reject the promise with the error
+        });
+      });
+    }
+    
     const createPdf = () => {
-      // console.log(invoiceData);
-      // setIsLoading(true);
-      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
-      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
-      .then((res) => {
-        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl,'_blank');
-        // setIsLoading(false);
-        // saveAs(pdfBlob, 'invoice.pdf');
-      })
+      getUserData()
+        .then(() => {
+          // userData will be available here as getUserData() has completed execution
+          // console.log(userData);
+          
+          const requestData = {
+            invoiceData: invoiceData,
+            userData: userData
+          };
+          console.log(requestData);
+        
+          // Send the combined data in the request body
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
+        })
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+        .then((res) => {
+          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl,'_blank');
+        })
+        .catch((error) => {
+          console.error('Error creating PDF:', error);
+        });
     }
     
     
+    // const createPdf = () => {
+    //   // Combine invoiceData and userData into a single object
+    //   getUserData()
+    //   // .then(() => {console.log(userData)})
+    //   console.log(userData)
+      
+    //   const requestData = {
+    //     invoiceData: invoiceData,
+    //     userData: userData
+    //   };
+    
+    //   // Send the combined data in the request body
+    //   axios.post('http://localhost:5050/api/create-pdf', requestData)
+    //     .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+    //     .then((res) => {
+    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //       const pdfUrl = URL.createObjectURL(pdfBlob);
+    //       window.open(pdfUrl,'_blank');
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error creating PDF:', error);
+    //     });
+    // }
+    
+    
     const downloadPdf = () => {
-      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      getUserData()
+        .then(() => {
+          // userData will be available here as getUserData() has completed execution
+          // console.log(userData);
+          
+          const requestData = {
+            invoiceData: invoiceData,
+            userData: userData
+          };
+          console.log(requestData);
+          return requestData;
+        })
+        .then((requestData) => {
+      axios.post('http://localhost:5050/api/create-pdf', requestData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
       })
+        })
     }
 
     const updateInventory = () => {

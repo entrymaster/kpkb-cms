@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate , useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Register.css"; 
 
 function Verification() {
@@ -14,7 +14,7 @@ function Verification() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-// 
+  // using this to get Email with which the user verified
   const location = useLocation();
   const { email } = location.state || {}; // Destructure email from location state
   form.email = email;
@@ -48,7 +48,7 @@ function Verification() {
       // }
         if (response.ok) {
           // If OTP verification is successful, navigate to register page
-          navigate('/register', { state: { email: form.email } });
+          navigate('/forgotpass', { state: { email: form.email } });
         } else {
           // If OTP verification fails, display error message or handle accordingly
           alert("OTP verification failed.");
@@ -88,10 +88,10 @@ function Verification() {
                   required
                   className="input-box"
                   placeholder="Email address"
+                  //value={form.email}
                   value={email || ''} // Set value to email received from location state
                   disabled // Disable input to prevent user modification
-                  // value={form.email}
-                  // onChange={handleInputChange}
+                  //onChange={handleInputChange}
                 />
                 <br /><br />
                 <input

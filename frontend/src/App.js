@@ -14,10 +14,12 @@ import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
 
-
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
 import VerifyOtp from "./otpverify.js";
+import Forgototpverify from "./Forgototpverify.js"
+
+
 // import Layout from "./Layout.js";
 import "./App.css";
 import {
@@ -53,7 +55,7 @@ const App = () => {
   const signout = (navigate) => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/", { replace: true });
+    navigate("/Login", { replace: true });
   };
 
   setSignout(signout);
@@ -89,7 +91,6 @@ const App = () => {
             element={<PendingTransactions />}
           />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/FAQ" element={<FAQ />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/Reports" element={<Reports />} />
           <Route path="/pdf-viewer" element={<InvoicePDF />} />

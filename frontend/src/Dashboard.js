@@ -74,7 +74,7 @@ function Dashboard() {
     </div>
     <div
       className="main-container"
-      style={{ display: "flex", justifyContent: "space-around", paddingTop: 20 }}
+      style={{ display: "flex", justifyContent: "space-around", paddingTop: 120 }}
     >
       <div className="data-box">
         <p
