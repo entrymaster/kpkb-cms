@@ -4,8 +4,8 @@ const Product = require("../models/inventory.model");
 const addProduct = async (req, res) => {
   console.log("req: ", req.body.userID);
   const addProduct = new Product({
-    // userID: req.body.userID,
-    userID:"user",
+    userID: req.body.userID,
+    // userID:"user",
     itemID: req.body.itemID,
     itemName: req.body.itemName,
     salePrice: req.body.salePrice,
@@ -103,7 +103,7 @@ const updateBatch = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await Product.find({ userID: "user" });
+    const allProducts = await Product.find({ userID: req.params.userId });
 
     // Sort the products based on the expiry date of the first batch in each item
     allProducts.sort((a, b) => {

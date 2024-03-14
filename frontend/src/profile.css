@@ -1,4 +1,4 @@
-/* profile.css */
+
 
 .profile {
   font-family: Arial, sans-serif;
@@ -19,8 +19,8 @@
 /* profile.css */
 
 /* Button styles */
-.edit-button,
-.save-button {
+.profile.edit-button,
+.profile.save-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -28,12 +28,12 @@
   margin-right: 10px; /* Add margin between the buttons */
 }
 
-.edit-button {
+.profile.edit-button {
   background-color: #4caf50;
   color: white;
 }
 
-.save-button {
+.profile.save-button {
   background-color: #008cba;
   color: white;
 }
@@ -44,13 +44,13 @@
 }
 
 
-h1 {
+.profile.h1 {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-.profile-details {
+.profile.profile-details {
   background-color: #b2cfe0;
   padding: 20px;
   border-radius: 10px;
@@ -60,14 +60,17 @@ h1 {
   border: 2px solid #004d99;
 }
 
-h4 {
+.profile.h4 {
   font-size: 18px;
   margin-bottom: 10px;
 }
 
 /* Style input fields */
-input[type="text"] {
+.profile input[type="text"] {
+  
+  height: 30px;
   width: 100%;
+  
   padding: 8px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -76,7 +79,7 @@ input[type="text"] {
 }
 
 /* Edit and Save button styles */
-.button-group {
+.profile.button-group {
   margin-top: 20px;
 }
 

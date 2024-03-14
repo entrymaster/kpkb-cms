@@ -86,8 +86,8 @@ const Inventory = () =>
   // const userId=authContext.user;
   console.log(userId);
   const fetchProductsData = () => {
-    fetch('http://localhost:5050/api/inventory/get/${userId}')
-    // fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
+    // fetch('http://localhost:5050/api/inventory/get/${userId}')
+    fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -97,7 +97,7 @@ const Inventory = () =>
 
 };
 const fetchSearchData = () => {
-  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
+  fetch(`http://localhost:5050/api/inventory/search/${authContext.user}?itemName=${itemName}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
