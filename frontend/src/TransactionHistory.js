@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthContext from './AuthContext';
 import axios from 'axios';
 import {initialState} from './components/Invoice/initialState';
-
+import Navbar from './Navbar';
 
 const TransactionHistory = () =>
 {
@@ -75,7 +75,8 @@ useEffect(() => {
 }, [invoiceData]);
     return (
       <div className="TransactionHistory">
-      <div className="container">
+          <Navbar/>
+      {/* <div className="container">
         <div className="left">
           <div className="left-top-box">
             <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -119,7 +120,7 @@ useEffect(() => {
         <div style={{ textAlign: "left", marginTop: 15 }}>
           <h1 style={{ color: "#fff", fontSize: 40 }}>Transaction History</h1>
         </div>
-      </div>
+      </div> */}
       <div className="main-container">
         <div className="add-button-container">
         </div>

@@ -53,7 +53,7 @@ const App = () => {
   const signout = (navigate) => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/Login", { replace: true });
+    navigate("/", { replace: true });
   };
 
   setSignout(signout);
