@@ -158,6 +158,7 @@ const AddNewInvoice = () => {
       })
     }
     
+    
     const downloadPdf = () => {
       axios.post('http://localhost:5050/api/create-pdf', invoiceData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
