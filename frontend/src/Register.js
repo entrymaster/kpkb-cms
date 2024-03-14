@@ -13,6 +13,7 @@ function Register() {
     gstno: "",
     shopname: "",
     shopaddress: "",
+    phonenumber: "",
   });
 
   const navigate = useNavigate();
@@ -62,9 +63,9 @@ function Register() {
 
     registerUser();
   };
-  if (!(location.state && location.state.email)) {
-    return <Navigate to="/verify" replace/>;
-  }
+  // if (!(location.state && location.state.email)) {
+  //   return <Navigate to="/verify" replace/>;
+  // }
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
@@ -145,6 +146,18 @@ function Register() {
                   className="input-box"
                   placeholder="Enter GST No."
                   value={form.gstno}
+                  onChange={handleInputChange}
+                />
+                <br></br>
+                <br></br>
+                <input
+                  name="phonenumber"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Phone Number"
+                  value={form.phonenumber}
                   onChange={handleInputChange}
                 />
               </div>

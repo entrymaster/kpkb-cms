@@ -35,6 +35,10 @@ const userSchema = new Schema({
     shopaddress: {
         type: String,
         required: true,
+    },
+    phonenumber : {
+        type : String,
+        required: true,
     }
 
 });
