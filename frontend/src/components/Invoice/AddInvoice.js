@@ -371,7 +371,7 @@ const AddNewInvoice = () => {
       </tbody>
     </table>
       <div className="bottom-controls">
-        <button id="add-new-item" type="button" onClick={handleAddField}><AddCircleIcon  /> <strong> Add New Row </strong> </button>
+        <button id="add-new-item" type="button" onClick={handleAddField}><strong> Add New Row </strong> </button>
         <div className='discount-input'>
           Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
         </div>
