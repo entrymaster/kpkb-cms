@@ -11,7 +11,8 @@ import axios from "axios";
 const Reports = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [chartData, setChartData] = useState({}); // Initialize with an empty object
+  const [chartData, setChartData] = useState({});
+  const [chartData1, setChartData1] = useState({}); // Initialize with an empty object
   const userId = "user";
   const [flag, setFlag] = useState(0); 
 
@@ -30,6 +31,9 @@ const Reports = () => {
           const salesByDay = calculateSalesByDay(salesData); // Calculate sales by day
           const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
           setChartData(preparedChartData); // Set chart data
+          const profitsByDay = calculateProfitsByDay(salesData); // Calculate sales by day
+          const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
+          setChartData1(preparedChartData1); // Set chart data
         })
         .catch((error) => {
           console.error('Error fetching sales data:', error);
@@ -48,9 +52,19 @@ const Reports = () => {
       // Check if createdAt is already a Date object
       const createdAt = typeof invoice.createdAt === 'string' ? new Date(invoice.createdAt) : invoice.createdAt;
       const date = createdAt.toISOString().split('T')[0];
-      salesByDay[date] = (salesByDay[date] || 0) + invoice.totalAmount;
+      salesByDay[date] = (salesByDay[date] || 0) + invoice.totalSales;
     });
     return salesByDay;
+  };
+  const calculateProfitsByDay = (salesData) => {
+    const profitsByDay = {};
+    salesData.forEach((invoice) => {
+      // Check if createdAt is already a Date object
+      const createdAt = typeof invoice.createdAt === 'string' ? new Date(invoice.createdAt) : invoice.createdAt;
+      const date = createdAt.toISOString().split('T')[0];
+      profitsByDay[date] = (profitsByDay[date] || 0) + invoice.totalSales - invoice.totalCostPrice;
+    });
+    return profitsByDay;
   };
 
   // Function to prepare chart data
@@ -61,6 +75,17 @@ const Reports = () => {
       labels: labels,
       datasets: [{
         label: 'Total Sales',
+        data: data,
+      }],
+    };
+  };
+  const prepareChartData1 = (profitsByDay) => {
+    const labels = Object.keys(profitsByDay);
+    const data = Object.values(profitsByDay);
+    return {
+      labels: labels,
+      datasets: [{
+        label: 'Total Profit',
         data: data,
       }],
     };
@@ -81,14 +106,25 @@ const Reports = () => {
             <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} style={{ width: '30%' }} />
           </div>
           <div>
-            <button onClick={fetchSalesData}>Fetch Sales Data</button>
+            <button onClick={fetchSalesData}>See Graphs</button>
             </div>
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
             <div style={{ width: '500px' }}>
               <LineChart1 Data={chartData} />
+
             </div>
+            
           )}
-        </div>
+          {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
+            <div style={{ width: '500px' }}>
+              <LineChart1 Data={chartData1} />
+
+            </div>
+            
+          )}
+            </div>
+            
+
     </div>
   );
 };
