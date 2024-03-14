@@ -57,6 +57,8 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setForm({ ...form, email: email || '' });
+
     registerUser();
   };
   if (!(location.state && location.state.email)) {
