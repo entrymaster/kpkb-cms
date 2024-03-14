@@ -24,7 +24,8 @@ const TransactionHistory = () => {
     fetchTransactionData();
   }, [updatePage]);
 
-  const userId = "user";
+  //const userId = "user";
+  const userId = authContext.user;
 
   const fetchTransactionData = () => {
     fetch(`http://localhost:5050/api/invoice/get/${userId}`)

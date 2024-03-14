@@ -6,7 +6,8 @@ const Invoice = require("../models/invoice.model");
 const addNewCredit = async (req, res) => {
    try{
     const newCredit = new Customer({
-      userID: 'user',
+      //userID: 'user',
+      userID: req.body.userID,
       name: req.body.partyName,
       phoneNo: req.body.phoneNumber,
       email: req.body.email,
@@ -25,7 +26,8 @@ const addNewCredit = async (req, res) => {
 const addNewDebit = async (req, res) => {
     try {
       const newDebit = new Supplier({
-        userID: 'user',
+        //userID: 'user',
+        userID: req.body.userID,
         name: req.body.partyName,
         phoneNo: req.body.phoneNumber,
         email: req.body.email,
