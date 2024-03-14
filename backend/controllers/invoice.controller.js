@@ -104,5 +104,68 @@ const searchInvoice = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+// const getSalesData = async (req, res) => {
+//   const { userId, startDate, endDate } = req.query; // Extract userId from query parameters
+//   try {
+//     // Fetch sales data from database based on start date, end date, and userId
+//     // Replace the following line with your database query
+//     const salesData = await Invoice.find({ 
+//       userID: userId, // Filter by userId
+//       createdAt: { $gte: startDate, $lte: endDate } ,
+     
+//     });
+//     console.log(userId);
+    
+//     // Calculate total sales for each day
+//     const salesByDay = {};
+//     salesData.forEach((invoice) => {
+//       const date = invoice.createdAt.toISOString().split('T')[0];
+//       salesByDay[date] = (salesByDay[date] || 0) + invoice.totalAmount;
+//       console.log("P");
+//     });
 
-module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice };
+//     // Prepare data for the chart
+//     const chartData = {
+//       labels: Object.keys(salesByDay),
+//       datasets: [{
+//         label: 'Total Sales',
+//         data: Object.values(salesByDay),
+//       }],
+//     };
+
+//     res.status(200).json(chartData);
+//     console.log("Successful");
+//   } catch (error) {
+//     console.error('Error fetching sales data:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
+const getSalesData = async (req, res) => {
+  const { userId, startDate, endDate } = req.query; // Extract userId, startDate, and endDate from query parameters
+  try {
+    // Convert startDate and endDate to ISO 8601 format
+    const userId = "user";
+    const isoStartDate = new Date(startDate).toISOString();
+    const isoEndDate = new Date(endDate).toISOString();
+    console.log(isoStartDate);
+    console.log(isoEndDate);
+    console.log(userId);
+
+    // Fetch sales data from database based on start date, end date, and userId
+    const salesData = await Invoice.find({ 
+      userID: "user", // Filter by userId
+      createdAt: { $gte: isoStartDate, $lte: isoEndDate } ,
+    });
+    
+    // Send the salesData to the frontend
+    res.status(200).json(salesData);
+  } catch (error) {
+    console.error('Error fetching sales data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+
+module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, };
