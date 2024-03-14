@@ -13,7 +13,7 @@ import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
-
+import Profile from "./profile.js"
 
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
@@ -90,6 +90,7 @@ const App = () => {
           />
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/FAQ" element={<FAQ />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/Reports" element={<Reports />} />
           <Route path="/pdf-viewer" element={<InvoicePDF />} />

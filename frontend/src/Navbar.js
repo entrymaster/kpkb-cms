@@ -43,6 +43,8 @@ const handleSignout = () => {
                 return 'FAQs';
             case '/contactUs':
                 return 'Contact Us';
+                case '/profile':
+                return 'Profile';
             default:
                 return '';
         }
