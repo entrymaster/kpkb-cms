@@ -226,9 +226,9 @@ const AddNewInvoice = () => {
       .catch((err) => console.log(err));
     };
 
-    const handleOpenPDF = () => {
-      window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
-    };
+    // const handleOpenPDF = () => {
+    //   window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
+    // };
     // const handleOpenPDF = () => {
     //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
     //   history.push({

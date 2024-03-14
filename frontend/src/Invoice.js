@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Invoice.css';
 import { Link } from "react-router-dom";
 import AddNewInvoice from './components/Invoice/AddInvoice';
@@ -9,6 +9,10 @@ import PendingTransactionsIcon from '@mui/icons-material/PendingActions';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import HistoryIcon from '@mui/icons-material/History';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Invoice = () => {
     return (
@@ -73,16 +77,38 @@ const Invoice = () => {
         </div>
       </div>
       <div className="top-panel">
+        <div style={{ textAlign: "left" , left:10}}>
+          <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
+        </div>
+        <div style={{ position: 'absolute', top: 60, right: 10 }}>
+          <NotificationsIcon style={{ color: "#fff", marginRight: '15px' }} />
+          <SettingsIcon style={{ color: "#fff", marginRight: '15px' }} />
+          <AccountCircleIcon style={{ color: "#fff", marginRight: '15px' }} />
+          <LogoutIcon style={{ color: "#fff" }} />
+        </div>
+      </div>
+      {/* <div className="top-panel">
+      <div style={{ textAlign: "left" }}>
+            <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
+          </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingRight:'100px' }}>
+          
+          <div>
+            <NotificationsIcon style={{ color: "#fff", marginRight: '100px' }} />
+            <SettingsIcon style={{ color: "#fff", marginRight: '15px' }} />
+            <AccountCircleIcon style={{ color: "#fff", marginRight: '15px' }} />
+            <LogoutIcon style={{ color: "#fff", marginRight: '100px' }} />
+          </div>
+        </div>
+      </div> */}
+      {/* <div className="top-panel">
         <div style={{ textAlign: "left", marginLeft: 10, marginTop: 15 }}>
           <h1 style={{ color: "#fff", fontSize: 40 }}>Invoice</h1>
         </div>
-      </div>
+      </div> */}
       <AddNewInvoice/>
   </div>
   );
-    
 }
+
 export default Invoice;
-
-
-
