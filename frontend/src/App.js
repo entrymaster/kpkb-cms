@@ -3,6 +3,7 @@ import Dashboard from "./Dashboard.js";
 import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
+import FAQ from "./FAQ.js";
 import Invoice from "./Invoice.js";
 import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
@@ -12,6 +13,7 @@ import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
+
 
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
@@ -87,6 +89,7 @@ const App = () => {
             element={<PendingTransactions />}
           />
           <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/FAQ" element={<FAQ />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/Reports" element={<Reports />} />
           <Route path="/pdf-viewer" element={<InvoicePDF />} />
