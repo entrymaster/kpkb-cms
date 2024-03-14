@@ -14,6 +14,7 @@ function Profile() {
     gstno: "",
     shopname: "",
     shopaddress: "",
+    phonenumber :"",
   });
   const [editable, setEditable] = useState(false); // State to manage edit mode
   const [formData, setFormData] = useState({}); // State to store form data
@@ -140,7 +141,7 @@ function Profile() {
           <input
             type="text"
             name="phone"
-            value={formData.phone || ""}
+            value={formData.phonenumber || ""}
             onChange={handleInputChange}
             readOnly={!editable}
           />

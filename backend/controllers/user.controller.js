@@ -31,7 +31,7 @@ async function saveUserData(req, res) {
       user.gstno = userData.gstno || user.gstno;
       user.shopname = userData.shopname || user.shopname;
       user.shopaddress = userData.shopaddress || user.shopaddress;
-  
+      user.phonenumber=userData.phonenumber||user.phonenumber;
       // Save updated user data
       const updatedUser = await user.save();
   
