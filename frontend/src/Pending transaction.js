@@ -388,7 +388,7 @@ import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-
+import Navbar from './Navbar';
 const PendingTransactions = () => {
   const [activeTab, setActiveTab] = useState("credit-tab");
 
@@ -531,7 +531,8 @@ const PendingTransactions = () => {
 
   return (
     <div className="PendingTrans">
-      <div className="container">
+        <Navbar/>
+      {/* <div className="container">
         <div className="left">
           <div className="left-top-box">
             <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -610,7 +611,7 @@ const PendingTransactions = () => {
       </div>
       <div className="top-panel">
         <a className="heading">Pending Transactions</a>
-      </div>
+      </div> */}
       <div className="main-container">
         <div className="top">
           <div className="search-bar-container">
