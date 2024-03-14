@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import Navbar from './Navbar';
 const ContactUs = () => {
-    return <div className="ContactUs"> <div className="container">
+    return <div className="ContactUs">
+      <Navbar/>
+      {/* <div className="container">
     <div className="left">
       <div className="left-top-box">
         <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -56,7 +58,7 @@ const ContactUs = () => {
     >
       Contact Us
     </span>
-  </div>
+  </div> */}
   <div className="main-container">
     <div className="contact-section">
       <h2>&nbsp; GET IN TOUCH</h2>
