@@ -193,32 +193,6 @@ const AddNewInvoice = () => {
         });
     }
     
-    
-    // const createPdf = () => {
-    //   // Combine invoiceData and userData into a single object
-    //   getUserData()
-    //   // .then(() => {console.log(userData)})
-    //   console.log(userData)
-      
-    //   const requestData = {
-    //     invoiceData: invoiceData,
-    //     userData: userData
-    //   };
-    
-    //   // Send the combined data in the request body
-    //   axios.post('http://localhost:5050/api/create-pdf', requestData)
-    //     .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
-    //     .then((res) => {
-    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-    //       const pdfUrl = URL.createObjectURL(pdfBlob);
-    //       window.open(pdfUrl,'_blank');
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error creating PDF:', error);
-    //     });
-    // }
-    
-    
     const downloadPdf = () => {
       getUserData()
         .then(() => {
@@ -233,6 +207,7 @@ const AddNewInvoice = () => {
           return requestData;
         })
         .then((requestData) => {
+          // console.log(requestData)
       axios.post('http://localhost:5050/api/create-pdf', requestData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
