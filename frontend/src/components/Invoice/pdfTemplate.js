@@ -1,33 +1,33 @@
 /**
  * Generates an HTML template for an invoice.
- * @param {Object} options - The options for generating the invoice template.
- * @param {string} options.userID - The user ID.
- * @param {string} options.invoiceID - The invoice ID.
- * @param {string} options.customerName - The name of the customer.
- * @param {string} options.phoneNo - The phone number of the customer.
- * @param {string} options.customerEmail - The email of the customer.
- * @param {number} options.totalAmount - The total amount of the invoice.
- * @param {string} options.notes - Any notes for the invoice.
- * @param {string} options.paymentMode - The payment mode.
- * @param {number} options.discount - The discount amount.
- * @param {Object[]} options.itemList - The list of items in the invoice.
- * @param {string} options.itemList[].itemName - The name of the item.
- * @param {number} options.itemList[].quantity - The quantity of the item.
- * @param {number} options.itemList[].rate - The rate of the item.
- * @param {number} options.itemList[].gst - The GST of the item.
- * @param {number} options.itemList[].amount - The total amount for the item.
- * @param {Date} options.createdAt - The date when the invoice was created.
+ * @param {Object} invoice - The invoice for generating the invoice template.
+ * @param {string} invoice.userID - The user ID.
+ * @param {string} invoice.invoiceID - The invoice ID.
+ * @param {string} invoice.customerName - The name of the customer.
+ * @param {string} invoice.phoneNo - The phone number of the customer.
+ * @param {string} invoice.customerEmail - The email of the customer.
+ * @param {number} invoice.totalAmount - The total amount of the invoice.
+ * @param {string} invoice.notes - Any notes for the invoice.
+ * @param {string} invoice.paymentMode - The payment mode.
+ * @param {number} invoice.discount - The discount amount.
+ * @param {Object[]} invoice.itemList - The list of items in the invoice.
+ * @param {string} invoice.itemList[].itemName - The name of the item.
+ * @param {number} invoice.itemList[].quantity - The quantity of the item.
+ * @param {number} invoice.itemList[].rate - The rate of the item.
+ * @param {number} invoice.itemList[].gst - The GST of the item.
+ * @param {number} invoice.itemList[].amount - The total amount for the item.
+ * @param {Date} invoice.createdAt - The date when the invoice was created.
  * @returns {string} The HTML template for the invoice.
  */
-module.exports = (options) => {
+module.exports = (invoice) => {
   const today = new Date();
-  // console.log(options.itemList[0].itemName);
+  // console.log(invoice.itemList[0].itemName);
   return `<!DOCTYPE html>
   <html>
   <head>
       <style>
           body {
-              margin-left: 15px ;
+              margin-left: 30px ;
               margin-top: 15px;
               margin-right:15px;
               padding: 0;
@@ -132,23 +132,23 @@ module.exports = (options) => {
 
               <div>
                   <p class="title">Bill to:</p>
-                  <h4>${options.customerName}</h4>
-                  <p>${options.customerEmail}</p>
-                  <p>${options.phoneNo}</p>
+                  <h4>${invoice.customerName}</h4>
+                  <p>${invoice.customerEmail}</p>
+                  <p>${invoice.phoneNo}</p>
               </div>
           </div>
 
           <div class="status">
               <div class="receipt-id">
                   <h1>Receipt</h1>
-                  <p>#${options.invoiceID}</p>
+                  <p>#${invoice.invoiceID}</p>
               </div>
               <p class="title">Status</p>
-              <h3>${options.paymentMode}</h3>
+              <h3>${invoice.paymentMode}</h3>
               <p class="title">Date</p>
-              <p>${options.createdAt}</p>
+              <p>${invoice.createdAt}</p>
               <p class="title">Amount</p>
-              <h3>&#8377;${options.totalAmount}</h3>
+              <h3>&#8377;${invoice.totalAmount}</h3>
           </div>
       </section>
 
@@ -163,7 +163,7 @@ module.exports = (options) => {
               </tr>
           </thead>
           <tbody id="table-body">
-              ${options.itemList.map(item => `
+              ${invoice.itemList.map(item => `
                   <tr>
                       <td>${item.itemName}</td>
                       <td>${item.quantity}</td>
@@ -182,18 +182,17 @@ module.exports = (options) => {
               </tr>
               <tr>
                   <td>Total</td>
-                  <td style="text-align: center">${options.totalAmount}</td>
+                  <td style="text-align: center">${invoice.totalAmount}</td>
               </tr>
 
               <tr>
-                  <td>Payment made</td>
-                  <td style="text-align: center">${options.totalAmount}</td>
-              </tr>
-
-              <tr>
-                  <td>Balance</td>
-                  <td><h3 style="line-height: 5px; text-align: center">&#8377;0.00</h3></td>
-              </tr>
+                <td>Payment made</td>
+                <td style="text-align: center">${invoice.paymentMode === 'Paid' ? invoice.totalAmount : '&#8377;0.00'}</td>
+            </tr>
+            <tr>
+                <td>Balance</td>
+                <td><h3 style="line-height: 5px; text-align: center">${invoice.paymentMode === 'Paid' ?'&#8377;0.00' : invoice.totalAmount}</td>
+            </tr>
           </table>
       </section>
 

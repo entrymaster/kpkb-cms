@@ -4,6 +4,7 @@ import axios from 'axios';
 import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
+import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
 import { saveAs } from 'file-saver';
 const AddNewInvoice = () => {
@@ -17,6 +18,7 @@ const AddNewInvoice = () => {
   const [updatePage, setUpdatePage] = useState(true);
   const [isPaid, setIsPaid] = useState(true);
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
+  const [isLoading, setIsLoading] = useState(false);
   // const history = useHistory();
   const authContext = useContext(AuthContext);
 
@@ -109,6 +111,10 @@ const AddNewInvoice = () => {
   };
 
   const addInvoice = () => {
+    if (invoiceData.paymentMode === 'Credit') {
+      // If payment mode is Credit, add invoice data to pending transactions
+      addPendingTransaction();
+    }
       fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
@@ -131,32 +137,20 @@ const AddNewInvoice = () => {
         setUpdatePage(false);
     };
 
-    // const handleGeneratePDF = async () => {
-    //   try {
-    //     const response = await axios.post('http://localhost:5050/api/generate-pdf', 
-    //     {invoiceData}, { responseType: 'blob' });
-    //     // console.log('Response from server:', response);
-    //     const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-    //     const pdfUrl = URL.createObjectURL(pdfBlob);
-    //     console.log(pdfUrl);
-    //     // const newWindow=window.open();
-    //     // newWindow.location.href = pdfUrl;
-    //     window.open(pdfUrl, '_blank');
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
     const createPdf = () => {
-      console.log(invoiceData);
+      // console.log(invoiceData);
+      // setIsLoading(true);
       axios.post('http://localhost:5050/api/create-pdf', invoiceData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         const pdfUrl = URL.createObjectURL(pdfBlob);
         window.open(pdfUrl,'_blank');
+        // setIsLoading(false);
         // saveAs(pdfBlob, 'invoice.pdf');
       })
     }
+    
     
     const downloadPdf = () => {
       axios.post('http://localhost:5050/api/create-pdf', invoiceData)
@@ -226,16 +220,27 @@ const AddNewInvoice = () => {
       .catch((err) => console.log(err));
     };
 
-    // const handleOpenPDF = () => {
-    //   window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
-    // };
-    // const handleOpenPDF = () => {
-    //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
-    //   history.push({
-    //     pathname: '/invoice/pdf-viewer',
-    //     search: `?data=${encodeURIComponent(JSON.stringify(invoiceData))}`,
-    //   });
-    // };
+    const addPendingTransaction = () => {
+      const pendingTransactionData = {
+        partyName: invoiceData.customerName,
+        phoneNumber: invoiceData.phoneNo,
+        email: invoiceData.customerEmail,
+        amount: invoiceData.totalAmount // You might need to adjust this based on your application logic
+      };
+    
+      fetch("http://localhost:5050/api/pendingTransactions/add", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(pendingTransactionData),
+      })
+      .then((result) => {
+        console.log("Pending Transaction ADDED");
+      })
+      .catch((err) => console.log(err));
+    };
+    
 
     const togglePaymentMode = () => {
       setInvoiceData(prevData => ({
@@ -247,6 +252,13 @@ const AddNewInvoice = () => {
 
     return (
       <>
+      {/* {isLoading && (
+        <div className="loading-overlay">
+          <ReactLoading type="spinningBubbles" color="#0000FF"
+                height={100}
+                width={50}/>
+        </div>
+      )} */}
         <div className="customer-details">
           <table id="customerTable">
             <tbody>

@@ -10,4 +10,6 @@ app.get("/getCust/:userID",pendingTrans.getCreditCustomers);
 app.get("/getSupp/:userID",pendingTrans.getDebitSuppliers);
 app.put("/updateCustAmt",pendingTrans.updateCustomerAmount);
 app.put("/updateSuppAmt",pendingTrans.updateSupplierAmount);
+app.get("/SearchCreditCust/:userID",pendingTrans.SearchCreditCustomers);
+app.get("/SearchDebitSupp/:userID",pendingTrans.SearchDebitSuppliers);
 module.exports = app;
