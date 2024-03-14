@@ -2,6 +2,9 @@ import React,{useState, useEffect,useContext} from 'react';
 import './TransactionHistory.css';
 import { Link } from "react-router-dom";
 import AuthContext from './AuthContext';
+import axios from 'axios';
+import {initialState} from './components/Invoice/initialState';
+
 
 const TransactionHistory = () =>
 {
@@ -10,6 +13,7 @@ const TransactionHistory = () =>
   const [customerName, setCustomerName] = useState();
   // const [products, setAllProducts] = useState([]);
   const authContext = useContext(AuthContext);
+  const [invoiceData, setInvoiceData] = useState(initialState);
 
 
   const handlePageUpdate = () => {
@@ -43,9 +47,22 @@ const fetchSearchData = () => {
     })
     .catch((err) => console.log(err));
 };
+const createPdf = () => {
+  axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+    .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob' }))
+    .then((res) => {
+      const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      window.open(pdfUrl, '_blank');
+    });
+};
 const handleCustomerName = (e) => {
   setCustomerName(e.target.value);
   fetchSearchData();
+};
+const populateInvoiceData = (element) => {
+  setInvoiceData(element);
+  createPdf();
 };
     return (
       <div className="TransactionHistory">
@@ -125,7 +142,17 @@ const handleCustomerName = (e) => {
               <td>{element.customerName}</td>
               <td>{element.paymentMode}</td>
               <td>{element.totalAmount}</td>
-              <td>{element.invoiceID }</td>
+              {/* <td>{element.invoiceID }</td> */}
+              <td>
+              <span
+              className="action-button"
+                //className="text-green-700 cursor-pointer"
+                //onClick={() => updateProductModalSetting(element)}
+                onClick={() => populateInvoiceData(element)}
+              >
+                {element.invoiceID + " "}
+              </span>
+              </td>
             </tr>
           );
         })}
