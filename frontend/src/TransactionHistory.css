@@ -1,0 +1,51 @@
+.TransactionHistory #inventoryTable {
+    padding-top: 200px;
+    width: 80%; /* Set the desired width of the table */
+    border-collapse: collapse;
+    margin: 20px;
+}
+
+.TransactionHistory #inventoryTable th, #inventoryTable td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+   
+}
+
+.TransactionHistory #inventoryTable th {
+    background-color: #f2f2f2;
+}
+.TransactionHistory .search-bar-container {
+    padding: 10px;
+    width: 100%;
+    margin-left: -10px;
+    margin-top: -10px;
+}
+
+.TransactionHistory .search-bar {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    width: 95%;
+    height: 30px;
+    background-color: #ccc;
+    font-size: 18px;
+}
+
+.TransactionHistory .search-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    position: absolute;
+    top: 125px;
+    left: 245px;
+}
+
+.TransactionHistory .search-bar::placeholder {
+    font-size: 22px;
+    color: #888;
+    position:absolute;
+    margin-left: 35px;
+}
+.TransactionHistory .add-button-container {
+    margin-top: 20px;
+}

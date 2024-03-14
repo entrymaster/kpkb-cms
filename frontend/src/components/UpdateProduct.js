@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
-const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
+const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
     useEffect(() => {
         setItemData((prevItemData) => ({
           ...prevItemData,
@@ -27,19 +27,19 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
      quantity: '',
       // batchList: [],
     });
-    const resetFields = () => {
-        setItemData({
-          _id: '',
-          itemID: '',
-          itemName: '',
-          salePrice: '',
-          costPrice: '',
-          itemGST: '',
-          category: '',
-          discount: '',
-          quantity: '',
-        });
-      };
+    // const resetFields = () => {
+    //     setItemData({
+    //       _id: '',
+    //       itemID: '',
+    //       itemName: '',
+    //       salePrice: '',
+    //       costPrice: '',
+    //       itemGST: '',
+    //       category: '',
+    //       discount: '',
+    //       quantity: '',
+    //     });
+    //   };
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
@@ -53,9 +53,9 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
           body: JSON.stringify(itemData),
         })
           .then((result) => {
-            alert("Product ADDED");
-            resetFields();
-            //handlePageUpdate();
+            alert("Product UPDATED");
+            //resetFields();
+            handlePageUpdate();
             //addProductModalSetting();
             onCancel();
           })
@@ -63,7 +63,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element }) => {
       };
       const handleCancel = () => {
         onCancel();
-        resetFields();
+        //resetFields();
       };
   return (
     isVisible && (

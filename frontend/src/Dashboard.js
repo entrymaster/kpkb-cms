@@ -44,10 +44,10 @@ function Dashboard() {
           <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
           </p>
           <p>
-          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
           </p>
           <p>
-          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
           </p>
         </div>
       </div>
@@ -120,6 +120,32 @@ function Dashboard() {
           <br />₹ 1,18,729
         </p>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
   )

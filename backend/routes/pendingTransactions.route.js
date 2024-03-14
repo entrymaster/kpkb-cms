@@ -5,5 +5,9 @@ const pendingTrans = require("../controllers/pendingTransactions.controller");
 app.post("/addNewCredit",pendingTrans.addNewCredit);
 app.post("/addNewDebit",pendingTrans.addNewDebit);
 app.put("/updateCustomer",pendingTrans.updateCustomer);
-app.put("/updateSupplier",pendingTrans.updateSupplier)
+app.put("/updateSupplier",pendingTrans.updateSupplier);
+app.get("/getCust/:userID",pendingTrans.getCreditCustomers);
+app.get("/getSupp/:userID",pendingTrans.getDebitSuppliers);
+app.put("/updateCustAmt",pendingTrans.updateCustomerAmount);
+app.put("/updateSuppAmt",pendingTrans.updateSupplierAmount);
 module.exports = app;

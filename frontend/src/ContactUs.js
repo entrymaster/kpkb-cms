@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import Navbar from './Navbar';
 const ContactUs = () => {
-    return <div className="ContactUs"> <div className="container">
+    return <div className="ContactUs">
+      <Navbar/>
+      {/* <div className="container">
     <div className="left">
       <div className="left-top-box">
         <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -19,7 +21,7 @@ const ContactUs = () => {
       </div>
       <div className="nav-panel">
       <p>
-          <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
           </p>
           <p>
           <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
@@ -32,6 +34,12 @@ const ContactUs = () => {
           </p>
           <p style={{ backgroundColor: "#E0E0F7" }}>
           <Link to="/contactUs" style={{color: "black", textDecoration: 'none'}}>Contact Us</Link>
+          </p>
+          <p>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          </p>
+          <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
           </p>
       </div>
     </div>
@@ -50,7 +58,7 @@ const ContactUs = () => {
     >
       Contact Us
     </span>
-  </div>
+  </div> */}
   <div className="main-container">
     <div className="contact-section">
       <h2>&nbsp; GET IN TOUCH</h2>

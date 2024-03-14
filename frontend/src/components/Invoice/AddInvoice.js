@@ -5,7 +5,7 @@ import {initialState} from './initialState';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
 import AuthContext from '../../AuthContext';
-
+import { saveAs } from 'file-saver';
 const AddNewInvoice = () => {
   // const reload = () => {window.location.reload()};
   // reload();
@@ -15,37 +15,62 @@ const AddNewInvoice = () => {
   const [items, setAllItems] = useState([]);
   const [currItem, setCurrItem] = useState();
   const [updatePage, setUpdatePage] = useState(true);
+  const [isPaid, setIsPaid] = useState(true);
+  const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   // const history = useHistory();
   const authContext = useContext(AuthContext);
 
+  const handleItemSelection = (selectedItem) => {
+    // Assuming selectedItem is an object containing the selected item details including available quantity
+    setAvailableQuantity(selectedItem.quantity);
+  };
+
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
+    if(value != null){
       // console.log(value)
       const updatedItemList = [...invoiceData.itemList];
       // console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
+        updatedItemList[index].costPrice = value['costPrice'];
         updatedItemList[index].rate=value['salePrice'];
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
+        handleItemSelection(value);
+        let quantity = parseFloat(updatedItemList[index].quantity);
+        if(quantity > value['quantity']) {
+          alert("Quantity entered exceeds available stock !");
+          updatedItemList[index].quantity = 0;
+          quantity = 0;
+        };
+        const rate = parseFloat(updatedItemList[index].rate);
+        const gst = parseFloat(updatedItemList[index].gst);
+        const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
+        updatedItemList[index].amount = amount;
       }
-    if (fieldName === 'quantity') {
-      const quantity = parseFloat(value)
-      const rate = parseFloat(updatedItemList[index].rate);
-      const gst = parseFloat(updatedItemList[index].gst);
-      const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
-      updatedItemList[index].amount = amount;
-      updatedItemList[index].quantity = quantity;
+      if (fieldName === 'quantity') {
+        let quantity = parseFloat(value);
+        if(quantity > availableQuantity) {
+          alert("Quantity entered exceeds available stock !");
+          updatedItemList[index].quantity = 0;
+          quantity = 0;
+        };
+        const rate = parseFloat(updatedItemList[index].rate);
+        const gst = parseFloat(updatedItemList[index].gst);
+        const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
+        updatedItemList[index].amount = isNaN(amount) ? 0 : amount;
+        updatedItemList[index].quantity = quantity;
+      }
+  
+      setInvoiceData({
+        ...invoiceData,
+        itemList: updatedItemList
+      });
     }
-  
-    setInvoiceData({
-      ...invoiceData,
-      itemList: updatedItemList
-    });
     setTotalChange(true);
+      
   };
-
-  
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
@@ -63,6 +88,7 @@ const AddNewInvoice = () => {
       subTotal = subTotal + arr[i].amount;
     }
     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
+    invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : invoiceData.totalAmount;
     setTotalChange(false);
   }, [totalChange])
 
@@ -94,30 +120,51 @@ const AddNewInvoice = () => {
           console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
+          setCurrItem(null);
         })
         .then(() => {
           setIncInvoiceID(true);
-          // window.location.reload(); // Reload the webpage
+          window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
     };
 
-    const handleGeneratePDF = async () => {
-      try {
-        const response = await axios.post('http://localhost:5050/api/generate-pdf', 
-        {invoiceData}, { responseType: 'blob' });
-        // console.log('Response from server:', response);
-        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    // const handleGeneratePDF = async () => {
+    //   try {
+    //     const response = await axios.post('http://localhost:5050/api/generate-pdf', 
+    //     {invoiceData}, { responseType: 'blob' });
+    //     // console.log('Response from server:', response);
+    //     const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    //     const pdfUrl = URL.createObjectURL(pdfBlob);
+    //     console.log(pdfUrl);
+    //     // const newWindow=window.open();
+    //     // newWindow.location.href = pdfUrl;
+    //     window.open(pdfUrl, '_blank');
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
+    const createPdf = () => {
+      console.log(invoiceData);
+      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        console.log(pdfUrl);
-        // const newWindow=window.open();
-        // newWindow.location.href = pdfUrl;
-        window.open(pdfUrl, '_blank');
-      } catch (error) {
-        console.error(error);
-      }
+        window.open(pdfUrl,'_blank');
+        // saveAs(pdfBlob, 'invoice.pdf');
+      })
+    }
+    
+    const downloadPdf = () => {
+      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
+      })
     }
 
     const updateInventory = () => {
@@ -169,6 +216,7 @@ const AddNewInvoice = () => {
       // fetchSalesData();
     }, [updatePage]);
     const userId='user';
+
     const fetchItemsData = () => {
       fetch(`http://localhost:5050/api/inventory/get/${userId}`)
       .then((response) => response.json())
@@ -178,9 +226,9 @@ const AddNewInvoice = () => {
       .catch((err) => console.log(err));
     };
 
-    const handleOpenPDF = () => {
-      window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
-    };
+    // const handleOpenPDF = () => {
+    //   window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
+    // };
     // const handleOpenPDF = () => {
     //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
     //   history.push({
@@ -188,6 +236,14 @@ const AddNewInvoice = () => {
     //     search: `?data=${encodeURIComponent(JSON.stringify(invoiceData))}`,
     //   });
     // };
+
+    const togglePaymentMode = () => {
+      setInvoiceData(prevData => ({
+        ...prevData,
+        paymentMode: isPaid ? 'Credit' : 'Paid'
+      }));
+      setIsPaid(prevState => !prevState);
+    };
 
     return (
       <>
@@ -227,7 +283,7 @@ const AddNewInvoice = () => {
               label="itemName"
               id={`dropdown-${index}`}
               selectedVal={currItem}
-              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')} 
+              handleChange={(selectedItem) => handleInputChange({ target:{ value: selectedItem } }, index, 'itemName')} 
             /></td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td>{item.rate}</td>
@@ -258,9 +314,9 @@ const AddNewInvoice = () => {
       <div className="total-amt-box" style={{ fontSize: '24px' }}>Total Amount: &#8377; {invoiceData.totalAmount}</div>
     </div>
       <div className="bill-buttons">
-        <button id="add-as-credit" type = "button" onClick={handleAddField}> <strong> Add as Credit </strong> </button>
-        <button id="preview-bill" type = "button" onClick={ handleGeneratePDF}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory();}}> <strong> Generate Bill </strong> </button>
+        <button id="add-as-credit" type = "button" onClick={togglePaymentMode}> <strong> {isPaid ? 'Add as Credit' : 'Set as Paid'} </strong> </button>
+        <button id="preview-bill" type = "button" onClick={createPdf}> <strong> Preview Bill </strong> </button>
+        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button>
       </div>
     
     </div>

@@ -35,14 +35,14 @@ const invoiceSchema = new Schema({
   paymentMode: {
     type: String,
     default: "Paid",
-    // required: true,
+    required: false,
   },
   discount: {
     type: Number,
     default: 0,
   },
   itemList: {
-    type: [ {itemID: String, itemName: String, quantity: Number, rate: Number, gst: Number, amount: Number } ],
+    type: [ {itemID: String, itemName: String, quantity: Number, costPrice: Number, rate: Number, gst: Number, amount: Number } ],
     required: true,
   },
   createdAt:{
