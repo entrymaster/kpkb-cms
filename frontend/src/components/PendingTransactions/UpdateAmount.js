@@ -1,26 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Modal from "react-modal";
 
 const UpdateAmt = ({isVisible, onCancel, entryType, operationType, entryID, handlePageUpdate}) => {
 
+    const [DisplayData, setDisplayData] = useState({
+        amount: 0,
+    });
+
     const [Data, setData] = useState({
       amount: 0,
-      zero: 0,
     });
 
     const handleInputChange = (key, value) => {
-      setData({ ...Data, [key]: value });
+      setData({ ...Data, [key]: value});
+      setDisplayData({...DisplayData,[key]: value});
       console.log(Data);
     };
     
+    const setAmountSign = () => {
+        if(operationType === "Subtraction")
+            setData({...Data, amount: Data.amount < 0 ? Data.amount : -Data.amount});
+    };
+
+    useEffect(() => {setAmountSign();},[DisplayData]);
+
     const updateAmount = () => {
         onCancel();
-        if(operationType === "Subtraction")
-            setData({ ...Data, amount: (Data.amount * -1)});    //...........???????
+      if(DisplayData.amount > 0)
+      {
+        setDisplayData({amount:0});
       if(entryType === "Customer")
         updateCustAmount();
       else                             //entryType === "Supplier"
         updateSuppAmount();
+      }
     };
 
     const updateCustAmount = () => {
@@ -98,7 +111,7 @@ ariaHideApp={false}
   onSubmit={(e) => {e.preventDefault();updateAmount();onCancel();}}
 >
               <label htmlFor="amount">Enter Amount (in Rupees):</label>
-              <input type="number" value={Data.amount} name="amount" onChange={(e) => handleInputChange(e.target.name, e.target.value) } />
+              <input type="number" value={DisplayData.amount} name="amount" onChange={(e) => handleInputChange(e.target.name, e.target.value) } />
               <br />
             <button type="submit">
               Submit

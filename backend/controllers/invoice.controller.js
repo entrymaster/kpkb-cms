@@ -83,12 +83,35 @@ const getInvoiceCount = async (req, res) => {
 const getAllInvoice = async (req, res) => {
   const findAllInvoices = await Invoice.find({
     // userID: req.params.userId,
+
     userID: "user",
   }).sort({ customerName: 1 }); 
   // -1 for descending;1 for ascending;
   // console.log(req.params.userId);
   res.json(findAllInvoices);
   // console.log(findAllInvoices);
+};
+const searchInvoice = async (req, res) => {
+ 
+  try {
+    const {userID, customerName } = req.query;
+
+    // Create a query object based on parameters
+    const query = {
+      userID: "user",
+      // userID: req.params.userID,
+      customerName: { $regex: new RegExp(customerName, 'i') }, // Case-insensitive string search
+    };
+
+    // Execute the query
+    const records = await Invoice.find(query);
+    // Send the results
+    res.json(records);
+    console.log(records);
+  } catch (error) {
+    console.error('Error fetching records:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 // const generatePDF = async (req, res) => {
 //   const invoiceData=req.body;
@@ -124,4 +147,4 @@ const getAllInvoice = async (req, res) => {
 // }
 
 
-module.exports={addInvoice, getInvoiceCount,getAllInvoice};
+module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice };

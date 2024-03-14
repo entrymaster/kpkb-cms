@@ -131,21 +131,21 @@ const AddNewInvoice = () => {
         setUpdatePage(false);
     };
 
-    const handleGeneratePDF = async () => {
-      try {
-        const response = await axios.post('http://localhost:5050/api/generate-pdf', 
-        {invoiceData}, { responseType: 'blob' });
-        // console.log('Response from server:', response);
-        const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        console.log(pdfUrl);
-        // const newWindow=window.open();
-        // newWindow.location.href = pdfUrl;
-        window.open(pdfUrl, '_blank');
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    // const handleGeneratePDF = async () => {
+    //   try {
+    //     const response = await axios.post('http://localhost:5050/api/generate-pdf', 
+    //     {invoiceData}, { responseType: 'blob' });
+    //     // console.log('Response from server:', response);
+    //     const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+    //     const pdfUrl = URL.createObjectURL(pdfBlob);
+    //     console.log(pdfUrl);
+    //     // const newWindow=window.open();
+    //     // newWindow.location.href = pdfUrl;
+    //     window.open(pdfUrl, '_blank');
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
     const createPdf = () => {
       console.log(invoiceData);
       axios.post('http://localhost:5050/api/create-pdf', invoiceData)
@@ -156,7 +156,6 @@ const AddNewInvoice = () => {
         window.open(pdfUrl,'_blank');
         // saveAs(pdfBlob, 'invoice.pdf');
       })
-      
     }
     
     const downloadPdf = () => {
@@ -166,7 +165,6 @@ const AddNewInvoice = () => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
       })
-      
     }
 
     const updateInventory = () => {

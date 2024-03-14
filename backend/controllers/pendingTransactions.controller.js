@@ -1,5 +1,6 @@
 const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
+const Invoice = require("../models/invoice.model");
 const mongoose = require("mongoose");
 
 //Add New Credit
@@ -42,58 +43,31 @@ const addNewDebit = async (req, res) => {
 // Update Existing Customer Credit
 const updateCustomer  = async (req, res) => {
   try {
-    const { CustomerID, invoiceID, amount } = req.body;
+    const { name, phoneNo, email } = req.body;
 
-    // Find the Customer by userID
-    const Customer = await Customer.findOne({ userID: CustomerID });
-
-    if (!Customer) {
-      return res.status(404).json({ error: "Customer not found" });
-    }
-
-    // Update credit amount
-    Customer.creditAmount += amount ;
-
-    // Add invoice ID to the invoice list (avoid duplicates)
-    const uniqueInvoiceList = [...new Set([...Customer.invoiceList, { invoiceID }])]; // Ensures unique invoices
-    Customer.invoiceList = uniqueInvoiceList;
-
-    const updatedCustomer = await Customer.save();
-
+    const updatedCustomer = await Customer.findByIdAndUpdate({_id:req.body._id},{name: name, phoneNo: phoneNo, email: email},{new: true});
+    console.log(".....");
+    console.log(updatedCustomer);
     res.json(updatedCustomer);
   } catch (error) {
-    console.error("Error updating Customer credit:", error);
-    res.status(400).json({ error: "Failed to update Customer credit" });
+    console.error("Error updating Customer:", error);
+    res.status(400).json({ error: "Failed to update Customer" });
   }
 };
 
   
 // Update Existing Supplier Debit
 const updateSupplier  = async (req, res) => {
-    try {
-      const { SupplierID, invoiceID, amount } = req.body;
-  
-      // Find the Supplier by userID
-      const Supplier = await Supplier.findOne({ userID: SupplierID });
-  
-      if (!Supplier) {
-        return res.status(404).json({ error: "Supplier not found" });
-      }
-  
-      // Update debit amount 
-      Supplier.debitAmount += amount ;
-  
-      // Add invoice ID to the invoice list (avoid duplicates)
-      const uniqueInvoiceList = [...new Set([...Supplier.invoiceList, { invoiceID }])]; // Ensures unique invoices
-      Supplier.invoiceList = uniqueInvoiceList;
-  
-      const updatedSupplier = await Supplier.save();
-  
-      res.json(updatedSupplier);
-    } catch (error) {
-      console.error("Error updating Supplier debit:", error);
-      res.status(400).json({ error: "Failed to update Supplier debit" });
-    }
+  try {
+    const { name, phoneNo, email } = req.body;
+
+    const updatedSupplier = await Supplier.findByIdAndUpdate({_id:req.body._id},{name: name, phoneNo: phoneNo, email: email},{new: true});
+
+    res.json(updatedSupplier);
+  } catch (error) {
+    console.error("Error updating Supplier:", error);
+    res.status(400).json({ error: "Failed to update Supplier" });
+  }
   };
 
   const getCreditCustomers = async (req, res) => {
@@ -124,13 +98,39 @@ const updateSupplier  = async (req, res) => {
   const updateCustomerAmount = async (req, res) => {
     try {
      const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
+     const id=updatedCust.userID;
      console.log(updatedCust);
      res.json(updatedCust);
+     const count = await Invoice.countDocuments({userID : id});
+     const addInvoice = new Invoice({
+       userID: updatedCust.userID,
+       //invoiceID: req.body.invoiceID,
+       invoiceID: count,
+       customerName: updatedCust.name,
+       phoneNo: updatedCust.phoneNo,
+       customerEmail: updatedCust.email,
+       totalAmount: -req.body.amount,
+       //notes: req.body.notes,
+       paymentMode: "Credit dues cleared",
+       itemList: [],
+       //createdAt: req.body.createdAt,
+     });
+     addInvoice.save()
+     .then(async(result)=> {
+       const newInvoiceId = result._id;
+       updatedCust.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
+       const savedCustomer = await updatedCust.save();
+       console.log(savedCustomer);
+     })
+     .catch((err) => {
+       console.log(err);
+     });
     }
     catch(error) {
      console.error("Error updating customer amount", error);
      res.status(400).json({error: "Failed to update customer amount"});
     }
+
   };
  
   const updateSupplierAmount = async (req, res) => {

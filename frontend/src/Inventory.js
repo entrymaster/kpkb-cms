@@ -56,6 +56,23 @@ const Inventory = () =>
     setUpdateBatch(selectedProductData);
     toggleViewBatchDialog ();
   };
+  const getRowStyle = (expiryDate) => {
+    const today = new Date();
+    const expirationDate = new Date(expiryDate);
+    const daysUntilExpiration = Math.floor((expirationDate - today) / (1000 * 60 * 60 * 24));
+    if (daysUntilExpiration < 0) {
+      // Item has already expired
+      return { backgroundColor: 'pink' };
+    } else if (daysUntilExpiration <= 3) {
+      // Item will expire soon
+      return { backgroundColor: '#FFF59D' };
+    } 
+    else {
+      // Item is not expiring soon and not expired
+      return { backgroundColor: '#E0FFDB' };
+      // return {};
+    }
+  };
 
   useEffect(() => {
     fetchProductsData();
@@ -77,10 +94,11 @@ const Inventory = () =>
 
 };
 const fetchSearchData = () => {
-  fetch('http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}')
+  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
+      console.log(data);
     })
     .catch((err) => console.log(err));
 };
@@ -116,7 +134,7 @@ const deleteItem = (id) => {
       </div>
       <div className="nav-panel">
          <p>
-          <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
           </p>
           <p>
           <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
@@ -200,7 +218,7 @@ const deleteItem = (id) => {
         <tbody>
     {products && products.map((element, index) => {
       return (
-        <tr key={element._id}>
+        <tr key={element._id} style={getRowStyle(element.batchList[0]?.expiryDate)}>
           <td>{element.itemID}</td>
           <td>{element.itemName}</td>
           <td>{element.salePrice}</td>
