@@ -13,7 +13,6 @@ const { updateSearchIndex } = require("./models/invoice.model");
 const registerRouter = require("./routes/register.route")
 const loginRouter = require("./routes/login.route")
 const verifyRouter = require("./routes/verify.route")
-const forgotRouter = require("./routes/forgot.route")
 //const {User} = require("./models/user.model")
 // const registerRouter = require("./routes/register.route");
 
@@ -37,11 +36,7 @@ app.use("/api/pendingTransactions",pendingTransactionsRouter);
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 app.use("/api/otp" , verifyRouter);
-app.use("/api/verify" , verifyRouter);
-app.use("/api/forgot" , forgotRouter);
 
-// Middleware to parse URL-encoded bodies
-app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -64,33 +59,6 @@ app.post('/api/create-pdf', (req,res) => {
 app.get('/api/fetch-pdf', (req,res) => {
   res.sendFile(`${__dirname}/invoice.pdf`);
 })
-// app.post('/api/generate-pdf', async (req, res) => {
-//   try {
-//     const { invoiceData } = req.body;
-
-//     // Create a new PDF document
-//     const pdfDoc = await PDFDocument.create();
-//     const page = pdfDoc.addPage();
-//     const { width, height } = page.getSize();
-//     page.drawText("hello ");
-//     page.drawText('Invoice Details:', { x: 50, y: height - 100, color: rgb(0, 0, 0) });
-//     page.drawText(`Customer Name: ${invoiceData.customerName}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
-//     page.drawText(`Invoice ID: ${invoiceData.invoiceID}`, { x: 50, y: height - 120, color: rgb(0, 0, 0) });
-//     page.drawText(`Total Amount: ${invoiceData.totalAmount}`, { x: 50, y: height - 140, color: rgb(0, 0, 0) });
-
-//     // Serialize the PDF to a buffer
-//     const pdfBytes = await pdfDoc.save();
-
-//     // Send the PDF as a response
-//     res.setHeader('Content-Type', 'application/pdf');
-//     res.setHeader('Content-Disposition', 'inline; filename=invoice.pdf');
-//     res.send(pdfBytes);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
-
 
 /* Connecting to the database and then starting the server. */
 mongoose

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -14,12 +14,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import './Navbar.css';
-
+import { performSignout } from './auth';
 const iconSize = 32;
+
 
 const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
+const handleSignout = () => {
+  performSignout(navigate);
+};
     const getPageTitle = () => {
         switch(location.pathname) {
             case '/dashboard':
@@ -34,10 +39,12 @@ const Navbar = () => {
                 return 'Transaction History';
             case '/Reports':
                 return 'Reports';
-            case '/FAQs':
+            case '/FAQ':
                 return 'FAQs';
             case '/contactUs':
                 return 'Contact Us';
+                case '/profile':
+                return 'Profile';
             default:
                 return '';
         }
@@ -85,25 +92,25 @@ const Navbar = () => {
             </p>
             <p className={location.pathname === "/TransactionHistory" ? "active" : ""}>
                 <Link to="/TransactionHistory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                <SupportAgentIcon style={{ marginRight: '5px' }} />
+                <HistoryIcon style={{ marginRight: '5px' }} />
                 <strong>Transaction History</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/Reports" ? "active" : ""}>
                 <Link to="/Reports" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <HistoryIcon style={{ marginRight: '5px' }} />
+                    <BarChartIcon style={{ marginRight: '5px' }} />
                     <strong>Reports</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/FAQs" ? "active" : ""}>
-                <Link to="/FAQs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <Link to="/FAQ" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                     <HelpOutlineIcon style={{ marginRight: '5px' }} />
                     <strong>FAQs</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/contactUs" ? "active" : ""}>
                 <Link to="/contactUs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <BarChartIcon style={{ marginRight: '5px' }} />
+                    <SupportAgentIcon style={{ marginRight: '5px' }} />
                     <strong>Contact Us</strong>
                 </Link>
             </p>
@@ -127,7 +134,9 @@ const Navbar = () => {
               </Link>
           </Tooltip>
           <Tooltip title="Logout">
-              <LogoutIcon style={{ color: "#fff", fontSize: iconSize }} />
+          <button onClick={handleSignout} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+        <LogoutIcon style={{ color: "#fff", fontSize: iconSize }} />
+      </button>
           </Tooltip>
         </div>
       </div>

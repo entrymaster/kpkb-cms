@@ -2,17 +2,18 @@ import React from 'react';
 import './Dashboard.css';
 import { Link, useNavigate } from "react-router-dom";
 import { performSignout } from './auth';
-
+import Navbar from './Navbar';
 function Dashboard() { 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleSignout = () => {
-    performSignout(navigate);
-  };
+  // const handleSignout = () => {
+  //   performSignout(navigate);
+  // };
 
   return (
   <div className="Dashboard">
-    <div className="container">
+     <Navbar/>
+    {/* <div className="container">
       <div className="left">
         <div className="left-top-box">
           <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -51,12 +52,12 @@ function Dashboard() {
           </p>
         </div>
       </div>
-    </div>
+    </div> */}
     <div
-      className="top-panel"
-      style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
+      // className="top-panel"
+      // style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
     >
-      <span
+      {/* <span
         style={{
           paddingInlineStart: "0.2cm",
           color: "white",
@@ -66,14 +67,14 @@ function Dashboard() {
       >
         {" "}
         Dashboard
-      </span>
-      <div>
+      </span> */}
+      {/* <div>
           <button id="signOutBtn" onClick = {handleSignout}>Sign Out</button>
-      </div>
+      </div> */}
     </div>
     <div
       className="main-container"
-      style={{ display: "flex", justifyContent: "space-around", paddingTop: 20 }}
+      style={{ display: "flex", justifyContent: "space-around", paddingTop: 120 }}
     >
       <div className="data-box">
         <p

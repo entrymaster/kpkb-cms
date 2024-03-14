@@ -1,33 +1,45 @@
 /**
  * Generates an HTML template for an invoice.
- * @param {Object} options - The options for generating the invoice template.
- * @param {string} options.userID - The user ID.
- * @param {string} options.invoiceID - The invoice ID.
- * @param {string} options.customerName - The name of the customer.
- * @param {string} options.phoneNo - The phone number of the customer.
- * @param {string} options.customerEmail - The email of the customer.
- * @param {number} options.totalAmount - The total amount of the invoice.
- * @param {string} options.notes - Any notes for the invoice.
- * @param {string} options.paymentMode - The payment mode.
- * @param {number} options.discount - The discount amount.
- * @param {Object[]} options.itemList - The list of items in the invoice.
- * @param {string} options.itemList[].itemName - The name of the item.
- * @param {number} options.itemList[].quantity - The quantity of the item.
- * @param {number} options.itemList[].rate - The rate of the item.
- * @param {number} options.itemList[].gst - The GST of the item.
- * @param {number} options.itemList[].amount - The total amount for the item.
- * @param {Date} options.createdAt - The date when the invoice was created.
+ * @param {Object} requestData
+ * @param {Object} requestData.invoiceData - The invoice data for generating the invoice template.
+ * @param {string} requestData.invoiceData.userID - The user ID.
+ * @param {string} requestData.invoiceData.invoiceID - The invoice ID.
+ * @param {string} requestData.invoiceData.customerName - The name of the customer.
+ * @param {string} requestData.invoiceData.phoneNo - The phone number of the customer.
+ * @param {string} requestData.invoiceData.customerEmail - The email of the customer.
+ * @param {number} requestData.invoiceData.totalAmount - The total amount of the invoice.
+ * @param {string} requestData.invoiceData.notes - Any notes for the invoice.
+ * @param {string} requestData.invoiceData.paymentMode - The payment mode.
+ * @param {number} requestData.invoiceData.discount - The discount amount.
+ * @param {Object[]} requestData.invoiceData.itemList - The list of items in the invoice.
+ * @param {string} requestData.invoiceData.itemList[].itemName - The name of the item.
+ * @param {number} requestData.invoiceData.itemList[].quantity - The quantity of the item.
+ * @param {number} requestData.invoiceData.itemList[].rate - The rate of the item.
+ * @param {number} requestData.invoiceData.itemList[].gst - The GST of the item.
+ * @param {number} requestData.invoiceData.itemList[].amount - The total amount for the item.
+ * @param {Date} requestData.invoiceData.createdAt - The date when the invoice was created.
+ * @param {Object} requestData.userData - The user data for including shop details in the invoice.
+ * @param {string} requestData.userData.shopName - The name of the shop.
+ * @param {string} requestData.userData.gstno - The GST number of the shop.
+ * @param {string} requestData.userData.email - The email address of the shop.
+ * @param {string} requestData.userData.shopaddress - The address of the shop.
  * @returns {string} The HTML template for the invoice.
  */
-module.exports = (options) => {
+  
+const User = require('../../../../backend/models/user.model');
+
+const invoicePDF = (requestData) => {
+    
   const today = new Date();
-  // console.log(options.itemList[0].itemName);
+  // console.log(invoice.itemList[0].itemName);
+
+  
   return `<!DOCTYPE html>
   <html>
   <head>
       <style>
           body {
-              margin-left: 15px ;
+              margin-left: 30px ;
               margin-top: 15px;
               margin-right:15px;
               padding: 0;
@@ -123,32 +135,31 @@ module.exports = (options) => {
       <section class="address">
           <div class="contact">
               <div>
-                  <h4>SALESFORCE</h4>
-                  <p>payments@salesforce.com</p>
-                  <p>1234567890</p>
-                  <p>415 Mission Street Suite 300</p>
-                  <p>San Francisco, CA 94105</p>
+                  <h4>${requestData.userData.shopname}</h4>
+                  <p>${requestData.userData.gstno}</p>
+                  <p>${requestData.userData.email}</p>
+                  <p>${requestData.userData.shopaddress}</p>
               </div>
 
               <div>
                   <p class="title">Bill to:</p>
-                  <h4>${options.customerName}</h4>
-                  <p>${options.customerEmail}</p>
-                  <p>${options.phoneNo}</p>
+                  <h4>${requestData.invoiceData.customerName}</h4>
+                  <p>${requestData.invoiceData.customerEmail}</p>
+                  <p>${requestData.invoiceData.phoneNo}</p>
               </div>
           </div>
 
           <div class="status">
               <div class="receipt-id">
                   <h1>Receipt</h1>
-                  <p>#${options.invoiceID}</p>
+                  <p>#${requestData.invoiceData.invoiceID}</p>
               </div>
               <p class="title">Status</p>
-              <h3>${options.paymentMode}</h3>
+              <h3>${requestData.invoiceData.paymentMode}</h3>
               <p class="title">Date</p>
-              <p>${options.createdAt}</p>
+              <p>${requestData.invoiceData.createdAt}</p>
               <p class="title">Amount</p>
-              <h3>&#8377;${options.totalAmount}</h3>
+              <h3>&#8377;${requestData.invoiceData.totalAmount}</h3>
           </div>
       </section>
 
@@ -163,7 +174,7 @@ module.exports = (options) => {
               </tr>
           </thead>
           <tbody id="table-body">
-              ${options.itemList.map(item => `
+              ${requestData.invoiceData.itemList.map(item => `
                   <tr>
                       <td>${item.itemName}</td>
                       <td>${item.quantity}</td>
@@ -182,21 +193,21 @@ module.exports = (options) => {
               </tr>
               <tr>
                   <td>Total</td>
-                  <td style="text-align: center">${options.totalAmount}</td>
+                  <td style="text-align: center">${requestData.invoiceData.totalAmount}</td>
               </tr>
 
               <tr>
-                  <td>Payment made</td>
-                  <td style="text-align: center">${options.totalAmount}</td>
-              </tr>
-
-              <tr>
-                  <td>Balance</td>
-                  <td><h3 style="line-height: 5px; text-align: center">&#8377;0.00</h3></td>
-              </tr>
+                <td>Payment made</td>
+                <td style="text-align: center">${requestData.invoiceData.paymentMode === 'Paid' ? requestData.invoiceData.totalAmount : '&#8377;0.00'}</td>
+            </tr>
+            <tr>
+                <td>Balance</td>
+                <td><h3 style="line-height: 5px; text-align: center">${requestData.invoiceData.paymentMode === 'Paid' ?'&#8377;0.00' : requestData.invoiceData.totalAmount}</td>
+            </tr>
           </table>
       </section>
 
   </body>
   </html>`;
 };
+module.exports = invoicePDF;

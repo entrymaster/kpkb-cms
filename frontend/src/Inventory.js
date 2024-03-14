@@ -7,6 +7,7 @@ import AddBatchDialog from './components/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ViewBatchDialog from './components/ViewBatch';
 import AuthContext from './AuthContext';
+import Navbar from './Navbar';
 const Inventory = () =>
 {
   const [sortBy, setSortBy] = useState('');
@@ -130,7 +131,8 @@ const sortProducts = (heading) => {
 };
         return (
             <div className="Inventory">
-  <div className="container">
+               <Navbar/>
+  {/* <div className="container">
     <div className="left">
       <div className="left-top-box">
         <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -169,12 +171,12 @@ const sortProducts = (heading) => {
           </p>
       </div>
     </div>
-  </div>
-  <div className="top-panel">
+  </div> */}
+  {/* <div className="top-panel">
     <div style={{ textAlign: "left", marginTop: 15 }}>
       <h1 style={{ color: "#fff", fontSize: 40 }}>Inventory</h1>
     </div>
-  </div>
+  </div> */}
   <div className="main-container">
     <div className="add-button-container">
       <button className="add-item-button" onClick={toggleAddItemDialog}>

@@ -3,6 +3,7 @@ import Dashboard from "./Dashboard.js";
 import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
+import FAQ from "./FAQ.js";
 import Invoice from "./Invoice.js";
 import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
@@ -12,8 +13,7 @@ import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
-import ForgotPass from "./ForgotPass.js"
-import ForgotVerify from "./Forgotverify.js"
+
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
 import VerifyOtp from "./otpverify.js";
@@ -52,51 +52,52 @@ const App = () => {
     callback();
   };
 
-    const signout = (navigate) => {
-      setUser(null);
-      localStorage.removeItem("user");
-      navigate("/Login", { replace: true });
-    };
-  
-    setSignout(signout);
-  
-    let value = { user, signin, signout };
-  
-    if (loader)
-      return (
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <h1>LOADING...</h1>
-        </div>
-      );
+  const signout = (navigate) => {
+    setUser(null);
+    localStorage.removeItem("user");
+    navigate("/Login", { replace: true });
+  };
+
+  setSignout(signout);
+
+  let value = { user, signin, signout };
+
+  if (loader)
     return (
-        <AuthContext.Provider value = {value}>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Login/>} />
-                    <Route path = "/forgotverify" element = {<ForgotVerify/>}/>
-                    <Route path = "forgototpverify" element = {<Forgototpverify/>}/>
-                    <Route path ="/forgotpass" element = {<ForgotPass/>}/>
-                    <Route path = "/otp" element = {<VerifyOtp/>}/>
-                    <Route path = "/verify" element = {<Verify/>}/>
-                    <Route path="/register" element={<Register />} /> 
-                      <Route path="/dashboard" element={<Dashboard/>}/> 
-                      <Route path="/inventory" element={<Inventory/>}/>
-                      <Route path="/invoice" element={<Invoice/>}/>
-                      <Route path="/pendingTransactions" element={<PendingTransactions/>}/>
-                      <Route path="/contactUs" element={<ContactUs/>}/>
-                      <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
-                      <Route path="/pdf-viewer" element={<InvoicePDF/>} />
-                </Routes>
-            </Router>
-        </AuthContext.Provider>
-    )
-}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1>LOADING...</h1>
+      </div>
+    );
+  return (
+    <AuthContext.Provider value={value}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/otp" element={<VerifyOtp />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/invoice" element={<Invoice />} />
+          <Route
+            path="/pendingTransactions"
+            element={<PendingTransactions />}
+          />
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/TransactionHistory" element={<TransactionHistory />} />
+          <Route path="/Reports" element={<Reports />} />
+          <Route path="/pdf-viewer" element={<InvoicePDF />} />
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
+  );
+};
 
 export default App;

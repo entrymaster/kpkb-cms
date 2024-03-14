@@ -6,7 +6,7 @@ import BarChart from "./components/Charts/BarChart1.js";
 import LineChart from "./components/Charts/LineChart1.js";
 import PieChart from "./components/Charts/PieChart.js";
 import { UserData } from "./Data";
-
+import Navbar from './Navbar';
 function Reports() {
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.year),
@@ -28,7 +28,8 @@ function Reports() {
   });
   return (
     <div className="Reports">
-      <div className="container">
+        <Navbar/>
+      {/* <div className="container">
         <div className="left">
           <div className="left-top-box">
             <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -120,9 +121,9 @@ function Reports() {
           {" "}
           Reports
         </span>
-      </div>
+      </div> */}
         <div className="main-container">
-        <div style={{ width: 300 }}>
+        <div style={{ width: 300, marginTop: 100  }}>
             <PieChart chartData={userData} />
           </div>
           <div style={{ width: 300 }}>

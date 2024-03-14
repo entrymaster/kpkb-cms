@@ -5,7 +5,7 @@ body, html {
 }
  .container {
     display: flex;
-    position: absolute;
+    position: fixed;
     box-sizing: border-box;
     top:0px;
     left:0px;
@@ -45,6 +45,11 @@ body, html {
     padding-left: 10px;
 }
  .top-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1000;
     margin-left: 240px;
     height: 100px;
     display: flex;
