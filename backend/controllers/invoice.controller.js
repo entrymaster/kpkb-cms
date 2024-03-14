@@ -173,8 +173,37 @@ const getSalesData = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const getDashboardData = async (req, res) => {
+  try {
+    // Extract user ID from request parameters or wherever it's stored
+    const userId = req.params.userId; // Example: req.params.userId
+
+    // Get today's date
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    console.log("today");
+    console.log(today);
+    console.log(startOfDay);
+    // Find all invoices for the user with today's date
+    const invoices = await Invoice.find({
+      userID: userId,
+      createdAt: { $gte: startOfDay }
+    });
+    console.log(invoices);
+    // Calculate the sum of selling prices
+    const totalSellingPrice = invoices.reduce((total, invoice) => total + invoice.totalSales, 0);
+    // Calculate the sum of cost prices
+    
+    const totalCostPrice = invoices.reduce((total, invoice) => total + invoice.totalCostPrice, 0);
+
+    // Return the sums as response
+    res.json({ totalSellingPrice, totalCostPrice });
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 
 
-
-module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, };
+module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, getDashboardData };

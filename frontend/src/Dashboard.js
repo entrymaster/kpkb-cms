@@ -1,15 +1,40 @@
-import React from 'react';
+import React,{useState,useEffect, useContext} from 'react';
 import './Dashboard.css';
 import { Link, useNavigate } from "react-router-dom";
 import { performSignout } from './auth';
 import Navbar from './Navbar';
+import AuthContext from './AuthContext';
 function Dashboard() { 
   // const navigate = useNavigate();
 
   // const handleSignout = () => {
   //   performSignout(navigate);
   // };
-
+  const authContext = useContext(AuthContext);
+  const [updatePage, setUpdatePage] = useState(true);
+  const [todayProfit, setTodayProfit] = useState('');
+  const [todaySales, setTodaySales] = useState('');
+  const [todayBills, setTodayBills] = useState('');
+  const [yesterdaySales, setYesterdaySales] = useState('');
+  const handlePageUpdate = () => {
+    setUpdatePage(!updatePage);
+  };
+  useEffect(() => {
+    //fetchUserData();
+    fetchDashboardData();
+  }, [updatePage]);
+  const fetchDashboardData = () => {
+    //fetch(`http://localhost:5050/api/invoice/getDashboardData/${authContext.user}`)
+    fetch(`http://localhost:5050/api/invoice/getDashboardData/${authContext.user}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // setAllProducts(data);
+      setTodayProfit(data.totalSellingPrice-data.totalCostPrice);
+      setTodaySales(data.totalSellingPrice);
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+};
   return (
   <div className="Dashboard">
      <Navbar/>
@@ -83,7 +108,7 @@ function Dashboard() {
             fontFamily: '"Times New Roman", Times, serif'
           }}
         >
-          Today's Sales
+          Today's Sales {todaySales}
           <br />₹ 1,08,324
         </p>
       </div>
@@ -94,7 +119,7 @@ function Dashboard() {
             fontFamily: '"Times New Roman", Times, serif'
           }}
         >
-          Today's Profit
+          Today's Profit {todayProfit}
           <br />₹ 15,240
         </p>
       </div>
