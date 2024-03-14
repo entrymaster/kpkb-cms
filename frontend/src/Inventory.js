@@ -9,6 +9,7 @@ import ViewBatchDialog from './components/ViewBatch';
 import AuthContext from './AuthContext';
 const Inventory = () =>
 {
+  const [sortBy, setSortBy] = useState('');
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
   const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
   const [isViewBatchDialogVisible, setViewBatchDialogVisibility] = useState(false);
@@ -115,6 +116,18 @@ const deleteItem = (id) => {
       setUpdatePage(!updatePage);
     });
 };
+const sortProducts = (heading) => {
+  const sortedProducts = [...products];
+  if (sortBy === heading) {
+    // If already sorted by the same heading, reverse the order
+    sortedProducts.reverse();
+  } else {
+    // Sort the products based on the selected heading
+    sortedProducts.sort((a, b) => a[heading] > b[heading] ? 1 : -1);
+  }
+  setAllProducts(sortedProducts);
+  setSortBy(heading); // Update the state to track the selected heading
+};
         return (
             <div className="Inventory">
   <div className="container">
@@ -205,14 +218,64 @@ const deleteItem = (id) => {
     </div>
     <table id="inventoryTable">
         <thead>
-          <tr class="headers">
-          <th>ITEM ID</th>
-            <th>ITEM NAME</th>
-            <th>SALE PRICE</th>
-            <th>COST PRICE</th>
-            <th>STOCK</th>
-            <th>MORE ACTIONS</th>
-            <th>DELETE</th>
+        <tr className="headers">
+        <th>
+  ITEM ID
+  <button onClick={() => sortProducts('itemID')}>
+    {/* Arrow icon */}
+    {sortBy === 'itemID' ? (
+      <>&uarr;</>
+    ) : (
+      <>&darr;</>
+    )}
+  </button>
+</th>
+<th>
+  ITEM NAME
+  <button onClick={() => sortProducts('itemName')}>
+    {/* Arrow icon */}
+    {sortBy === 'itemName' ? (
+      <>&uarr;</>
+    ) : (
+      <>&darr;</>
+    )}
+  </button>
+</th>
+<th>
+  SALE PRICE
+  <button onClick={() => sortProducts('salePrice')}>
+    {/* Arrow icon */}
+    {sortBy === 'salePrice' ? (
+      <>&uarr;</>
+    ) : (
+      <>&darr;</>
+    )}
+  </button>
+</th>
+<th>
+  COST PRICE
+  <button onClick={() => sortProducts('costPrice')}>
+    {/* Arrow icon */}
+    {sortBy === 'costPrice' ? (
+      <>&uarr;</>
+    ) : (
+      <>&darr;</>
+    )}
+  </button>
+</th>
+<th>
+  STOCK
+  <button onClick={() => sortProducts('quantity')}>
+    {/* Arrow icon */}
+    {sortBy === 'quantity' ? (
+      <>&uarr;</>
+    ) : (
+      <>&darr;</>
+    )}
+  </button>
+</th>
+<th>MORE ACTIONS</th>
+<th>DELETE</th>
           </tr>
         </thead>
         <tbody>
