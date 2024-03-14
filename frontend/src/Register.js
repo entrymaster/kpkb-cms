@@ -63,9 +63,9 @@ function Register() {
 
     registerUser();
   };
-  // if (!(location.state && location.state.email)) {
-  //   return <Navigate to="/verify" replace/>;
-  // }
+  if (!(location.state && location.state.email)) {
+    return <Navigate to="/verify" replace/>;
+  }
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
