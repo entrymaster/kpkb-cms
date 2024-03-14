@@ -58,13 +58,13 @@
   padding: 10px;
   display: inline-block;
 }
-.PendingTrans h1 {
+/* .PendingTrans h1 {
   text-align: top;
   margin-top: 1px;
   font-size: 20px;
   margin-block-end: 0.2em;
-  text-decoration: underline;
-}
+  /* text-decoration: underline; 
+} */
 .PendingTrans th {
   text-align: center;
   padding: 10px;
