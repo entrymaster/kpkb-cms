@@ -19,7 +19,7 @@ const ContactUs = () => {
       </div>
       <div className="nav-panel">
       <p>
-          <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
           </p>
           <p>
           <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
@@ -34,10 +34,10 @@ const ContactUs = () => {
           <Link to="/contactUs" style={{color: "black", textDecoration: 'none'}}>Contact Us</Link>
           </p>
           <p>
-          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
+          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
           </p>
           <p>
-          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
           </p>
       </div>
     </div>

@@ -125,7 +125,7 @@ const PendingTransactions = () => {
           </div>
           <div className="nav-panel">
             <p>
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+              <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
                 Dashboard
               </Link>
             </p>
@@ -163,19 +163,14 @@ const PendingTransactions = () => {
             </p>
             <p>
               <Link
-                to="/Register"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Register
-              </Link>
-            </p>
-            <p>
-              <Link
                 to="/TransactionHistory"
                 style={{ color: "white", textDecoration: "none" }}
               >
                 Transaction History
               </Link>
+              <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
+          </p>
             </p>
           </div>
         </div>

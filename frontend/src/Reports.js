@@ -50,7 +50,7 @@ function Reports() {
           </div>
           <div className="nav-panel">
             <p>
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+              <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
                 Dashboard
               </Link>
             </p>
@@ -84,14 +84,6 @@ function Reports() {
                 style={{ color: "white", textDecoration: "none" }}
               >
                 Contact Us
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/Register"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Register
               </Link>
             </p>
             <p>

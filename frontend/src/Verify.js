@@ -23,7 +23,7 @@ function Verification() {
       body: JSON.stringify(form),
     })
       .then((result) => {
-        alert("Successfully Sended OTP.");
+        alert(" OTP has been sent to E-mail.");
         navigate('/otp');
       })
       .catch((err) => console.log(err));

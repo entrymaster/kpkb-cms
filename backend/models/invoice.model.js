@@ -42,7 +42,7 @@ const invoiceSchema = new Schema({
     default: 0,
   },
   itemList: {
-    type: [ {itemID: String, itemName: String, quantity: Number, rate: Number, gst: Number, amount: Number } ],
+    type: [ {itemID: String, itemName: String, quantity: Number, costPrice: Number, rate: Number, gst: Number, amount: Number } ],
     required: true,
   },
   createdAt:{

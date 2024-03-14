@@ -2,6 +2,9 @@ import React,{useState, useEffect,useContext} from 'react';
 import './TransactionHistory.css';
 import { Link } from "react-router-dom";
 import AuthContext from './AuthContext';
+import axios from 'axios';
+import {initialState} from './components/Invoice/initialState';
+
 
 const TransactionHistory = () =>
 {
@@ -10,6 +13,7 @@ const TransactionHistory = () =>
   const [customerName, setCustomerName] = useState();
   // const [products, setAllProducts] = useState([]);
   const authContext = useContext(AuthContext);
+  const [invoiceData, setInvoiceData] = useState(initialState);
 
 
   const handlePageUpdate = () => {
@@ -43,9 +47,22 @@ const fetchSearchData = () => {
     })
     .catch((err) => console.log(err));
 };
+const createPdf = () => {
+  axios.post('http://localhost:5050/api/create-pdf', invoiceData)
+    .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob' }))
+    .then((res) => {
+      const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      window.open(pdfUrl, '_blank');
+    });
+};
 const handleCustomerName = (e) => {
   setCustomerName(e.target.value);
   fetchSearchData();
+};
+const populateInvoiceData = (element) => {
+  setInvoiceData(element);
+  createPdf();
 };
     return (
       <div className="TransactionHistory">
@@ -66,7 +83,7 @@ const handleCustomerName = (e) => {
           </div>
           <div className="nav-panel">
              <p>
-              <Link to="/" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
+              <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
               </p>
               <p>
               <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
@@ -80,12 +97,12 @@ const handleCustomerName = (e) => {
               <p>
               <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
               </p>
-              <p>
-              <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
-              </p>
               <p style={{ backgroundColor: "#E0E0F7" }}>
               <Link to="/TransactionHistory" style={{color: "black", textDecoration: 'none'}}>Transaction History</Link>
               </p>
+              <p>
+          <Link to="/Reports" style={{color: "white", textDecoration: 'none'}}>Reports</Link> 
+          </p>
           </div>
         </div>
       </div>
@@ -125,7 +142,17 @@ const handleCustomerName = (e) => {
               <td>{element.customerName}</td>
               <td>{element.paymentMode}</td>
               <td>{element.totalAmount}</td>
-              <td>{element.invoiceID }</td>
+              {/* <td>{element.invoiceID }</td> */}
+              <td>
+              <span
+              className="action-button"
+                //className="text-green-700 cursor-pointer"
+                //onClick={() => updateProductModalSetting(element)}
+                onClick={() => populateInvoiceData(element)}
+              >
+                {element.invoiceID + " "}
+              </span>
+              </td>
             </tr>
           );
         })}

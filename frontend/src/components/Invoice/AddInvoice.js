@@ -33,6 +33,7 @@ const AddNewInvoice = () => {
       // console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
+        updatedItemList[index].costPrice = value['costPrice'];
         updatedItemList[index].rate=value['salePrice'];
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
@@ -123,7 +124,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          // window.location.reload(); // Reload the webpage
+          window.location.reload(); // Reload the webpage
         })
         .catch((err) => console.log(err));
 
@@ -146,6 +147,7 @@ const AddNewInvoice = () => {
     //   }
     // }
     const createPdf = () => {
+      console.log(invoiceData);
       axios.post('http://localhost:5050/api/create-pdf', invoiceData)
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
@@ -224,9 +226,9 @@ const AddNewInvoice = () => {
       .catch((err) => console.log(err));
     };
 
-    const handleOpenPDF = () => {
-      window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
-    };
+    // const handleOpenPDF = () => {
+    //   window.open(`/pdf-viewer/?data=${encodeURIComponent(JSON.stringify(invoiceData))}`, '_blank'); // Open the PDFViewer component in a new window
+    // };
     // const handleOpenPDF = () => {
     //   // Navigate to the PDF viewer page with the invoiceData as a query parameter
     //   history.push({
