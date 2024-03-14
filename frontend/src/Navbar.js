@@ -90,13 +90,13 @@ const handleSignout = () => {
             </p>
             <p className={location.pathname === "/TransactionHistory" ? "active" : ""}>
                 <Link to="/TransactionHistory" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                <SupportAgentIcon style={{ marginRight: '5px' }} />
+                <HistoryIcon style={{ marginRight: '5px' }} />
                 <strong>Transaction History</strong>
                 </Link>
             </p>
             <p className={location.pathname === "/Reports" ? "active" : ""}>
                 <Link to="/Reports" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <HistoryIcon style={{ marginRight: '5px' }} />
+                    <BarChartIcon style={{ marginRight: '5px' }} />
                     <strong>Reports</strong>
                 </Link>
             </p>
@@ -108,7 +108,7 @@ const handleSignout = () => {
             </p>
             <p className={location.pathname === "/contactUs" ? "active" : ""}>
                 <Link to="/contactUs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
-                    <BarChartIcon style={{ marginRight: '5px' }} />
+                    <SupportAgentIcon style={{ marginRight: '5px' }} />
                     <strong>Contact Us</strong>
                 </Link>
             </p>
