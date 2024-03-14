@@ -12,7 +12,7 @@ import Login from "./Login.js";
 import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
-
+import ForgotPass from "./ForgotPass.js"
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js"
 import VerifyOtp from "./otpverify.js"
@@ -76,6 +76,7 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Login/>} />
+                    <Route path="/forgot" element = {<ForgotPass/>}/>
                     <Route path = "/otp" element = {<VerifyOtp/>}/>
                     <Route path = "/verify" element = {<Verify/>}/>
                     <Route path="/register" element={<Register />} /> 
