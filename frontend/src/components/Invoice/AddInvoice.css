@@ -67,6 +67,7 @@
     flex-grow: 1;
     padding: 20px;
     display: flex;
+    margin-top: 100px;
 }
 #customerTable {
     flex-grow: 1;
