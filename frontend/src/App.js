@@ -18,6 +18,9 @@ import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
 import VerifyOtp from "./otpverify.js";
 import Forgototpverify from "./Forgototpverify.js"
+import Forgotpass from "./ForgotPass.js"
+import Forgotverify from "./Forgotverify.js"
+
 
 
 // import Layout from "./Layout.js";
@@ -81,6 +84,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/otp" element={<VerifyOtp />} />
+          <Route path="/forgotverify" element={<Forgotverify/>}/>
+          <Route path = "/forgotpass" element = {<Forgotpass/>}/>
+          <Route path = "/forgototpverify" element = {<Forgototpverify/>} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />

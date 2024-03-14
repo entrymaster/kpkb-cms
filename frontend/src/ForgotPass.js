@@ -109,7 +109,7 @@ function Login() {
                   //value={form.email}
                   value={email || ''} // Set value to email received from location state
                   disabled // Disable input to prevent user modification
-                  onChange={handleInputChange}
+                  //onChange={handleInputChange}
                 />
               </div>
               <br></br>
