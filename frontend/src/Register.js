@@ -33,10 +33,6 @@ function Register() {
       alert("Password and Confirm Password do not match");
       return; // Exit function if passwords don't match
     }
-    if (!form.email.includes("@")) {
-      alert("Invalid Email, doesn't include @");
-      return; // Exit function if email is invalid
-    }
     if (form.password.length < 6) {
       alert("Password should be at least 6 characters");
       return; // Exit function if password is too short
@@ -57,6 +53,8 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setForm({ ...form, email: email || '' });
+
     registerUser();
   };
   if (!(location.state && location.state.email)) {

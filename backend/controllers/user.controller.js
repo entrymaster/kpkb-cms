@@ -1,8 +1,9 @@
 const User = require("../models/user.model");
 
 const getUserData = async (req, res) => {
+    // console.log(req.params);
     try {
-        const userID = req.params.userID;
+        const userID = req.params.userId;
         const userData = await User.findById(userID);
         res.json(userData);
     } catch (error) {
