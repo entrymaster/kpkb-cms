@@ -24,10 +24,6 @@ const PendingTransactions = () => {
     setUpdatePage(!updatePage);
   };
 
-  useEffect(() => {
-    fetchEntriesData();
-  }, [updatePage]);
-
   const fetchEntriesData = () => {
     if (activeTab === "credit-tab") fetchCreditCustomers();
     else fetchDebitSuppliers();
@@ -53,11 +49,36 @@ const PendingTransactions = () => {
       .catch((err) => console.log(err));
   };
 
+  const SearchCreditCustomers = (query) => {
+    const q = query;
+    const userID = "user";
+    fetch(`http://localhost:5050/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setEntries(data);
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+  };
+
+  const SearchDebitSuppliers = (query) => {
+    const q = query;
+    const userID = "user";
+    fetch(`http://localhost:5050/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setEntries(data);
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+  };
+
   const [entryType, setEntryType] = useState("Customer");
   const [operationType, setOperationType] = useState("Subtraction");
   const [entryID, setEntryID] = useState([]);
   const [entry, setEntry] = useState([]);
   const [isUpdateAmtDialogOpen, setIsUpdateAmtDialogOpen] = useState(false);
+  const [query, setQuery] = useState("");
 
   const showUpdateAmtDialog = () => {
     setIsUpdateAmtDialogOpen(true);
@@ -86,6 +107,8 @@ const PendingTransactions = () => {
   const [totalAmt, setTotalAmt] = useState(0);
 
   const handleTotalAmt = () => {
+    if(query === "")
+    {
     const amounts =
       activeTab === "credit-tab"
         ? Entries.map((Entry) => Entry.creditAmount)
@@ -95,11 +118,33 @@ const PendingTransactions = () => {
       0
     );
     setTotalAmt(total);
+    }
   };
 
   useEffect(() => {
     handleTotalAmt();
   }, [Entries]);
+
+  useEffect(() => {
+    if(query === "")
+      fetchEntriesData();
+    else
+    {
+      if (activeTab === "credit-tab") SearchCreditCustomers(query);
+      else SearchDebitSuppliers(query);
+    }
+  }, [query]);
+
+  useEffect(() => {
+    if(query === "")
+      fetchEntriesData();
+    else
+    {
+      if (activeTab === "credit-tab") SearchCreditCustomers(query);
+      else SearchDebitSuppliers(query);
+    }
+  }, [updatePage]);
+
 
   return (
     <div className="PendingTrans">
@@ -181,7 +226,7 @@ const PendingTransactions = () => {
       <div className="main-container">
         <div className="top">
           <div className="search-bar-container">
-            <input type="text" className="search-bar" placeholder="Search" />
+            <input type="text" value={query} className="search-bar" placeholder="Search" onChange={(e) => {setQuery(e.target.value);}} />
           </div>
           <div className="TotalAmount">
             <h1>
@@ -290,7 +335,7 @@ const PendingTransactions = () => {
               <th>Phone No.</th>
               <th>Email</th>
               <th>Amount</th>
-              <th id="add-credit-button" onClick={showAddNewDialog}>
+              <th id="add-credit-button" onClick={() => {setEntryType("Supplier");showAddNewDialog();}}>
                 Add New Supplier
               </th>
             </tr>

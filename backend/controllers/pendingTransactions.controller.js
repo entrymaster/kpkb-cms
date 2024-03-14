@@ -1,7 +1,6 @@
 const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
 const Invoice = require("../models/invoice.model");
-const mongoose = require("mongoose");
 
 //Add New Credit
 const addNewCredit = async (req, res) => {
@@ -54,8 +53,7 @@ const updateCustomer  = async (req, res) => {
     res.status(400).json({ error: "Failed to update Customer" });
   }
 };
-
-  
+ 
 // Update Existing Supplier Debit
 const updateSupplier  = async (req, res) => {
   try {
@@ -92,16 +90,18 @@ const updateSupplier  = async (req, res) => {
       console.error("Error finding suppliers to debit:",error);
       res.status(400).json({ error: "Failed to find suppliers to debit"});
     }
-    console.log(req.params.userID);
   };
 
   const updateCustomerAmount = async (req, res) => {
     try {
+      const amt = req.body.amount;
      const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
      const id=updatedCust.userID;
      console.log(updatedCust);
      res.json(updatedCust);
      const count = await Invoice.countDocuments({userID : id});
+     const totalAmt = amt > 0 ? amt : -amt;
+     const payMode = amt > 0 ? "Amount added to credit" : "Credit dues cleared";
      const addInvoice = new Invoice({
        userID: updatedCust.userID,
        //invoiceID: req.body.invoiceID,
@@ -109,9 +109,9 @@ const updateSupplier  = async (req, res) => {
        customerName: updatedCust.name,
        phoneNo: updatedCust.phoneNo,
        customerEmail: updatedCust.email,
-       totalAmount: -req.body.amount,
+       totalAmount: totalAmt,
        //notes: req.body.notes,
-       paymentMode: "Credit dues cleared",
+       paymentMode: payMode,
        itemList: [],
        //createdAt: req.body.createdAt,
      });
@@ -145,6 +145,34 @@ const updateSupplier  = async (req, res) => {
    }
  };
 
+ const SearchCreditCustomers = async(req, res) => {
+  try{
+    const user= req.params.userID;
+    const {custName} = req.query;
+    const CreditCustomers = await Customer.find({ creditAmount : {$gt : 0}, userID : user, name: { $regex: new RegExp(custName, 'i') }});
+    console.log(CreditCustomers); 
+    res.json(CreditCustomers);
+    }
+    catch (error) {
+      console.error("Error finding customers with credit:",error);
+      res.status(400).json({ error: "Failed to find customers with credit"});
+    }
+ };
+
+ const SearchDebitSuppliers = async(req, res) => {
+  try{
+    const user= req.params.userID;
+    const {suppName} = req.query;
+    const DebitSuppliers = await Supplier.find({ debitAmount : {$gt : 0}, userID : user, name: { $regex: new RegExp(suppName, 'i') }});
+    console.log(DebitSuppliers); 
+    res.json(DebitSuppliers);
+    }
+    catch (error) {
+      console.error("Error finding suppliers to debit:",error);
+      res.status(400).json({ error: "Failed to find suppliers to debit"});
+    }
+ };
+
 module.exports={
   addNewCredit,
   addNewDebit,
@@ -154,4 +182,6 @@ module.exports={
   getDebitSuppliers,
   updateCustomerAmount,
   updateSupplierAmount,
+  SearchCreditCustomers,
+  SearchDebitSuppliers,
 };
