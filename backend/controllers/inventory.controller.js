@@ -43,29 +43,6 @@ const updateProduct = async (req, res) => {
     res.status(402).send("Error");
   }
 };
-// const updateBatch = async (req, res) => {
-//   try {
-//     const { batchID, batchQty, expiryDate } = req.body;
-
-//     const updatedBatch = await Product.findOneAndUpdate(
-//       { "batchList._id": req.body._id }, // Find the product with the matching batchList _id
-//       { 
-//         $set: {
-//           "batchList.$.batchID": batchID,
-//           "batchList.$.batchQty": batchQty,
-//           "batchList.$.expiryDate": expiryDate,
-//         }
-//       },
-//       { new: true }
-//     );
-
-//     console.log(updatedBatch);
-//     res.json(updatedBatch);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(402).send("Error");
-//   }
-// };
 const updateBatch = async (req, res) => {
   try {
     const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
@@ -117,29 +94,6 @@ const getAllProducts = async (req, res) => {
     res.status(500).json({ error: 'Error fetching products', message: error.message });
   }
 };
-
-
-// const getAllProducts = async (req, res) => {
-//   try {
-//     const products = await Product.find({ userID: "user" });
-
-//     // Loop through each product and calculate the total quantity
-//     products.forEach(product => {
-//       let totalQuantity = 0;
-//       product.batchList.forEach(batch => {
-//         totalQuantity += batch.batchQty;
-//       });
-//       product.quantity = totalQuantity;
-//       // Save the updated product with the new quantity
-//       product.save();
-//     });
-
-//     res.json(products);
-//   } catch (error) {
-//     console.error('Error fetching products:', error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
 const searchProduct = async (req, res) => {
   try {
     const {userID, itemName } = req.query;
@@ -202,8 +156,6 @@ const deleteBatch = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-
 const addBatchList = async (req, res) => {
   try {
     const { batchID, batchQty, expiryDate } = req.body;
@@ -221,42 +173,6 @@ const addBatchList = async (req, res) => {
     res.status(500).json({ error: 'Error adding batchList', message: error.message });
   }
 };
-
-/*const updateBatchList = async (req, res) => {
-  try {
-    const { batchId, batchQty, expiryDate } = req.body;
-    const _id = req.body._id;
-
-    // Check if the product with the given ID exists
-    const existingProduct = await Product.findById(_id);
-
-    if (!existingProduct) {
-      return res.status(404).json({ error: 'Product not found'});
-    }
-
-    // Find the batch with the given batchId within the batches array
-    const targetBatchIndex = existingProduct.batches.findIndex(batchList => batchList.batchId === batchId);
-
-    if (targetBatchIndex === -1) {
-      return res.status(404).json({ error: 'Batch not found'});
-    }
-
-    // Update the target batch
-    existingProduct.batches[targetBatchIndex] = {
-      ...existingProduct.batches[targetBatchIndex],
-      batchQty,
-      expiryDate,
-    };
-
-    // Save the updated product
-    const updatedProduct = await existingProduct.save();
-
-    res.json({ message: 'Batch updated successfully', product: updatedProduct });
-  } catch (error) {
-    console.error('Error updating batch:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};*/
 const updateItemQuantityInInvoice = async (req, res) => {
   try {
     const itemsToUpdate = req.body; // Assuming req.body is an array of items [{ itemName, requestedQuantity }, ...]
