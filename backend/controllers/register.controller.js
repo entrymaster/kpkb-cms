@@ -31,7 +31,7 @@ const fixedSalt = '$2b$10$abcdefghijklmnopqrstuv';
 
 
 const registerUser = async (req, res) => {
-  const { firstname, lastname, email, password, gstno , shopname , shopaddress } = req.body;
+  const { firstname, lastname, email, password, gstno , shopname , shopaddress , phonenumber } = req.body;
 
   try {
     // Check if the user with the given email already exists
@@ -56,6 +56,7 @@ const registerUser = async (req, res) => {
       gstno,
       shopname,
       shopaddress,
+      phonenumber,
     });
     console.log(password)
     // Save the user to the database

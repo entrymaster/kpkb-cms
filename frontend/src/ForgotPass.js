@@ -1,6 +1,6 @@
 // import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation} from "react-router-dom";
 import AuthContext from "./AuthContext";
 import "./Login.css";
 
@@ -21,30 +21,37 @@ function Login() {
     setForm({ ...form, [name]: value });
   };
 
-  const authCheck = () => {
-    setTimeout(() => {
-      fetch("http://localhost:5050/api/login/log/get")
-        .then((response) => response.json())
-        .then((data) => {
-          alert("Successfully Login");
-          localStorage.setItem("user", JSON.stringify(data));
-          authContext.signin(data._id, () => {
-            navigate("/dashboard");
-          });
-        })
-        .catch((err) => {
-          alert("Wrong credentials, Try again")
-          console.log(err);
-        });
-    }, 3000);
-  };
+  
+  const location = useLocation();
+  const { email } = location.state || {}; // Destructure email from location state
+  form.email = email;
+//   const authCheck = () => {
+//     setTimeout(() => {
+//       fetch("http://localhost:5050/api/login/log/get")
+//         .then((response) => response.json())
+//         .then((data) => {
+//           alert("Successfully Login");
+//           localStorage.setItem("user", JSON.stringify(data));
+//           authContext.signin(data._id, () => {
+//             navigate("/dashboard");
+//           });
+//         })
+//         .catch((err) => {
+//           alert("Wrong credentials, Try again")
+//           console.log(err);
+//         });
+//     }, 3000);
+//   };
 
-  const loginUser = (e) => {
+  const forgotpass = (e) => {
     // Cannot send empty data
+    //form.email = email;
     if (form.email === "" || form.password === "") {
-      alert("To login user, enter details to proceed...");
+      alert("To change password, enter details to proceed...");
     } else {
-      fetch("http://localhost:5050/api/login/log/in", {
+        // console.log(form.password)
+        // console.log(form.email)
+      fetch("http://localhost:5050/api/forgot/for", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -52,13 +59,15 @@ function Login() {
         body: JSON.stringify(form),
       })
         .then((result) => {
-          console.log("User login", result);
+          alert("Successfully changed password");
+          console.log("Successfully changed password", result);
+          navigate("/")
         })
         .catch((error) => {
           console.log("Something went wrong ", error);
         });
     }
-    authCheck();
+    //authCheck();
   };
 
 
@@ -81,7 +90,7 @@ function Login() {
               //alt="Your Company"
             />
             <h2 className="logintext">
-              login to your account
+              Change your Password
             </h2>
 
           </div>
@@ -97,8 +106,10 @@ function Login() {
                   required
                   className="input-box2"
                   placeholder="Email address"
-                  value={form.email}
-                  onChange={handleInputChange}
+                  //value={form.email}
+                  value={email || ''} // Set value to email received from location state
+                  disabled // Disable input to prevent user modification
+                  //onChange={handleInputChange}
                 />
               </div>
               <br></br>
@@ -110,7 +121,7 @@ function Login() {
                   autoComplete="current-password"
                   required
                   className="input-box2"
-                  placeholder="Password"
+                  placeholder="New Password"
                   value={form.password}
                   onChange={handleInputChange}
                 />
@@ -142,7 +153,7 @@ function Login() {
                 type="submit"
                 id="btn2"
                 className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={loginUser}
+                onClick={forgotpass}
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                   {/* <LockClosedIcon
@@ -150,7 +161,7 @@ function Login() {
                     aria-hidden="true"
                   /> */}
                 </span>
-                Sign in
+                Change Password
               </button>
               </div>
               <br></br>
@@ -159,7 +170,6 @@ function Login() {
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  <Link to="/forgotverify"> Forgot your password?</Link>
                 </span>
               </div>
               <p className="mt-2 text-center text-sm text-gray-600" class="shift5">
