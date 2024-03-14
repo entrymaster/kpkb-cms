@@ -388,7 +388,7 @@ import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 const PendingTransactions = () => {
   const [activeTab, setActiveTab] = useState("credit-tab");
 
@@ -435,25 +435,29 @@ const PendingTransactions = () => {
   const SearchCreditCustomers = (query) => {
     const q = query;
     const userID = "user";
-    fetch(`http://localhost:5050/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`)
-    .then((response) => response.json())
-    .then((data) => {
-      setEntries(data);
-      console.log(data);
-    })
-    .catch((err) => console.log(err));
+    fetch(
+      `http://localhost:5050/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setEntries(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const SearchDebitSuppliers = (query) => {
     const q = query;
     const userID = "user";
-    fetch(`http://localhost:5050/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`)
-    .then((response) => response.json())
-    .then((data) => {
-      setEntries(data);
-      console.log(data);
-    })
-    .catch((err) => console.log(err));
+    fetch(
+      `http://localhost:5050/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setEntries(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const [entryType, setEntryType] = useState("Customer");
@@ -490,17 +494,16 @@ const PendingTransactions = () => {
   const [totalAmt, setTotalAmt] = useState(0);
 
   const handleTotalAmt = () => {
-    if(query === "")
-    {
-    const amounts =
-      activeTab === "credit-tab"
-        ? Entries.map((Entry) => Entry.creditAmount)
-        : Entries.map((Entry) => Entry.debitAmount);
-    const total = amounts.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    );
-    setTotalAmt(total);
+    if (query === "") {
+      const amounts =
+        activeTab === "credit-tab"
+          ? Entries.map((Entry) => Entry.creditAmount)
+          : Entries.map((Entry) => Entry.debitAmount);
+      const total = amounts.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      );
+      setTotalAmt(total);
     }
   };
 
@@ -509,30 +512,24 @@ const PendingTransactions = () => {
   }, [Entries]);
 
   useEffect(() => {
-    if(query === "")
-      fetchEntriesData();
-    else
-    {
+    if (query === "") fetchEntriesData();
+    else {
       if (activeTab === "credit-tab") SearchCreditCustomers(query);
       else SearchDebitSuppliers(query);
     }
   }, [query]);
 
   useEffect(() => {
-    if(query === "")
-      fetchEntriesData();
-    else
-    {
+    if (query === "") fetchEntriesData();
+    else {
       if (activeTab === "credit-tab") SearchCreditCustomers(query);
       else SearchDebitSuppliers(query);
     }
   }, [updatePage]);
 
-
   return (
     <div className="PendingTrans">
-        <Navbar/>
-      {/* <div className="container">
+      <div className="container">
         <div className="left">
           <div className="left-top-box">
             <img src="logo1.png" alt="logo" width={220} height={80} />
@@ -611,11 +608,19 @@ const PendingTransactions = () => {
       </div>
       <div className="top-panel">
         <a className="heading">Pending Transactions</a>
-      </div> */}
+      </div>
       <div className="main-container">
         <div className="top">
           <div className="search-bar-container">
-            <input type="text" value={query} className="search-bar" placeholder="Search" onChange={(e) => {setQuery(e.target.value);}} />
+            <input
+              type="text"
+              value={query}
+              className="search-bar"
+              placeholder="Search"
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+            />
           </div>
           <div className="TotalAmount">
             <h1>
@@ -649,8 +654,8 @@ const PendingTransactions = () => {
           activeTab === "credit-tab" ? "tabcontent-active" : "tabcontent"
         }
       >
-        <table style={{ border: "1px solid lightgray" }}>
-          <thead style={{ backgroundColor: "lightgray" }}>
+        <table border="1">
+          <thead style={{ backgroundColor: "lightly" }}>
             <tr className="headers">
               <th>Customer Name</th>
               <th>Phone No.</th>
@@ -667,7 +672,7 @@ const PendingTransactions = () => {
                 return (
                   <tr
                     key={element._id}
-                    style={{ borderBottom: "1px solid lightgray" }}
+                    // style={{ borderBottom: "1px solid lightgray" }}
                   >
                     <td>{element.name}</td>
                     <td>{element.phoneNo}</td>
@@ -727,7 +732,13 @@ const PendingTransactions = () => {
               <th>Phone No.</th>
               <th>Email</th>
               <th>Amount</th>
-              <th id="add-credit-button" onClick={() => {setEntryType("Supplier");showAddNewDialog();}}>
+              <th
+                id="add-credit-button"
+                onClick={() => {
+                  setEntryType("Supplier");
+                  showAddNewDialog();
+                }}
+              >
                 Add New Supplier
               </th>
             </tr>
