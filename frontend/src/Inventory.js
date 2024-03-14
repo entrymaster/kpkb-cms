@@ -82,7 +82,6 @@ const Inventory = () =>
 
     // fetchSalesData();
   }, [updatePage]);
-  console.log(userId);
   const fetchProductsData = () => {
     fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
