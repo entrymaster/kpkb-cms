@@ -6,6 +6,7 @@ const getUserData = async (req, res) => {
         const userID = req.params.userId;
         const userData = await User.findById(userID);
         res.json(userData);
+        console.log(userData);
     } catch (error) {
         console.error("Error fetching user data:", error);
         res.status(500).json({ error: "Error fetching user data" });
