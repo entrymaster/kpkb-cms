@@ -1,6 +1,6 @@
 // import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation} from "react-router-dom";
 import AuthContext from "./AuthContext";
 import "./Login.css";
 
@@ -21,6 +21,10 @@ function Login() {
     setForm({ ...form, [name]: value });
   };
 
+  
+  const location = useLocation();
+  const { email } = location.state || {}; // Destructure email from location state
+  form.email = email;
 //   const authCheck = () => {
 //     setTimeout(() => {
 //       fetch("http://localhost:5050/api/login/log/get")
@@ -41,6 +45,7 @@ function Login() {
 
   const forgotpass = (e) => {
     // Cannot send empty data
+    //form.email = email;
     if (form.email === "" || form.password === "") {
       alert("To change password, enter details to proceed...");
     } else {
@@ -54,7 +59,9 @@ function Login() {
         body: JSON.stringify(form),
       })
         .then((result) => {
+          alert("Successfully changed password");
           console.log("Successfully changed password", result);
+          navigate("/")
         })
         .catch((error) => {
           console.log("Something went wrong ", error);
@@ -99,7 +106,9 @@ function Login() {
                   required
                   className="input-box2"
                   placeholder="Email address"
-                  value={form.email}
+                  //value={form.email}
+                  value={email || ''} // Set value to email received from location state
+                  disabled // Disable input to prevent user modification
                   onChange={handleInputChange}
                 />
               </div>

@@ -14,20 +14,9 @@ function Verification() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const sendOtp = (req , res) => {
-    // Check if the email is empty
-    if (!form.email) {
-      alert("Please enter your email.");
-      return; // Stop further execution
-    }
-  
-    // Check if the email is in a valid format
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(form.email)) {
-        alert("Please enter a valid email address.");
-        return; // Stop further execution
-    }
-    fetch("http://localhost:5050/api/otp/gen?source=login", {
+
+  const sendOtp = () => {
+    fetch("http://localhost:5050/api/otp/gen", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -36,13 +25,42 @@ function Verification() {
     })
       .then((result) => {
         alert(" OTP has been sent to E-mail.");
-        //res.redirect('/otp?source=login');
-        navigate('/otp' ,  { state: { email: form.email } });
+        navigate('/forgototpverify', { state: { email: form.email } });
+        //navigate('/forgototpverify');
       })
       .catch((err) => console.log(err));
   };
 
-  const emailexist = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+
+//   const emailexist = () => {
+//     fetch("http://localhost:5050/api/forgot/ver", {
+//       method: "POST",
+//       headers: {
+//         "Content-type": "application/json",
+//       },
+//       body: JSON.stringify(form),
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         if (data.exists) {
+//           //alert("OTP has been sent to your email.");
+//           // Call the sendOTP function
+//           sendOtp();
+//           //navigate('/otp');
+//         } else {
+//           alert("Email does not exist.");
+//         }
+//       })
+//       .catch((err) => console.error(err));
+//       //console.log(err);
+
+//   };
+
+const emailexist = () => {
     // Check if the email is empty
     if (!form.email) {
       alert("Please enter your email.");
@@ -67,24 +85,14 @@ function Verification() {
       .then((data) => {
         if (data.exists) {
           // Email exists, call the sendOTP function
-          alert("Account already exists with this Email.")
-        } else {
-          //alert("");
           sendOtp();
+        } else {
+          alert("Email does not exist.");
         }
       })
       .catch((err) => console.error(err));
 };
-
-
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-
-
+  
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
@@ -96,7 +104,7 @@ function Verification() {
             src="logo1.png" alt = "Billing360 Logo"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Verify Your Email-ID
+              Enter your Email associated with the Account.
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

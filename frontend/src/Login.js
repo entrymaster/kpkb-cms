@@ -159,7 +159,7 @@ function Login() {
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Forgot your password?
+                  <Link to="/forgotverify"> Forgot your password?</Link>
                 </span>
               </div>
               <p className="mt-2 text-center text-sm text-gray-600" class="shift5">

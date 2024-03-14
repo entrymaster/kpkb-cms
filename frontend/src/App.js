@@ -13,9 +13,13 @@ import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
 import ForgotPass from "./ForgotPass.js"
+import ForgotVerify from "./Forgotverify.js"
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
 import VerifyOtp from "./otpverify.js";
+import Forgototpverify from "./Forgototpverify.js"
+
+
 // import Layout from "./Layout.js";
 import "./App.css";
 import {
@@ -76,6 +80,9 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Login/>} />
+                    <Route path = "/forgotverify" element = {<ForgotVerify/>}/>
+                    <Route path = "forgototpverify" element = {<Forgototpverify/>}/>
+                    <Route path ="/forgotpass" element = {<ForgotPass/>}/>
                     <Route path = "/otp" element = {<VerifyOtp/>}/>
                     <Route path = "/verify" element = {<Verify/>}/>
                     <Route path="/register" element={<Register />} /> 

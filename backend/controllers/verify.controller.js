@@ -7,7 +7,9 @@ const logger = require('../utils/logger');
 const router = express.Router();
 
 const senOtp = async (req, res) => {
+  //req.session.source = 'verify';
   try {
+    
     const { email, type = 'numeric', organization = 'Billing 360', subject = 'One-Time Password (OTP)' } = req.body;
     console.log(email)
 
@@ -23,7 +25,9 @@ const senOtp = async (req, res) => {
 };
 
 const verOtp = async (req, res) => {
+  //req.session.source = 'verify';
   try {
+    
     const { email, otp } = req.body;
     console.log(email)
     console.log(otp)

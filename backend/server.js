@@ -16,6 +16,7 @@ const verifyRouter = require("./routes/verify.route")
 const forgotRouter = require("./routes/forgot.route")
 //const {User} = require("./models/user.model")
 // const registerRouter = require("./routes/register.route");
+
 const app = express();
 
 /* Loading the environment variables from the .env file. */
@@ -36,9 +37,14 @@ app.use("/api/pendingTransactions",pendingTransactionsRouter);
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 app.use("/api/otp" , verifyRouter);
+app.use("/api/verify" , verifyRouter);
 app.use("/api/forgot" , forgotRouter);
 
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // >>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b
 /* This is a route handler. It is listening for a GET request to the root route of the application.
