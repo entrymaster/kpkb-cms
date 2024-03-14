@@ -123,7 +123,7 @@ function Reports() {
         </span>
       </div> */}
         <div className="main-container">
-        <div style={{ width: 300 }}>
+        <div style={{ width: 300, marginTop: 100  }}>
             <PieChart chartData={userData} />
           </div>
           <div style={{ width: 300 }}>

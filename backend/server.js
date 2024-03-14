@@ -13,6 +13,7 @@ const { updateSearchIndex } = require("./models/invoice.model");
 const registerRouter = require("./routes/register.route")
 const loginRouter = require("./routes/login.route")
 const verifyRouter = require("./routes/verify.route")
+const userRouter =  require("./routes/user.route")
 //const {User} = require("./models/user.model")
 // const registerRouter = require("./routes/register.route");
 const app = express();
@@ -35,7 +36,7 @@ app.use("/api/pendingTransactions",pendingTransactionsRouter);
 app.use("/api/register" , registerRouter);
 app.use("/api/login" , loginRouter);
 app.use("/api/otp" , verifyRouter);
-
+app.use("/api/user", userRouter);
 
 
 // >>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b

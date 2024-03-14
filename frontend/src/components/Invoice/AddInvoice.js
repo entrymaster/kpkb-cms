@@ -19,8 +19,8 @@ const AddNewInvoice = () => {
   const [isPaid, setIsPaid] = useState(true);
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   const [isLoading, setIsLoading] = useState(false);
-  // const history = useHistory();
   const authContext = useContext(AuthContext);
+  const [userData, setUserData] = useState(); 
 
   const handleItemSelection = (selectedItem) => {
     // Assuming selectedItem is an object containing the selected item details including available quantity
@@ -109,7 +109,15 @@ const AddNewInvoice = () => {
       };
     });
   };
-
+  const getUserData = () => {
+    fetch("http://localhost:5050/api/users/get/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(invoiceData),
+      })
+  }
   const addInvoice = () => {
     if (invoiceData.paymentMode === 'Credit') {
       // If payment mode is Credit, add invoice data to pending transactions
