@@ -1,14 +1,18 @@
 #addItemDialog {
     align-items: center;
-    width: 800px; /* Set the desired width */
-    height: 400px;
+    width: 600px; /* Set the desired width */
+    height: 380px;
+    border-style: solid;
+    background-color: #b3d9ff;
+    border-color: rgb(104, 157, 237);
+    margin-left: 150px 
 }
 
 #addItemDialog form {
     padding: 20px; /* Add padding for better spacing */
 }
 #addItemDialog table {
-    padding-right: 100px;
+    /* padding-right: 100px; */
     border: none;
 
 }
@@ -90,8 +94,8 @@
   
   .dialog-background {
     position: fixed;
-    top: 30%;
-    left: 30%;
+    top: 23%;
+    left: 23%;
     transform: translate(-50%, -50%);
     background-color: white; /* Adjust as needed */
     /* padding: 20px; */
@@ -110,8 +114,8 @@
   
   .dialog-background-batch {
     position: fixed;
-    top: 30%;
-    left: 30%;
+    top: 23%;
+    left: 23%;
     transform: translate(-50%, -50%);
     background-color: white; /* Adjust as needed */
     /* padding: 20px; */

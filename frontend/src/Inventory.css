@@ -96,8 +96,8 @@ th.Inventory, td.Inventory {
  #addItemDialog form {
     padding: 20px; /* Add padding for better spacing */
 }
- #addItemDialog table {
-    padding-right: 100px;
+ .Inventory #addItemDialog table {
+    /* padding-right: 100px; */
     border: none;
 
 }

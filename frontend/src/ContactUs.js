@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
-import "./ContactUs.css"; 
+import "./ContactUs.css";
 const ContactUs = () => {
   return (
     <div className="ContactUs">
@@ -65,14 +65,22 @@ const ContactUs = () => {
                 <br />
                 <br />
                 <div className="message">
-                  <label htmlFor="message">Message : </label><br />
-                  <textarea id="message" placeholder="How can we help you?" rows="4" cols="50"></textarea>
+                  <label htmlFor="message">Message : </label>
+                  <br />
+                  <textarea
+                    id="message"
+                    placeholder="How can we help you?"
+                    rows="4"
+                    cols="50"
+                  ></textarea>
                 </div>
               </form>
             </div>
             <br />
             <button type="submit" className="pushable">
-              <span className="front"><strong>Send Message</strong></span>
+              <span className="front">
+                <strong>Send Message</strong>
+              </span>
             </button>
           </div>
         </div>
