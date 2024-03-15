@@ -60,6 +60,11 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
     toggleUpdateBatchDialog();
   };
 
+  const formatDate = (date) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(date).toLocaleDateString('en-IN', options);
+  };
+
   return (
     isVisible && (
       <div>
@@ -106,7 +111,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
                     <tr key={index}>
                       <td>{element.batchID}</td>
                       <td>{element.batchQty}</td>
-                      <td>{element.expiryDate}</td>
+                      <td>{formatDate(element.expiryDate)}</td>
                       <td>
                         <span
                           className="action-button"

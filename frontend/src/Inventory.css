@@ -23,6 +23,7 @@
 }
 
 .Inventory .search-bar-container {
+    position: relative; /* Make the container relative to position its children */
     padding: 10px;
     width: 100%;
     margin-left: -10px;
@@ -30,6 +31,7 @@
 }
 
 .Inventory .search-bar {
+    /* padding: 8px 40px 8px 30px; */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -37,14 +39,16 @@
     height: 30px;
     background-color: #ccc;
     font-size: 18px;
+    padding-left: 31px;
 }
+
 
 .Inventory .search-icon {
     font-size: 24px;
-    margin-right: 10px;
     position: absolute;
-    left: 270px;
-    top: 195px;
+    left: 25px;
+    top: 23px;
+
 }
 
 .Inventory .search-bar::placeholder {
@@ -81,6 +85,7 @@ table.Inventory {
     cursor: pointer;
     color: #ba3726; /* Green color, change as needed */
     margin-right: 10px; /* Adjust spacing between buttons */
+    text-decoration: underline;
   }
 th.Inventory, td.Inventory {
 
