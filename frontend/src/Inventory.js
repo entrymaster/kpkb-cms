@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Tooltip from '@mui/material/Tooltip';
+import SearchIcon from '@mui/icons-material/Search';
 const Inventory = () =>
 {
   const [sortDirection, setSortDirection] = useState('asc');
@@ -191,8 +192,9 @@ const sortProducts = (heading) => {
         // onChange={handleItemName}
         value={searchInput}
         onChange={handleSearchInputChange}
+        
         />
-        <div className="search-icon">🔍</div>
+     <SearchIcon className="search-icon" />
         {/* <div className="circle" /> */}
       </div>
     </div>
@@ -262,12 +264,19 @@ const sortProducts = (heading) => {
         {filteredProducts.map((element, index) => (
     /* {products && products.map((element, index) => { */
       // return 
-        <tr key={element._id} style={getRowStyle(element.batchList[0]?.expiryDate)}>
-          <td>{element.itemID}</td>
-          <td>{element.itemName}</td>
-          <td>{element.salePrice}</td>
-          <td>{element.costPrice}</td>
-          <td>{element.quantity }</td>
+      <tr
+      key={element._id}
+      style={{
+        ...getRowStyle(element.batchList[0]?.expiryDate),
+        marginBottom: '20px',
+        borderBottom: '4px solid white'
+      }}
+    >
+       <td style={{ padding: '15px 0' }}>{element.itemID}</td>
+  <td style={{ padding: '15px 0' }}>{element.itemName}</td>
+  <td style={{ padding: '15px 0' }}>{element.salePrice}</td>
+  <td style={{ padding: '15px 0' }}>{element.costPrice}</td>
+  <td style={{ padding: '15px 0' }}>{element.quantity}</td>
           <td>
             <span
             className="action-button"

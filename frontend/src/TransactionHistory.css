@@ -1,7 +1,7 @@
 .TransactionHistory #inventoryTable {
     padding-top: 200px; /* Adjust the padding-top value as needed */
     /* margin-top: 200px; */
-    width: 80%;/* Set the desired width of the table */
+    width: 95%;/* Set the desired width of the table */
     border-collapse: collapse;
     margin: 20px;
 }
@@ -79,6 +79,6 @@
 .TransactionHistory .search-icon {
     font-size: 24px;
     position: absolute;
-    top: 30px; /* Adjust the top position to vertically center the icon */
     left: 30px; /* Adjust the left position to position the icon before the text */
+    top: 38px 
 }
