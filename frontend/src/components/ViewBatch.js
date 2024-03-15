@@ -129,7 +129,8 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
             </tbody>
           </table>
 
-          <button type="button" onClick={onCancel}>
+          <button type="button" style={{ marginLeft: '300px' }} onClick={onCancel}>
+
             Cancel
           </button>
         </form>
