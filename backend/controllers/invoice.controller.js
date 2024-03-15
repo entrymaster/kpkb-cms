@@ -119,12 +119,14 @@ const getSalesData = async (req, res) => {
   try {
     // Convert startDate and endDate to ISO 8601 format
     //const userId = "user";
-    const id = userId;
+    const id = req.params.userId; 
     const isoStartDate = new Date(startDate).toISOString();
-    const isoEndDate = new Date(endDate).toISOString();
+    const endOfDay = new Date(endDate);
+    endOfDay.setHours(23, 59, 59, 999); // Set time to end of day
+    const isoEndDate = endOfDay.toISOString();
     console.log(isoStartDate);
     console.log(isoEndDate);
-    console.log(userId);
+    console.log(id);
 
     // Fetch sales data from database based on start date, end date, and userId
     const salesData = await Invoice.find({ 
