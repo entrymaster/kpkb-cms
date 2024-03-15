@@ -13,6 +13,7 @@ const Reports = () => {
   const [endDate, setEndDate] = useState("");
   const [chartData, setChartData] = useState({});
   const [chartData1, setChartData1] = useState({}); // Initialize with an empty object
+  const [chartData2, setChartData2] = useState({});
   //const userId = "user";
   const [flag, setFlag] = useState(0);
   const authContext = useContext(AuthContext);
@@ -26,7 +27,7 @@ const Reports = () => {
   
       axios.get(`http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {
-          const salesData = response.data; // Assuming response.data contains sales data
+          const {salesData, totalPaidSales, totalCreditSales} = response.data; // Assuming response.data contains sales data
           console.log(salesData);
           setFlag(1);
           //const allDates = generateDateArray(today, sevenDaysAgo);
@@ -38,6 +39,10 @@ const Reports = () => {
           const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
           console.log(profitsByDay);
           setChartData1(preparedChartData1); // Set chart data
+          const InvoicesByDay = calculateInvoicesByDay(salesData, startDate, endDate); // Calculate sales by day
+          const preparedChartData2 = prepareChartData2(InvoicesByDay); // Prepare chart data
+          console.log(profitsByDay);
+          setChartData2(preparedChartData2); // Set chart data
         })
         .catch((error) => {
           console.error('Error fetching sales data:', error);
@@ -77,7 +82,25 @@ const Reports = () => {
   
     return salesByDay;
   };
+  const calculateInvoicesByDay = (salesData, startDate, endDate) => {
+    const InvoicesByDay = {};
+    const currentDate = new Date(startDate);
+    const end = new Date(endDate);
   
+    while (currentDate <= end) {
+      const currentDateISO = currentDate.toISOString().split('T')[0];
+      InvoicesByDay[currentDateISO] = 0; // Initialize sales for each day to 0
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+  
+    salesData.forEach((invoice) => {
+      const createdAt = new Date(invoice.createdAt);
+      const date = createdAt.toISOString().split('T')[0];
+      InvoicesByDay[date] += 1;
+    });
+  
+    return InvoicesByDay;
+  };
   // Function to calculate profits by day
   const calculateProfitsByDay = (salesData, startDate, endDate) => {
     const profitsByDay = {};
@@ -118,6 +141,17 @@ const Reports = () => {
       labels: labels,
       datasets: [{
         label: 'Total Profit',
+        data: data,
+      }],
+    };
+  };
+  const prepareChartData2 = (InvoicesByDay) => {
+    const labels = Object.keys(InvoicesByDay);
+    const data = Object.values(InvoicesByDay);
+    return {
+      labels: labels,
+      datasets: [{
+        label: 'Total Bills',
         data: data,
       }],
     };
@@ -204,7 +238,18 @@ const Reports = () => {
     </div>
   )}
 </div>
-
+<div>
+  {flag === 1 && (
+    <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
+      <LineChart1 Data={chartData2} />
+    </div>
+  )}
+  {/* {flag === 1 && (
+    <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block" }}>
+      <LineChart1 Data={chartData1} />
+    </div>
+  )} */}
+</div>
       </div>
     </div>
   );
