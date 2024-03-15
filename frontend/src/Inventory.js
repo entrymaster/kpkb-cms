@@ -8,6 +8,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ViewBatchDialog from './components/ViewBatch';
 import AuthContext from './AuthContext';
 import Navbar from './Navbar';
+import AddIcon from '@mui/icons-material/Add';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import Tooltip from '@mui/material/Tooltip';
 const Inventory = () =>
 {
   const [sortBy, setSortBy] = useState('');
@@ -229,7 +233,7 @@ const sortProducts = (heading) => {
   </button>
 </th>
 <th>MORE ACTIONS</th>
-<th>DELETE</th>
+{/* <th>DELETE</th> */}
           </tr>
         </thead>
         <tbody>
@@ -247,24 +251,37 @@ const sortProducts = (heading) => {
               //className="text-green-700 cursor-pointer"
               onClick={() => updateProductModalSetting(element)}
             >
-              EditItem{" "}
+              {/* EditItem{" "} */}
+              <Tooltip title='Edit Item'><ModeEditIcon/></Tooltip>
+              
             </span>
             <span
             className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => addBatchModalSetting(element)}
             >
-              AddBatch{" "}
+              <Tooltip title='Add Batch'><AddIcon/></Tooltip>
             </span>
             <span
             className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => viewBatchModalSetting(element)}
             >
-              ViewBatch{" "}
+              {/* ViewBatch{" "} */}
+              <Tooltip title='View Batch'><ViewListIcon/></Tooltip>
+            </span>
+            <span className="action-button"
+            
+              //className="text-red-600 px-2 cursor-pointer"
+              //onClick={() => deleteItem(element._id)}
+            >
+            <Tooltip title='Delete Item'><DeleteIcon
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => deleteItem(element._id)}
+                /></Tooltip>  
             </span>
             </td>
-            <td> 
+            {/* <td> 
             <span
             
               //className="text-red-600 px-2 cursor-pointer"
@@ -275,7 +292,7 @@ const sortProducts = (heading) => {
                   onClick={() => deleteItem(element._id)}
                 />
             </span>
-          </td> 
+          </td>  */}
         </tr>
       );
     })}
