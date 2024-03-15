@@ -46,12 +46,6 @@ const updateProduct = async (req, res) => {
 const updateBatch = async (req, res) => {
   try {
     const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
-
-    // Find the initial batchQty
-    
-    
-
-    // Find the difference (new batchQty - initial batchQty)
     const quantityDifference = batchQty - initialBatchQty;
 
     // Update the batch

@@ -419,15 +419,6 @@ const AddNewInvoice = () => {
         >
           <strong> Generate Bill </strong>
         </button>
-        {/* {showLoading && (
-          <ReactLoading
-            type="spin"
-            color="#000"
-            height={30}
-            width={30}
-            className="loading-indicator"
-          />
-        )} */}
       </div>
     
     </div>
