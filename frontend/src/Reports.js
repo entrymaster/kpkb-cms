@@ -18,9 +18,9 @@ const Reports = () => {
   const authContext = useContext(AuthContext);
   const userId = authContext.user;
 
-  // useEffect(() => {
-  //   fetchSalesData();
-  // }, [startDate, endDate]);
+  useEffect(() => {
+    fetchSalesData();
+  }, [startDate, endDate]);
   const fetchSalesData = () => {
     if (startDate && endDate) {
   
@@ -168,10 +168,11 @@ const Reports = () => {
             }}
           />
         </div>
-        <div style={{ paddingLeft: "30%" }}>
+        {/* <div style={{ paddingLeft: "30%" }}>
           &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
           <button
-            onClick={fetchSalesData}
+            // onClick={fetchSalesData}
+            // onClick={}
             style={{
               padding: "10px",
               marginLeft: "auto",
@@ -186,7 +187,7 @@ const Reports = () => {
           >
             See Graphs{" "}
           </button>
-        </div>
+        </div> */}
         <div>
   {flag === 1 && (
     <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
