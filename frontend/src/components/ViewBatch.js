@@ -17,10 +17,6 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
     setBatchList(batches);
   }, [batches]);
 
-  // const handlePageUpdate = () => {
-  //   setUpdatePage(!updatePage);
-  // };
-
   const deleteBatch = (Batchid) => {
     console.log("Batch ID: ", Batchid);
     setBatchIdToDelete(Batchid);
@@ -46,14 +42,10 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
       });
   };
 
-  
-
   const toggleUpdateBatchDialog = () => {
     setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
   };
   
-
-
   const updateBatchModalSetting = (selectedProductData) => {
     console.log("Clicked: edit");
     setUpdateBatch(selectedProductData);

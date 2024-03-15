@@ -26,7 +26,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
     
     const resetFields = () => {
         setItemData({
-            _idProduct : id,
+            _idProduct: id,
             _id: '',
             batchID: '',
             batchQty: '',
@@ -34,6 +34,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
             initialBatchQty: element.batchQty,
         });
     };
+
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
@@ -59,6 +60,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
         on_Cancel();
         //resetFields();
       };
+      
   return (
     isVisible && (
       <div>
