@@ -263,3 +263,14 @@
 2024-03-14T18:26:04.773Z [ERROR] Failed to verify OTP
 2024-03-14T18:26:23.013Z [ERROR] Failed to verify OTP
 2024-03-14T18:26:40.051Z [INFO] Verified OTP 775016 for pallavgoyal136@gmail.com
+2024-03-14T23:50:26.419Z [INFO] Generated OTP 488396 for nipun22@iitk.ac.in
+2024-03-14T23:50:29.441Z [INFO] Sent OTP to nipun22@iitk.ac.in
+2024-03-14T23:50:48.084Z [INFO] Verified OTP 488396 for nipun22@iitk.ac.in
+2024-03-14T23:51:30.186Z [INFO] Generated OTP 752073 for abhi17jan2004@gmail.com
+2024-03-14T23:51:32.771Z [INFO] Sent OTP to abhi17jan2004@gmail.com
+2024-03-14T23:52:20.553Z [INFO] Generated OTP 605996 for nipun22@iitk.ac.in
+2024-03-14T23:52:21.699Z [INFO] OTP 605996 already exists for nipun22@iitk.ac.in
+2024-03-14T23:52:23.166Z [INFO] Sent OTP to nipun22@iitk.ac.in
+2024-03-14T23:52:24.443Z [INFO] Sent OTP to nipun22@iitk.ac.in
+2024-03-14T23:52:40.479Z [ERROR] Failed to verify OTP
+2024-03-14T23:52:44.761Z [INFO] Verified OTP 605996 for nipun22@iitk.ac.in
