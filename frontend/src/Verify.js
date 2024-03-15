@@ -115,21 +115,6 @@ function Verification() {
                 <br></br>
                 <br></br>
               </div>
-            <br></br>
-            <br></br>
-            <div className="flex items-center justify-between" class="center">
-              <div className="flex items-center" id="rememberme">
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                    I Agree to the Terms & Conditons
-                </label>
-                <input type="checkbox" id="rememberMe" name="rememberMe"></input>
-              </div>
-
-              
-            </div>  
            <br></br>
             <div class="center">
               <button 
@@ -146,7 +131,7 @@ function Verification() {
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Already Have an Account? <Link to="/">Sign in</Link>
+                  Already Have an Account? <br></br><Link to="/">Sign in</Link>
                 </span>
               </p>
             </div>

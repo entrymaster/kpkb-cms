@@ -8,6 +8,7 @@ import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
 import { saveAs } from 'file-saver';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
@@ -19,12 +20,19 @@ const AddNewInvoice = () => {
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   const [showLoading, setShowLoading] = useState(false); 
   const authContext = useContext(AuthContext);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
+  
   const handleItemSelection = (selectedItem) => {
-    // Assuming selectedItem is an object containing the selected item details including available quantity
     setAvailableQuantity(selectedItem.quantity);
+    setSelectedItems([...selectedItems, selectedItem]);
   };
+
+  // const handleItemSelection = (selectedItem) => {
+  //   // Assuming selectedItem is an object containing the selected item details including available quantity
+  //   setAvailableQuantity(selectedItem.quantity);
+  // };
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -107,6 +115,7 @@ const AddNewInvoice = () => {
       updatedItemList.splice(index, 1);
       return {
         itemList: updatedItemList,
+        
       };
     });
   };
@@ -323,6 +332,7 @@ const AddNewInvoice = () => {
       setIsPaid(prevState => !prevState);
     };
 
+
     return (
       <>
       {showLoading && ( // Conditionally render loading component
@@ -362,12 +372,13 @@ const AddNewInvoice = () => {
         <tr key={index}>
           <td placeholder='Select Item'>
             <SearchableDropdown
-              options={items}
+              options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
               label="itemName"
               id={`dropdown-${index}`}
               selectedVal={currItem}
               handleChange={(selectedItem) => handleInputChange({ target:{ value: selectedItem } }, index, 'itemName')} 
-            /></td>
+            />
+            </td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td>{item.rate}</td>
           <td>{item.gst}</td>
@@ -408,7 +419,7 @@ const AddNewInvoice = () => {
         >
           <strong> Generate Bill </strong>
         </button>
-        {showLoading && (
+        {/* {showLoading && (
           <ReactLoading
             type="spin"
             color="#000"
@@ -416,7 +427,7 @@ const AddNewInvoice = () => {
             width={30}
             className="loading-indicator"
           />
-        )}
+        )} */}
       </div>
     
     </div>
