@@ -161,10 +161,10 @@ const PendingTransactions = () => {
             />
           </div>
           <div className="TotalAmount">
-            <h1>
+            <h2>
               {activeTab === "credit-tab" ? "Total Credit" : "Total Debit"}
-            </h1>
-            <a className="credit">{totalAmt}</a>
+            </h2>
+            <p className="credit">{totalAmt}</p>
           </div>
         </div>
       </div>

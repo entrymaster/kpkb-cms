@@ -58,6 +58,7 @@ app.post('/api/create-pdf', (req,res) => {
     }
   res.send(Promise.resolve())
   });
+  console.log(req.body);
 })
 
 app.get('/api/fetch-pdf', (req,res) => {
