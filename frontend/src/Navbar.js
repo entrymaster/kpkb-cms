@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useContext, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -15,13 +15,52 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip from '@mui/material/Tooltip';
 import './Navbar.css';
 import { performSignout } from './auth';
+import AuthContext from './AuthContext';
 const iconSize = 32;
+
 
 
 const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
+    const authContext = useContext(AuthContext);
+    const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''});
+    const getUserData = () => {
+      return new Promise((resolve, reject) => {
+        console.log(authContext.user);
+        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+       
+        .then(response => {
+          console.log(response);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setUserData(data); // Set userData state with fetched data
+          resolve(data); // Resolve the promise with the user data
+        })
+        .catch(error => {
+          console.log('There was a problem with the fetch operation:', error);
+          reject(error); // Reject the promise with the error
+        });
+      });
+    }
+    
+    useEffect(() => {
+      getUserData(); // Call getUserData on component mount and whenever authContext.user changes
+    }, []);
+    
+    
+    
+     
+    
 const handleSignout = () => {
   performSignout(navigate);
 };
@@ -39,10 +78,12 @@ const handleSignout = () => {
                 return 'Transaction History';
             case '/Reports':
                 return 'Reports';
-            case '/FAQs':
+            case '/FAQ':
                 return 'FAQs';
             case '/contactUs':
                 return 'Contact Us';
+                case '/profile':
+                return 'Profile';
             default:
                 return '';
         }
@@ -59,9 +100,9 @@ const handleSignout = () => {
             <img src="profile_icon.png" alt="Profile icon" width={80} height={80} />
             <div className="mid-text">
               <p>
-                Firm Name
+                {userData.shopname}
                 <br/>
-                GST Number
+                {userData.gstno}
               </p>
             </div>
           </div>
@@ -101,7 +142,7 @@ const handleSignout = () => {
                 </Link>
             </p>
             <p className={location.pathname === "/FAQs" ? "active" : ""}>
-                <Link to="/FAQs" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
+                <Link to="/FAQ" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                     <HelpOutlineIcon style={{ marginRight: '5px' }} />
                     <strong>FAQs</strong>
                 </Link>
@@ -115,7 +156,7 @@ const handleSignout = () => {
           </div>
         </div>
       </div>
-      <div className="top-panel">
+      <div className="top-panel" style={{ zIndex: 1 }}>
         <div style={{ textAlign: "left", left: 10, marginLeft: 10, marginTop: 25 }}>
             <h1 style={{ color: "#fff", fontSize: 40 }}>{getPageTitle()}</h1>
         </div>

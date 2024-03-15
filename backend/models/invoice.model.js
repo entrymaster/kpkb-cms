@@ -49,6 +49,14 @@ const invoiceSchema = new Schema({
     type: Date,
     default: new Date(),
   },
+  totalCostPrice: {
+    type: Number,
+    default: 0,
+  },
+  totalSales: {
+    type: Number,
+    default: 0,
+  },
   // createdAt:{
   //   type: String,
   //   required: true,

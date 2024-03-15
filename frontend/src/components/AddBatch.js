@@ -67,7 +67,12 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
       }, [itemData]);
   return (
     isVisible && (
-      <dialog open id="addItemDialog" style={{width: '50%' ,height:'250px'}}>
+      <div>
+      <div className="blur-container-batch" />
+      
+      {/* Dialog background */}
+      <div className="dialog-background-batch">
+      <dialog open id="addItemDialog" style={{height:'250px'}}>
         <form onSubmit={(e) => { e.preventDefault();  }}>
           <table style={{ width: '100%' ,height:'110px'}}>
             
@@ -92,6 +97,8 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
           <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
+      </div>
+    </div>
     )
   );
 };

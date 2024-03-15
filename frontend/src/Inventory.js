@@ -8,6 +8,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ViewBatchDialog from './components/ViewBatch';
 import AuthContext from './AuthContext';
 import Navbar from './Navbar';
+import AddIcon from '@mui/icons-material/Add';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import Tooltip from '@mui/material/Tooltip';
 const Inventory = () =>
 {
   const [sortBy, setSortBy] = useState('');
@@ -22,6 +26,7 @@ const Inventory = () =>
   const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
   const authContext = useContext(AuthContext);
+    console.log(authContext.user);
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
@@ -81,12 +86,8 @@ const Inventory = () =>
 
     // fetchSalesData();
   }, [updatePage]);
-  const userId = "user";
-  // const userId=authContext.user;
-  console.log(userId);
   const fetchProductsData = () => {
-    fetch('http://localhost:5050/api/inventory/get/${userId}')
-    // fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
+    fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -96,7 +97,7 @@ const Inventory = () =>
 
 };
 const fetchSearchData = () => {
-  fetch(`http://localhost:5050/api/inventory/search/${userId}?itemName=${itemName}`)
+  fetch(`http://localhost:5050/api/inventory/search/${authContext.user}?itemName=${itemName}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -132,51 +133,6 @@ const sortProducts = (heading) => {
         return (
             <div className="Inventory">
                <Navbar/>
-  {/* <div className="container">
-    <div className="left">
-      <div className="left-top-box">
-        <img src="logo1.png" alt="logo" width={220} height={80} />
-      </div>
-      <div className="left-mid-box">
-        <img src="profile_icon.png" alt="Profile icon" width={80} height={80} />
-        <div className="mid-text">
-          <p>
-            Firm Name
-            <br />
-            GST Number
-          </p>
-        </div>
-      </div>
-      <div className="nav-panel">
-         <p>
-          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
-          </p>
-          <p>
-          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
-          </p>
-          <p style={{ backgroundColor: "#E0E0F7" }}>
-          <Link to="/inventory" style={{color: "black", textDecoration: 'none'}}>Inventory</Link>
-          </p>
-          <p>
-          <Link to="/pendingTransactions" style={{color: "white", textDecoration: 'none'}}>Pending Transactions</Link>
-          </p>
-          <p>
-          <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
-          </p>
-          <p>
-          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
-          </p>
-          <p>
-          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
-          </p>
-      </div>
-    </div>
-  </div> */}
-  {/* <div className="top-panel">
-    <div style={{ textAlign: "left", marginTop: 15 }}>
-      <h1 style={{ color: "#fff", fontSize: 40 }}>Inventory</h1>
-    </div>
-  </div> */}
   <div className="main-container">
     <div className="add-button-container">
       <button className="add-item-button" onClick={toggleAddItemDialog}>
@@ -277,7 +233,7 @@ const sortProducts = (heading) => {
   </button>
 </th>
 <th>MORE ACTIONS</th>
-<th>DELETE</th>
+{/* <th>DELETE</th> */}
           </tr>
         </thead>
         <tbody>
@@ -295,24 +251,37 @@ const sortProducts = (heading) => {
               //className="text-green-700 cursor-pointer"
               onClick={() => updateProductModalSetting(element)}
             >
-              EditItem{" "}
+              {/* EditItem{" "} */}
+              <Tooltip title='Edit Item'><ModeEditIcon/></Tooltip>
+              
             </span>
             <span
             className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => addBatchModalSetting(element)}
             >
-              AddBatch{" "}
+              <Tooltip title='Add Batch'><AddIcon/></Tooltip>
             </span>
             <span
             className="action-button"
               //className="text-green-700 cursor-pointer"
               onClick={() => viewBatchModalSetting(element)}
             >
-              ViewBatch{" "}
+              {/* ViewBatch{" "} */}
+              <Tooltip title='View Batch'><ViewListIcon/></Tooltip>
+            </span>
+            <span className="action-button"
+            
+              //className="text-red-600 px-2 cursor-pointer"
+              //onClick={() => deleteItem(element._id)}
+            >
+            <Tooltip title='Delete Item'><DeleteIcon
+                  style={{ color: 'red', cursor: 'pointer' }}
+                  onClick={() => deleteItem(element._id)}
+                /></Tooltip>  
             </span>
             </td>
-            <td> 
+            {/* <td> 
             <span
             
               //className="text-red-600 px-2 cursor-pointer"
@@ -323,7 +292,7 @@ const sortProducts = (heading) => {
                   onClick={() => deleteItem(element._id)}
                 />
             </span>
-          </td> 
+          </td>  */}
         </tr>
       );
     })}

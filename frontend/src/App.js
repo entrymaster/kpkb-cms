@@ -14,10 +14,15 @@ import { useEffect, useState } from "react";
 import AuthContext from "./AuthContext.js";
 import TransactionHistory from "./TransactionHistory.js";
 
-
 import ProtectedWrapper from "./ProtectedWrapper";
 import Verify from "./Verify.js";
 import VerifyOtp from "./otpverify.js";
+import Forgototpverify from "./Forgototpverify.js"
+import Forgotpass from "./ForgotPass.js"
+import Forgotverify from "./Forgotverify.js"
+import Profile from "./profile.js"
+// import { LibreBaskerville_400Regular, LibreBaskerville_700Bold } from '@expo-google-fonts/libre-baskerville';
+
 // import Layout from "./Layout.js";
 import "./App.css";
 import {
@@ -53,7 +58,7 @@ const App = () => {
   const signout = (navigate) => {
     setUser(null);
     localStorage.removeItem("user");
-    navigate("/", { replace: true });
+    navigate("/Login", { replace: true });
   };
 
   setSignout(signout);
@@ -79,17 +84,21 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/otp" element={<VerifyOtp />} />
+          <Route path="/forgotverify" element={<Forgotverify/>}/>
+          <Route path = "/forgotpass" element = {<Forgotpass/>}/>
+          <Route path = "/forgototpverify" element = {<Forgototpverify/>} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/FAQ" element={<FAQ/>} />
           <Route
             path="/pendingTransactions"
             element={<PendingTransactions />}
           />
           <Route path="/contactUs" element={<ContactUs />} />
-          <Route path="/FAQ" element={<FAQ />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/Reports" element={<Reports />} />
           <Route path="/pdf-viewer" element={<InvoicePDF />} />

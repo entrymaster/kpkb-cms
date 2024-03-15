@@ -1,0 +1,19 @@
+.faq-container {
+    /* display: flex; */
+    justify-content: space-around;
+    padding-top: 120px;
+    margin-left: 250px
+  }
+  
+  .faq-section {
+    margin-bottom: 20px; /* Add margin between FAQ sections */
+  }
+  
+  .question {
+    font-weight: bold;
+  }
+  
+  .answer {
+    margin-top: 5px; /* Add margin between question and answer */
+  }
+  

@@ -12,7 +12,7 @@
     
 }
 .Inventory .add-button-container {
-    margin-top: 20px;
+    margin-top: 120px
 }
 .Inventory .top {
     justify-content: center; /* Center horizontally */
@@ -64,7 +64,7 @@
     transform: translateY(-50%);
 }
 th.Inventory{
-    width: 25%; /* Set equal width for each heading column */
+    width: auto; /* Set equal width for each heading column */
     text-align: center;
     padding: 10px;
 }
@@ -96,8 +96,8 @@ th.Inventory, td.Inventory {
  #addItemDialog form {
     padding: 20px; /* Add padding for better spacing */
 }
- #addItemDialog table {
-    padding-right: 100px;
+ .Inventory #addItemDialog table {
+    /* padding-right: 100px; */
     border: none;
 
 }
@@ -126,7 +126,7 @@ th.Inventory, td.Inventory {
 }
 .Inventory #inventoryTable {
     padding-top: 200px;
-    width: 80%; /* Set the desired width of the table */
+    width: 95%; /* Set the desired width of the table */
     border-collapse: collapse;
     margin: 20px;
 }

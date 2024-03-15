@@ -7,9 +7,8 @@ import SearchableDropdown from './SearchableDropdown';
 import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
 import { saveAs } from 'file-saver';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 const AddNewInvoice = () => {
-  // const reload = () => {window.location.reload()};
-  // reload();
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
   const [totalChange, setTotalChange] = useState(false);
@@ -20,7 +19,7 @@ const AddNewInvoice = () => {
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   const [isLoading, setIsLoading] = useState(false);
   const authContext = useContext(AuthContext);
-  const [userData, setUserData] = useState(); 
+  const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
   const handleItemSelection = (selectedItem) => {
     // Assuming selectedItem is an object containing the selected item details including available quantity
@@ -30,9 +29,7 @@ const AddNewInvoice = () => {
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
     if(value != null){
-      // console.log(value)
       const updatedItemList = [...invoiceData.itemList];
-      // console.log(value['itemName'])
       if(fieldName==='itemName'){
         updatedItemList[index].itemName = value['itemName'];
         updatedItemList[index].costPrice = value['costPrice'];
@@ -67,6 +64,7 @@ const AddNewInvoice = () => {
   
       setInvoiceData({
         ...invoiceData,
+        userID: authContext.user,
         itemList: updatedItemList
       });
     }
@@ -92,12 +90,15 @@ const AddNewInvoice = () => {
     invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
     invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : invoiceData.totalAmount;
     setTotalChange(false);
-  }, [totalChange])
+  }, [totalChange]);
+  // useEffect(() => {
+  //   setInvoiceData((prevState) => ({...prevState, userID: authContext.user}))
 
+  //   // fetchSalesData();
+  // }, []);
   const handleAddField = (e) => {
     e.preventDefault()
-    setInvoiceData((prevState) => ({...prevState, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
-    // setCurrItem();
+    setInvoiceData((prevState) => ({...prevState,userID:authContext.user, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
   }
 
   const handleDeleteRow = (index) => {
@@ -109,20 +110,8 @@ const AddNewInvoice = () => {
       };
     });
   };
-  const getUserData = () => {
-    fetch("http://localhost:5050/api/users/get/", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(invoiceData),
-      })
-  }
+  
   const addInvoice = () => {
-    if (invoiceData.paymentMode === 'Credit') {
-      // If payment mode is Credit, add invoice data to pending transactions
-      addPendingTransaction();
-    }
       fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
@@ -131,42 +120,100 @@ const AddNewInvoice = () => {
         body: JSON.stringify(invoiceData),
       })
         .then((result) => {
-          console.log(invoiceData);
           alert("Invoice ADDED");
           setInvoiceData(initialState);
           setCurrItem(null);
         })
         .then(() => {
           setIncInvoiceID(true);
-          window.location.reload(); // Reload the webpage
+          // window.location.reload(); 
         })
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
     };
 
-    const createPdf = () => {
-      // console.log(invoiceData);
-      // setIsLoading(true);
-      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
-      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
-      .then((res) => {
-        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl,'_blank');
-        // setIsLoading(false);
-        // saveAs(pdfBlob, 'invoice.pdf');
-      })
+    const getUserData = () => {
+      return new Promise((resolve, reject) => {
+        console.log(authContext.user);
+        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+       
+        .then(response => {
+          console.log(response);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // console.log(data);
+          // setUserData(data);
+          userData.firstname = data.firstname;
+          userData.lastname = data.lastname;
+          userData.email = data.email;
+          userData.password = data.password;
+          userData.gstno = data.gstno;
+          userData.shopname = data.shopname;
+          userData.shopaddress = data.shopaddress;
+          resolve(data); // Resolve the promise with the user data
+        })
+        .catch(error => {
+          console.log('There was a problem with the fetch operation:', error);
+          reject(error); // Reject the promise with the error
+        });
+      });
     }
     
+    const createPdf = () => {
+      getUserData()
+        .then(() => {
+          // userData will be available here as getUserData() has completed execution
+          // console.log(userData);
+          
+          const requestData = {
+            invoiceData: invoiceData,
+            userData: userData
+          };
+          // console.log(requestData);
+        
+          // Send the combined data in the request body
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
+        })
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+        .then((res) => {
+          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          window.open(pdfUrl,'_blank');
+        })
+        .catch((error) => {
+          console.error('Error creating PDF:', error);
+        });
+    }
     
     const downloadPdf = () => {
-      axios.post('http://localhost:5050/api/create-pdf', invoiceData)
-      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+      getUserData()
+        .then(() => {
+          // userData will be available here as getUserData() has completed execution
+          // console.log(userData);
+          
+          const requestData = {
+            invoiceData: invoiceData,
+            userData: userData
+          };
+          // console.log(requestData);
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
+        })
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
       })
+      .then(()=>{window.location.reload();})
     }
 
     const updateInventory = () => {
@@ -185,7 +232,7 @@ const AddNewInvoice = () => {
     }
 
     const getInvoiceCount = async() =>{
-      fetch(`http://localhost:5050/api/invoice/count/${invoiceData.userID}`, {
+      fetch(`http://localhost:5050/api/invoice/count/${authContext.user}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -216,39 +263,18 @@ const AddNewInvoice = () => {
     useEffect(() => {
       fetchItemsData();
       // fetchSalesData();
+      setInvoiceData(initialState);
     }, [updatePage]);
-    const userId='user';
+    // const userId='user';
 
     const fetchItemsData = () => {
-      fetch(`http://localhost:5050/api/inventory/get/${userId}`)
+      fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllItems(data);
       })
       .catch((err) => console.log(err));
     };
-
-    const addPendingTransaction = () => {
-      const pendingTransactionData = {
-        partyName: invoiceData.customerName,
-        phoneNumber: invoiceData.phoneNo,
-        email: invoiceData.customerEmail,
-        amount: invoiceData.totalAmount // You might need to adjust this based on your application logic
-      };
-    
-      fetch("http://localhost:5050/api/pendingTransactions/add", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(pendingTransactionData),
-      })
-      .then((result) => {
-        console.log("Pending Transaction ADDED");
-      })
-      .catch((err) => console.log(err));
-    };
-    
 
     const togglePaymentMode = () => {
       setInvoiceData(prevData => ({
@@ -322,7 +348,7 @@ const AddNewInvoice = () => {
       </tbody>
     </table>
       <div className="bottom-controls">
-        <button id="add-new-item" type="button" onClick={handleAddField}> <strong> Add New Row </strong> </button>
+        <button id="add-new-item" type="button" onClick={handleAddField}><strong> Add New Row </strong> </button>
         <div className='discount-input'>
           Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
         </div>

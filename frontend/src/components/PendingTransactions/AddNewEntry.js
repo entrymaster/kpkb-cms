@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 
-const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
+const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) => {
   const [Data, setData] = useState({
+    userID: '',
     partyName: "",
     phoneNumber: "",
     email: "",
@@ -10,7 +11,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
   });
 
   const handleInputChange = (key, value) => {
-    setData({ ...Data, [key]: value });
+    setData({ ...Data, userID: id, [key]: value });
     console.log(Data);
   };
 
@@ -58,7 +59,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
             console.log(result);
             handlePageUpdate();
             onCancel();
-            setData({ partyName: "", phoneNumber: "", email: "", amount: 0 });
+            setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
           })
           .catch((err) => console.log(err));
       })
@@ -77,7 +78,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
         alert("Successfully added new supplier!");
         handlePageUpdate();
         onCancel();
-        setData({ partyName: "", phoneNumber: "", email: "", amount: 0 });
+        setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
       })
       .catch((err) => console.log(err));
   };
@@ -90,7 +91,8 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
       ariaHideApp={false}
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.7)", // Adjust overlay opacity as needed
+          backgroundColor: "rgba(0, 0, 0, 0.7)", 
+          zIndex:3,// Adjust overlay opacity as needed
         },
         content: {
           top: "50%",
@@ -103,6 +105,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate }) => {
           backgroundColor: "#fff",
           borderRadius: "5px",
           boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
+          zIndex:2,
         },
       }}
     >

@@ -13,6 +13,7 @@ function Register() {
     gstno: "",
     shopname: "",
     shopaddress: "",
+    phonenumber: "",
   });
 
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ function Register() {
 
   const registerUser = () => {
     // Check if passwords match
+    form.email = email;
     if (form.password !== form.confirmpassword) {
       alert("Password and Confirm Password do not match");
       return; // Exit function if passwords don't match
@@ -57,6 +59,8 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setForm({ ...form, email: email || '' });
+
     registerUser();
   };
   if (!(location.state && location.state.email)) {
@@ -142,6 +146,18 @@ function Register() {
                   className="input-box"
                   placeholder="Enter GST No."
                   value={form.gstno}
+                  onChange={handleInputChange}
+                />
+                <br></br>
+                <br></br>
+                <input
+                  name="phonenumber"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Phone Number"
+                  value={form.phonenumber}
                   onChange={handleInputChange}
                 />
               </div>

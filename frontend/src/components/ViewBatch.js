@@ -62,6 +62,11 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
 
   return (
     isVisible && (
+      <div>
+      <div className="blur-container-batch" />
+      
+      {/* Dialog background */}
+      <div className="dialog-background-batch">
       <dialog open id="addItemDialog" >
         <form
           onSubmit={(e) => {
@@ -124,11 +129,14 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
             </tbody>
           </table>
 
-          <button type="button" onClick={onCancel}>
+          <button type="button" style={{ marginLeft: '300px' }} onClick={onCancel}>
+
             Cancel
           </button>
         </form>
       </dialog>
+      </div>
+    </div>
     )
   );
 };
