@@ -1,142 +1,182 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
 import BarChart from "./components/Charts/BarChart1.js";
-import LineChart from "./components/Charts/LineChart1.js";
+import LineChart1 from "./components/Charts/LineChart1.js";
 import PieChart from "./components/Charts/PieChart.js";
-import { UserData } from "./Data";
-import Navbar from './Navbar';
-function Reports() {
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
-  });
+import Navbar from "./Navbar";
+import axios from "axios";
+import AuthContext from "./AuthContext.js";
+const Reports = () => {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [chartData, setChartData] = useState({});
+  const [chartData1, setChartData1] = useState({}); // Initialize with an empty object
+  //const userId = "user";
+  const [flag, setFlag] = useState(0);
+  const authContext = useContext(AuthContext);
+  const userId = authContext.user;
+
+  // useEffect(() => {
+  //   fetchSalesData();
+  // }, [startDate, endDate]);
+  const fetchSalesData = () => {
+    if (startDate && endDate) {
+      axios
+        .get(
+          `http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`
+        )
+        .then((response) => {
+          const salesData = response.data; // Assuming response.data contains sales data
+          console.log(salesData);
+          setFlag(1);
+          const salesByDay = calculateSalesByDay(salesData); // Calculate sales by day
+          const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
+          setChartData(preparedChartData); // Set chart data
+          const profitsByDay = calculateProfitsByDay(salesData); // Calculate sales by day
+          const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
+          setChartData1(preparedChartData1); // Set chart data
+        })
+        .catch((error) => {
+          console.error("Error fetching sales data:", error);
+        });
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchSalesData();
+  // }, [startDate, endDate]);
+
+  // Function to calculate sales by day
+  const calculateSalesByDay = (salesData) => {
+    const salesByDay = {};
+    salesData.forEach((invoice) => {
+      // Check if createdAt is already a Date object
+      const createdAt =
+        typeof invoice.createdAt === "string"
+          ? new Date(invoice.createdAt)
+          : invoice.createdAt;
+      const date = createdAt.toISOString().split("T")[0];
+      salesByDay[date] = (salesByDay[date] || 0) + invoice.totalSales;
+    });
+    return salesByDay;
+  };
+  const calculateProfitsByDay = (salesData) => {
+    const profitsByDay = {};
+    salesData.forEach((invoice) => {
+      // Check if createdAt is already a Date object
+      const createdAt =
+        typeof invoice.createdAt === "string"
+          ? new Date(invoice.createdAt)
+          : invoice.createdAt;
+      const date = createdAt.toISOString().split("T")[0];
+      profitsByDay[date] =
+        (profitsByDay[date] || 0) + invoice.totalSales - invoice.totalCostPrice;
+    });
+    return profitsByDay;
+  };
+
+  // Function to prepare chart data
+  const prepareChartData = (salesByDay) => {
+    const labels = Object.keys(salesByDay);
+    const data = Object.values(salesByDay);
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "Total Sales",
+          data: data,
+        },
+      ],
+    };
+  };
+  const prepareChartData1 = (profitsByDay) => {
+    const labels = Object.keys(profitsByDay);
+    const data = Object.values(profitsByDay);
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: "Total Profit",
+          data: data,
+        },
+      ],
+    };
+  };
+
   return (
     <div className="Reports">
-        <Navbar/>
-      {/* <div className="container">
-        <div className="left">
-          <div className="left-top-box">
-            <img src="logo1.png" alt="logo" width={220} height={80} />
-          </div>
-          <div className="left-mid-box">
-            <img
-              src="profile_icon.png"
-              alt="Profile icon"
-              width={80}
-              height={80}
-            />
-            <div className="mid-text">
-              <p>
-                Firm Name
-                <br />
-                GST Number
-              </p>
-            </div>
-          </div>
-          <div className="nav-panel">
-            <p>
-              <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
-                Dashboard
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/invoice"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Invoice
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/inventory"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Inventory
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/pendingTransactions"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Pending Transactions
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/contactUs"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Contact Us
-              </Link>
-            </p>
-            <p>
-              <Link
-                to="/TransactionHistory"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Transaction History
-              </Link>
-            </p>
-            <p style={{ backgroundColor: "#E0E0F7" }}>
-              <Link
-                to="/Reports"
-                style={{ color: "black", textDecoration: "none" }}
-              >
-                Reports
-              </Link>
-            </p>
-          </div>
+      <Navbar />
+
+      <div className="main-container" style={{ paddingTop: "120px" }}>
+        <div>
+          <label>Start Date: </label>
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            style={{
+              // padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              boxShadow: "none", // Remove default box-shadow
+              fontSize: "16px",
+              marginBottom: "10px",
+              width: "30%",
+              flex: "1",
+            }}
+          />
         </div>
-      </div>
-      <div
-        className="top-panel"
-        style={{ display: "flex", justifyContent: "left", alignItems: "end" }}
-      >
-        <span
-          style={{
-            paddingInlineStart: "0.2cm",
-            color: "white",
-            fontSize: "1cm",
-            fontFamily: '"Times New Roman"',
-          }}
-        >
-          {" "}
-          Reports
-        </span>
-      </div> */}
-        <div className="main-container">
-        <div style={{ width: 300 }}>
-            <PieChart chartData={userData} />
-          </div>
-          <div style={{ width: 300 }}>
-            <BarChart chartData={userData} />
-          </div>
-          <div style={{ width: 500 }}>
-            <LineChart chartData={userData} />
-          </div>
-          
+        <div>
+          <label>End Date : </label>
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            style={{
+              // padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              boxShadow: "none", // Remove default box-shadow
+              fontSize: "16px",
+              marginBottom: "10px",
+              width: "30%",
+              flex: "1",
+            }}
+          />
+        </div>
+        <div>
+          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+          <button
+            onClick={fetchSalesData}
+            style={{
+              padding: "10px",
+              marginLeft: "auto",
+                 marginRight: "10px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              borderRadius: "6px",
+              cursor: "pointer",
+              transition: "background-color 0.3s",
+              font: "15px",
+            }}
+          >
+            See Graphs{" "}
+          </button>
         </div>
        
+        {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
+          <div style={{ width: "500px" }}>
+            <LineChart1 Data={chartData} />
+          </div>
+        )}
+        {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
+          <div style={{ width: "500px" }}>
+            <LineChart1 Data={chartData1} />
+          </div>
+        )}
+      </div>
     </div>
   );
-}
-
+};
 export default Reports;

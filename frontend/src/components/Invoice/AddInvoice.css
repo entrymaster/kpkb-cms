@@ -25,6 +25,7 @@
   
 .customer-notes label {
     font-weight: bold;
+    font-size: 20px;
 }
   
 .customer-notes textarea {
@@ -32,6 +33,7 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 18px;
     resize: vertical;
 }
 .discount-input {
@@ -104,8 +106,6 @@
     width: calc(100%-50px);
     /* padding-right: 50px; */
     padding-left: 50px;
-    /* display: flex;
-    justify-content: center; */
 }
 
 #invoiceTable {
