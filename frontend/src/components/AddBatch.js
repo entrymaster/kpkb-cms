@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import './AddProduct.css'
 const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
+
     useEffect(() => {
         setItemData((prevItemData) => ({
           ...prevItemData,
@@ -8,13 +9,16 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
         //   batchID: element,
         }));
       }, [element]);
+
     const [itemData, setItemData] = useState({
          _id: element,
         batchID: '',
         batchQty: '',
         expiryDate: '',
-      });
+      });
+
      console.log(element);
+     
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);
