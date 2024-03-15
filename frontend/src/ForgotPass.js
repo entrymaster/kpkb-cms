@@ -61,7 +61,7 @@ function Login() {
         .then((result) => {
           alert("Successfully changed password");
           console.log("Successfully changed password", result);
-          navigate("/forgotverify")
+          navigate("/")
         })
         .catch((error) => {
           console.log("Something went wrong ", error);
@@ -75,7 +75,7 @@ function Login() {
     e.preventDefault();
   };
 if (!(location.state && location.state.email)) {
-    return <Navigate to="/verify" replace/>;
+    return <Navigate to="/forgotverify" replace/>;
 }
   
   return (
