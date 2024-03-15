@@ -22,72 +22,92 @@ const Reports = () => {
   // }, [startDate, endDate]);
   const fetchSalesData = () => {
     if (startDate && endDate) {
-      axios
-        .get(
-          `http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`
-        )
+  
+      axios.get(`http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {
           const salesData = response.data; // Assuming response.data contains sales data
           console.log(salesData);
           setFlag(1);
-          const salesByDay = calculateSalesByDay(salesData); // Calculate sales by day
+          //const allDates = generateDateArray(today, sevenDaysAgo);
+          const salesByDay = calculateSalesByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
+          console.log(salesByDay)
           setChartData(preparedChartData); // Set chart data
-          const profitsByDay = calculateProfitsByDay(salesData); // Calculate sales by day
+          const profitsByDay = calculateProfitsByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
+          console.log(profitsByDay);
           setChartData1(preparedChartData1); // Set chart data
         })
         .catch((error) => {
-          console.error("Error fetching sales data:", error);
+          console.error('Error fetching sales data:', error);
         });
     }
   };
-
-  // useEffect(() => {
-  //   fetchSalesData();
-  // }, [startDate, endDate]);
-
+  
+  // Function to generate an array of dates from startDate to endDate
+  // const generateDateArray = (startDate, endDate) => {
+  //   const dateArray = [];
+  //   let currentDate = new Date(startDate);
+  //   while (currentDate <= endDate) {
+  //     dateArray.push(new Date(currentDate));
+  //     currentDate.setDate(currentDate.getDate() + 1);
+  //   }
+  //   return dateArray;
+  // };
+  
   // Function to calculate sales by day
-  const calculateSalesByDay = (salesData) => {
+  // Function to calculate sales by day
+  const calculateSalesByDay = (salesData, startDate, endDate) => {
     const salesByDay = {};
+    const currentDate = new Date(startDate);
+    const end = new Date(endDate);
+  
+    while (currentDate <= end) {
+      const currentDateISO = currentDate.toISOString().split('T')[0];
+      salesByDay[currentDateISO] = 0; // Initialize sales for each day to 0
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+  
     salesData.forEach((invoice) => {
-      // Check if createdAt is already a Date object
-      const createdAt =
-        typeof invoice.createdAt === "string"
-          ? new Date(invoice.createdAt)
-          : invoice.createdAt;
-      const date = createdAt.toISOString().split("T")[0];
-      salesByDay[date] = (salesByDay[date] || 0) + invoice.totalSales;
+      const createdAt = new Date(invoice.createdAt);
+      const date = createdAt.toISOString().split('T')[0];
+      salesByDay[date] += invoice.totalSales;
     });
+  
     return salesByDay;
   };
-  const calculateProfitsByDay = (salesData) => {
+  
+  // Function to calculate profits by day
+  const calculateProfitsByDay = (salesData, startDate, endDate) => {
     const profitsByDay = {};
+    const currentDate = new Date(startDate);
+    const end = new Date(endDate);
+  
+    while (currentDate <= end) {
+      const currentDateISO = currentDate.toISOString().split('T')[0];
+      profitsByDay[currentDateISO] = 0; // Initialize profits for each day to 0
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+  
     salesData.forEach((invoice) => {
-      // Check if createdAt is already a Date object
-      const createdAt =
-        typeof invoice.createdAt === "string"
-          ? new Date(invoice.createdAt)
-          : invoice.createdAt;
-      const date = createdAt.toISOString().split("T")[0];
-      profitsByDay[date] =
-        (profitsByDay[date] || 0) + invoice.totalSales - invoice.totalCostPrice;
+      const createdAt = new Date(invoice.createdAt);
+      const date = createdAt.toISOString().split('T')[0];
+      profitsByDay[date] += invoice.totalSales - invoice.totalCostPrice;
     });
+  
     return profitsByDay;
   };
-
+  
   // Function to prepare chart data
   const prepareChartData = (salesByDay) => {
     const labels = Object.keys(salesByDay);
     const data = Object.values(salesByDay);
     return {
       labels: labels,
-      datasets: [
-        {
-          label: "Total Sales",
-          data: data,
-        },
-      ],
+      datasets: [{
+        label: 'Total Sales',
+        data: data,
+      }],
     };
   };
   const prepareChartData1 = (profitsByDay) => {
@@ -95,12 +115,10 @@ const Reports = () => {
     const data = Object.values(profitsByDay);
     return {
       labels: labels,
-      datasets: [
-        {
-          label: "Total Profit",
-          data: data,
-        },
-      ],
+      datasets: [{
+        label: 'Total Profit',
+        data: data,
+      }],
     };
   };
 
