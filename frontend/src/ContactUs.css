@@ -2,7 +2,7 @@ body.ContactUs,
 html.ContactUs {
   height: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Libre Baskerville', serif;
 }
 form input,
 form textarea {
