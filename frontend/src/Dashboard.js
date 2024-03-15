@@ -20,9 +20,10 @@ function Dashboard() {
   const [yesterdaySales, setYesterdaySales] = useState('');
   const [chartData, setChartData] = useState({});
   const [chartData1, setChartData1] = useState({}); // Initialize with an empty object
-  const userId = "user";
+  const userId = authContext.user;
   const [flag, setFlag] = useState(0); 
   const today = new Date();
+  //today.setDate(today.getDate() + 1);
 
 // Calculate the date 7 days ago
 const sevenDaysAgo = new Date(today);
@@ -46,6 +47,8 @@ const fetchSalesData = () => {
       .then((response) => {
         const salesData = response.data; // Assuming response.data contains sales data
         console.log(salesData);
+        console.log(startDate);
+        console.log(endDate);
         setFlag(1);
         //const allDates = generateDateArray(today, sevenDaysAgo);
         const salesByDay = calculateSalesByDay(salesData, startDate, endDate); // Calculate sales by day
