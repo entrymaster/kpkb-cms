@@ -77,4 +77,43 @@
 .read-only-input {
     background-color: #f0f0f0; /* Set background color to light white */
   }
+  .blur-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   
+    z-index: 2; /* Ensure it appears above the background */
+    background-color: rgba(0, 0, 0, 0.7);
+  }
   
+  .dialog-background {
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* Adjust as needed */
+    /* padding: 20px; */
+    z-index: 3; /* Ensure it appears above the blurred background */
+  }
+  .blur-container-batch {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+   
+    z-index: 2; /* Ensure it appears above the background */
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .dialog-background-batch {
+    position: fixed;
+    top: 30%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    background-color: white; /* Adjust as needed */
+    /* padding: 20px; */
+    z-index: 3; /* Ensure it appears above the blurred background */
+  }
