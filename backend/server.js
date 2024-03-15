@@ -63,6 +63,8 @@ app.post('/api/create-pdf', (req,res) => {
 
 app.get('/api/fetch-pdf', (req,res) => {
   res.sendFile(`${__dirname}/invoice.pdf`);
+  console.log("pdf check2")
+  console.log(res.body);
 })
 
 /* Connecting to the database and then starting the server. */

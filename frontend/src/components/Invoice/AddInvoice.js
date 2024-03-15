@@ -126,7 +126,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          window.location.reload(); 
+          // window.location.reload(); 
         })
         .catch((err) => console.log(err));
 
@@ -179,7 +179,7 @@ const AddNewInvoice = () => {
             invoiceData: invoiceData,
             userData: userData
           };
-          console.log(requestData);
+          // console.log(requestData);
         
           // Send the combined data in the request body
           return axios.post('http://localhost:5050/api/create-pdf', requestData);
@@ -205,18 +205,15 @@ const AddNewInvoice = () => {
             invoiceData: invoiceData,
             userData: userData
           };
-          console.log(requestData);
-          return requestData;
+          // console.log(requestData);
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
         })
-        .then((requestData) => {
-          // console.log(requestData)
-      axios.post('http://localhost:5050/api/create-pdf', requestData)
-      .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
       })
-        })
+      .then(()=>{window.location.reload();})
     }
 
     const updateInventory = () => {
