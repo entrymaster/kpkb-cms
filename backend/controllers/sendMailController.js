@@ -114,7 +114,7 @@ async function sendMailController(email, otp, organization, subject) {
                               </div>
                               <div class="footer">
                                   <p>Author</p>
-                                  <p><a href="http://localhost:3000/" target="_blank">Kundan Kumar</a></p>
+                                  <p><a href="http://localhost:3000/" target="_blank">Billing 360</a></p>
                               </div>
                           </div>
                       </body>

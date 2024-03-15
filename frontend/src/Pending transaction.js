@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Pending transactions.css";
 import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
@@ -6,18 +6,18 @@ import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import AuthContext from "./AuthContext";
 const PendingTransactions = () => {
   const [activeTab, setActiveTab] = useState("credit-tab");
-
+  const authContext = useContext(AuthContext);
   const openTab = (tabName) => {
     setActiveTab(tabName);
     handlePageUpdate();
   };
 
   const [Entries, setEntries] = useState([]);
-
-  const userID = "user";
-
+  //const userID = "user";
+  const userID = authContext.user;
   const [updatePage, setUpdatePage] = useState(true);
 
   const handlePageUpdate = () => {
@@ -336,6 +336,7 @@ const PendingTransactions = () => {
         onCancel={hideAddNewDialog}
         entryType={entryType}
         handlePageUpdate={handlePageUpdate}
+        id={userID}
       />
 
       <UpdateEntry

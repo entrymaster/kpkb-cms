@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import { saveAs } from 'file-saver';
 import SearchIcon from '@mui/icons-material/Search'; // Import Search icon from Material-UI
 
+
 const TransactionHistory = () => {
   const [updatePage, setUpdatePage] = useState(true);
   const [transactions, setAllTransactions] = useState([]);
@@ -24,7 +25,8 @@ const TransactionHistory = () => {
     fetchTransactionData();
   }, [updatePage]);
 
-  const userId = "user";
+  //const userId = "user";
+  const userId = authContext.user;
 
   const fetchTransactionData = () => {
     fetch(`http://localhost:5050/api/invoice/get/${userId}`)
@@ -89,7 +91,6 @@ const TransactionHistory = () => {
         console.error('Error creating PDF:', error);
       });
   };
-
   const handleCustomerName = async (e) => {
     await setCustomerName(e.target.value);
     fetchSearchData();

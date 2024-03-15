@@ -1,6 +1,6 @@
 // import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useContext, useState } from "react";
-import { Link, useNavigate , useLocation} from "react-router-dom";
+import { Link, useNavigate , Navigate, useLocation} from "react-router-dom";
 import AuthContext from "./AuthContext";
 import "./Login.css";
 
@@ -74,7 +74,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
+if (!(location.state && location.state.email)) {
+    return <Navigate to="/verify" replace/>;
+}
   
   return (
     <>

@@ -82,11 +82,7 @@ const Inventory = () =>
 
     // fetchSalesData();
   }, [updatePage]);
-  const userId = "user";
-  // const userId=authContext.user;
-  console.log(userId);
   const fetchProductsData = () => {
-    // fetch('http://localhost:5050/api/inventory/get/${userId}')
     fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
     .then((data) => {
@@ -133,51 +129,6 @@ const sortProducts = (heading) => {
         return (
             <div className="Inventory">
                <Navbar/>
-  {/* <div className="container">
-    <div className="left">
-      <div className="left-top-box">
-        <img src="logo1.png" alt="logo" width={220} height={80} />
-      </div>
-      <div className="left-mid-box">
-        <img src="profile_icon.png" alt="Profile icon" width={80} height={80} />
-        <div className="mid-text">
-          <p>
-            Firm Name
-            <br />
-            GST Number
-          </p>
-        </div>
-      </div>
-      <div className="nav-panel">
-         <p>
-          <Link to="/dashboard" style={{color: "white",  textDecoration: 'none'}}>Dashboard</Link>
-          </p>
-          <p>
-          <Link to="/invoice" style={{color: "white", textDecoration: 'none'}}>Invoice</Link>
-          </p>
-          <p style={{ backgroundColor: "#E0E0F7" }}>
-          <Link to="/inventory" style={{color: "black", textDecoration: 'none'}}>Inventory</Link>
-          </p>
-          <p>
-          <Link to="/pendingTransactions" style={{color: "white", textDecoration: 'none'}}>Pending Transactions</Link>
-          </p>
-          <p>
-          <Link to="/contactUs" style={{color: "white", textDecoration: 'none'}}>Contact Us</Link>
-          </p>
-          <p>
-          <Link to="/Register" style={{color: "white", textDecoration: 'none'}}>Register</Link>
-          </p>
-          <p>
-          <Link to="/TransactionHistory" style={{color: "white", textDecoration: 'none'}}>Transaction History</Link>
-          </p>
-      </div>
-    </div>
-  </div> */}
-  {/* <div className="top-panel">
-    <div style={{ textAlign: "left", marginTop: 15 }}>
-      <h1 style={{ color: "#fff", fontSize: 40 }}>Inventory</h1>
-    </div>
-  </div> */}
   <div className="main-container">
     <div className="add-button-container">
       <button className="add-item-button" onClick={toggleAddItemDialog}>
