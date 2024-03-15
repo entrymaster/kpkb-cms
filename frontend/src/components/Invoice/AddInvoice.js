@@ -112,10 +112,6 @@ const AddNewInvoice = () => {
   };
   
   const addInvoice = () => {
-    if (invoiceData.paymentMode === 'Credit') {
-      // If payment mode is Credit, add invoice data to pending transactions
-      addPendingTransaction();
-    }
       fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
@@ -270,8 +266,9 @@ const AddNewInvoice = () => {
     useEffect(() => {
       fetchItemsData();
       // fetchSalesData();
+      setInvoiceData(initialState);
     }, [updatePage]);
-    const userId='user';
+    // const userId='user';
 
     const fetchItemsData = () => {
       fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
@@ -281,28 +278,6 @@ const AddNewInvoice = () => {
       })
       .catch((err) => console.log(err));
     };
-
-    const addPendingTransaction = () => {
-      const pendingTransactionData = {
-        partyName: invoiceData.customerName,
-        phoneNumber: invoiceData.phoneNo,
-        email: invoiceData.customerEmail,
-        amount: invoiceData.totalAmount // You might need to adjust this based on your application logic
-      };
-    
-      fetch("http://localhost:5050/api/pendingTransactions/add", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(pendingTransactionData),
-      })
-      .then((result) => {
-        console.log("Pending Transaction ADDED");
-      })
-      .catch((err) => console.log(err));
-    };
-    
 
     const togglePaymentMode = () => {
       setInvoiceData(prevData => ({
