@@ -188,6 +188,7 @@ const sortProducts = (heading) => {
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search"
+        style={{ fontFamily: 'Libre Baskerville' }}
         // value={itemName}
         // onChange={handleItemName}
         value={searchInput}
