@@ -7,6 +7,7 @@ import PieChart from "./components/Charts/PieChart.js";
 import Navbar from "./Navbar";
 import axios from "axios";
 import AuthContext from "./AuthContext.js";
+import './Reports.css'
 const Reports = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -128,13 +129,15 @@ const Reports = () => {
 
       <div className="main-container" style={{ paddingTop: "120px" }}>
         <div>
-          <label>Start Date: </label>
+        <label style={{ display: "inline-block", margin: "20px" }}>Start Date: </label>
+
           <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             style={{
               // padding: "10px",
+              height: "40px",
               border: "1px solid #ccc",
               borderRadius: "4px",
               boxShadow: "none", // Remove default box-shadow
@@ -144,15 +147,17 @@ const Reports = () => {
               flex: "1",
             }}
           />
-        </div>
-        <div>
-          <label>End Date : </label>
+        {/* </div>
+        <div> */}
+        <label style={{ display: "inline-block",  margin: "20px" }}>End Date: </label>
+
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             style={{
               // padding: "10px",
+              height: "40px",
               border: "1px solid #ccc",
               borderRadius: "4px",
               boxShadow: "none", // Remove default box-shadow
@@ -163,7 +168,7 @@ const Reports = () => {
             }}
           />
         </div>
-        <div>
+        <div style={{ paddingLeft: "30%" }}>
           &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
           <button
             onClick={fetchSalesData}
@@ -182,17 +187,19 @@ const Reports = () => {
             See Graphs{" "}
           </button>
         </div>
-       
-        {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
-          <div style={{ width: "500px" }}>
-            <LineChart1 Data={chartData} />
-          </div>
-        )}
-        {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
-          <div style={{ width: "500px" }}>
-            <LineChart1 Data={chartData1} />
-          </div>
-        )}
+        <div>
+  {flag === 1 && (
+    <div style={{ width: "50%", display: "inline-block" }}>
+      <LineChart1 Data={chartData} />
+    </div>
+  )}
+  {flag === 1 && (
+    <div style={{ width: "50%", display: "inline-block" }}>
+      <LineChart1 Data={chartData1} />
+    </div>
+  )}
+</div>
+
       </div>
     </div>
   );
