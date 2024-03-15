@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import './AddInvoice.css';
 import axios from 'axios';
 import {initialState} from './initialState';
@@ -7,7 +7,6 @@ import SearchableDropdown from './SearchableDropdown';
 import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
 import { saveAs } from 'file-saver';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
@@ -24,15 +23,15 @@ const AddNewInvoice = () => {
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
   
-  const handleItemSelection = (selectedItem) => {
-    setAvailableQuantity(selectedItem.quantity);
-    setSelectedItems([...selectedItems, selectedItem]);
-  };
-
   // const handleItemSelection = (selectedItem) => {
-  //   // Assuming selectedItem is an object containing the selected item details including available quantity
   //   setAvailableQuantity(selectedItem.quantity);
+  //   setSelectedItems([...selectedItems, selectedItem]);
   // };
+
+  const handleItemSelection = (selectedItem) => {
+    // Assuming selectedItem is an object containing the selected item details including available quantity
+    setAvailableQuantity(selectedItem.quantity);
+  };
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -216,32 +215,6 @@ const AddNewInvoice = () => {
           console.error('Error creating PDF:', error);
         });
     }
-
-    // const createPdf = () => {
-    //   getUserData()
-    //     .then(() => {
-    //       // userData will be available here as getUserData() has completed execution
-    //       // console.log(userData);
-          
-    //       const requestData = {
-    //         invoiceData: invoiceData,
-    //         userData: userData
-    //       };
-    //       // console.log(requestData);
-        
-    //       // Send the combined data in the request body
-    //       return axios.post('http://localhost:5050/api/create-pdf', requestData);
-    //     })
-    //     .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
-    //     .then((res) => {
-    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-    //       const pdfUrl = URL.createObjectURL(pdfBlob);
-    //       window.open(pdfUrl,'_blank');
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error creating PDF:', error);
-    //     });
-    // }
     
     const downloadPdf = () => {
       getUserData()
@@ -372,7 +345,8 @@ const AddNewInvoice = () => {
         <tr key={index}>
           <td placeholder='Select Item'>
             <SearchableDropdown
-              options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
+              options={items}
+              // options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
               label="itemName"
               id={`dropdown-${index}`}
               selectedVal={currItem}
@@ -410,7 +384,6 @@ const AddNewInvoice = () => {
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={togglePaymentMode}> <strong> {isPaid ? 'Add as Credit' : 'Set as Paid'} </strong> </button>
         <button id="preview-bill" type = "button" onClick={createPdf}> <strong> Preview Bill </strong> </button>
-        {/* <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button> */}
         <button
           id="generate-bill-button"
           type="button"
@@ -419,15 +392,6 @@ const AddNewInvoice = () => {
         >
           <strong> Generate Bill </strong>
         </button>
-        {/* {showLoading && (
-          <ReactLoading
-            type="spin"
-            color="#000"
-            height={30}
-            width={30}
-            className="loading-indicator"
-          />
-        )} */}
       </div>
     
     </div>

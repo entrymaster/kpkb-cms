@@ -1,4 +1,3 @@
-// const user = JSON.parse(localStorage.getItem('profile'))
 export const initialState = {
     userID:'user',
     invoiceID:0,
