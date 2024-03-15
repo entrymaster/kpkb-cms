@@ -75,7 +75,7 @@ function Login() {
     e.preventDefault();
   };
 if (!(location.state && location.state.email)) {
-    return <Navigate to="/verify" replace/>;
+    return <Navigate to="/forgotverify" replace/>;
 }
   
   return (
