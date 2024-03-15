@@ -14,7 +14,7 @@ const addProduct = async (req, res) => {
     category: req.body.category,
     discount: req.body.discount,
     quantity: req.body.quantity,
-    //batchList: req.body.batchList,
+    // batchList: req.body.batchList,
   });
   addProduct
     .save()

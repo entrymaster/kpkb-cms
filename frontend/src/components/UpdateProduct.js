@@ -67,6 +67,9 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
       };
   return (
     isVisible && (
+      <div>
+      <div className="blur-container" />
+    <div className="dialog-background">
       <dialog open id="addItemDialog">
         <form onSubmit={(e) => { e.preventDefault();  }}>
           <table>
@@ -122,6 +125,8 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           <button type="button" onClick={handleCancel}>Cancel</button>
         </form>
       </dialog>
+      </div>
+  </div>
     )
   );
 };

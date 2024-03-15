@@ -91,7 +91,8 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
       ariaHideApp={false}
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.7)", // Adjust overlay opacity as needed
+          backgroundColor: "rgba(0, 0, 0, 0.7)", 
+          zIndex:3,// Adjust overlay opacity as needed
         },
         content: {
           top: "50%",
@@ -104,6 +105,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           backgroundColor: "#fff",
           borderRadius: "5px",
           boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
+          zIndex:2,
         },
       }}
     >

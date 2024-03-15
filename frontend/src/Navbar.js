@@ -156,7 +156,7 @@ const handleSignout = () => {
           </div>
         </div>
       </div>
-      <div className="top-panel">
+      <div className="top-panel" style={{ zIndex: 1 }}>
         <div style={{ textAlign: "left", left: 10, marginLeft: 10, marginTop: 25 }}>
             <h1 style={{ color: "#fff", fontSize: 40 }}>{getPageTitle()}</h1>
         </div>
