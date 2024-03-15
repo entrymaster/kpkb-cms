@@ -263,7 +263,7 @@ const PendingTransactions = () => {
           activeTab === "debit-tab" ? "tabcontent-active" : "tabcontent"
         }
       >
-        <table>
+        <table border="1">
           <thead>
             <tr className="headers">
               <th>Supplier Name</th>
