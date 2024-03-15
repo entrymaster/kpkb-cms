@@ -34,7 +34,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             //addProductModalSetting();
             onCancel();
             setItemData({ // Resetting fields to initial state
-              userID: 'user',
+              userID: authContext.user,
               itemID: '',
               itemName: '',
               salePrice: '',
@@ -50,7 +50,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
       const handleCancel = () => {
         onCancel();
         setItemData({ // Resetting fields to initial state
-          userID: 'user',
+          userID: authContext.user,
           itemID: '',
           itemName: '',
           salePrice: '',
