@@ -5,7 +5,7 @@
   justify-content: center; /* Center horizontally */
   align-items: center;
   flex-grow: 1;
-  /* padding: 20px; */
+  padding: 20px;
   display: flex;
   padding-top: 100px;
   /* margin-top: 100px; */
@@ -62,7 +62,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow for depth */
   color: #051d40; /* Set text color to white */
 }
-
+#credit-tab{
+  margin-left: 18%;
+}
+#debit-tab{
+  margin-left: 18%;
+}
 .PendingTrans .TotalAmount span {
   margin-left: 10px; /* Add some space between the icon and text */
 }
@@ -192,4 +197,21 @@ td {
 
 .PendingTrans .tabcontent {
   display: none;
+}
+.PendingTrans #inventoryTable {
+  padding-top: 200px;
+  width: 95%; /* Set the desired width of the table */
+  border-collapse: collapse;
+  margin: 20px;
+}
+
+.PendingTrans #inventoryTable th, #inventoryTable td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+ 
+}
+
+.PendingTrans #inventoryTable th {
+  background-color: #f2f2f2;
 }
