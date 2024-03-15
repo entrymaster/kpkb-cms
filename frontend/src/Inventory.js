@@ -14,6 +14,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import Tooltip from '@mui/material/Tooltip';
 const Inventory = () =>
 {
+  const [sortDirection, setSortDirection] = useState('asc');
   const [sortBy, setSortBy] = useState('');
   const [isAddItemDialogVisible, setAddItemDialogVisibility] = useState(false);
   const [isUpdateItemDialogVisible, setUpdateItemDialogVisibility] = useState(false);
@@ -25,8 +26,18 @@ const Inventory = () =>
   const[addBatch,setAddBatch]=useState([]);
   const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
+  const [searchInput, setSearchInput] = useState('');
   const authContext = useContext(AuthContext);
-    console.log(authContext.user);
+  console.log(authContext.user);
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.itemName.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
@@ -120,15 +131,24 @@ const deleteItem = (id) => {
 };
 const sortProducts = (heading) => {
   const sortedProducts = [...products];
+  let newSortDirection;
+
   if (sortBy === heading) {
     // If already sorted by the same heading, reverse the order
     sortedProducts.reverse();
+    // Toggle the direction of the arrow
+    newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
   } else {
     // Sort the products based on the selected heading
     sortedProducts.sort((a, b) => a[heading] > b[heading] ? 1 : -1);
+    // Set the default direction of the arrow to 'asc' when changing the heading
+    newSortDirection = 'asc';
   }
+  
+  // Update state variables
   setAllProducts(sortedProducts);
   setSortBy(heading); // Update the state to track the selected heading
+  setSortDirection(newSortDirection); // Update the arrow direction
 };
         return (
             <div className="Inventory">
@@ -167,8 +187,10 @@ const sortProducts = (heading) => {
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search"
-        value={itemName}
-        onChange={handleItemName}
+        // value={itemName}
+        // onChange={handleItemName}
+        value={searchInput}
+        onChange={handleSearchInputChange}
         />
         <div className="search-icon">🔍</div>
         {/* <div className="circle" /> */}
@@ -182,21 +204,21 @@ const sortProducts = (heading) => {
   <button onClick={() => sortProducts('itemID')}>
     {/* Arrow icon */}
     {sortBy === 'itemID' ? (
-      <>&uarr;</>
-    ) : (
-      <>&darr;</>
-    )}
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
   </button>
 </th>
 <th>
   ITEM NAME
   <button onClick={() => sortProducts('itemName')}>
     {/* Arrow icon */}
-    {sortBy === 'itemName' ? (
-      <>&uarr;</>
-    ) : (
-      <>&darr;</>
-    )}
+    {sortBy === 'itemName' ?(
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
   </button>
 </th>
 <th>
@@ -204,10 +226,10 @@ const sortProducts = (heading) => {
   <button onClick={() => sortProducts('salePrice')}>
     {/* Arrow icon */}
     {sortBy === 'salePrice' ? (
-      <>&uarr;</>
-    ) : (
-      <>&darr;</>
-    )}
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
   </button>
 </th>
 <th>
@@ -215,21 +237,21 @@ const sortProducts = (heading) => {
   <button onClick={() => sortProducts('costPrice')}>
     {/* Arrow icon */}
     {sortBy === 'costPrice' ? (
-      <>&uarr;</>
-    ) : (
-      <>&darr;</>
-    )}
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
   </button>
 </th>
 <th>
   STOCK
   <button onClick={() => sortProducts('quantity')}>
     {/* Arrow icon */}
-    {sortBy === 'quantity' ? (
-      <>&uarr;</>
-    ) : (
-      <>&darr;</>
-    )}
+    {sortBy === 'quantity' ?(
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
   </button>
 </th>
 <th>MORE ACTIONS</th>
@@ -237,8 +259,9 @@ const sortProducts = (heading) => {
           </tr>
         </thead>
         <tbody>
-    {products && products.map((element, index) => {
-      return (
+        {filteredProducts.map((element, index) => (
+    /* {products && products.map((element, index) => { */
+      // return 
         <tr key={element._id} style={getRowStyle(element.batchList[0]?.expiryDate)}>
           <td>{element.itemID}</td>
           <td>{element.itemName}</td>
@@ -294,8 +317,7 @@ const sortProducts = (heading) => {
             </span>
           </td>  */}
         </tr>
-      );
-    })}
+        ))}
   </tbody>
       </table>
   </div>
