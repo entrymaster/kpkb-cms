@@ -22,6 +22,7 @@ const TransactionHistory = () => {
 
   useEffect(() => {
     fetchTransactionData();
+    setInvoiceData((prevState) => ({...prevState,userID:authContext.user }))
   }, [updatePage]);
 
   //const userId = "user";
@@ -68,6 +69,7 @@ const TransactionHistory = () => {
           console.log('There was a problem with the fetch operation:', error);
           reject(error);
         });
+        console.log(userData);
     });
   };
 
@@ -78,6 +80,7 @@ const TransactionHistory = () => {
           invoiceData: invoiceData,
           userData: userData
         };
+        console.log(userData);
         return axios.post('http://localhost:5050/api/create-pdf', requestData);
       })
       .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob' }))
@@ -85,6 +88,7 @@ const TransactionHistory = () => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         const pdfUrl = URL.createObjectURL(pdfBlob);
         window.open(pdfUrl, '_blank');
+        console.log("jdj");
       })
       .catch((error) => {
         console.error('Error creating PDF:', error);
@@ -97,7 +101,8 @@ const TransactionHistory = () => {
 
   const populateInvoiceData = (element) => {
     setInvoiceData(element);
-    // createPdf(); // Remove calling createPdf here
+    console.log(element);
+     createPdf(); // Remove calling createPdf here
   };
 
   const formatDate = (date) => {
