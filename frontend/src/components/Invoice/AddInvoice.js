@@ -17,7 +17,7 @@ const AddNewInvoice = () => {
   const [updatePage, setUpdatePage] = useState(true);
   const [isPaid, setIsPaid] = useState(true);
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(false); 
   const authContext = useContext(AuthContext);
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
@@ -110,6 +110,21 @@ const AddNewInvoice = () => {
       };
     });
   };
+
+  const handleGenerateBill = async () => {
+    try {
+      setShowLoading(true);
+
+      // Perform your asynchronous operations here (e.g., adding invoice, updating inventory, downloading PDF)
+      await addInvoice();
+      await updateInventory();
+      await downloadPdf();
+    } catch (error) {
+      console.error('Error generating bill:', error);
+    } finally {
+      setShowLoading(false);
+    }
+  };
   
   const addInvoice = () => {
       fetch("http://localhost:5050/api/invoice/add", {
@@ -170,30 +185,54 @@ const AddNewInvoice = () => {
     }
     
     const createPdf = () => {
+      setShowLoading(true); // Show loading when generating PDF
       getUserData()
         .then(() => {
-          // userData will be available here as getUserData() has completed execution
-          // console.log(userData);
-          
+          // Logic for PDF creation
           const requestData = {
             invoiceData: invoiceData,
             userData: userData
           };
-          // console.log(requestData);
-        
-          // Send the combined data in the request body
           return axios.post('http://localhost:5050/api/create-pdf', requestData);
         })
         .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
         .then((res) => {
           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+          setShowLoading(false);
           const pdfUrl = URL.createObjectURL(pdfBlob);
           window.open(pdfUrl,'_blank');
         })
         .catch((error) => {
+          setShowLoading(false); // Hide loading in case of error
           console.error('Error creating PDF:', error);
         });
     }
+
+    // const createPdf = () => {
+    //   getUserData()
+    //     .then(() => {
+    //       // userData will be available here as getUserData() has completed execution
+    //       // console.log(userData);
+          
+    //       const requestData = {
+    //         invoiceData: invoiceData,
+    //         userData: userData
+    //       };
+    //       // console.log(requestData);
+        
+    //       // Send the combined data in the request body
+    //       return axios.post('http://localhost:5050/api/create-pdf', requestData);
+    //     })
+    //     .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
+    //     .then((res) => {
+    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //       const pdfUrl = URL.createObjectURL(pdfBlob);
+    //       window.open(pdfUrl,'_blank');
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error creating PDF:', error);
+    //     });
+    // }
     
     const downloadPdf = () => {
       getUserData()
@@ -286,13 +325,11 @@ const AddNewInvoice = () => {
 
     return (
       <>
-      {/* {isLoading && (
-        <div className="loading-overlay">
-          <ReactLoading type="spinningBubbles" color="#0000FF"
-                height={100}
-                width={50}/>
-        </div>
-      )} */}
+      {showLoading && ( // Conditionally render loading component
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
         <div className="customer-details">
           <table id="customerTable">
             <tbody>
@@ -362,7 +399,24 @@ const AddNewInvoice = () => {
       <div className="bill-buttons">
         <button id="add-as-credit" type = "button" onClick={togglePaymentMode}> <strong> {isPaid ? 'Add as Credit' : 'Set as Paid'} </strong> </button>
         <button id="preview-bill" type = "button" onClick={createPdf}> <strong> Preview Bill </strong> </button>
-        <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button>
+        {/* <button id="generate-bill-button" type = "button"  onClick={() => {addInvoice(); updateInventory(); downloadPdf();}}> <strong> Generate Bill </strong> </button> */}
+        <button
+          id="generate-bill-button"
+          type="button"
+          onClick={handleGenerateBill}
+          disabled={showLoading} // Disable the button when loading
+        >
+          <strong> Generate Bill </strong>
+        </button>
+        {showLoading && (
+          <ReactLoading
+            type="spin"
+            color="#000"
+            height={30}
+            width={30}
+            className="loading-indicator"
+          />
+        )}
       </div>
     
     </div>
