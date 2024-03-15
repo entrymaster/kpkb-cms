@@ -21,7 +21,7 @@ import Forgototpverify from "./Forgototpverify.js"
 import Forgotpass from "./ForgotPass.js"
 import Forgotverify from "./Forgotverify.js"
 import Profile from "./profile.js"
-
+// import { LibreBaskerville_400Regular, LibreBaskerville_700Bold } from '@expo-google-fonts/libre-baskerville';
 
 // import Layout from "./Layout.js";
 import "./App.css";
