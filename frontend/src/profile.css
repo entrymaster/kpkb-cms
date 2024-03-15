@@ -1,7 +1,7 @@
 
 
 .profile {
-  font-family: Arial, sans-serif;
+  font-family: 'Libre Baskerville', serif;
   min-height: 100vh; /* Ensure the profile page covers the entire viewport height */
   display: flex;
   justify-content: center; /* Center horizontally */
