@@ -68,7 +68,8 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
     <div className="dialog-background">
     <dialog open id="addItemDialog">
       <form onSubmit={(e) => { e.preventDefault();  }}>
-        <table>
+      <table >
+
           
           <tbody>
           <tr>
@@ -106,7 +107,8 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           </tbody>
         </table>
 
-        <button type="submit" onClick={addProduct}>Save</button>
+        <button type="submit" onClick={addProduct} style={{ marginLeft: '100px' }}>Save</button>
+
         <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
       </dialog>

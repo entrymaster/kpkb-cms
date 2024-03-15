@@ -1,6 +1,7 @@
 body.ContactUs,
 html.ContactUs {
   height: 100%;
+  padding-top : 50px ;
   margin: 0;
   font-family: 'Libre Baskerville', serif;
 }
