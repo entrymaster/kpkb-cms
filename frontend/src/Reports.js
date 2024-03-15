@@ -189,12 +189,12 @@ const Reports = () => {
         </div>
         <div>
   {flag === 1 && (
-    <div style={{ width: "50%", display: "inline-block" }}>
+    <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
       <LineChart1 Data={chartData} />
     </div>
   )}
   {flag === 1 && (
-    <div style={{ width: "50%", display: "inline-block" }}>
+    <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block" }}>
       <LineChart1 Data={chartData1} />
     </div>
   )}
