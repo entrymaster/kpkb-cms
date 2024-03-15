@@ -85,6 +85,7 @@ table.Inventory {
     cursor: pointer;
     color: #ba3726; /* Green color, change as needed */
     margin-right: 10px; /* Adjust spacing between buttons */
+    text-decoration: underline;
   }
 th.Inventory, td.Inventory {
 
