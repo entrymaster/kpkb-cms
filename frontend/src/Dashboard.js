@@ -215,50 +215,47 @@ const calculateProfitsByDay = (salesData, startDate, endDate) => {
           <br />₹ {yesterdaySales}
         </p>
       </div>
-
-      <div>
-            <button onClick={fetchSalesData}>See Graphs</button>
-            </div>
+    </div>
+    <div>
+    <div>
+      <button
+            onClick={fetchSalesData}
+            style={{
+              width: "200px",
+              height: "50px",
+              padding: "10px",
+              marginLeft: "50%",
+                 marginRight: "10px",
+              backgroundColor: "#B3E5FC",
+              color: "white",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontSize: "20px", // Increased font size
+    fontWeight: "bold", 
+    color: "#283593",
+              transition: "background-color 0.3s",
+              font: "15px",
+              marginTop:"40px",
+              marginBottom: "50px",
+            }}
+          >
+            See Graphs{" "}
+          </button>
+          </div>
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
-            <div style={{ width: '500px' }}>
+             <div style={{ width: "40%", display: "inline-block",marginLeft:"250px"}}>
               <LineChart1 Data={chartData} />
 
             </div>
             
           )}
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
-            <div style={{ width: '500px' }}>
+            <div style={{ width: "40%", display: "inline-block",}}>
               <LineChart1 Data={chartData1} />
 
             </div>
             
           )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   </div>
   )

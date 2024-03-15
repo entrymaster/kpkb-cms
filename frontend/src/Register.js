@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import "./Register.css";
@@ -15,6 +14,8 @@ function Register() {
     shopaddress: "",
     phonenumber: "",
   });
+
+  const [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
 
   const navigate = useNavigate();
   
@@ -61,6 +62,12 @@ function Register() {
     e.preventDefault();
     setForm({ ...form, email: email || '' });
 
+    // Check if terms are agreed
+    if (!agreeTerms) {
+      alert("Please agree to the Terms & Conditions to proceed.");
+      return;
+    }
+
     registerUser();
   };
   if (!(location.state && location.state.email)) {
@@ -105,7 +112,7 @@ function Register() {
               </div>
               <br></br>
               <div>
-              <input
+                <input
                   id="email-address"
                   name="email"
                   type="email"
@@ -193,9 +200,15 @@ function Register() {
                     htmlFor="remember-me"
                     className="ml-2 block text-sm text-gray-900"
                   >
+                    <input
+                      type="checkbox"
+                      id="rememberMe"
+                      name="rememberMe"
+                      onChange={() => setAgreeTerms(!agreeTerms)}
+                      required
+                    />
                     I Agree to the Terms & Conditons
                   </label>
-                  <input type="checkbox" id="rememberMe" name="rememberMe"></input>
                 </div>
               </div>
               <br></br>

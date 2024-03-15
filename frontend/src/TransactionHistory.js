@@ -16,6 +16,15 @@ const TransactionHistory = () => {
   const authContext = useContext(AuthContext);
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [userData, setUserData] = useState({ firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: '' });
+  const [searchInput, setSearchInput] = useState('');
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const filteredTransactions = transactions.filter(transaction =>
+    transaction.customerName.toLowerCase().includes(searchInput.toLowerCase())
+  );
 
   const handlePageUpdate = () => {
     setUpdatePage(!updatePage);
@@ -118,8 +127,8 @@ const TransactionHistory = () => {
         <div className="top">
           <div className="search-bar-container">
             <input type="text" className="search-bar" placeholder="Search"
-              value={customerName}
-              onChange={handleCustomerName}
+              value={searchInput}
+              onChange={handleSearchInputChange}
             />
             <SearchIcon className="search-icon" /> {/* Use Search icon from Material-UI */}
           </div>
@@ -135,8 +144,9 @@ const TransactionHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions && transactions.map((element, index) => {
-              return (
+            {filteredTransactions.map((element, index) => (
+            // {transactions && transactions.map((element, index) => {
+            //   return (
                 <tr key={element._id}>
                   <td>{formatDate(element.createdAt)}</td>
                   <td>{element.customerName}</td>
@@ -151,8 +161,7 @@ const TransactionHistory = () => {
                     </span>
                   </td>
                 </tr>
-              );
-            })}
+            ))}
           </tbody>
         </table>
       </div>
