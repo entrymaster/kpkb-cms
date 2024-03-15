@@ -136,7 +136,8 @@ const TransactionHistory = () => {
     <div className="TransactionHistory">
       <Navbar />
       <div className="main-container">
-        <div className="top">
+        <div className="top" style={{ marginTop: '3.5%' }}>
+
           <div className="search-bar-container">
             <input type="text" className="search-bar" placeholder="Search"
               value={searchInput}
@@ -159,11 +160,14 @@ const TransactionHistory = () => {
             {filteredTransactions.map((element, index) => (
             // {transactions && transactions.map((element, index) => {
             //   return (
-                <tr key={element._id}>
-                  <td>{formatDate(element.createdAt)}</td>
-                  <td>{element.customerName}</td>
-                  <td>{element.paymentMode}</td>
-                  <td>{element.totalAmount}</td>
+                <tr key={element._id}  style={{
+                  marginBottom: '20px',
+                  // borderBottom: '4px solid #dddddd'
+                }}>
+                  <td style={{  padding: '10px' }}>{formatDate(element.createdAt)}</td>
+                  <td style={{  padding: '10px' }}>{element.customerName}</td>
+                  <td style={{  padding: '10px' }}>{element.paymentMode}</td>
+                  <td style={{  padding: '10px' }}>{element.totalAmount}</td>
                   <td>
                     <span
                       className="action-button"
