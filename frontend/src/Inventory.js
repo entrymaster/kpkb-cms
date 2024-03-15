@@ -25,8 +25,18 @@ const Inventory = () =>
   const[addBatch,setAddBatch]=useState([]);
   const[updateBatch,setUpdateBatch]=useState([]);
   const [itemName, setItemName] = useState();
+  const [searchInput, setSearchInput] = useState('');
   const authContext = useContext(AuthContext);
-    console.log(authContext.user);
+  console.log(authContext.user);
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.itemName.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
     console.log({isAddItemDialogVisible});
@@ -167,8 +177,10 @@ const sortProducts = (heading) => {
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search"
-        value={itemName}
-        onChange={handleItemName}
+        // value={itemName}
+        // onChange={handleItemName}
+        value={searchInput}
+        onChange={handleSearchInputChange}
         />
         <div className="search-icon">🔍</div>
         {/* <div className="circle" /> */}
@@ -237,8 +249,9 @@ const sortProducts = (heading) => {
           </tr>
         </thead>
         <tbody>
-    {products && products.map((element, index) => {
-      return (
+        {filteredProducts.map((element, index) => (
+    /* {products && products.map((element, index) => { */
+      // return 
         <tr key={element._id} style={getRowStyle(element.batchList[0]?.expiryDate)}>
           <td>{element.itemID}</td>
           <td>{element.itemName}</td>
@@ -294,8 +307,7 @@ const sortProducts = (heading) => {
             </span>
           </td>  */}
         </tr>
-      );
-    })}
+        ))}
   </tbody>
       </table>
   </div>
