@@ -8,6 +8,7 @@ import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
 import { saveAs } from 'file-saver';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [incInvoiceID, setIncInvoiceID] = useState(false);
@@ -114,6 +115,7 @@ const AddNewInvoice = () => {
       updatedItemList.splice(index, 1);
       return {
         itemList: updatedItemList,
+        
       };
     });
   };
