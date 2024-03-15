@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./profile.css";
 import AuthContext from './AuthContext';
@@ -85,6 +85,11 @@ function Profile() {
       });
   };
 
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
+  
   return (
     <div className="profile">
       <Navbar />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import BarChart from "./components/Charts/BarChart1.js";
 import LineChart1 from "./components/Charts/LineChart1.js";
 import PieChart from "./components/Charts/PieChart.js";
@@ -122,6 +122,10 @@ const Reports = () => {
       }],
     };
   };
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="Reports">

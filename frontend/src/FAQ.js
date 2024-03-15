@@ -3,7 +3,15 @@ import './Dashboard.css';
 import { Link } from "react-router-dom";
 import Navbar from './Navbar'; // Assuming Navbar component is imported from './Navbar'
 import './FAQ.css';
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import AuthContext from "./AuthContext";
+
 function FAQ() { 
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <>
       <Navbar />

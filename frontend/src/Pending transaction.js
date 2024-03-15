@@ -4,7 +4,7 @@ import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import AuthContext from "./AuthContext";
 
@@ -145,6 +145,10 @@ const PendingTransactions = () => {
     }
   }, [updatePage]);
 
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className="PendingTrans">
       <Navbar/>
