@@ -61,7 +61,7 @@ function Login() {
         .then((result) => {
           alert("Successfully changed password");
           console.log("Successfully changed password", result);
-          navigate("/")
+          navigate("/forgotverify")
         })
         .catch((error) => {
           console.log("Something went wrong ", error);
