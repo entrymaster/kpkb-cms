@@ -141,7 +141,7 @@ const handleSignout = () => {
                     <strong>Reports</strong>
                 </Link>
             </p>
-            <p className={location.pathname === "/FAQs" ? "active" : ""}>
+            <p className={location.pathname === "/FAQ" ? "active" : ""}>
                 <Link to="/FAQ" style={{ display: 'flex', alignItems: 'center', color: 'white', textDecoration: 'none' }}>
                     <HelpOutlineIcon style={{ marginRight: '5px' }} />
                     <strong>FAQs</strong>

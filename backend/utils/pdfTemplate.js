@@ -26,7 +26,7 @@
  * @returns {string} The HTML template for the invoice.
  */
   
-const User = require('../../../../backend/models/user.model');
+const User = require('../models/user.model');
 const formatDate = (date) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
     return new Date(date).toLocaleDateString('en-IN', options);

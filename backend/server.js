@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const { PDFDocument,rgb } = require('pdf-lib');
 const pdf = require('html-pdf');
-const pdfTemplate = require('../frontend/src/components/Invoice/pdfTemplate');
+const pdfTemplate = require('./utils/pdfTemplate');
 
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
