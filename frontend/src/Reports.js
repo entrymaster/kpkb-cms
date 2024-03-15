@@ -7,16 +7,16 @@ import LineChart1 from "./components/Charts/LineChart1.js";
 import PieChart from "./components/Charts/PieChart.js";
 import Navbar from './Navbar';
 import axios from "axios";
-
+import AuthContext from './AuthContext.js';
 const Reports = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [chartData, setChartData] = useState({});
   const [chartData1, setChartData1] = useState({}); // Initialize with an empty object
-  const userId = "user";
+  //const userId = "user";
   const [flag, setFlag] = useState(0); 
-
-
+  const authContext = useContext(AuthContext);
+  const userId = authContext.user;
   
   // useEffect(() => {
   //   fetchSalesData();
