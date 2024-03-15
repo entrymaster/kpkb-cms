@@ -48,7 +48,13 @@ function Login() {
     //form.email = email;
     if (form.email === "" || form.password === "") {
       alert("To change password, enter details to proceed...");
-    } else {
+      
+    }
+    else if (form.password.length < 6) {
+      alert("Password should be at least 6 characters");
+      return; // Exit function if password is too short
+    }
+     else {
         // console.log(form.password)
         // console.log(form.email)
       fetch("http://localhost:5050/api/forgot/for", {
