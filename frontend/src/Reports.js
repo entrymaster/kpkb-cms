@@ -228,7 +228,7 @@ const Reports = () => {
       <Navbar />
 
       <div className="main-container" style={{ paddingTop: "120px" }}>
-      <div style={{ marginBottom: "6%" ,marginLeft: "5%"}}>
+      <div style={{ marginBottom: "6%" ,marginLeft: "50px"}}>
         <label style={{ display: "inline-block", margin: "20px" ,marginBottom:"20px"}}>Start Date: </label>
 
           <input
@@ -268,36 +268,40 @@ const Reports = () => {
             }}
           />
         </div>
-        <div>
+        <div  style={{marginLeft: "80px" }}>
   {flag === 1 && (
     
     <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block",marginLeft: "1%" }}>
+      <h2>Total Sales/Date</h2>
       <LineChart1 Data={chartData} yAxisTitle="Total Sales" />
     </div>
   )}
   {flag === 1 && (
     <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block",marginLeft: "1%" }}>
-      {/* <h2>Total Profit</h2> */}
+      <h2>Total Profit/Date</h2>
      <LineChart1 Data={chartData1} yAxisTitle="Total Profit" />
     </div>
   )}
     </div>
-    <div style={{marginLeft: "40px" }}>
+    <div style={{marginLeft: "80px" }}>
 
   {flag === 1 && (
     <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block" }}>
+      <h2>Total Bills/Date</h2>
       <LineChart1 Data={chartData2} yAxisTitle="Total Bills" />
     </div>
   )}
   {flag === 1 && (
   <div style={{minWidth:"400", width: "50%", maxWidth: "400px", display: "inline-block",marginLeft:"120px" }}>
+    <h2>Credit VS Debit Sales</h2>
     <PieChart Data={chartData3} />
   </div>
   )}
   {flag === 1 && (
   <div>
-    <h2>Top 5 Customers by Sales</h2>
-    <table>
+  <h2 style={{ fontSize: "24px", fontWeight: "bold", color: "#333", marginBottom: "20px" }}>Top 5 Customers by Sales</h2>
+
+    <table  id="inventoryTable">
       <thead>
         <tr>
           <th>Name</th>
@@ -305,7 +309,7 @@ const Reports = () => {
           <th>Total Sales</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
         {topCustomers.map((customer, index) => (
           <tr key={index}>
             <td>{customer.name}</td>
