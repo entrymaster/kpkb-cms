@@ -1,6 +1,6 @@
 import React,{useState, useContext} from 'react';
 import './AddProduct.css'
-import AuthContext from '../AuthContext';
+import AuthContext from '../../AuthContext';
 const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
   const authContext = useContext(AuthContext);
     const [itemData, setItemData] = useState({

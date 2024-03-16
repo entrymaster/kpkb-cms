@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddProduct.css";
 import { Link } from "react-router-dom";
-import UpdateBatchDialog from '../components/UpdateBatch';
+import UpdateBatchDialog from './UpdateBatch';
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }) => {
