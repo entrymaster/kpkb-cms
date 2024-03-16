@@ -132,8 +132,8 @@ const Reports = () => {
       <Navbar />
 
       <div className="main-container" style={{ paddingTop: "120px" }}>
-        <div>
-        <label style={{ display: "inline-block", margin: "20px" }}>Start Date: </label>
+      <div style={{ marginBottom: "6%" ,marginLeft: "5%"}}>
+        <label style={{ display: "inline-block", margin: "20px" ,marginBottom:"20px"}}>Start Date: </label>
 
           <input
             type="date"
@@ -194,13 +194,15 @@ const Reports = () => {
         </div> */}
         <div>
   {flag === 1 && (
-    <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
-      <LineChart1 Data={chartData} />
+    
+    <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block",marginLeft: "1%" }}>
+      <LineChart1 Data={chartData} yAxisTitle="Total Sales" />
     </div>
   )}
   {flag === 1 && (
-    <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block" }}>
-      <LineChart1 Data={chartData1} />
+    <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block",marginLeft: "1%" }}>
+      {/* <h2>Total Profit</h2> */}
+     <LineChart1 Data={chartData1} yAxisTitle="Total Profit" />
     </div>
   )}
 </div>
