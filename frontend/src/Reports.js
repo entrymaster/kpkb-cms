@@ -294,7 +294,7 @@ const Reports = () => {
   )}
   {flag === 1 && (
   <div style={{minWidth:"400", width: "50%", maxWidth: "400px", display: "inline-block",marginLeft:"120px" }}>
-    <h2>Credit VS Debit Sales</h2>
+    <h2>Sales Distribution</h2>
     <PieChart Data={chartData3} />
   </div>
   )}
