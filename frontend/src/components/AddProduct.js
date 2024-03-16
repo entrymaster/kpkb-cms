@@ -14,9 +14,20 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
         discount: 0,
         quantity: 0,
       });
-    const handleInputChange = (key, value) => {
-        setItemData({ ...itemData, [key]: value });
-        console.log(itemData);
+      const handleInputChange = (key, value) => {
+        // Check if the value is numeric and not negative
+        // if (!isNaN(value) && parseFloat(value) >= 0) {
+          if ( (!isNaN(parseFloat(value)) && parseFloat(value) >= 0)) {
+            // If the value is empty or a valid number, update the state and previousValidValue
+            setItemData({ ...itemData, [key]: value });
+          } else {
+            // If the value is not valid, revert to the previous valid value
+            // Update the input field with the previous valid value
+       
+            // Show an alert box or any other indication of invalid input
+            alert('Invalid input: Please enter a valid non-negative numeric value.');
+          }
+  console.log(itemData);
       };
       const addProduct = () => {
         fetch("http://localhost:5050/api/inventory/add", {
