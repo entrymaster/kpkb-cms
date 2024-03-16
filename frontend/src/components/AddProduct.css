@@ -1,123 +1,115 @@
 #addItemDialog {
-    align-items: center;
-    width: 600px; /* Set the desired width */
-    height: 380px;
-    border-style: solid;
-    background-color: #b3d9ff;
-    border-color: rgb(104, 157, 237);
-    margin-left: 150px 
+  align-items: center;
+  width: 600px;
+  height: 380px;
+  border-style: solid;
+  background-color: #d3e5f7;
+  border-color: rgb(104, 157, 237);
+  margin-left: 150px 
 }
 
 #addItemDialog form {
-    padding: 20px; /* Add padding for better spacing */
+  padding: 20px;
 }
-#addItemDialog table {
-    /* padding-right: 100px; */
-    border: none;
 
+#addItemDialog table {
+  border: none;
 }
+
 #addItemDialog label {
-    display: block;
-    margin-bottom: 10px;
+  display: block;
+  margin-bottom: 10px;
 }
 
 #addItemDialog input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
 }
 
 #addItemDialog button {
-    padding: 10px 20px;
-    /* margin-right: 50px; */
-    margin-left: 200px;
-} .confirmation-dialog {
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    text-align: center;
-    width:400px;
-    height:150px
-  }
-  
-  .confirmation-dialog p {
-    margin-bottom: 20px;
-  }
-  
-  .confirmation-dialog button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-left: 20px;
-  }
-  
+  padding: 10px 20px;
+  margin-left: 200px;
+}
+
+.confirmation-dialog {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-align: center;
+  width:400px;
+  height:150px
+}
+
+.confirmation-dialog p {
+  margin-bottom: 20px;
+}
+
+.confirmation-dialog button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
 
 .label-cell {
   text-align: left;
-  font-size: 12px; /* Adjust the font size as needed */
-  font-weight: bold; /* Optionally make it bold */
-  padding-right: 10px; /* Adjust spacing between label and input */
+  font-size: 12px;
+  font-weight: bold;
+  padding-right: 10px;
 }
+
 .label-cell1 {
-    text-align: left;
-    background-color: #f0f0f0; 
-    font-size: 12px; /* Adjust the font size as needed */
-    font-weight: bold; /* Optionally make it bold */
-    padding-right: 10px; /* Adjust spacing between label and input */
-  }
+  text-align: left;
+  background-color: #f0f0f0; 
+  font-size: 12px;
+  font-weight: bold;
+  padding-right: 10px;
+}
 
-/* Additional styles for input cells */
-/* input {
-  width: 100%; /* Make the input take up the full width of the cell */
-
-/* Include padding and border in the width */
-/* } */ */
-/* Add this to your existing CSS */
 .read-only-input {
-    background-color: #f0f0f0; /* Set background color to light white */
-  }
-  .blur-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-   
-    z-index: 2; /* Ensure it appears above the background */
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  .dialog-background {
-    position: fixed;
-    top: 23%;
-    left: 23%;
-    transform: translate(-50%, -50%);
-    background-color: white; /* Adjust as needed */
-    /* padding: 20px; */
-    z-index: 3; /* Ensure it appears above the blurred background */
-  }
-  .blur-container-batch {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-   
-    z-index: 2; /* Ensure it appears above the background */
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  .dialog-background-batch {
-    position: fixed;
-    top: 23%;
-    left: 23%;
-    transform: translate(-50%, -50%);
-    background-color: white; /* Adjust as needed */
-    /* padding: 20px; */
-    z-index: 3; /* Ensure it appears above the blurred background */
-  }
+  background-color: #f0f0f0;
+}
+
+.blur-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dialog-background {
+  position: fixed;
+  top: 23%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 3;
+}
+
+.blur-container-batch {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.dialog-background-batch {
+  position: fixed;
+  top: 23%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 3;
+}

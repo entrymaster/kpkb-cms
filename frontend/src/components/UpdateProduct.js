@@ -27,19 +27,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
      quantity: '',
       // batchList: [],
     });
-    // const resetFields = () => {
-    //     setItemData({
-    //       _id: '',
-    //       itemID: '',
-    //       itemName: '',
-    //       salePrice: '',
-    //       costPrice: '',
-    //       itemGST: '',
-    //       category: '',
-    //       discount: '',
-    //       quantity: '',
-    //     });
-    //   };
+    
     const handleInputChange = (key, value) => {
         setItemData({ ...itemData, [key]: value });
         console.log(itemData);

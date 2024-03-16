@@ -4,9 +4,10 @@ import AddNewEntry from "./components/PendingTransactions/AddNewEntry";
 import UpdateEntry from "./components/PendingTransactions/UpdateEntry";
 import UpdateAmt from "./components/PendingTransactions/UpdateAmount";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import AuthContext from "./AuthContext";
+
 const PendingTransactions = () => {
   const [activeTab, setActiveTab] = useState("credit-tab");
   const authContext = useContext(AuthContext);
@@ -144,6 +145,10 @@ const PendingTransactions = () => {
     }
   }, [updatePage]);
 
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className="PendingTrans">
       <Navbar/>
@@ -192,7 +197,7 @@ const PendingTransactions = () => {
           activeTab === "credit-tab" ? "tabcontent-active" : "tabcontent"
         }
       >
-        <table border="1">
+        <table id="inventoryTable">
           <thead style={{ backgroundColor: "lightly" }}>
             <tr className="headers">
               <th>Customer Name</th>
@@ -263,7 +268,7 @@ const PendingTransactions = () => {
           activeTab === "debit-tab" ? "tabcontent-active" : "tabcontent"
         }
       >
-        <table border="1">
+        <table id="inventoryTable">
           <thead>
             <tr className="headers">
               <th>Supplier Name</th>

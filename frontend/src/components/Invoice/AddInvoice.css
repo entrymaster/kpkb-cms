@@ -5,6 +5,7 @@
 #add-new-item:active, #preview-bill:active, #add-as-credit:active, #generate-bill-button:active {
     background-color: #99c2ff; /* Change color on click */
 }
+
 #add-new-item, #preview-bill, #add-as-credit, #generate-bill-button {
     background-color: #cfe8ff;
     color: #051d40;
@@ -36,6 +37,7 @@
     font-size: 18px;
     resize: vertical;
 }
+
 .discount-input {
     margin-top: 20px;
     /* margin-left: 50%; */
@@ -51,10 +53,12 @@
     border-radius: 4px;
     font-size: 20px;
 }
+
 .total-amt-box {
     font-size: 20px;
     padding-left: 70%;
 }
+
 .bill-buttons {
     /* position: fixed;
     bottom: 20px;
@@ -73,6 +77,7 @@
     display: flex;
     margin-top: 100px;
 }
+
 #customerTable {
     flex-grow: 1;
     padding: 20px;
@@ -81,6 +86,7 @@
     width: 200px;
     margin-bottom: 4px;
 }
+
 .input-box {
     background-color: #f0f8ff;; /* Change this color to your preferred color */
     border: 1px solid #CCCCCC; /* Add border styles if needed */
@@ -89,6 +95,7 @@
     width: 400px;
     size:auto;
 }
+
 #customerTable input[type="text"],
 #customerTable input[type="number"] {
   border: none;
@@ -97,6 +104,7 @@
   width: 400px;
   font-size: 18px;
 }
+
 #invoiceTable input[type="text"],
 #invoiceTable input[type="number"] {
   border: none;
@@ -104,6 +112,7 @@
   width: auto;
   font-size: 18px;
 }
+
 .itemListContainer {
     width: calc(100%-50px);
     /* padding-right: 50px; */
@@ -127,10 +136,10 @@
     text-align: left;
     
 }
+
 #invoiceTable th {
     background-color: #f2f2f2;
 }
- 
 
 .bottom-controls {
     display: flex;

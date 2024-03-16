@@ -133,9 +133,14 @@ const getSalesData = async (req, res) => {
       userID: id, // Filter by userId
       createdAt: { $gte: isoStartDate, $lte: isoEndDate } ,
     });
-    
+    let totalPaidSales = 0;
+    let totalCreditSales = 0;
+    salesData.forEach((invoice) => {
+      if(invoice.paymentMode==="Paid") totalPaidSales += invoice.totalSales;
+      else totalCreditSales+= invoice.totalSales;
+    });
     // Send the salesData to the frontend
-    res.status(200).json(salesData);
+    res.status(200).json(salesData, totalPaidSales, totalCreditSales);
   } catch (error) {
     console.error('Error fetching sales data:', error);
     res.status(500).json({ error: 'Internal Server Error' });

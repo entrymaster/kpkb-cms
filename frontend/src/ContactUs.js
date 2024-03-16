@@ -1,8 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React,{useContext} from "react";
+import { Link, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
+import AuthContext from "./AuthContext";
 import "./ContactUs.css";
 const ContactUs = () => {
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className="ContactUs">
       <Navbar />

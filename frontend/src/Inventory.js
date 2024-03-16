@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext} from 'react';
 import './Inventory.css';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AddItemDialog from './components/AddProduct';
 import UpdateItemDialog from './components/UpdateProduct';
 import AddBatchDialog from './components/AddBatch';
@@ -151,6 +151,10 @@ const sortProducts = (heading) => {
   setSortBy(heading); // Update the state to track the selected heading
   setSortDirection(newSortDirection); // Update the arrow direction
 };
+  const auth = useContext(AuthContext);
+  if (!auth.user) {
+    return <Navigate to="/" replace />;
+  }
         return (
             <div className="Inventory">
                <Navbar/>
@@ -188,6 +192,7 @@ const sortProducts = (heading) => {
     <div className="top">
       <div className="search-bar-container">
         <input type="text" className="search-bar" placeholder="Search"
+        style={{ fontFamily: 'Libre Baskerville' }}
         // value={itemName}
         // onChange={handleItemName}
         value={searchInput}

@@ -17,10 +17,6 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
     setBatchList(batches);
   }, [batches]);
 
-  // const handlePageUpdate = () => {
-  //   setUpdatePage(!updatePage);
-  // };
-
   const deleteBatch = (Batchid) => {
     console.log("Batch ID: ", Batchid);
     setBatchIdToDelete(Batchid);
@@ -46,18 +42,19 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
       });
   };
 
-  
-
   const toggleUpdateBatchDialog = () => {
     setUpdateBatchDialogVisibility(!isUpdateBatchDialogVisible);
   };
   
-
-
   const updateBatchModalSetting = (selectedProductData) => {
     console.log("Clicked: edit");
     setUpdateBatch(selectedProductData);
     toggleUpdateBatchDialog();
+  };
+
+  const formatDate = (date) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(date).toLocaleDateString('en-IN', options);
   };
 
   return (
@@ -106,7 +103,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
                     <tr key={index}>
                       <td>{element.batchID}</td>
                       <td>{element.batchQty}</td>
-                      <td>{element.expiryDate}</td>
+                      <td>{formatDate(element.expiryDate)}</td>
                       <td>
                         <span
                           className="action-button"
