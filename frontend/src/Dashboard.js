@@ -148,7 +148,7 @@ const calculateProfitsByDay = (salesData, startDate, endDate) => {
     setUpdatePage(!updatePage);
   };
   useEffect(() => {
-    //fetchUserData();
+    fetchSalesData();
     fetchDashboardData();
   }, [updatePage]);
   const fetchDashboardData = () => {
@@ -222,7 +222,7 @@ if (!auth.user) {
       </div>
     </div>
     <div>
-    <div>
+    {/* <div>
       <button
             onClick={fetchSalesData}
             style={{
@@ -246,7 +246,7 @@ if (!auth.user) {
           >
             See Graphs{" "}
           </button>
-          </div>
+          </div> */}
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
              <div style={{ width: "40%", display: "inline-block",marginLeft:"250px"}}>
               <LineChart1 Data={chartData} yAxisTitle="Total Sales" />
