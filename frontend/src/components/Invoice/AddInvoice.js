@@ -44,28 +44,28 @@ const AddNewInvoice = () => {
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
         handleItemSelection(value);
-        let quantity = parseFloat(updatedItemList[index].quantity);
+        let quantity = parseFloat(updatedItemList[index].quantity.toFixed(2));
         if(quantity > value['quantity']) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
           quantity = 0;
         };
-        const rate = parseFloat(updatedItemList[index].rate);
-        const gst = parseFloat(updatedItemList[index].gst);
+        const rate = parseFloat(updatedItemList[index].rate.toFixed(2));
+        const gst = parseFloat(updatedItemList[index].gst.toFixed(2));
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
-        updatedItemList[index].amount = amount;
+        updatedItemList[index].amount = parseFloat(amount.toFixed(2));
       }
       if (fieldName === 'quantity') {
-        let quantity = parseFloat(value);
+        let quantity = value
         if(quantity > availableQuantity) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
           quantity = 0;
         };
-        const rate = parseFloat(updatedItemList[index].rate);
-        const gst = parseFloat(updatedItemList[index].gst);
+        const rate = parseFloat(updatedItemList[index].rate.toFixed(2));
+        const gst = parseFloat(updatedItemList[index].gst.toFixed(2));
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
-        updatedItemList[index].amount = isNaN(amount) ? 0 : amount;
+        updatedItemList[index].amount = isNaN(amount) ? 0 : parseFloat(amount.toFixed(2));
         updatedItemList[index].quantity = quantity;
       }
   
@@ -92,10 +92,10 @@ const AddNewInvoice = () => {
     const arr = invoiceData.itemList;
     var subTotal = 0;
     for(var i=0; i<arr.length; i++){
-      subTotal = subTotal + arr[i].amount;
+      subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
     }
-    invoiceData.totalAmount = subTotal - (subTotal*invoiceData.discount)/100;
-    invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : invoiceData.totalAmount;
+    invoiceData.totalAmount = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
+    invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : parseFloat(invoiceData.totalAmount.toFixed(2));
     setTotalChange(false);
   }, [totalChange]);
   // useEffect(() => {
