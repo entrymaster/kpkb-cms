@@ -1,17 +1,12 @@
-import { Line } from "react-chartjs-2";
-
-// LineChart1.js
-
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const LineChart1 = ({ Data }) => {
+const LineChart1 = ({ Data, yAxisTitle }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
     if (chartInstance.current) {
-      // If chart instance exists, destroy it before creating a new one
       chartInstance.current.destroy();
     }
 
@@ -20,20 +15,95 @@ const LineChart1 = ({ Data }) => {
       type: "line",
       data: Data,
       options: {
-        responsive: false, // Ensure chart doesn't resize
-        maintainAspectRatio: false, // Ensure canvas doesn't resize
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false, // Hide legend
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Date",
+              font: {
+                size: 14,
+                weight: "bold",
+              },
+            },
+      border: {
+        display: true,
+        color: "black", // Set border color to black
+      },
+         
+            grid: {
+              display: true,
+              color:"lightblue",
+            },
+            ticks: {
+              color: "black",
+              font: {
+                weight: "bold",
+              },
+            },
+            borderColor: "black",
+            borderWidth: 2,
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: yAxisTitle, 
+              font: {
+                size: 14,
+                weight: "bold",
+                color: "black",
+              },
+            },
+            ticks: {
+              color: "black",
+              lineWidth: 2,
+              font: {
+                weight: "bold",
+              },
+            },
+            border: {
+              display: true,
+              color:"black",
+            },
+            grid: {
+              display: false,
+            },
+            beginAtZero: true,
+          },
+        },
+        elements: {
+          point: {
+            backgroundColor: "black",
+          },
+          line: {
+            borderColor: "black",
+            borderWidth: 3,
+          },
+        },
       },
     });
 
     return () => {
-      // Cleanup function to destroy chart instance when component unmounts
+     
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
     };
   }, [Data]);
 
-  return <canvas ref={chartRef} width="500" height="300" />; // Set fixed width and height
+  return (
+    <div>
+     
+      <canvas ref={chartRef} width="500" height="300" />
+    </div>
+  );
 };
 
 export default LineChart1;

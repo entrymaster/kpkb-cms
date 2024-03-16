@@ -249,14 +249,14 @@ if (!auth.user) {
           </div>
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
              <div style={{ width: "40%", display: "inline-block",marginLeft:"250px"}}>
-              <LineChart1 Data={chartData} />
+              <LineChart1 Data={chartData} yAxisTitle="Total Sales" />
 
             </div>
             
           )}
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
             <div style={{ width: "40%", display: "inline-block",}}>
-              <LineChart1 Data={chartData1} />
+              <LineChart1 Data={chartData1} yAxisTitle="Total Profit" />
 
             </div>
             
