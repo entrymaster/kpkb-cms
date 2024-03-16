@@ -1,11 +1,11 @@
 import React,{useState, useEffect, useContext} from 'react';
 import './Inventory.css';
 import { Link, Navigate } from "react-router-dom";
-import AddItemDialog from './components/AddProduct';
-import UpdateItemDialog from './components/UpdateProduct';
-import AddBatchDialog from './components/AddBatch';
+import AddItemDialog from './components/Inventory/AddProduct';
+import UpdateItemDialog from './components/Inventory/UpdateProduct';
+import AddBatchDialog from './components/Inventory/AddBatch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ViewBatchDialog from './components/ViewBatch';
+import ViewBatchDialog from './components/Inventory/ViewBatch';
 import AuthContext from './AuthContext';
 import Navbar from './Navbar';
 import AddIcon from '@mui/icons-material/Add';
