@@ -10,13 +10,23 @@ import AuthContext from "./AuthContext";
 
 const PendingTransactions = () => {
   const [activeTab, setActiveTab] = useState("credit-tab");
+  const [Entries, setEntries] = useState([]);
   const authContext = useContext(AuthContext);
   const openTab = (tabName) => {
     setActiveTab(tabName);
     handlePageUpdate();
   };
+  const [searchInput, setSearchInput] = useState('');
 
-  const [Entries, setEntries] = useState([]);
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const filteredEntries = Entries.filter(Entry =>
+    Entry.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
+  
   //const userID = "user";
   const userID = authContext.user;
   const [updatePage, setUpdatePage] = useState(true);
@@ -157,12 +167,10 @@ const PendingTransactions = () => {
           <div className="search-bar-container">
             <input
               type="text"
-              value={query}
               className="search-bar"
               placeholder="Search"
-              onChange={(e) => {
-                setQuery(e.target.value);
-              }}
+              value={searchInput}
+              onChange={handleSearchInputChange}
             />
           </div>
           <div className="TotalAmount">
@@ -210,9 +218,10 @@ const PendingTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            {Entries &&
-              Entries.map((element, index) => {
-                return (
+            {/* {Entries &&
+              Entries.map((element, index) => { */}.
+              {filteredEntries.map((element, index) => (
+                // return (
                   <tr
                     key={element._id}
                     // style={{ borderBottom: "1px solid lightgray" }}
@@ -256,8 +265,7 @@ const PendingTransactions = () => {
                       />
                     </td>
                   </tr>
-                );
-              })}
+                ))}
           </tbody>
         </table>
       </div>
