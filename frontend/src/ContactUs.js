@@ -1,96 +1,58 @@
-import React,{useContext} from "react";
-import { Link, Navigate } from "react-router-dom";
+import React from "react";
+import "./ContactUs.css"; // Make sure to import your CSS file
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt, faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import Navbar from "./Navbar";
-import AuthContext from "./AuthContext";
-import "./ContactUs.css";
 const ContactUs = () => {
-  const auth = useContext(AuthContext);
-  if (!auth.user) {
-    return <Navigate to="/" replace />;
-  }
   return (
-    <div className="ContactUs">
-      <Navbar />
-      <div className="main-container">
-        <div className="contact-section">
-          <h2>&nbsp; GET IN TOUCH</h2>
-          <div className="contact-info">
-            <p>
-              &nbsp; Got a question or need help? We're happy to hear from you!
-              <br />
-              <br />
-              &nbsp; Kindly refer to the FAQs page for any general queries.
-            </p>
-            <div className="contact-details">
-              <h3>
-                &nbsp; <u>Contact Details</u>
-              </h3>
-              &nbsp; Mail us : &nbsp; <i className="fa fa-envelope" />
-              billing360iitk@gmail.com
-              <br />
-              <br />
-              &nbsp; Call us : &nbsp; <i className="fa fa-phone" />
-              +91 xxxxxxxxx
-              <br />
-              <br />
-              &nbsp; Address : &nbsp;
-              <i className="fa fa-map-marker-alt" /> Billing 360
-              <br />
-              &nbsp; &nbsp; &nbsp;RM Building, IIT Kanpur
-              <br />
-              &nbsp; &nbsp; &nbsp;Kanpur, Uttar Pradesh 208016
-            </div>
-            <div className="form-group">
-              <form onsubmit="SendEmail(); reset(); return false;">
-                <h2>
-                  &nbsp; <u>Message Us</u>
-                </h2>
-                <label htmlFor="name"> &nbsp; Name : &nbsp; &nbsp; </label>
-                <input
-                  type="text"
-                  id="Name"
-                  className="textbox"
-                  size="45%"
-                  height={50}
-                  placeholder="  Your Name "
-                  required=""
-                />
-                <br />
-                <br />
-                <label htmlFor="email"> &nbsp; Email : &nbsp; &nbsp;</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="textbox"
-                  size="45%"
-                  height={50}
-                  placeholder=" Your Email Id "
-                  required=""
-                />
-                <br />
-                <br />
-                <div className="message">
-                  <label htmlFor="message">Message : </label>
-                  <br />
-                  <textarea
-                    id="message"
-                    placeholder="How can we help you?"
-                    rows="4"
-                    cols="50"
-                  ></textarea>
-                </div>
-              </form>
-            </div>
-            <br />
-            <button type="submit" className="pushable">
-              <span className="front">
-                <strong>Send Message</strong>
-              </span>
-            </button>
+   
+    
+    <div className="container">
+      <Navbar/>
+      <div className="content">
+        <div className="left-side">
+          <div className="address details">
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
+            <div className="topic">Address</div>
+            <div className="text-one"> Billing 360</div>
+            <div className="text-two">RM Building, IIT Kanpur <br />
+                Kanpur, Uttar Pradesh 208016</div>
           </div>
+          <div className="phone details">
+            <FontAwesomeIcon icon={faPhoneAlt} />
+            <div className="topic">Phone</div>
+            <div className="text-one">+0098 9893 5647</div>
+            <div className="text-two">+0096 3434 5678</div>
+          </div>
+          <div className="email details">
+            <FontAwesomeIcon icon={faEnvelope} />
+            <div className="topic">Email</div>
+            <div className="text-one">billing360iitk@gmail.com</div>
+            {/* <div className="text-two">info.codinglab@gmail.com</div> */}
+          </div>
+        </div>
+        <div className="right-side">
+          <div className="topic-text">Send us a message</div>
+          <p>Got a question or need help? We're happy to hear from you!. Kindly refer to the FAQs page for any general queries.</p>
+          <p>How can we help you?</p>
+          <form action="#">
+            <div className="input-box">
+              <input type="text" placeholder="Enter your name" />
+            </div>
+            <div className="input-box">
+              <input type="text" placeholder="Enter your email" />
+            </div>
+            <textarea className="input-box message-box">
+            {/* <input type="text" placeholder="Enter your query" /> */}
+            </textarea>
+            <div className="button">
+              <input type="button" value="Send Now" />
+            </div>
+          </form>
         </div>
       </div>
     </div>
+ 
   );
 };
 
