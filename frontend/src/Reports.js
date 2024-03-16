@@ -176,7 +176,8 @@ const Reports = () => {
   };
  
   const prepareChartData3 = (paymentModeData) => {
-    const labels = Object.keys(paymentModeData);
+    // const labels = Object.keys(paymentModeData);
+    const labels = ["Paid Sales", "Credit Sales"];
     const data = Object.values(paymentModeData);
     return {
       labels: labels,
