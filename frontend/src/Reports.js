@@ -276,7 +276,7 @@ const Reports = () => {
             See Graphs{" "}
           </button>
         </div> */}
-        <div>
+        <div style={{marginLeft: "40px" }}>
   {flag === 1 && (
     
     <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block",marginLeft: "1%" }}>
@@ -289,13 +289,16 @@ const Reports = () => {
      <LineChart1 Data={chartData1} yAxisTitle="Total Profit" />
     </div>
   )}
+    </div>
+    <div style={{marginLeft: "40px" }}>
+
   {flag === 1 && (
     <div style={{ minWidth:"400",width: "50%", maxWidth: "500px", display: "inline-block" }}>
-      <LineChart1 Data={chartData2} />
+      <LineChart1 Data={chartData2} yAxisTitle="Total Bills" />
     </div>
   )}
   {flag === 1 && (
-  <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
+  <div style={{minWidth:"400", width: "50%", maxWidth: "400px", display: "inline-block",marginLeft:"120px" }}>
     <PieChart Data={chartData3} />
   </div>
   )}
