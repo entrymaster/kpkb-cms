@@ -15,8 +15,7 @@ const Reports = () => {
   const [chartData1, setChartData1] = useState({});
   const [chartData2, setChartData2] = useState({});
   const [chartData3, setChartData3] = useState({});
-   // Initialize with an empty object
-  //const userId = "user";
+  const [topCustomers, setTopCustomers] = useState([]);
   const [flag, setFlag] = useState(0);
   const authContext = useContext(AuthContext);
   const userId = authContext.user;
@@ -32,7 +31,7 @@ const Reports = () => {
           const salesData = response.data; // Assuming response.data contains sales data
           console.log(salesData);
          
-          //const allDates = generateDateArray(today, sevenDaysAgo);
+          
           const salesByDay = calculateSalesByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
           console.log(salesByDay)
@@ -50,6 +49,9 @@ const Reports = () => {
           const preparedChartData3 = prepareChartData3(paymentModeDistributionData);
           console.log(preparedChartData3);
           setChartData3(preparedChartData3);
+          const topCustomersData = calculateTopCustomers(salesData);
+          console.log(topCustomersData);
+          setTopCustomers(topCustomersData);
           setFlag(1);
         })
         .catch((error) => {
@@ -58,18 +60,7 @@ const Reports = () => {
     }
   };
   
-  // Function to generate an array of dates from startDate to endDate
-  // const generateDateArray = (startDate, endDate) => {
-  //   const dateArray = [];
-  //   let currentDate = new Date(startDate);
-  //   while (currentDate <= endDate) {
-  //     dateArray.push(new Date(currentDate));
-  //     currentDate.setDate(currentDate.getDate() + 1);
-  //   }
-  //   return dateArray;
-  // };
   
-  // Function to calculate sales by day
   // Function to calculate sales by day
   const calculateSalesByDay = (salesData, startDate, endDate) => {
     const salesByDay = {};
@@ -183,15 +174,7 @@ const Reports = () => {
       }],
     };
   };
-  // const prepareChartData3 = (data) => {
-  //   return {
-  //     labels: ["Paid", "Credit"],
-  //     datasets: [{
-  //       data: [data.paidSalesData, data.totalCreditSales],
-  //       backgroundColor: ['#36A2EB', '#FFCE56'],
-  //     }],
-  //   };
-  // };
+ 
   const prepareChartData3 = (paymentModeData) => {
     const labels = Object.keys(paymentModeData);
     const data = Object.values(paymentModeData);
@@ -203,6 +186,35 @@ const Reports = () => {
         backgroundColor: ['#36A2EB', '#FFCE56'],
       }],
     };
+  };
+
+  const calculateTopCustomers = (salesData) => {
+    // Create a map to store total sales for each customer
+    const customerSalesMap = new Map();
+  
+    // Calculate total sales for each customer
+    salesData.forEach((invoice) => {
+      const { customerEmail, totalSales } = invoice;
+      const currentTotalSales = customerSalesMap.get(customerEmail) || 0;
+      customerSalesMap.set(customerEmail, currentTotalSales + totalSales);
+    });
+  
+    // Sort customers by total sales
+    const sortedCustomers = [...customerSalesMap.entries()].sort((a, b) => b[1] - a[1]);
+  
+    // Select top 5 customers
+    const topCustomers = sortedCustomers.slice(0, 5);
+  
+    // Return top customers data
+    return topCustomers.map(([email, totalSales]) => {
+      // Find customer details from sales data
+      const customerDetails = salesData.find((invoice) => invoice.customerEmail === email);
+      return {
+        name: customerDetails.customerName,
+        email: email,
+        totalSales: totalSales,
+      };
+    });
   };
   
   
@@ -256,26 +268,6 @@ const Reports = () => {
             }}
           />
         </div>
-        {/* <div style={{ paddingLeft: "30%" }}>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-          <button
-            // onClick={fetchSalesData}
-            // onClick={}
-            style={{
-              padding: "10px",
-              marginLeft: "auto",
-                 marginRight: "10px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              borderRadius: "6px",
-              cursor: "pointer",
-              transition: "background-color 0.3s",
-              font: "15px",
-            }}
-          >
-            See Graphs{" "}
-          </button>
-        </div> */}
         <div>
   {flag === 1 && (
     <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
@@ -295,6 +287,29 @@ const Reports = () => {
   {flag === 1 && (
   <div style={{minWidth:"400", width: "50%", maxWidth: "500px", display: "inline-block" }}>
     <PieChart Data={chartData3} />
+  </div>
+  )}
+  {flag === 1 && (
+  <div>
+    <h2>Top 5 Customers by Sales</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Total Sales</th>
+        </tr>
+      </thead>
+      <tbody>
+        {topCustomers.map((customer, index) => (
+          <tr key={index}>
+            <td>{customer.name}</td>
+            <td>{customer.email}</td>
+            <td>{customer.totalSales}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
   )}
 </div>
