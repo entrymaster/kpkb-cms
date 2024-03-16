@@ -15,14 +15,14 @@ const ContactUs = () => {
             <FontAwesomeIcon icon={faMapMarkerAlt} />
             <div className="topic">Address</div>
             <div className="text-one"> Billing 360</div>
-            <div className="text-two">RM Building, IIT Kanpur <br />
+            <div className="text-two">KD Lab, IIT Kanpur <br />
                 Kanpur, Uttar Pradesh 208016</div>
           </div>
           <div className="phone details">
             <FontAwesomeIcon icon={faPhoneAlt} />
             <div className="topic">Phone</div>
-            <div className="text-one">+0098 9893 5647</div>
-            <div className="text-two">+0096 3434 5678</div>
+            <div className="text-one">xxxxxxxxxx</div>
+            {/* <div className="text-two">+0096 3434 5678</div> */}
           </div>
           <div className="email details">
             <FontAwesomeIcon icon={faEnvelope} />
