@@ -19,14 +19,25 @@ const AddNewInvoice = () => {
   const [availableQuantity, setAvailableQuantity] = useState(1000000000000000);
   const [showLoading, setShowLoading] = useState(false); 
   const authContext = useContext(AuthContext);
-  const [selectedItems, setSelectedItems] = useState([]);
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
+  const [optionList, setOptionList] = useState([]);
+
 
   
   const handleItemSelection = (selectedItem) => {
     setAvailableQuantity(selectedItem.quantity);
-    setSelectedItems([...selectedItems, selectedItem]);
+    const filteredOptions = items.filter(
+      (item) => !invoiceData.itemList.some((selectedItem) => selectedItem._id === item._id)
+    );
+    setOptionList(filteredOptions);
   };
+  useEffect(() => {
+    const filteredOptions = items.filter(
+      (item) => !invoiceData.itemList.some((selectedItem) => selectedItem._id === item._id)
+    );
+    setOptionList(filteredOptions);
+  }, [items, invoiceData]);
+  
 
   // const handleItemSelection = (selectedItem) => {
   //   // Assuming selectedItem is an object containing the selected item details including available quantity
@@ -44,7 +55,8 @@ const AddNewInvoice = () => {
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
         handleItemSelection(value);
-        let quantity = parseFloat(updatedItemList[index].quantity.toFixed(2));
+        // console.log((updatedItemList[index].quantity));
+        let quantity = (isNaN(updatedItemList[index].quantity) || updatedItemList[index].quantity)?parseFloat(updatedItemList[index].quantity):0;
         if(quantity > value['quantity']) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
@@ -54,6 +66,7 @@ const AddNewInvoice = () => {
         const gst = parseFloat(updatedItemList[index].gst.toFixed(2));
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
         updatedItemList[index].amount = parseFloat(amount.toFixed(2));
+        // setTotalChange(true);
       }
       if (fieldName === 'quantity') {
         let quantity = value
@@ -76,44 +89,72 @@ const AddNewInvoice = () => {
       });
     }
     setTotalChange(true);
-      
+    // const arr = invoiceData.itemList;
+    // var subTotal = 0;
+    // for(var i=0; i<arr.length; i++){
+    //   subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+    // }
+    // const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100));
+    // // invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+    // invoiceData.totalAmount = temp.toFixed(2);
   };
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
     setInvoiceData((prevData) => ({
       ...prevData,
-      [fieldName] : value,
+      [fieldName] : isNaN(value) ? 0 : value,
     }));
     setTotalChange(true);
   };
-
+  // const calculateTotal = () => {
+  //   const arr = invoiceData.itemList;
+  //   var subTotal = 0;
+  //   for(var i=0; i<arr.length; i++){
+  //     subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+  //   }
+  //   const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
+  //   invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+  // }
+  // setInterval(calculateTotal, 100);
   useEffect(()=>{
     const arr = invoiceData.itemList;
     var subTotal = 0;
     for(var i=0; i<arr.length; i++){
       subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
     }
-    invoiceData.totalAmount = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
-    invoiceData.totalAmount = (isNaN(invoiceData.totalAmount)) ? 0 : parseFloat(invoiceData.totalAmount.toFixed(2));
+    const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100));
+    // console.log(subTotal);
+    // invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+    invoiceData.totalAmount = temp.toFixed(2);
     setTotalChange(false);
   }, [totalChange]);
-  // useEffect(() => {
-  //   setInvoiceData((prevState) => ({...prevState, userID: authContext.user}))
 
-  //   // fetchSalesData();
-  // }, []);
   const handleAddField = (e) => {
     e.preventDefault()
-    setInvoiceData((prevState) => ({...prevState,userID:authContext.user, itemList: [...prevState.itemList,  {itemName: '', quantity:0, rate:0, discount:0,gst:0, amount:0}]}))
+    setInvoiceData((prevState) => ({...prevState,userID:authContext.user, itemList: [...prevState.itemList,  {itemName: '', quantity:0, costPrice:0, rate:0, gst:0, amount:0}]}))
+    
   }
 
   const handleDeleteRow = (index) => {
     setInvoiceData((prevData) => {
       const updatedItemList = [...prevData.itemList];
       updatedItemList.splice(index, 1);
+
+      // setTotalChange(true);
+      // calculateTotal();
+      const arr = updatedItemList;
+      var subTotal = 0;
+      for(var i=0; i<arr.length; i++){
+        subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+      }
+      var total = 0;
+      const temp = parseFloat((subTotal - (subTotal*prevData.discount)/100).toFixed(2));
+      // total = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+      total = temp.toFixed(2);
       return {
         itemList: updatedItemList,
+        totalAmount: total,
         
       };
     });
@@ -123,7 +164,6 @@ const AddNewInvoice = () => {
     try {
       setShowLoading(true);
 
-      // Perform your asynchronous operations here (e.g., adding invoice, updating inventory, downloading PDF)
       await addInvoice();
       await updateInventory();
       await downloadPdf();
@@ -344,24 +384,18 @@ const AddNewInvoice = () => {
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
-           {/* <td>
-            <SearchableDropdown
-              options={items} // Pass items as options
-              label="itemName"
-              id={`dropdown-${index}`}
-              selectedVal={currItem}
-              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')}
-            />
-          </td> */}
           <td placeholder='Select Item'>
             <SearchableDropdown
-              // options={items}
-              options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
+              options={optionList}
               label="itemName"
-              id={`dropdown-${index}`}
+              id={index}
               selectedVal={currItem}
-              handleChange={(selectedItem) => handleInputChange({ target:{ value: selectedItem } }, index, 'itemName')} 
+              handleChange={(selectedItem) => {
+                handleInputChange({ target:{ value: selectedItem } }, index, 'itemName');
+              }}
+              props={invoiceData}
             />
+            {/* {item.itemName} */}
             </td>
           <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
           <td>{item.rate}</td>

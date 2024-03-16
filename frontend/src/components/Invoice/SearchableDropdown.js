@@ -92,14 +92,18 @@ const SearchableDropdown = ({
   label,
   id,
   selectedVal,
-  handleChange
+  handleChange,
+  props
 }) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  useEffect(() => {
+    setSelectedItem(props.itemList[id]);
+  }, [props])
   const inputRef = useRef(null);
-
+  // console.log("data",props.itemList);
   useEffect(() => {
     document.addEventListener("click", toggle);
     return () => document.removeEventListener("click", toggle);
@@ -115,6 +119,7 @@ const SearchableDropdown = ({
   const toggle = (e) => {
     if (inputRef.current && inputRef.current.contains(e.target)) {
       setIsOpen(true);
+      console.log(options);
     } else {
       setIsOpen(false);
     }
@@ -129,6 +134,7 @@ const SearchableDropdown = ({
     if (selectedItem) return selectedItem[label];
     if (query) return query;
     if (selectedVal) return selectedVal;
+    // console.log("query",query);
 
     return "";
   };
@@ -161,7 +167,7 @@ const SearchableDropdown = ({
               className={`option ${
                 option[label] === selectedVal ? "selected" : ""
               }`}
-              key={`${id}-${index}`}
+              key={index}
             >
               {option[label]}
             </div>
