@@ -16,17 +16,18 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
       });
       const handleInputChange = (key, value) => {
         // Check if the value is numeric and not negative
-        // if (!isNaN(value) && parseFloat(value) >= 0) {
-          if ( (!isNaN(parseFloat(value)) && parseFloat(value) >= 0)) {
-            // If the value is empty or a valid number, update the state and previousValidValue
+        if (key === 'costPrice' || key === 'salePrice' || key === 'itemGST') {
+          // Check if the value is empty or a positive number
+          if ((!isNaN(parseFloat(value)) && parseFloat(value) >= 0)) {
+            // If the value is empty or a positive number, update the state
             setItemData({ ...itemData, [key]: value });
           } else {
-            // If the value is not valid, revert to the previous valid value
-            // Update the input field with the previous valid value
-       
-            // Show an alert box or any other indication of invalid input
             alert('Invalid input: Please enter a valid non-negative numeric value.');
           }
+        } else {
+          // For other fields, update the state directly
+          setItemData({ ...itemData, [key]: value });
+        }
   console.log(itemData);
       };
       const addProduct = () => {
