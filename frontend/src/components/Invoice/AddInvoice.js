@@ -233,6 +233,7 @@ const AddNewInvoice = () => {
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
+        
       })
       .then(()=>{window.location.reload();})
     }
