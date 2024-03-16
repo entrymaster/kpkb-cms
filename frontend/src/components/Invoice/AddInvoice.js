@@ -81,11 +81,21 @@ const AddNewInvoice = () => {
         updatedItemList[index].amount = isNaN(amount) ? 0 : parseFloat(amount.toFixed(2));
         updatedItemList[index].quantity = quantity;
       }
-  
+      // setInvoiceData((prevData)=>{
+      //   const disc = prevData.discount
+
+      //   return{
+      //     userID: authContext.user,
+      //     itemList: updatedItemList,
+      //     discount: disc,
+      //   }
+        
+      // });
       setInvoiceData({
         ...invoiceData,
         userID: authContext.user,
-        itemList: updatedItemList
+        itemList: updatedItemList,
+        discount: 0,
       });
     }
     setTotalChange(true);
@@ -107,16 +117,16 @@ const AddNewInvoice = () => {
     }));
     setTotalChange(true);
   };
-  // const calculateTotal = () => {
-  //   const arr = invoiceData.itemList;
-  //   var subTotal = 0;
-  //   for(var i=0; i<arr.length; i++){
-  //     subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
-  //   }
-  //   const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
-  //   invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
-  // }
-  // setInterval(calculateTotal, 100);
+  const calculateTotal = () => {
+    const arr = invoiceData.itemList;
+    var subTotal = 0;
+    for(var i=0; i<arr.length; i++){
+      subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+    }
+    const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
+    invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+  }
+  setInterval(calculateTotal, 100);
   useEffect(()=>{
     const arr = invoiceData.itemList;
     var subTotal = 0;
