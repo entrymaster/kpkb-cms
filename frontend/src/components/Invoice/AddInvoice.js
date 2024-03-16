@@ -23,15 +23,15 @@ const AddNewInvoice = () => {
   const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''}); 
 
   
-  // const handleItemSelection = (selectedItem) => {
-  //   setAvailableQuantity(selectedItem.quantity);
-  //   setSelectedItems([...selectedItems, selectedItem]);
-  // };
-
   const handleItemSelection = (selectedItem) => {
-    // Assuming selectedItem is an object containing the selected item details including available quantity
     setAvailableQuantity(selectedItem.quantity);
+    setSelectedItems([...selectedItems, selectedItem]);
   };
+
+  // const handleItemSelection = (selectedItem) => {
+  //   // Assuming selectedItem is an object containing the selected item details including available quantity
+  //   setAvailableQuantity(selectedItem.quantity);
+  // };
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -343,10 +343,19 @@ const AddNewInvoice = () => {
       <tbody>
       {invoiceData.itemList.map((item, index) => (
         <tr key={index}>
+           {/* <td>
+            <SearchableDropdown
+              options={items} // Pass items as options
+              label="itemName"
+              id={`dropdown-${index}`}
+              selectedVal={currItem}
+              handleChange={(selectedItem) => handleInputChange({ target: { value: selectedItem } }, index, 'itemName')}
+            />
+          </td> */}
           <td placeholder='Select Item'>
             <SearchableDropdown
-              options={items}
-              // options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
+              // options={items}
+              options={items.filter(item => !selectedItems.some(selected => selected._id === item._id))}
               label="itemName"
               id={`dropdown-${index}`}
               selectedVal={currItem}
