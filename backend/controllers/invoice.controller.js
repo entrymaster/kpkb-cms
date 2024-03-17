@@ -114,39 +114,93 @@ const searchInvoice = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// const getSalesData = async (req, res) => {
+//   const { userId, startDate, endDate } = req.query; // Extract userId, startDate, and endDate from query parameters
+//   try {
+//     // Convert startDate and endDate to ISO 8601 format
+//     const id = req.params.userId; 
+
+//     // Convert start and end dates to GMT
+//     const startUTC = new Date(startDate);
+//     const endUTC = new Date(endDate);
+
+//     // Adjust start date to GMT and subtract 1 day
+//     startUTC.setDate(startUTC.getDate() - 1);
+//     startUTC.setUTCHours(18, 30, 0, 0);
+
+//     // Set end date time to 18:30 GMT
+//     endUTC.setUTCHours(18, 30, 0, 0);
+
+//     // Convert dates to ISO 8601 format
+//     const isoStartDate = startUTC.toISOString();
+//     const isoEndDate = endUTC.toISOString();
+
+//     console.log(isoStartDate);
+//     console.log(isoEndDate);
+//     console.log(id);
+
+//     // Fetch sales data from database based on start date, end date, and userId
+//     const salesData = await Invoice.find({ 
+//       userID: id, // Filter by userId
+//       createdAt: { $gte: isoStartDate, $lte: isoEndDate } ,
+//     });
+    
+//     res.status(200).json(salesData);
+//   } catch (error) {
+//     console.error('Error fetching sales data:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// };
+
 const getSalesData = async (req, res) => {
   const { userId, startDate, endDate } = req.query; // Extract userId, startDate, and endDate from query parameters
   try {
     // Convert startDate and endDate to ISO 8601 format
-    //const userId = "user";
     const id = req.params.userId; 
-    const isoStartDate = new Date(startDate).toISOString();
-    const endOfDay = new Date(endDate);
-    endOfDay.setHours(23, 59, 59, 999); // Set time to end of day
-    const isoEndDate = endOfDay.toISOString();
+
+    // Convert start and end dates to GMT
+    const startUTC = new Date(startDate);
+    const endUTC = new Date(endDate);
+
+    // Adjust start date to GMT and subtract 1 day
+    startUTC.setDate(startUTC.getDate() - 1);
+    startUTC.setUTCHours(18, 30, 0, 0);
+
+    // Set end date time to 18:30 GMT
+    endUTC.setUTCHours(18, 30, 0, 0);
+
+    // Convert dates to ISO 8601 format
+    const isoStartDate = startUTC.toISOString();
+    const isoEndDate = endUTC.toISOString();
+
     console.log(isoStartDate);
     console.log(isoEndDate);
     console.log(id);
 
     // Fetch sales data from database based on start date, end date, and userId
-    const salesData = await Invoice.find({ 
+    let salesData = await Invoice.find({ 
       userID: id, // Filter by userId
       createdAt: { $gte: isoStartDate, $lte: isoEndDate } ,
     });
-    // let totalPaidSales = 0;
-    // let totalCreditSales = 0;
-    // salesData.forEach((invoice) => {
-    //   if(invoice.paymentMode==="Paid") totalPaidSales += invoice.totalSales;
-    //   else totalCreditSales+= invoice.totalSales;
-    // });
-    // Send the salesData to the frontend
-    //res.status(200).json(salesData, totalPaidSales, totalCreditSales);
-    res.status(200).json(salesData,);
+
+    // Adjust createdAt parameter of each invoice by adding 5 hours and 30 minutes
+    salesData = salesData.map(invoice => {
+      const adjustedCreatedAt = new Date(invoice.createdAt);
+      adjustedCreatedAt.setHours(adjustedCreatedAt.getHours() + 5); // Add 5 hours
+      adjustedCreatedAt.setMinutes(adjustedCreatedAt.getMinutes() + 30); // Add 30 minutes
+      invoice.createdAt = adjustedCreatedAt.toISOString();
+      return invoice;
+    });
+    
+    res.status(200).json(salesData);
   } catch (error) {
     console.error('Error fetching sales data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
 const getDashboardData = async (req, res) => {
   try {
     // Extract user ID from request parameters or wherever it's stored
