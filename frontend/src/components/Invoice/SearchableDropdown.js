@@ -151,6 +151,7 @@ const SearchableDropdown = ({
       <div className="control" ref={inputRef}>
         <input
           type="text"
+          autocomplete="one-time-code"
           value={getDisplayValue()}
           onChange={handleInputChange}
           placeholder="Search..."
