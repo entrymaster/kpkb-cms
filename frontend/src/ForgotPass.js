@@ -160,28 +160,13 @@ if (!(location.state && location.state.email)) {
                 </span>
                 Change Password
               </button>
-            </div>
-              <br></br>
-              
-              <div className="text-sm" class="center">
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                </span>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                Or{" "}
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Don't Have an Account, Please{" "}
-                  <Link to="/register"> Register now </Link>
-                </span>
-              </p>
-        </div>
-    
+            </div>    
           </form>
+          <footer id="footerverify">
+            <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
+          </footer>
         </div>
-        
+       
       </div>
       </div>
     </>
