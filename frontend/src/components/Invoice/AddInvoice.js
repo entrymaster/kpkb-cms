@@ -81,11 +81,21 @@ const AddNewInvoice = () => {
         updatedItemList[index].amount = isNaN(amount) ? 0 : parseFloat(amount.toFixed(2));
         updatedItemList[index].quantity = quantity;
       }
-  
+      // setInvoiceData((prevData)=>{
+      //   const disc = prevData.discount
+
+      //   return{
+      //     userID: authContext.user,
+      //     itemList: updatedItemList,
+      //     discount: disc,
+      //   }
+        
+      // });
       setInvoiceData({
         ...invoiceData,
         userID: authContext.user,
-        itemList: updatedItemList
+        itemList: updatedItemList,
+        discount: 0,
       });
     }
     setTotalChange(true);
@@ -107,16 +117,16 @@ const AddNewInvoice = () => {
     }));
     setTotalChange(true);
   };
-  // const calculateTotal = () => {
-  //   const arr = invoiceData.itemList;
-  //   var subTotal = 0;
-  //   for(var i=0; i<arr.length; i++){
-  //     subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
-  //   }
-  //   const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
-  //   invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
-  // }
-  // setInterval(calculateTotal, 100);
+  const calculateTotal = () => {
+    const arr = invoiceData.itemList;
+    var subTotal = 0;
+    for(var i=0; i<arr.length; i++){
+      subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+    }
+    const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
+    invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+  }
+  setInterval(calculateTotal, 100);
   useEffect(()=>{
     const arr = invoiceData.itemList;
     var subTotal = 0;
@@ -358,12 +368,12 @@ const AddNewInvoice = () => {
           <table id="customerTable">
             <tbody>
               <tr>
-                <td className="input-box"><input type="text" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
                 <td className="input-box">InvoiceID : {invoiceData.invoiceID}</td>
               </tr>
               <tr>
-                <td className="input-box"><input type="text" value={invoiceData.customerEmail} onChange={(e) => handleInputChangeCust(e, 'customerEmail')} placeholder='Customer Email' /></td>
-                <td className="input-box"><input type="text" value={invoiceData.phoneNo} onChange={(e) => handleInputChangeCust(e, 'phoneNo')} placeholder='Customer Phone No' /></td>
+                <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.customerEmail} onChange={(e) => handleInputChangeCust(e, 'customerEmail')} placeholder='Customer Email' /></td>
+                <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.phoneNo} onChange={(e) => handleInputChangeCust(e, 'phoneNo')} placeholder='Customer Phone No' /></td>
               </tr>
             </tbody>
           </table>
@@ -416,7 +426,7 @@ const AddNewInvoice = () => {
       <div className="bottom-controls">
         <button id="add-new-item" type="button" onClick={handleAddField}><strong> Add New Row </strong> </button>
         <div className='discount-input'>
-          Discount (%): <input type="number" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
+          Discount (%): <input type="number" autocomplete="one-time-code" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
         </div>
       </div>
       <div className="customer-notes">

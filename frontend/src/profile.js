@@ -99,6 +99,7 @@ function Profile() {
           <h4>FIRM NAME:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="shopname"
             value={formData.shopname || ""}
             onChange={handleInputChange}
@@ -107,6 +108,7 @@ function Profile() {
           <h4>NAME OF OWNER:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="firstname"
             value={formData.firstname || ""}
             onChange={handleInputChange}
@@ -114,6 +116,7 @@ function Profile() {
           />
           <input
             type="text"
+            autocomplete="one-time-code"
             name="lastname"
             value={formData.lastname || ""}
             onChange={handleInputChange}
@@ -122,6 +125,7 @@ function Profile() {
           <h4>FIRM ADDRESS:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="shopaddress"
             value={formData.shopaddress || ""}
             onChange={handleInputChange}
@@ -130,6 +134,7 @@ function Profile() {
           <h4>GST NUMBER:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="gstno"
             value={formData.gstno || ""}
             onChange={handleInputChange}
@@ -138,6 +143,7 @@ function Profile() {
           <h4>EMAIL:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="email"
             value={userData.email || ""}
             readOnly
@@ -145,6 +151,7 @@ function Profile() {
           <h4>PHONE NO:</h4>
           <input
             type="text"
+            autocomplete="one-time-code"
             name="phone"
             value={formData.phonenumber || ""}
             onChange={handleInputChange}

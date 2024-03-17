@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 
 const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) => {
@@ -10,19 +10,59 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     amount: 0,
   });
 
+  const [existingEmail,setExistingEmail] = useState([]);
+
+  const [email, setEmail] = useState("");
+
   const handleInputChange = (key, value) => {
     setData({ ...Data, userID: id, [key]: value });
+    if(key==="email")
+      setEmail(value);
     console.log(Data);
   };
 
+  const findExistingEmail = () => {
+    if(entryType === "Customer")
+    {
+    fetch(`http://localhost:5050/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setExistingEmail(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+    }
+    else
+    {
+      fetch(`http://localhost:5050/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setExistingEmail(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+    }
+  }
+
   const handleSave = () => {
-    if (Data.amount > 0) {
+    if(email !== "")
+    {
+    if (existingEmail.length === 0) {
+      if(Data.amount >0)
+      {
       if (entryType === "Customer") addNewCredit();
       else addNewDebit();
+      }
+      else
+        alert("Please enter amount greater than zero");
     } else {
       onCancel();
-      alert("Amount must greater than zero!");
+      setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
+      setEmail("");
+      if (entryType === "Customer") alert("This email is already associated with a customer");
+      else alert("This email is already associated with a supplier");  
     }
+  }
   };
 
   const addNewCredit = () => {
@@ -60,8 +100,9 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
             handlePageUpdate();
             onCancel();
             setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
+            setEmail("");
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {console.log(err)});
       })
       .catch((err) => console.log(err));
   };
@@ -79,9 +120,14 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
         handlePageUpdate();
         onCancel();
         setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
+        setEmail("");
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    handleSave();
+  },[existingEmail]);
 
   return (
     <Modal
@@ -113,7 +159,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleSave();
+          findExistingEmail();
           onCancel();
         }}
       >
@@ -121,6 +167,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="customerName">Name:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.partyName}
             name="partyName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -137,6 +184,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="phoneNo">Phone Number:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.phoneNumber}
             name="phoneNumber"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -153,6 +201,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="Email">Email:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.email}
             name="email"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -169,6 +218,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="amount">Amount:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.amount}
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}

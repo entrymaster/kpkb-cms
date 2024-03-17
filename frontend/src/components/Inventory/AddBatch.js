@@ -93,15 +93,15 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
             
             <tbody>
             <tr>
-              <td><input type="text" id="item-name" placeholder="batchID" value={itemData.batchID} name="batchID" onChange={(e) =>
+              <td><input type="text" id="item-name" autocomplete="one-time-code" placeholder="batchID" value={itemData.batchID} name="batchID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
-              <td><input type="number" id="item-id" placeholder="batchQty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
+              <td><input type="number" id="item-id" autocomplete="one-time-code" placeholder="batchQty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
             </tr>
             <tr>
-              <td><input type="date" id="expiryDate" placeholder="expiryDate" value={itemData.expiryDate} name="expiryDate" onChange={(e) =>
+              <td><input type="date" id="expiryDate" autocomplete="one-time-code" placeholder="expiryDate" value={itemData.expiryDate} name="expiryDate" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               }/></td>
             </tr>

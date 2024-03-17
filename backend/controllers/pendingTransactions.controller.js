@@ -2,6 +2,34 @@ const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
 const Invoice = require("../models/invoice.model");
 
+const existingCustEmail = async(req,res) => {
+  try{
+    const user = req.params.userID;
+    const {email} = req.query;
+    const redundantEmail = await Customer.find({userID: user, email: email});
+    console.log(redundantEmail); 
+    res.json(redundantEmail);
+    }
+    catch (error) {
+      console.error("Error finding customer with given email",error);
+      res.status(400).json({ error: "Failed to find customer with given email"});
+    }
+}
+
+const existingSuppEmail = async(req,res) => {
+  try{
+    const user = req.params.userID;
+    const {email} = req.query;
+    const redundantEmail = await Supplier.find({userID: user, email: email});
+    console.log(redundantEmail); 
+    res.json(redundantEmail);
+    }
+    catch (error) {
+      console.error("Error finding supplier with given email",error);
+      res.status(400).json({ error: "Failed to find supplier with given email"});
+    }
+}
+
 //Add New Credit
 const addNewCredit = async (req, res) => {
    try{
@@ -16,6 +44,32 @@ const addNewCredit = async (req, res) => {
 
     const savedCredit = await newCredit.save();
     res.status(201).json(savedCredit);
+
+    const id = savedCredit.userID;
+    const count = await Invoice.countDocuments({userID : id});
+     const addInvoice = new Invoice({
+       userID: savedCredit.userID,
+       //invoiceID: req.body.invoiceID,
+       invoiceID: count,
+       customerName: savedCredit.name,
+       phoneNo: savedCredit.phoneNo,
+       customerEmail: savedCredit.email,
+       totalAmount: savedCredit.creditAmount,
+       //notes: req.body.notes,
+       paymentMode: "Amount added to credit",
+       itemList: [],
+       //createdAt: req.body.createdAt,
+     });
+     addInvoice.save()
+     .then(async(result)=> {
+       const newInvoiceId = result._id;
+       savedCredit.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
+       const savedCustomer = await savedCredit.save();
+       console.log(savedCustomer);
+     })
+     .catch((err) => {
+       console.log(err);
+     });
   } catch (error) {
     console.error("Error adding new credit:", error);
     res.status(400).json({ error: "Failed to add credit" });
@@ -44,10 +98,9 @@ const addNewDebit = async (req, res) => {
 // Update Existing Customer Credit
 const updateCustomer  = async (req, res) => {
   try {
-    const { name, phoneNo, email } = req.body;
+    const { phoneNo, email } = req.body;
 
-    const updatedCustomer = await Customer.findByIdAndUpdate({_id:req.body._id},{name: name, phoneNo: phoneNo, email: email},{new: true});
-    console.log(".....");
+    const updatedCustomer = await Customer.findByIdAndUpdate({_id:req.body._id},{phoneNo: phoneNo, email: email},{new: true});
     console.log(updatedCustomer);
     res.json(updatedCustomer);
   } catch (error) {
@@ -59,10 +112,9 @@ const updateCustomer  = async (req, res) => {
 // Update Existing Supplier Debit
 const updateSupplier  = async (req, res) => {
   try {
-    const { name, phoneNo, email } = req.body;
+    const {phoneNo, email } = req.body;
 
-    const updatedSupplier = await Supplier.findByIdAndUpdate({_id:req.body._id},{name: name, phoneNo: phoneNo, email: email},{new: true});
-
+    const updatedSupplier = await Supplier.findByIdAndUpdate({_id:req.body._id},{phoneNo: phoneNo, email: email},{new: true});
     res.json(updatedSupplier);
   } catch (error) {
     console.error("Error updating Supplier:", error);
@@ -176,6 +228,8 @@ const updateSupplier  = async (req, res) => {
  };
 
 module.exports={
+  existingCustEmail,
+  existingSuppEmail,
   addNewCredit,
   addNewDebit,
   updateCustomer ,
