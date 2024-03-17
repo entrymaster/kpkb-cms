@@ -66,7 +66,17 @@ function Verification() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
+    <div className="parent-div">
+    <div className="left-div">
+  <div className="image-container">
+    <img
+      className="fit-pictureverify2"
+      src="Billing_2.jpeg"
+      alt="Billing360 Logo"
+    />
+  </div>
+  </div>
+      <div className="right-div" >
         <div id="sign-up">
           <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
             <div>
@@ -133,6 +143,7 @@ function Verification() {
             <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
           </footer>
         </div>
+      </div>
       </div>
     </>
   );

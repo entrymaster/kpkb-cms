@@ -95,6 +95,16 @@ const emailexist = () => {
   
   return (
     <>
+    <div className="parent-div">
+    <div className="left-div">
+  <div className="image-container">
+    <img
+      className="fit-pictureverify2"
+      src="Billing_2.jpeg"
+      alt="Billing360 Logo"
+    />
+  </div>
+  </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
       <div id="sign-up">
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
@@ -103,9 +113,16 @@ const emailexist = () => {
               class = "fit-picture"
             src="logo1.png" alt = "Billing360 Logo"
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Enter your Email associated with the Account.
+            <br></br>
+            <br>
+            </br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <h2>
+              Forgot Password
             </h2>
+            <h2></h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -123,22 +140,6 @@ const emailexist = () => {
                 <br></br>
                 <br></br>
               </div>
-            <br></br>
-            <br></br>
-            <div className="flex items-center justify-between" class="center">
-              <div className="flex items-center" id="rememberme">
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                    I Agree to the Terms & Conditons
-                </label>
-                <input type="checkbox" id="rememberMe" name="rememberMe"></input>
-              </div>
-
-              
-            </div>  
-           <br></br>
             <div class="center">
               <button 
                 type="submit" 
@@ -149,20 +150,18 @@ const emailexist = () => {
                 Send OTP
               </button>
               <br></br>
-              <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
-                Or{" "}
-                <span
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Already Have an Account? <Link to="/">Sign in</Link>
-                </span>
-              </p>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
             </div>
           </form>
         </div>
         <footer id="footer">
           <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
         </footer>
+      </div>
       </div>
       </div>
     </>

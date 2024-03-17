@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import "./Register.css";
@@ -14,8 +15,6 @@ function Register() {
     shopaddress: "",
     phonenumber: "",
   });
-
-  const [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
 
   const navigate = useNavigate();
   
@@ -62,12 +61,6 @@ function Register() {
     e.preventDefault();
     setForm({ ...form, email: email || '' });
 
-    // Check if terms are agreed
-    if (!agreeTerms) {
-      alert("Please agree to the Terms & Conditions to proceed.");
-      return;
-    }
-
     registerUser();
   };
   if (!(location.state && location.state.email)) {
@@ -75,7 +68,7 @@ function Register() {
   }
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
+      <div className="reg">
         <div id="sign-up">
           <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
             <div>
@@ -85,7 +78,7 @@ function Register() {
                 alt="Billing360 Logo"
               />
               <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                Register your account
+                Fill Details
               </h2>
             </div>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -112,7 +105,7 @@ function Register() {
               </div>
               <br></br>
               <div>
-                <input
+              <input
                   id="email-address"
                   name="email"
                   type="email"
@@ -122,6 +115,16 @@ function Register() {
                   placeholder="Email address"
                   value={email || ''} // Set value to email received from location state
                   disabled // Disable input to prevent user modification
+                />
+                <input
+                  name="phonenumber"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Phone Number"
+                  value={form.phonenumber}
+                  onChange={handleInputChange}
                 />
                 <br></br>
                 <br></br>
@@ -143,33 +146,11 @@ function Register() {
                   value={form.shopaddress}
                   onChange={handleInputChange}
                 />
+                
                 <br></br>
                 <br></br>
-                <input
-                  name="gstno"
-                  type="text"
-                  autoComplete="off"
-                  required
-                  className="input-box"
-                  placeholder="Enter GST No."
-                  value={form.gstno}
-                  onChange={handleInputChange}
-                />
-                <br></br>
-                <br></br>
-                <input
-                  name="phonenumber"
-                  type="text"
-                  autoComplete="off"
-                  required
-                  className="input-box"
-                  placeholder="Phone Number"
-                  value={form.phonenumber}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <br></br>
-              <div>
+                
+
                 <input
                   id="password"
                   name="password"
@@ -192,6 +173,18 @@ function Register() {
                   value={form.confirmpassword}
                   onChange={handleInputChange}
                 />
+                <br></br>
+                <br></br>
+                <input
+                  name="gstno"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="input-box"
+                  placeholder="Enter GST No."
+                  value={form.gstno}
+                  onChange={handleInputChange}
+                />
               </div>
               <br></br>
               <div className="flex items-center justify-between" class="center">
@@ -200,15 +193,9 @@ function Register() {
                     htmlFor="remember-me"
                     className="ml-2 block text-sm text-gray-900"
                   >
-                    <input
-                      type="checkbox"
-                      id="rememberMe"
-                      name="rememberMe"
-                      onChange={() => setAgreeTerms(!agreeTerms)}
-                      required
-                    />
                     I Agree to the Terms & Conditons
                   </label>
+                  <input type="checkbox" id="rememberMe" name="rememberMe"></input>
                 </div>
               </div>
               <br></br>

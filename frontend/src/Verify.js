@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Register.css";
+import "./verify.css";
 
 function Verification() {
   //va confirmpassword = ""
@@ -87,63 +87,78 @@ function Verification() {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
+    <div className="parent-div">
+    <div className="left-div">
+  <div className="image-container">
+    <img
+      className="fit-pictureverify2"
+      src="Billing_2.jpeg"
+      alt="Billing360 Logo"
+    />
+  </div>
+  </div>
+  <div className="right-div">
+    <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center">
       <div id="sign-up">
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
           <div>
-            <img 
-              class = "fit-picture"
-            src="logo1.png" alt = "Billing360 Logo"
+            <img
+              className="fit-picture"
+              src="logo1.png"
+              alt="Billing360 Logo"
             />
+            <br></br>
+            <br></br>
+            <br></br>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Verify Your Email-ID
+              Register
             </h2>
+            
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="input-box"
-                  placeholder="Email address"
-                  value={form.email}
-                  onChange={handleInputChange}
-                />
-                <br></br>
-                <br></br>
-              </div>
-           <br></br>
-            <div class="center">
-              <button 
-                type="submit" 
+            <div>
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="input-box"
+                placeholder="Email address"
+                value={form.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <br />
+            <div className="center">
+              <button
+                type="submit"
                 id="btn1"
                 onClick={emailexist}
-                
               >
                 Send OTP
               </button>
-              <br></br>
+              <br />
               <p className="mt-2 text-center text-sm text-gray-600" id="rememberme">
                 Or{" "}
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Already Have an Account? <br></br><Link to="/">Sign in</Link>
+                  already Have an Account? <br /><Link to="/">Sign in</Link>
                 </span>
               </p>
             </div>
           </form>
         </div>
-        <footer id="footer">
+        <footer id="footerverify">
           <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
         </footer>
       </div>
-      </div>
+    </div>
+  </div>
+</div>
     </>
-  );
+  )
 }
 
 export default Verification;

@@ -13,22 +13,22 @@
 html,body{
     height: 100%;
 }
-#sign-up{
+#sign-up {
+    width: 100%;
+    max-width: 800px; /* Adjust width as needed */
+    margin: 0 auto;
     height: 100%;
-    width: 700px;
-    box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
-    background-color: #F0F8FF;
-    padding: 20px;
-    margin: 0% auto 0;
-    text-align: center
+    text-align: center;
+    background-color: #cfe8ff;
+    /* Add background color */
+    padding: 20px; /* Add padding */
 }
 
 #heading1{
     font-size: 60px;
 }
 .input-box {
-    background-color: #cfe8ff;
-    border: 1px solid #CCCCCC; 
+    background-color: #F0F8FF; 
     padding: 8px;
     font-size: 16px; 
     width: 300px;
@@ -36,13 +36,15 @@ html,body{
     
 }
 #rememberme{
-    margin-left:  50px;
+    margin-left: 0px;
 }
 .Register body{
     background-color: #546887;
     text-align: center;
 }
-
+.reg{
+    background-color: #F0F8FF; 
+}
 #btn1 {
     padding: 1rem; 
     font-size: 1.25rem;

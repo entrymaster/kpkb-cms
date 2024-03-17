@@ -8,6 +8,7 @@
   .fit-pictureverify2 {
     max-width: 100%;
   max-height: 100%;
+
   }
   
   .grid {
@@ -53,7 +54,7 @@
     color: #333; /* Adjust color as needed */
   }
   
-  .input-box-verify {
+  .input-box_verify {
     width: 50%;
     padding: 0.75rem 1rem;
     border: 1px solid #cfe8ff; /* Adjust border color as needed */
@@ -88,7 +89,7 @@
   #footerverify {
     margin-top: 7rem;
     text-align: center;
-    color: #888; /* Adjust footer text color as needed */
+    color: #0c0b0b; /* Adjust footer text color as needed */
     margin-bottom: 0rem;
   }
   .parent-div {
@@ -101,10 +102,7 @@
   .right-div {
     flex: 1;
   }
-  .image-container {
-    width: 100%;
-    height: 100%;
-  }
+  
   /* Adjust these styles according to your design */
   .left-div {
     display: flex;
