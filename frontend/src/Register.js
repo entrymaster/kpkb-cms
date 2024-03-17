@@ -16,7 +16,7 @@ function Register() {
     phonenumber: "",
   });
 
-  onst [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
+  const [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
   const navigate = useNavigate();
   
   const location = useLocation();
@@ -69,9 +69,9 @@ function Register() {
 
     registerUser();
   };
-  if (!(location.state && location.state.email)) {
-    return <Navigate to="/verify" replace/>;
-  }
+  //if (!(location.state && location.state.email)) {
+    //return <Navigate to="/verify" replace/>;
+  //}
   return (
     <>
       <div className="reg">
@@ -201,7 +201,9 @@ function Register() {
                   >
                     I Agree to the Terms & Conditons
                   </label>
-                  <input type="checkbox" id="rememberMe" name="rememberMe"></input>
+                  <input type="checkbox" id="rememberMe" name="rememberMe"
+                  onChange={() => setAgreeTerms(!agreeTerms)}
+                  required></input>
                 </div>
               </div>
               <br></br>
