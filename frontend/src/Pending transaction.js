@@ -94,6 +94,7 @@ const PendingTransactions = () => {
   const [entry, setEntry] = useState([]);
   const [isUpdateAmtDialogOpen, setIsUpdateAmtDialogOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [amount,setAmount] = useState(0);
 
   const showUpdateAmtDialog = () => {
     setIsUpdateAmtDialogOpen(true);
@@ -212,14 +213,14 @@ const PendingTransactions = () => {
               <th>Phone No.</th>
               <th>Email</th>
               <th>Amount</th>
-              <th id="add-credit-button" onClick={showAddNewDialog}>
-                &emsp;&emsp; &emsp;Add New Customer
+              <th id="add-new" style={{backgroundColor:"#c4dcf4"}} onClick={() => {setEntryType("Customer");showAddNewDialog();}}>
+                Add New Customer
               </th>
             </tr>
           </thead>
           <tbody>
             {/* {Entries &&
-              Entries.map((element, index) => { */}.
+              Entries.map((element, index) => { */}
               {filteredEntries.map((element, index) => (
                 // return (
                   <tr
@@ -233,10 +234,11 @@ const PendingTransactions = () => {
                     <td>
                       {" "}
                       <button
-                        id="add-credit-button"
+                        className="add-credit-button"
                         onClick={() => {
                           setEntryType("Customer");
                           setEntryID(element._id);
+                          setAmount(element.creditAmount);
                           setOperationType("Subtraction");
                           showUpdateAmtDialog();
                         }}
@@ -245,10 +247,11 @@ const PendingTransactions = () => {
                       </button>
                       {"  "}{" "}
                       <button
-                        id="add-credit-button"
+                        className="add-credit-button"
                         onClick={() => {
                           setEntryType("Customer");
                           setEntryID(element._id);
+                          setAmount(element.creditAmount);
                           setOperationType("Addition");
                           showUpdateAmtDialog();
                         }}
@@ -284,7 +287,8 @@ const PendingTransactions = () => {
               <th>Email</th>
               <th>Amount</th>
               <th
-                id="add-credit-button"
+                id="add-new"
+                style={{backgroundColor:"#c4dcf4"}}
                 onClick={() => {
                   setEntryType("Supplier");
                   showAddNewDialog();
@@ -295,8 +299,8 @@ const PendingTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            {Entries &&
-              Entries.map((element, index) => {
+            {filteredEntries &&
+              filteredEntries.map((element, index) => {
                 return (
                   <tr key={element._id}>
                     <td>{element.name}</td>
@@ -306,10 +310,11 @@ const PendingTransactions = () => {
                     <td>
                       {" "}
                       <button
-                        id="add-credit-button"
+                        className="add-credit-button"
                         onClick={() => {
                           setEntryType("Supplier");
                           setEntryID(element._id);
+                          setAmount(element.debitAmount);
                           setOperationType("Subtraction");
                           showUpdateAmtDialog();
                         }}
@@ -318,10 +323,11 @@ const PendingTransactions = () => {
                       </button>
                       {"  "}{" "}
                       <button
-                        id="add-credit-button"
+                        className="add-credit-button"
                         onClick={() => {
                           setEntryType("Supplier");
                           setEntryID(element._id);
+                          setAmount(element.debitAmount);
                           setOperationType("Addition");
                           showUpdateAmtDialog();
                         }}
@@ -366,6 +372,7 @@ const PendingTransactions = () => {
         entryType={entryType}
         operationType={operationType}
         entryID={entryID}
+        amount={amount}
         handlePageUpdate={handlePageUpdate}
       />
     </div>

@@ -7,6 +7,7 @@ const UpdateAmt = ({
   entryType,
   operationType,
   entryID,
+  amount,
   handlePageUpdate,
 }) => {
   const [DisplayData, setDisplayData] = useState({
@@ -36,13 +37,22 @@ const UpdateAmt = ({
   }, [DisplayData]);
 
   const updateAmount = () => {
-    onCancel();
+    if(DisplayData.amount > 0)
+    {
+    if(amount + Data.amount > 0)
+    {
     if (DisplayData.amount > 0) {
+      onCancel();
       setDisplayData({ amount: 0 });
-      if (entryType === "Customer") updateCustAmount();
-      //entryType === "Supplier"
+      if (entryType === "Customer") updateCustAmount(); 
       else updateSuppAmount();
+      }
     }
+    else
+      alert("Amount entered exceeds the pending amount");
+    }
+    else
+      alert("Please enter amount greater than zero");
   };
 
   const updateCustAmount = () => {
@@ -141,7 +151,7 @@ const UpdateAmt = ({
         }}
       >
         <div className="form-group" style={{ marginBottom: "15px" }}>
-          <label htmlFor="amount">Enter Amount (in Rupees):</label>
+          <label htmlFor="amount">Enter Amount:</label>
           <input
             type="number"
             value={DisplayData.amount}
