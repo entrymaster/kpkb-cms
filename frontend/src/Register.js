@@ -69,9 +69,9 @@ function Register() {
 
     registerUser();
   };
-  //if (!(location.state && location.state.email)) {
-    //return <Navigate to="/verify" replace/>;
-  //}
+  if (!(location.state && location.state.email)) {
+    return <Navigate to="/verify" replace/>;
+  }
   return (
     <>
       <div className="reg">
