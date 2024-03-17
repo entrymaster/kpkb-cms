@@ -154,6 +154,7 @@ const UpdateAmt = ({
           <label htmlFor="amount">Enter Amount:</label>
           <input
             type="number"
+            autocomplete="one-time-code"
             value={DisplayData.amount}
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}

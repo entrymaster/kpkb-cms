@@ -102,6 +102,7 @@ const UpdateEntry = ({
           <label htmlFor="phoneNo">Phone Number:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.phoneNo}
             name="phoneNo"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -118,6 +119,7 @@ const UpdateEntry = ({
           <label htmlFor="Email">Email:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.email}
             name="email"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}

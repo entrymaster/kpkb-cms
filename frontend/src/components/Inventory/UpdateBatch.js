@@ -86,12 +86,12 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
             
             <tbody>
             <tr>
-              <td><input type="text" id="batch-id" value={`Batch Id : ${itemData.batchID}`} readOnly
+              <td><input type="text" id="batch-id" autocomplete="one-time-code" value={`Batch Id : ${itemData.batchID}`} readOnly
                                /></td>
-              <td><input type="number" id="item-id" placeholder="Batch Qty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
+              <td><input type="number" id="item-id" autocomplete="one-time-code" placeholder="Batch Qty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
-              <td><input type="text" id="expiry date"  value= {`Batch Expiry Date :  ${itemData.expiryDate}`} 
+              <td><input type="text" id="expiry date" autocomplete="one-time-code"  value= {`Batch Expiry Date :  ${itemData.expiryDate}`} 
                                readOnly  className="read-only-input"/></td>
             </tr>
             

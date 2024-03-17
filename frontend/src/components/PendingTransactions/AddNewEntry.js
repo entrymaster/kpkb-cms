@@ -167,6 +167,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="customerName">Name:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.partyName}
             name="partyName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -183,6 +184,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="phoneNo">Phone Number:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.phoneNumber}
             name="phoneNumber"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -199,6 +201,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="Email">Email:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.email}
             name="email"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -215,6 +218,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           <label htmlFor="amount">Amount:</label>
           <input
             type="text"
+            autocomplete="one-time-code"
             value={Data.amount}
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
