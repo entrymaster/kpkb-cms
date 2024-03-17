@@ -249,7 +249,7 @@ if (!auth.user) {
           </div> */}
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
              <div style={{ width: "40%", display: "inline-block",marginLeft:"250px"}}>
-                <h2>Total Sales/week</h2>
+                <h2>Total Sales this week</h2>
               <LineChart1 Data={chartData} yAxisTitle="Total Sales" />
 
             </div>
@@ -257,7 +257,7 @@ if (!auth.user) {
           )}
           {flag === 1 && ( // Conditionally render LineChart1 when flag is 1
             <div style={{ width: "40%", display: "inline-block",}}>
-                 <h2>Total Profit/week</h2>
+                 <h2>Total Profit this week</h2>
               <LineChart1 Data={chartData1} yAxisTitle="Total Profit" />
 
             </div>
