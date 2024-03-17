@@ -9,14 +9,12 @@ const UpdateEntry = ({
   handlePageUpdate,
 }) => {
   const [Data, setData] = useState({
-    name: "",
     phoneNo: "",
     email: "",
   });
 
   useEffect(() => {
     setData({
-      name: entry.name,
       phoneNo: entry.phoneNo,
       email: entry.email,
     });
@@ -34,7 +32,7 @@ const UpdateEntry = ({
 
   const updateCustomer = () => {
     onCancel();
-    const { name, phoneNo, email } = Data;
+    const { phoneNo, email } = Data;
     fetch("http://localhost:5050/api/pendingTransactions/updateCustomer", {
       method: "PUT",
       headers: {
@@ -42,7 +40,6 @@ const UpdateEntry = ({
       },
       body: JSON.stringify({
         _id: entry._id,
-        name,
         phoneNo,
         email,
       }),
@@ -56,7 +53,7 @@ const UpdateEntry = ({
 
   const updateSupplier = () => {
     onCancel();
-    const { name, phoneNo, email } = Data;
+    const { phoneNo, email } = Data;
     fetch("http://localhost:5050/api/pendingTransactions/updateSupplier", {
       method: "PUT",
       headers: {
@@ -64,7 +61,6 @@ const UpdateEntry = ({
       },
       body: JSON.stringify({
         _id: entry._id,
-        name,
         phoneNo,
         email,
       }),
@@ -102,23 +98,6 @@ const UpdateEntry = ({
     >
       <h2>Update Entry</h2> {/* Heading */}
       <form onSubmit={(e) => e.preventDefault()}>
-        <div className="form-group" style={{ marginBottom: "15px" }}>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            autocomplete="one-time-code"
-            value={Data.name}
-            name="name"
-            onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-            className="form-control"
-            style={{
-              width: "90%",
-              padding: "5px 10px",
-              border: "1px solid #ccc",
-              borderRadius: "3px",
-            }}
-          />
-        </div>
         <div className="form-group" style={{ marginBottom: "15px" }}>
           <label htmlFor="phoneNo">Phone Number:</label>
           <input

@@ -1,5 +1,5 @@
 .PendingTrans #addCreditButton {
-  background-color: #e5f2ff;
+  background-color: #c4dcf4;
 }
 .PendingTrans .top {
   justify-content: center; /* Center horizontally */
@@ -144,8 +144,19 @@
   margin-right: 10px;
 }
 
-.PendingTrans #add-credit-button {
+.PendingTrans .add-credit-button {
   background-color: #e5f2ff;
+  border-radius: 10px; /* Adjust the value for the desired rounded corner radius */
+  padding: 10px 20px; /* Adjust padding as needed */
+  cursor: pointer; /* Add cursor style for better indication of clickability */
+  transition: background-color 0.3s; /* Smooth transition for background color */
+
+  /* Optional: Add box-shadow for a subtle effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.PendingTrans #add-new {
+  background-color: #88b9e9;
   border-radius: 10px; /* Adjust the value for the desired rounded corner radius */
   padding: 10px 20px; /* Adjust padding as needed */
   cursor: pointer; /* Add cursor style for better indication of clickability */

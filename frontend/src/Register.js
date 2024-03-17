@@ -16,6 +16,7 @@ function Register() {
     phonenumber: "",
   });
 
+  onst [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
   const navigate = useNavigate();
   
   const location = useLocation();
@@ -60,6 +61,11 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setForm({ ...form, email: email || '' });
+     // Check if terms are agreed
+     if (!agreeTerms) {
+      alert("Please agree to the Terms & Conditions to proceed.");
+      return;
+    }
 
     registerUser();
   };

@@ -12,4 +12,6 @@ app.put("/updateCustAmt",pendingTrans.updateCustomerAmount);
 app.put("/updateSuppAmt",pendingTrans.updateSupplierAmount);
 app.get("/SearchCreditCust/:userID",pendingTrans.SearchCreditCustomers);
 app.get("/SearchDebitSupp/:userID",pendingTrans.SearchDebitSuppliers);
+app.get("/getCustExistingEmail/:userID",pendingTrans.existingCustEmail);
+app.get("/getSuppExistingEmail/:userID",pendingTrans.existingSuppEmail);
 module.exports = app;

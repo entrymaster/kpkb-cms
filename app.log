@@ -307,8 +307,20 @@
 2024-03-15T10:24:16.467Z [INFO] Generated OTP 458602 for nipun22@iitk.ac.in
 2024-03-15T10:24:19.058Z [INFO] Sent OTP to nipun22@iitk.ac.in
 2024-03-15T10:24:32.510Z [INFO] Verified OTP 458602 for nipun22@iitk.ac.in
+<<<<<<< HEAD
 2024-03-15T11:29:26.426Z [INFO] Generated OTP 399756 for meenakshi_gndu@yahoo.com
 2024-03-15T11:29:30.381Z [INFO] Sent OTP to meenakshi_gndu@yahoo.com
 2024-03-17T14:50:27.317Z [INFO] Generated OTP 513836 for nipun22@iitk.ac.in
 2024-03-17T14:50:30.327Z [INFO] Sent OTP to nipun22@iitk.ac.in
 2024-03-17T14:50:43.171Z [INFO] Verified OTP 513836 for nipun22@iitk.ac.in
+=======
+<<<<<<< HEAD
+2024-03-17T05:29:30.595Z [INFO] Generated OTP 860622 for saagarkopparam@gmail.com
+2024-03-17T05:29:34.211Z [INFO] Sent OTP to saagarkopparam@gmail.com
+2024-03-17T05:30:03.252Z [INFO] Verified OTP 860622 for saagarkopparam@gmail.com
+=======
+2024-03-16T15:13:01.265Z [INFO] Generated OTP 862776 for gorav3242@gmail.com
+2024-03-16T15:13:05.292Z [INFO] Sent OTP to gorav3242@gmail.com
+2024-03-16T15:13:32.539Z [INFO] Verified OTP 862776 for gorav3242@gmail.com
+>>>>>>> 01952c1923671e45d23806aacd7f0c941fe23b62
+>>>>>>> aebf1c32bd91162314b6fe5efdd85a0d48529fe5
