@@ -6,27 +6,18 @@ Billing 360 is a billing software built for microenterprises and offers faciliti
 
 ### - under the guidance of Prof. Indranil Saha, Department of Computer Science and Engineering, IITK
 
-Name | Roll number | Email ID
-
-Abhishek Khandelwal | 220040 | abhi17jan2004@gmail.com
-
-Akula Venkatesh | 220109 | venkateshakula042004@gmail.com
-
-Ansh Agarwal | 220165 | aansh7113@gmail.com
-
-Dhruv Gupta | 220361 | dhruvg190305@gmail.com
-
-Kundan Kumar | 220568 | kundan91700@gmail.com
-
-Nipun Nohria | 220717 | nipunnohria2016@gmail.com
-
-Pallav Goyal | 220747 | pallavgoyal136@gmail.com
-
-Poojal Katiyar | 220770 | poojalkatiyar13@gmail.com
-
-Pragati Agrawal | 220779 | pragr789@gmail.com
-
-Saagar K V | 220927 | saagarkopparam@gmail.com
+Name                | Roll number | Email ID
+--------------------|-------------|-------------------------------
+Abhishek Khandelwal | 220040      | abhi17jan2004@gmail.com
+Akula Venkatesh     | 220109      | venkateshakula042004@gmail.com
+Ansh Agarwal        | 220165      | aansh7113@gmail.com
+Dhruv Gupta         | 220361      | dhruvg190305@gmail.com
+Kundan Kumar        | 220568      | kundan91700@gmail.com
+Nipun Nohria        | 220717      | nipunnohria2016@gmail.com
+Pallav Goyal        | 220747      | pallavgoyal136@gmail.com
+Poojal Katiyar      | 220770      | poojalkatiyar13@gmail.com
+Pragati Agrawal     | 220779      | pragr789@gmail.com
+Saagar K V          | 220927      | saagarkopparam@gmail.com
 
 ## Architecture and Development process
 
