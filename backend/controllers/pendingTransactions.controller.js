@@ -1,6 +1,10 @@
 const Customer = require("../models/customer.model");
 const Supplier = require("../models/supplier.model");
 const Invoice = require("../models/invoice.model");
+const User = require("../models/user.model");
+const notifyCustomerController = require("./notifyCustomer.controller");
+const pdf = require('html-pdf');
+const pdfTemplate = require('../utils/pdfTemplate');
 
 const existingCustEmail = async(req,res) => {
   try{
@@ -66,6 +70,43 @@ const addNewCredit = async (req, res) => {
        savedCredit.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
        const savedCustomer = await savedCredit.save();
        console.log(savedCustomer);
+       const shopkeeper = await User.find({_id : savedCredit.userID});
+       console.log(shopkeeper);
+       pdf.create(pdfTemplate(
+        {
+          invoiceData: {
+            userID: result.userID,
+            invoiceID: result.invoiceID,
+            customerName: result.customerName,
+            phoneNo: result.phoneNo,
+            customerEmail: result.customerEmail,
+            totalAmount: result.totalAmount,
+            notes:result.notes,
+            paymentMode:result.paymentMode,
+            discount: result.discount,
+            itemList:result.itemList,
+            createdAt: result.createdAt,
+          },
+          userData: {
+            firstname: shopkeeper[0].firstname, 
+            lastname: shopkeeper[0].lastname, 
+            email: shopkeeper[0].email, 
+            password: shopkeeper[0].password, 
+            gstno: shopkeeper[0].gstno, 
+            shopname: shopkeeper[0].shopname, 
+            shopaddress: shopkeeper[0].shopaddress,
+          },
+        }
+       ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
+        if(err) {
+          return console.log('error');
+        }
+        console.log("pdf saved successfully");
+        const pdfPath = `${__dirname}\\invoice.pdf`;
+        console.log(pdfPath);
+        const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`
+        notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
+      })
      })
      .catch((err) => {
        console.log(err);
@@ -175,6 +216,43 @@ const updateSupplier  = async (req, res) => {
        updatedCust.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
        const savedCustomer = await updatedCust.save();
        console.log(savedCustomer);
+       const shopkeeper = await User.find({_id : savedCustomer.userID});
+       console.log(shopkeeper);
+       pdf.create(pdfTemplate(
+        {
+          invoiceData: {
+            userID: result.userID,
+            invoiceID: result.invoiceID,
+            customerName: result.customerName,
+            phoneNo: result.phoneNo,
+            customerEmail: result.customerEmail,
+            totalAmount: result.totalAmount,
+            notes:result.notes,
+            paymentMode:result.paymentMode,
+            discount: result.discount,
+            itemList:result.itemList,
+            createdAt: result.createdAt,
+          },
+          userData: {
+            firstname: shopkeeper[0].firstname, 
+            lastname: shopkeeper[0].lastname, 
+            email: shopkeeper[0].email, 
+            password: shopkeeper[0].password, 
+            gstno: shopkeeper[0].gstno, 
+            shopname: shopkeeper[0].shopname, 
+            shopaddress: shopkeeper[0].shopaddress,
+          },
+        }
+       ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
+        if(err) {
+          return console.log('error');
+        }
+        console.log("pdf saved successfully");
+        const pdfPath = `${__dirname}\\invoice.pdf`;
+        console.log(pdfPath);
+        const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
+        notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
+      })
      })
      .catch((err) => {
        console.log(err);

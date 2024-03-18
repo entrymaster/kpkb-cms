@@ -34,9 +34,9 @@ const formatDate = (date) => {
 const invoicePDF = (requestData) => {
     
     const billDate = formatDate(requestData.invoiceData.createdAt); 
-  // console.log(invoice.itemList[0].itemName);
+    console.log(requestData);
   
-  return `<!DOCTYPE html>
+  return (`<!DOCTYPE html>
   <html>
   <head>
       <style>
@@ -200,16 +200,16 @@ const invoicePDF = (requestData) => {
 
               <tr>
                 <td>Payment made</td>
-                <td style="text-align: center">${requestData.invoiceData.paymentMode === 'Paid' ? requestData.invoiceData.totalAmount : '&#8377;0.00'}</td>
+                <td style="text-align: center">${requestData.invoiceData.paymentMode === 'Credit dues cleared' || requestData.invoiceData.paymentMode === 'Amount added to credit' ? "" : requestData.invoiceData.paymentMode === 'Paid'? requestData.invoiceData.totalAmount : '&#8377;0.00'}</td>
             </tr>
             <tr>
                 <td>Balance</td>
-                <td><h3 style="line-height: 5px; text-align: center">${requestData.invoiceData.paymentMode === 'Paid' ?'&#8377;0.00' : requestData.invoiceData.totalAmount}</td>
+                <td><h3 style="line-height: 5px; text-align: center">${requestData.invoiceData.paymentMode === 'Credit dues cleared' || requestData.invoiceData.paymentMode === 'Amount added to credit' ? "" : requestData.invoiceData.paymentMode === 'Paid' ?'&#8377;0.00' : requestData.invoiceData.totalAmount}</td>
             </tr>
           </table>
       </section>
 
   </body>
-  </html>`;
+  </html>`);
 };
 module.exports = invoicePDF;
