@@ -7,19 +7,19 @@ The current code which is deployed on website is very slow due to involvement of
 
 1) Cloning the repository
 
-2)npm install to install all the dependencies.
+2) npm install to install all the dependencies.
 
 3) cd backend to go inside the backend folder and npm install to install the dependencies.
 
-4)cd frontend to go inside the frontend folder and npm install to install the dependencies.
+4) cd frontend to go inside the frontend folder and npm install to install the dependencies.
 
-5)Replacing all the occurenses of https://billing-360-dev.onrender.com with http://localhost:5050
+5) Replacing all the occurenses of https://billing-360-dev.onrender.com with http://localhost:5050
 
-6)Go inside the backend folder and perform node server.js
+6) Go inside the backend folder and perform node server.js
 
-7)Go inside the frontend folder and perform npm start
+7) Go inside the frontend folder and perform npm start
 
-8)Happy Billing
+8) Happy Billing
 
 ## Team Details:
 
