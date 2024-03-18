@@ -31,7 +31,7 @@ const ContactUs = () => {
             {/* <div className="text-two">info.codinglab@gmail.com</div> */}
           </div>
         </div>
-        <div className="right-side">
+        <div className="right-side" style={{marginTop:"10%"}}>
           <div className="topic-text">Send us a message</div>
           <p>Got a question or need help? We're happy to hear from you!. Kindly refer to the FAQs page for any general queries.</p>
           <p>How can we help you?</p>
