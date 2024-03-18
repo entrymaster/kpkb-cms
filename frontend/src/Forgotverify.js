@@ -95,7 +95,7 @@ const emailexist = () => {
   
   return (
     <>
-    <div className="parent-div">
+    <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">
     <img
@@ -105,7 +105,8 @@ const emailexist = () => {
     />
   </div>
   </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center" >
+  <div className="right-div" >
+      <div className="grid grid-cols-1 sm:grid-cols-2 h-screen items-center place-items-center"  style={{height:"100%"}} >
       <div id="sign-up">
         <div className="w-full max-w-md space-y-8 p-10 rounded-lg">
           <div>
@@ -155,12 +156,22 @@ const emailexist = () => {
               <br></br>
               <br></br>
               <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
             </div>
           </form>
         </div>
         <footer id="footer">
           <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
         </footer>
+      </div>
       </div>
       </div>
       </div>

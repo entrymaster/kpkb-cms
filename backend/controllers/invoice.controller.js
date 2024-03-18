@@ -38,7 +38,8 @@ const addInvoice = async (req, res) => {
       console.log(savedInvoice);
 
       // Check if customer exists
-      const existingCustomer = await Customer.findOne({ email: savedInvoice.customerEmail,});
+      const existingCustomer = await Customer.findOne({userID: req.body.userID, email: savedInvoice.customerEmail});
+      //const existingCustomer = await Customer.findOne({ email: savedInvoice.customerEmail,});
 
       if (existingCustomer) {
         // Update existing customer document

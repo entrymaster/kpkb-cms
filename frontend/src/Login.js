@@ -72,7 +72,7 @@ function Login() {
   
   return (
     <>
-      <div className="parent-div">
+    <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">
     <img
@@ -159,7 +159,15 @@ function Login() {
             <br></br>
             <br></br>
             <br></br>
-            
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
             <span>Billing 360 &copy; 2024 Copyright All Rights Reserved.</span>
           </footer>
         </div>

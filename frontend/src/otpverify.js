@@ -66,7 +66,7 @@ function Verification() {
 
   return (
     <>
-    <div className="parent-div">
+  <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">
     <img
