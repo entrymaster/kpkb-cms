@@ -22,7 +22,7 @@ function Verification() {
 
   const verifyOtp = (req , res) => {
     //const source = req.query.source;
-    fetch("http://localhost:5050/api/otp/ver", {
+    fetch("https://billing-360-dev.onrender.com/api/otp/ver", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

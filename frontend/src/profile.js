@@ -22,7 +22,7 @@ function Profile() {
   const navigate = useNavigate();
   
   const getUserData = () => {
-    fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+    fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -62,7 +62,7 @@ function Profile() {
     console.log(formData);
     // Check if the function is called
     // Send POST request to save updated user data
-    fetch(`http://localhost:5050/api/user/update/${authContext.user}`, {
+    fetch(`https://billing-360-dev.onrender.com/api/user/update/${authContext.user}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

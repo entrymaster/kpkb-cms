@@ -51,7 +51,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
         console.log(itemData);
       };
       const updateBatch = () => {
-        fetch("http://localhost:5050/api/inventory/updateBatch", {
+        fetch("https://billing-360-dev.onrender.com/api/inventory/updateBatch", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

@@ -28,7 +28,7 @@ const Navbar = () => {
     const getUserData = () => {
       return new Promise((resolve, reject) => {
         console.log(authContext.user);
-        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
+        fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
           method: "GET",
           headers: {
             "Content-type": "application/json",
