@@ -111,10 +111,18 @@ const AddNewInvoice = () => {
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
-    setInvoiceData((prevData) => ({
-      ...prevData,
-      [fieldName] : isNaN(value) ? 0 : value,
-    }));
+    if(fieldName === 'quantity'){
+      setInvoiceData((prevData) => ({
+        ...prevData,
+        [fieldName] : isNaN(value) ? 0 : value,
+      }));
+    } else {
+      setInvoiceData((prevData) => ({
+        ...prevData,
+        [fieldName] : value,
+      }));
+    }
+    
     setTotalChange(true);
   };
   const calculateTotal = () => {
