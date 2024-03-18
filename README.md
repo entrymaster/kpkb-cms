@@ -7,7 +7,7 @@ Billing 360 is a billing software built for microenterprises and offers faciliti
 ### - under the guidance of Prof. Indranil Saha, Department of Computer Science and Engineering, IITK
 
 Name | Roll number | Email ID
------------------------------
+-----|-------------|---------
 Abhishek Khandelwal | 220040 | abhi17jan2004@gmail.com
 
 Akula Venkatesh | 220109 | venkateshakula042004@gmail.com
