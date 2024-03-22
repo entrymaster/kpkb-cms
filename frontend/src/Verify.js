@@ -27,7 +27,7 @@ function Verification() {
         alert("Please enter a valid email address.");
         return; // Stop further execution
     }
-    fetch("http://localhost:5050/api/otp/gen?source=login", {
+    fetch("https://billing-360-dev.onrender.com/api/otp/gen?source=login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -56,7 +56,7 @@ function Verification() {
         return; // Stop further execution
     }
 
-    fetch("http://localhost:5050/api/forgot/ver", {
+    fetch("https://billing-360-dev.onrender.com/api/forgot/ver", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
