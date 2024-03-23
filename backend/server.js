@@ -54,7 +54,11 @@ app.get("/api/login", (req, res) => {
 
 app.post('/api/generate-pdf', (req, res) => {
   // Generate PDF in memory
-  pdf.create(pdfTemplate(req.body), {}).toBuffer((err, buffer) => {
+  pdf.create(pdfTemplate(req.body), {childProcessOptions: {
+    env: {
+      OPENSSL_CONF: '/dev/null',
+    },
+  }}).toBuffer((err, buffer) => {
     if (err) {
       console.error('Error generating PDF:', err);
       return res.status(500).send('Error generating PDF');
