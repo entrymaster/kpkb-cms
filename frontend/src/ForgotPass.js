@@ -27,7 +27,7 @@ function Login() {
   form.email = email;
 //   const authCheck = () => {
 //     setTimeout(() => {
-//       fetch("http://localhost:5050/api/login/log/get")
+//       fetch("https://billing-360-dev.onrender.com/api/login/log/get")
 //         .then((response) => response.json())
 //         .then((data) => {
 //           alert("Successfully Login");
@@ -57,7 +57,7 @@ function Login() {
      else {
         // console.log(form.password)
         // console.log(form.email)
-      fetch("http://localhost:5050/api/forgot/for", {
+      fetch("https://billing-360-dev.onrender.com/api/forgot/for", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

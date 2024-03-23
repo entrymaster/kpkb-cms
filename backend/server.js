@@ -51,21 +51,39 @@ When it receives a request, it will send back a response with the string "Hello 
 app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
-app.post('/api/create-pdf', (req,res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
-    if(err) {
-      return console.log('error');
-    }
-  res.send(Promise.resolve())
-  });
-  console.log(req.body);
-})
 
-app.get('/api/fetch-pdf', (req,res) => {
-  res.sendFile(`${__dirname}/invoice.pdf`);
-  console.log("pdf check2")
-  console.log(res.body);
-})
+app.post('/api/generate-pdf', (req, res) => {
+  // Generate PDF in memory
+  pdf.create(pdfTemplate(req.body), {}).toBuffer((err, buffer) => {
+    if (err) {
+      console.error('Error generating PDF:', err);
+      return res.status(500).send('Error generating PDF');
+    }
+
+    // Send the PDF buffer back in the response
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="invoice.pdf"',
+    });
+    res.send(buffer);
+  });
+});
+
+// app.post('/api/create-pdf', (req,res) => {
+//   pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
+//     if(err) {
+//       return console.log('error');
+//     }
+//   res.send(Promise.resolve())
+//   });
+//   console.log(req.body);
+// })
+
+// app.get('/api/fetch-pdf', (req,res) => {
+//   res.sendFile(`${__dirname}/invoice.pdf`);
+//   console.log("pdf check2")
+//   console.log(res.body);
+// })
 
 /* Connecting to the database and then starting the server. */
 mongoose
