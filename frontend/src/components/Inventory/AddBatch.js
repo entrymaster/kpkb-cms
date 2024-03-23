@@ -37,7 +37,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
       const addBatch = () => {
         const { batchID, batchQty, expiryDate } = itemData; // Destructure itemData
       
-        fetch("https://billing-360-dev.onrender.com/api/inventory/addBatchList", {
+        fetch("http://localhost:5050/api/inventory/addBatchList", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

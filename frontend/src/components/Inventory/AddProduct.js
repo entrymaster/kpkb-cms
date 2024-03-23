@@ -31,7 +31,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
   console.log(itemData);
       };
       const addProduct = () => {
-        fetch("https://billing-360-dev.onrender.com/api/inventory/add", {
+        fetch("http://localhost:5050/api/inventory/add", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

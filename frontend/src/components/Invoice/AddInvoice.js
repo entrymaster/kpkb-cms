@@ -193,7 +193,7 @@ const AddNewInvoice = () => {
   };
   
   const addInvoice = () => {
-      fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
+      fetch("http://localhost:5050/api/invoice/add", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -217,7 +217,7 @@ const AddNewInvoice = () => {
     const getUserData = () => {
       return new Promise((resolve, reject) => {
         console.log(authContext.user);
-        fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
+        fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
           method: "GET",
           headers: {
             "Content-type": "application/json",
@@ -259,9 +259,9 @@ const AddNewInvoice = () => {
             invoiceData: invoiceData,
             userData: userData
           };
-          return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
         })
-        .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
         .then((res) => {
           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
           setShowLoading(false);
@@ -285,9 +285,9 @@ const AddNewInvoice = () => {
             userData: userData
           };
           // console.log(requestData);
-          return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
+          return axios.post('http://localhost:5050/api/create-pdf', requestData);
         })
-        .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
+        .then(() => axios.get('http://localhost:5050/api/fetch-pdf', { responseType: 'blob'}))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
@@ -297,7 +297,7 @@ const AddNewInvoice = () => {
     }
 
     const updateInventory = () => {
-      fetch("https://billing-360-dev.onrender.com/api/inventory/updateItemQuantity",{
+      fetch("http://localhost:5050/api/inventory/updateItemQuantity",{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -312,7 +312,7 @@ const AddNewInvoice = () => {
     }
 
     const getInvoiceCount = async() =>{
-      fetch(`https://billing-360-dev.onrender.com/api/invoice/count/${authContext.user}`, {
+      fetch(`http://localhost:5050/api/invoice/count/${authContext.user}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -348,7 +348,7 @@ const AddNewInvoice = () => {
     // const userId='user';
 
     const fetchItemsData = () => {
-      fetch(`https://billing-360-dev.onrender.com/api/inventory/get/${authContext.user}`)
+      fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllItems(data);

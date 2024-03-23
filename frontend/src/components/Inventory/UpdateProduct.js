@@ -44,7 +44,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
         console.log(itemData);
       };
       const updateProduct = () => {
-        fetch("https://billing-360-dev.onrender.com/api/inventory/update", {
+        fetch("http://localhost:5050/api/inventory/update", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

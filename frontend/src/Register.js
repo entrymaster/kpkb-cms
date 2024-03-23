@@ -44,7 +44,7 @@ function Register() {
       alert("Password should be at least 6 characters");
       return; // Exit function if password is too short
     }
-    fetch("https://billing-360-dev.onrender.com/api/register/reg", {
+    fetch("http://localhost:5050/api/register/reg", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
