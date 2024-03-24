@@ -6,7 +6,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
 import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
-import { saveAs } from 'file-saver';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
@@ -184,7 +183,7 @@ const AddNewInvoice = () => {
 
       await addInvoice();
       await updateInventory();
-      await downloadPdf();
+      // await downloadPdf();
     } catch (error) {
       console.error('Error generating bill:', error);
     } finally {
@@ -298,27 +297,27 @@ const AddNewInvoice = () => {
     //     });
     // }
     
-    const downloadPdf = () => {
-      getUserData()
-        .then(() => {
-          // userData will be available here as getUserData() has completed execution
-          // console.log(userData);
+    // const downloadPdf = () => {
+    //   getUserData()
+    //     .then(() => {
+    //       // userData will be available here as getUserData() has completed execution
+    //       // console.log(userData);
           
-          const requestData = {
-            invoiceData: invoiceData,
-            userData: userData
-          };
-          // console.log(requestData);
-          return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
-        })
-        .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
-      .then((res) => {
-        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-        saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
+    //       const requestData = {
+    //         invoiceData: invoiceData,
+    //         userData: userData
+    //       };
+    //       // console.log(requestData);
+    //       return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
+    //     })
+    //     .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
+    //   .then((res) => {
+    //     const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //     saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
         
-      })
-      .then(()=>{window.location.reload();})
-    }
+    //   })
+    //   .then(()=>{window.location.reload();})
+    // }
 
     const updateInventory = () => {
       fetch("https://billing-360-dev.onrender.com/api/inventory/updateItemQuantity",{

@@ -23,7 +23,8 @@ async function notifyCustomerController(email, organization, shopname, shopEmail
             attachments: [
                 {
                   filename: 'invoice.pdf',
-                  path: pdfPath,
+                  //path: pdfPath,
+                  content: pdfPath,
                   contentType: 'application/pdf',
                 },
               ],

@@ -42,7 +42,7 @@ function Login() {
 
   const loginUser = (e) => {
     // Cannot send empty data
-    
+
     if (form.email === "" || form.password === "") {
       alert("To login user, enter details to proceed...");
     } else {
@@ -59,6 +59,7 @@ function Login() {
         .catch((error) => {
           console.log("Something went wrong ", error);
         });
+        setShowLoading(true);
         authCheck();
     }
     
@@ -72,6 +73,11 @@ function Login() {
   
   return (
     <>
+    {showLoading && ( // Conditionally render loading component
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
     <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">
@@ -126,13 +132,18 @@ function Login() {
             
             <div id="center" > 
             <br></br>
-            
-              <button
+            <button
+              type="submit"
+              id="btn1"
+              className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
+              onClick={loginUser}
+            >
+              {/* <button
                 type="submit"
                 id="btn1"
                 className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 onClick={loginUser}
-              >
+              > */}
                 Login
               </button>
               </div>

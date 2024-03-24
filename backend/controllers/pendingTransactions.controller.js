@@ -72,41 +72,67 @@ const addNewCredit = async (req, res) => {
        console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCredit.userID});
        console.log(shopkeeper);
-       pdf.create(pdfTemplate(
-        {
-          invoiceData: {
-            userID: result.userID,
-            invoiceID: result.invoiceID,
-            customerName: result.customerName,
-            phoneNo: result.phoneNo,
-            customerEmail: result.customerEmail,
-            totalAmount: result.totalAmount,
-            notes:result.notes,
-            paymentMode:result.paymentMode,
-            discount: result.discount,
-            itemList:result.itemList,
-            createdAt: result.createdAt,
-          },
-          userData: {
-            firstname: shopkeeper[0].firstname, 
-            lastname: shopkeeper[0].lastname, 
-            email: shopkeeper[0].email, 
-            password: shopkeeper[0].password, 
-            gstno: shopkeeper[0].gstno, 
-            shopname: shopkeeper[0].shopname, 
-            shopaddress: shopkeeper[0].shopaddress,
-          },
-        }
-       ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
-        if(err) {
-          return console.log('error');
-        }
-        console.log("pdf saved successfully");
-        const pdfPath = `${__dirname}\\invoice.pdf`;
-        console.log(pdfPath);
-        const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`
-        notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
-      })
+      //  pdf.create(pdfTemplate(
+      //   {
+      //     invoiceData: {
+      //       userID: result.userID,
+      //       invoiceID: result.invoiceID,
+      //       customerName: result.customerName,
+      //       phoneNo: result.phoneNo,
+      //       customerEmail: result.customerEmail,
+      //       totalAmount: result.totalAmount,
+      //       notes:result.notes,
+      //       paymentMode:result.paymentMode,
+      //       discount: result.discount,
+      //       itemList:result.itemList,
+      //       createdAt: result.createdAt,
+      //     },
+      //     userData: {
+      //       firstname: shopkeeper[0].firstname, 
+      //       lastname: shopkeeper[0].lastname, 
+      //       email: shopkeeper[0].email, 
+      //       password: shopkeeper[0].password, 
+      //       gstno: shopkeeper[0].gstno, 
+      //       shopname: shopkeeper[0].shopname, 
+      //       shopaddress: shopkeeper[0].shopaddress,
+      //     },
+      //   }
+      //  ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
+      //   if(err) {
+      //     return console.log('error');
+      //   }
+      //   console.log("pdf saved successfully");
+      //   const pdfPath = `${__dirname}\\invoice.pdf`;
+      //   console.log(pdfPath);
+      //   const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`
+      //   notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
+      // })
+      const pdfBuffer = await generatePDFBuffer(pdfTemplate({
+        invoiceData: {
+          userID: result.userID,
+          invoiceID: result.invoiceID,
+          customerName: result.customerName,
+          phoneNo: result.phoneNo,
+          customerEmail: result.customerEmail,
+          totalAmount: result.totalAmount,
+          notes:result.notes,
+          paymentMode:result.paymentMode,
+          discount: result.discount,
+          itemList:result.itemList,
+          createdAt: result.createdAt,
+        },
+        userData: {
+          firstname: shopkeeper[0].firstname, 
+          lastname: shopkeeper[0].lastname, 
+          email: shopkeeper[0].email, 
+          password: shopkeeper[0].password, 
+          gstno: shopkeeper[0].gstno, 
+          shopname: shopkeeper[0].shopname, 
+          shopaddress: shopkeeper[0].shopaddress,
+        },
+      }));
+      const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`;
+      await notifyCustomerController(savedCustomer.email, 'Billing 360', shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfBuffer);
      })
      .catch((err) => {
        console.log(err);
@@ -136,6 +162,22 @@ const addNewDebit = async (req, res) => {
     }
   };
 
+
+async function generatePDFBuffer(pdfContent) {
+    return new Promise((resolve, reject) => {
+        pdf.create(pdfContent, {childProcessOptions: {
+          env: {
+            OPENSSL_CONF: '/dev/null',
+          },
+        }}).toBuffer((err, buffer) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(buffer);
+            }
+        });
+    });
+}
 // Update Existing Customer Credit
 const updateCustomer  = async (req, res) => {
   try {
@@ -218,41 +260,67 @@ const updateSupplier  = async (req, res) => {
        console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCustomer.userID});
        console.log(shopkeeper);
-       pdf.create(pdfTemplate(
-        {
-          invoiceData: {
-            userID: result.userID,
-            invoiceID: result.invoiceID,
-            customerName: result.customerName,
-            phoneNo: result.phoneNo,
-            customerEmail: result.customerEmail,
-            totalAmount: result.totalAmount,
-            notes:result.notes,
-            paymentMode:result.paymentMode,
-            discount: result.discount,
-            itemList:result.itemList,
-            createdAt: result.createdAt,
-          },
-          userData: {
-            firstname: shopkeeper[0].firstname, 
-            lastname: shopkeeper[0].lastname, 
-            email: shopkeeper[0].email, 
-            password: shopkeeper[0].password, 
-            gstno: shopkeeper[0].gstno, 
-            shopname: shopkeeper[0].shopname, 
-            shopaddress: shopkeeper[0].shopaddress,
-          },
-        }
-       ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
-        if(err) {
-          return console.log('error');
-        }
-        console.log("pdf saved successfully");
-        const pdfPath = `${__dirname}\\invoice.pdf`;
-        console.log(pdfPath);
-        const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
-        notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
-      })
+      //  pdf.create(pdfTemplate(
+      //   {
+      //     invoiceData: {
+      //       userID: result.userID,
+      //       invoiceID: result.invoiceID,
+      //       customerName: result.customerName,
+      //       phoneNo: result.phoneNo,
+      //       customerEmail: result.customerEmail,
+      //       totalAmount: result.totalAmount,
+      //       notes:result.notes,
+      //       paymentMode:result.paymentMode,
+      //       discount: result.discount,
+      //       itemList:result.itemList,
+      //       createdAt: result.createdAt,
+      //     },
+      //     userData: {
+      //       firstname: shopkeeper[0].firstname, 
+      //       lastname: shopkeeper[0].lastname, 
+      //       email: shopkeeper[0].email, 
+      //       password: shopkeeper[0].password, 
+      //       gstno: shopkeeper[0].gstno, 
+      //       shopname: shopkeeper[0].shopname, 
+      //       shopaddress: shopkeeper[0].shopaddress,
+      //     },
+      //   }
+      //  ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
+      //   if(err) {
+      //     return console.log('error');
+      //   }
+      //   console.log("pdf saved successfully");
+      //   const pdfPath = `${__dirname}\\invoice.pdf`;
+      //   console.log(pdfPath);
+      //   const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
+      //   notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
+      // })
+      const pdfBuffer = await generatePDFBuffer(pdfTemplate({
+        invoiceData: {
+          userID: result.userID,
+          invoiceID: result.invoiceID,
+          customerName: result.customerName,
+          phoneNo: result.phoneNo,
+          customerEmail: result.customerEmail,
+          totalAmount: result.totalAmount,
+          notes:result.notes,
+          paymentMode:result.paymentMode,
+          discount: result.discount,
+          itemList:result.itemList,
+          createdAt: result.createdAt,
+        },
+        userData: {
+          firstname: shopkeeper[0].firstname, 
+          lastname: shopkeeper[0].lastname, 
+          email: shopkeeper[0].email, 
+          password: shopkeeper[0].password, 
+          gstno: shopkeeper[0].gstno, 
+          shopname: shopkeeper[0].shopname, 
+          shopaddress: shopkeeper[0].shopaddress,
+        },
+      }));
+      const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
+      await notifyCustomerController(savedCustomer.email, 'Billing 360', shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfBuffer);
      })
      .catch((err) => {
        console.log(err);
