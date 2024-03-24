@@ -6,6 +6,7 @@ import axios from 'axios';
 import { initialState } from './components/Invoice/initialState';
 import Navbar from './Navbar';
 import { saveAs } from 'file-saver';
+import ReactLoading from "react-loading";
 import SearchIcon from '@mui/icons-material/Search'; // Import Search icon from Material-UI
 
 
@@ -17,7 +18,8 @@ const TransactionHistory = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
   const [userData, setUserData] = useState({ firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: '' });
   const [searchInput, setSearchInput] = useState('');
-
+  const [showLoading, setShowLoading] = useState(false); 
+  
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
@@ -84,25 +86,36 @@ const TransactionHistory = () => {
   };
 
   const createPdf = () => {
+    setShowLoading(true);
     getUserData()
       .then(() => {
         const requestData = {
           invoiceData: invoiceData,
           userData: userData
         };
-        console.log(userData);
-        return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
+        // console.log(userData);
+        return axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
       })
-      .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob' }))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        setShowLoading(false);
         const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl, '_blank');
-        console.log("jdj");
+        window.open(pdfUrl,'_blank');
       })
       .catch((error) => {
+        setShowLoading(false); // Hide loading in case of error
         console.error('Error creating PDF:', error);
       });
+      // .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob' }))
+      // .then((res) => {
+      //   const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+      //   const pdfUrl = URL.createObjectURL(pdfBlob);
+      //   window.open(pdfUrl, '_blank');
+      //   console.log("jdj");
+      // })
+      // .catch((error) => {
+      //   console.error('Error creating PDF:', error);
+      // });
   };
   const handleCustomerName = async (e) => {
     await setCustomerName(e.target.value);
@@ -133,6 +146,12 @@ const TransactionHistory = () => {
   };
 
   return (
+    <>
+    {showLoading && ( // Conditionally render loading component
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
     <div className="TransactionHistory">
       <Navbar />
       <div className="main-container">
@@ -182,6 +201,7 @@ const TransactionHistory = () => {
         </table>
       </div>
     </div>
+    </>
   );
 }
 
