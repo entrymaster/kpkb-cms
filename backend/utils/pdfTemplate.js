@@ -40,6 +40,9 @@ const invoicePDF = (requestData) => {
   <html>
   <head>
       <style>
+            html{
+                zoom: 0.55;
+            }
           body {
               margin-left: 30px ;
               margin-top: 15px;

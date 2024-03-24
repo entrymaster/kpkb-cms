@@ -135,7 +135,6 @@ function Login() {
             <button
               type="submit"
               id="btn1"
-              style={buttonStyle}
               className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600"
               onClick={loginUser}
             >
@@ -189,19 +188,5 @@ function Login() {
     </>
   );
 }
-
-const buttonStyle = {
-  backgroundColor: '#cfe8ff',
-  color: '#051d40',
-  border: 'none',
-  padding: '15px 40px',
-  borderRadius: '50px',
-  cursor: 'pointer',
-  fontSize: '16px',
-  marginTop: '0px',
-  marginLeft: '20px',
-  fontFamily: 'Libre Baskerville, serif',
-  whiteSpace: 'nowrap',
-};
 
 export default Login;
