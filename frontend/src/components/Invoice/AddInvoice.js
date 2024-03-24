@@ -36,12 +36,6 @@ const AddNewInvoice = () => {
     );
     setOptionList(filteredOptions);
   }, [items, invoiceData]);
-  
-
-  // const handleItemSelection = (selectedItem) => {
-  //   // Assuming selectedItem is an object containing the selected item details including available quantity
-  //   setAvailableQuantity(selectedItem.quantity);
-  // };
 
   const handleInputChange = async(event, index, fieldName) => {
     const { value } = event.target;
@@ -80,16 +74,6 @@ const AddNewInvoice = () => {
         updatedItemList[index].amount = isNaN(amount) ? 0 : parseFloat(amount.toFixed(2));
         updatedItemList[index].quantity = quantity;
       }
-      // setInvoiceData((prevData)=>{
-      //   const disc = prevData.discount
-
-      //   return{
-      //     userID: authContext.user,
-      //     itemList: updatedItemList,
-      //     discount: disc,
-      //   }
-        
-      // });
       setInvoiceData({
         ...invoiceData,
         userID: authContext.user,
@@ -98,14 +82,6 @@ const AddNewInvoice = () => {
       });
     }
     setTotalChange(true);
-    // const arr = invoiceData.itemList;
-    // var subTotal = 0;
-    // for(var i=0; i<arr.length; i++){
-    //   subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
-    // }
-    // const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100));
-    // // invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
-    // invoiceData.totalAmount = temp.toFixed(2);
   };
 
   const handleInputChangeCust = async(event, fieldName) => {
@@ -188,6 +164,7 @@ const AddNewInvoice = () => {
       console.error('Error generating bill:', error);
     } finally {
       setShowLoading(false);
+      // window.location.reload(); 
     }
   };
   
@@ -226,7 +203,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          // window.location.reload(); 
+          window.location.reload(); 
         })
         .catch((err) => console.log(err));
 
@@ -292,53 +269,7 @@ const AddNewInvoice = () => {
           setShowLoading(false); // Hide loading in case of error
           console.error('Error creating PDF:', error);
         });
-    }
-
-    // const createPdf = () => {
-    //   setShowLoading(true); // Show loading when generating PDF
-    //   getUserData()
-    //     .then(() => {
-    //       // Logic for PDF creation
-    //       const requestData = {
-    //         invoiceData: invoiceData,
-    //         userData: userData
-    //       };
-    //       return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
-    //     })
-    //     .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
-    //     .then((res) => {
-    //       const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-    //       setShowLoading(false);
-    //       const pdfUrl = URL.createObjectURL(pdfBlob);
-    //       window.open(pdfUrl,'_blank');
-    //     })
-    //     .catch((error) => {
-    //       setShowLoading(false); // Hide loading in case of error
-    //       console.error('Error creating PDF:', error);
-    //     });
-    // }
-    
-    // const downloadPdf = () => {
-    //   getUserData()
-    //     .then(() => {
-    //       // userData will be available here as getUserData() has completed execution
-    //       // console.log(userData);
-          
-    //       const requestData = {
-    //         invoiceData: invoiceData,
-    //         userData: userData
-    //       };
-    //       // console.log(requestData);
-    //       return axios.post('https://billing-360-dev.onrender.com/api/create-pdf', requestData);
-    //     })
-    //     .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob'}))
-    //   .then((res) => {
-    //     const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-    //     saveAs(pdfBlob, `invoice_${invoiceData.invoiceID}.pdf`);
-        
-    //   })
-    //   .then(()=>{window.location.reload();})
-    // }
+      }
 
     const updateInventory = () => {
       fetch("https://billing-360-dev.onrender.com/api/inventory/updateItemQuantity",{
@@ -411,7 +342,7 @@ const AddNewInvoice = () => {
 
     return (
       <>
-      {showLoading && ( // Conditionally render loading component
+      {showLoading && ( 
        <div className="loading-overlay">
        <ReactLoading type="spin" color="#000" height={50} width={50} />
      </div>

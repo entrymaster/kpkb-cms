@@ -161,12 +161,12 @@ const handleSignout = () => {
             <h1 style={{ color: "#fff", fontSize: 40 }}>{getPageTitle()}</h1>
         </div>
         <div style={{ position: 'absolute', top: 60, right: 10 }}>
-          <Tooltip title="Notifications">
+          {/* <Tooltip title="Notifications">
               <NotificationsIcon style={{ color: "#fff", fontSize: iconSize, marginRight: '15px' }} />
           </Tooltip>
           <Tooltip title="Settings">
               <SettingsIcon style={{ color: "#fff", fontSize: iconSize, marginRight: '15px' }} />
-          </Tooltip>
+          </Tooltip> */}
           <Tooltip title="Profile">
               <Link to="/profile" style={{ color: 'inherit', textDecoration: 'none' }}>
                   <AccountCircleIcon style={{ color: "#fff", fontSize: iconSize, marginRight: '15px' }} />
