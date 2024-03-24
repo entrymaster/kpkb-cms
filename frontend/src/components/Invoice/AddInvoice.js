@@ -6,7 +6,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SearchableDropdown from './SearchableDropdown';
 import ReactLoading from "react-loading";
 import AuthContext from '../../AuthContext';
-import { saveAs } from 'file-saver';
 
 const AddNewInvoice = () => {
   const [invoiceData, setInvoiceData] = useState(initialState);
