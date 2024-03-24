@@ -1,4 +1,4 @@
-
+import ReactLoading from "react-loading";
 import React, { useState } from "react";
 import { Link, useNavigate, Navigate, useLocation } from "react-router-dom";
 import "./Register.css";
@@ -18,7 +18,7 @@ function Register() {
 
   const [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
   const navigate = useNavigate();
-  
+  const [showLoading, setShowLoading] = useState(false); 
   const location = useLocation();
   const { email } = location.state || {}; // Destructure email from location state
 
@@ -74,6 +74,11 @@ function Register() {
   }
   return (
     <>
+    {showLoading && ( // Conditionally render loading component
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
       <div className="reg">
         <div id="sign-up">
           <div className="w-full max-w-md space-y-8 p-10 rounded-lg">

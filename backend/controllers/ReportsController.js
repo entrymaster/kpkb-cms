@@ -5,7 +5,7 @@ const { PDFDocument, rgb } = require("pdf-lib");
 // Add Post
 
 const addInvoice = async (req, res) => {
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
 
   const addInvoice = new Invoice({
     userID: req.body.userID,
@@ -25,9 +25,9 @@ const addInvoice = async (req, res) => {
     .save()
     .then(async (result) => {
       const newInvoiceId = result._id;
-      console.log(newInvoiceId);
+      // console.log(newInvoiceId);
       const savedInvoice = await Invoice.findById(newInvoiceId);
-      console.log(savedInvoice);
+      // console.log(savedInvoice);
 
       // Check if customer exists
       const existingCustomer = await Customer.findOne({
@@ -40,7 +40,7 @@ const addInvoice = async (req, res) => {
         existingCustomer.creditAmount +=
           result.paymentMode === "Credit" ? result.totalAmount : 0;
         const savedCustomer = await existingCustomer.save();
-        console.log(savedCustomer);
+        // console.log(savedCustomer);
       } else {
         // Create a new customer document
         const newCustomer = new Customer({
@@ -54,7 +54,7 @@ const addInvoice = async (req, res) => {
         });
         // console.log(newCustomer);
         const savedCustomer = await newCustomer.save();
-        console.log(savedCustomer);
+        // console.log(savedCustomer);
       }
 
       res.status(200).send(result);
@@ -101,7 +101,7 @@ const searchInvoice = async (req, res) => {
     const records = await Invoice.find(query);
     // Send the results
     res.json(records);
-    console.log(records);
+    // console.log(records);
   } catch (error) {
     console.error("Error fetching records:", error);
     res.status(500).json({ error: "Internal Server Error" });

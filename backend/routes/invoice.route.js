@@ -9,6 +9,7 @@ app.get("/get/:userId", invoice.getAllInvoice);
 app.get("/search/:userId", invoice.searchInvoice);
 app.get("/sales/:userId", invoice.getSalesData);
 app.get("/getDashboardData/:userId", invoice.getDashboardData)
+app.put("/sendmail",invoice.sendInvoiceMail);
 // app.post("/generate-pdf", invoice.generatePDF);
 // app.get("/fetch-pdf", invoice.fetchPDF);
 module.exports = app;

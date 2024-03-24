@@ -31,7 +31,7 @@ app.post('/', async (req, res) => {
 app.post('/otp/generate', async (req, res) => {
   try {
     const { email, type = 'numeric', organization = 'IIT-KANPUR', subject = 'One-Time Password (OTP)' } = req.body;
-    console.log(email)
+    // console.log(email)
 
     const otp = await otpController.generateOtp(email, type);
 

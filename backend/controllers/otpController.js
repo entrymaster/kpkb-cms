@@ -54,16 +54,16 @@ const otpController = {
     verifyOtp: async (email, otp) => {
         try {
             if (otp.toString().length !== OTP_SIZE) {
-                console.log(otp.toString().length)
+                // console.log(otp.toString().length)
                 throw new Error('Invalid OTP');
             }
-            console.log("pass length check")
+            // console.log("pass length check")
             const otpDocument = await Otp.findOneAndDelete({
                 email: email,
                 otp: otp,
                 createdAt: { $gte: new Date(new Date() - 1000 * 60 * validityPeriodMinutes) }
             }).lean();
-            console.log("pass find")
+            // console.log("pass find")
             if (!otpDocument) {
                 throw new Error('Invalid OTP');
             }

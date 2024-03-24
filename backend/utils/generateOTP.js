@@ -3,7 +3,7 @@ const generateOTP = (size, type) => {
         logger.error('Invalid OTP size');
         throw new Error('Invalid OTP size');
     }
-    console.log("entered genrateOTP fn")
+    // console.log("entered genrateOTP fn")
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
     let otpChars = '';

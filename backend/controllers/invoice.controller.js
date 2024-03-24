@@ -1,11 +1,177 @@
 const Invoice = require("../models/invoice.model");
 const Customer = require("../models/customer.model");
 const { PDFDocument, rgb } = require('pdf-lib');
-
+const notifyCustomerController = require("./notifyCustomer.controller");
+// const sendInvoiceMailController = require("./sendInvoiceMailToCustomer.controller");
+const pdf = require('html-pdf');
+const pdfTemplate = require('../utils/pdfTemplate');
 // Add Post
+async function generatePDFBuffer(pdfContent) {
+  return new Promise((resolve, reject) => {
+      pdf.create(pdfContent, {childProcessOptions: {
+        env: {
+          OPENSSL_CONF: '/dev/null',
+        },
+      }}).toBuffer((err, buffer) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(buffer);
+          }
+      });
+  });
+}
+
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+const u = process.env.GMAIL_USER;
+const p = process.env.GMAIL_PASS;
+async function sendInvoiceMailController(email, organization, shopname, invoiceID, shopEmail, pdfPath, shopAddress) {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            secure: true,
+            auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_PASS,
+            },
+        });
+        
+        // console.log("hello")
+
+        const mailOptions = {
+            from: `"${organization}" <${process.env.GMAIL_USER}>`,
+            to: email,
+            subject: `Invoice for your purchase at ${shopname}`,
+            text: `This email is to inform you that invoice of your recent purchase has been generated. Below are the details:<br/><br/>
+            <strong>Invoice ID:</strong> ${invoiceID} <br/>
+            If this information is not correct, please reach out to the vendor(Email: ${shopEmail})`,
+            attachments: [
+                {
+                  filename: 'invoice.pdf',
+                  //path: pdfPath,
+                  content: pdfPath,
+                  contentType: 'application/pdf',
+                },
+              ],
+            html: `
+                  <!DOCTYPE html>
+                  <html lang="en">
+                      <head>
+                          <meta charset="UTF-8">
+                          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                          <title>${organization} Your Credit Amount</title>
+                          <style>
+                              body {
+                                  font-family: Arial, sans-serif;
+                                  background-color: #f8f8f8;
+                                  margin: 0;
+                                  padding: 0;
+                              }
+  
+                              .container {
+                                  max-width: 600px;
+                                  margin: 0 auto;
+                                  background-color: #ffffff;
+                                  border-radius: 5px;
+                                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                              }
+  
+                              .header {
+                                  background-color: #0073e6;
+                                  color: #ffffff;
+                                  padding: 20px;
+                                  text-align: center;
+                                  border-top-left-radius: 5px;
+                                  border-top-right-radius: 5px;
+                              }
+  
+                              h1 {
+                                  font-size: 24px;
+                                  margin: 0;
+                              }
+  
+                              p {
+                                  font-size: 16px;
+                                  color: #333333;
+                                  margin: 0;
+                              }
+                              .footer {
+                                  border: 1px dashed #cccccc;
+                                  border-width: 2px 0;
+                                  padding: 20px;
+                                  text-align: center;
+                              }
+  
+                              .footer p {
+                                  font-size: 14px;
+                                  color: #333333;
+                                  margin: 0;
+                              }
+  
+                              .footer a {
+                                  color: #0073e6;
+                              }
+  
+                              .footer a:hover {
+                                  text-decoration: underline;
+                              }
+                          </style>
+                      </head>
+                      <body>
+                          <div class="container">
+                              <div class="header">
+                                  <h1>${organization}</h1>
+                              </div>
+                              <div>
+                                    <p>
+                                    This is to inform you of your purchase at ${shopname}. <br/>
+                                    Please find attached the invoice. <br/>
+                                    If there is any discrepancy, please reach out to the vendor.<br/>
+                                    Email : ${shopEmail} <br/>
+                                    Address : ${shopAddress} <br/>
+                                    </p>
+                              </div>
+                              <div class="footer">
+                                  <p>Author</p>
+                                  <p><a href="http://localhost:3000/" target="_blank">Billing 360</a></p>
+                              </div>
+                          </div>
+                      </body>
+                  </html>
+                  `,
+        };
+        // console.log("message sent")
+        // Send email
+        await transporter.sendMail(mailOptions);
+        // console.log("message sent")
+    } catch (error) {
+        // console.log(u)
+        // console.log(p)
+        console.log(error)
+        console.error(`Failed to send invoice to ${email}`, error.message);
+        throw new Error(error.message);
+    }
+}
+module.exports = {sendInvoiceMailController};
+
+
+const sendInvoiceMail = async(req,res) => {
+  // console.log(req.body);
+  const requestData = req.body.requestData;
+  // console.log(requestData);
+  try{
+  const pdfBuffer = await generatePDFBuffer(pdfTemplate(requestData));
+  await sendInvoiceMailController(requestData.invoiceData.customerEmail, "Billing 360", requestData.userData.shopname,  requestData.invoiceData.invoiceID, requestData.userData.email, pdfBuffer, requestData.userData.shopaddress);
+  // await notifyCustomerController(requestData.invoiceData.customerEmail, 'Billing 360', requestData.userData.shopname, requestData.userData.email, requestData.userData.shopaddress, body, requestData.invoiceData.totalAmount, pdfBuffer);
+  }
+  catch(error){
+    console.log(error);
+  }
+}
 
 const addInvoice = async (req, res) => {
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
   let totalSales = 0;
   let totalCost = 0;
   for(let i = 0; i < req.body.itemList.length; i++){
@@ -33,9 +199,9 @@ const addInvoice = async (req, res) => {
   addInvoice.save()
     .then(async(result) => {
       const newInvoiceId = result._id;
-      console.log(newInvoiceId);
+      // console.log(newInvoiceId);
       const savedInvoice = await Invoice.findById(newInvoiceId);
-      console.log(savedInvoice);
+      // console.log(savedInvoice);
 
       // Check if customer exists
       const existingCustomer = await Customer.findOne({userID: req.body.userID, email: savedInvoice.customerEmail});
@@ -46,7 +212,7 @@ const addInvoice = async (req, res) => {
         existingCustomer.invoiceList.push(savedInvoice._id); // Add new invoice _id to the customer's invoices array
         existingCustomer.creditAmount += (result.paymentMode === 'Credit' ? result.totalAmount : 0);
         const savedCustomer = await existingCustomer.save();
-        console.log(savedCustomer);
+        // console.log(savedCustomer);
       } else {
         // Create a new customer document
         const newCustomer = new Customer({
@@ -60,7 +226,7 @@ const addInvoice = async (req, res) => {
         });
         // console.log(newCustomer);
         const savedCustomer = await newCustomer.save();
-        console.log(savedCustomer);
+        // console.log(savedCustomer);
       }
 
       res.status(200).send(result);
@@ -109,7 +275,7 @@ const searchInvoice = async (req, res) => {
     const records = await Invoice.find(query).exec();
     // Send the results
     res.json(records);
-    console.log(records);
+    // console.log(records);
   } catch (error) {
     console.error('Error fetching records:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -175,9 +341,9 @@ const getSalesData = async (req, res) => {
     const isoStartDate = startUTC.toISOString();
     const isoEndDate = endUTC.toISOString();
 
-    console.log(isoStartDate);
-    console.log(isoEndDate);
-    console.log(id);
+    // console.log(isoStartDate);
+    // console.log(isoEndDate);
+    // console.log(id);
 
     // Fetch sales data from database based on start date, end date, and userId
     let salesData = await Invoice.find({ 
@@ -213,10 +379,10 @@ const getDashboardData = async (req, res) => {
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
     const startOfYesterday = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
-    console.log("today");
-    console.log(today);
-    console.log(startOfDay);
-    console.log(startOfYesterday);
+    // console.log("today");
+    // console.log(today);
+    // console.log(startOfDay);
+    // console.log(startOfYesterday);
     // Find all invoices for the user with today's date
     const invoices = await Invoice.find({
       userID: userId,
@@ -226,7 +392,7 @@ const getDashboardData = async (req, res) => {
       userID: userId,
       createdAt: { $gte: startOfYesterday, $lt: startOfDay }
     });
-    console.log(invoices);
+    // console.log(invoices);
     // Calculate the sum of selling prices
     const totalSellingPrice = invoices.reduce((total, invoice) => total + invoice.totalSales, 0);
     // Calculate the sum of cost prices
@@ -244,4 +410,4 @@ const getDashboardData = async (req, res) => {
 
 
 
-module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, getDashboardData };
+module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, getDashboardData, sendInvoiceMail};

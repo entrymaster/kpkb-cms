@@ -66,11 +66,11 @@ function Login() {
       })
         .then((result) => {
           alert("Successfully changed password");
-          console.log("Successfully changed password", result);
+          // console.log("Successfully changed password", result);
           navigate("/")
         })
         .catch((error) => {
-          console.log("Something went wrong ", error);
+          // console.log("Something went wrong ", error);
         });
     }
     //authCheck();

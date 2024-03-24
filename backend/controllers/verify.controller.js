@@ -11,10 +11,10 @@ const senOtp = async (req, res) => {
   try {
     
     const { email, type = 'numeric', organization = 'Billing 360', subject = 'One-Time Password (OTP)' } = req.body;
-    console.log(email)
+    // console.log(email)
 
     const otp = await otpController.generateOtp(email, type);
-    console.log("otp generated now we will genrate email")
+    // console.log("otp generated now we will genrate email")
     await sendMailController(email, otp, organization, subject);
 
     res.status(200).json({ message: 'OTP is generated and sent to your email' });
@@ -29,12 +29,12 @@ const verOtp = async (req, res) => {
   try {
     
     const { email, otp } = req.body;
-    console.log(email)
-    console.log(otp)
+    // console.log(email)
+    // console.log(otp)
     await otpController.verifyOtp(email, otp);
 
     res.status(200).json({ message: 'OTP is verified' });
-    console.log("email is verified")
+    // console.log("email is verified")
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

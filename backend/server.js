@@ -45,7 +45,6 @@ app.use("/api/user", userRouter);
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// >>>>>>> 3b56fa5a78702810ae8dea8d7d64abdafcb1ee3b
 /* This is a route handler. It is listening for a GET request to the root route of the application.
 When it receives a request, it will send back a response with the string "Hello World!". */
 app.get("/api/login", (req, res) => {
@@ -72,22 +71,6 @@ app.post('/api/generate-pdf', (req, res) => {
     res.send(buffer);
   });
 });
-
-// app.post('/api/create-pdf', (req,res) => {
-//   pdf.create(pdfTemplate(req.body), {}).toFile('invoice.pdf', (err) => {
-//     if(err) {
-//       return console.log('error');
-//     }
-//   res.send(Promise.resolve())
-//   });
-//   console.log(req.body);
-// })
-
-// app.get('/api/fetch-pdf', (req,res) => {
-//   res.sendFile(`${__dirname}/invoice.pdf`);
-//   console.log("pdf check2")
-//   console.log(res.body);
-// })
 
 /* Connecting to the database and then starting the server. */
 mongoose

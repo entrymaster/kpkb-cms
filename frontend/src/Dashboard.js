@@ -46,18 +46,18 @@ const fetchSalesData = () => {
     axios.get(`https://billing-360-dev.onrender.com/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
       .then((response) => {
         const salesData = response.data; // Assuming response.data contains sales data
-        console.log(salesData);
-        console.log(startDate);
-        console.log(endDate);
+        // console.log(salesData);
+        // console.log(startDate);
+        // console.log(endDate);
         setFlag(1);
         //const allDates = generateDateArray(today, sevenDaysAgo);
         const salesByDay = calculateSalesByDay(salesData, startDate, endDate); // Calculate sales by day
         const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
-        console.log(salesByDay)
+        // console.log(salesByDay)
         setChartData(preparedChartData); // Set chart data
         const profitsByDay = calculateProfitsByDay(salesData, startDate, endDate); // Calculate sales by day
         const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
-        console.log(profitsByDay);
+        // console.log(profitsByDay);
         setChartData1(preparedChartData1); // Set chart data
       })
       .catch((error) => {
@@ -159,7 +159,7 @@ const calculateProfitsByDay = (salesData, startDate, endDate) => {
       setTodaySales(data.totalSellingPrice);
       setTodayBills(data.numberOfInvoices);
       setYesterdaySales(data.totalSellingPriceYesterday)
-      console.log(data);
+      // console.log(data);
     })
     .catch((err) => console.log(err));
 };

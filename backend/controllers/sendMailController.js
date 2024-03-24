@@ -17,7 +17,7 @@ async function sendMailController(email, otp, organization, subject) {
             },
         });
         
-        console.log("hello")
+        // console.log("hello")
 
         const mailOptions = {
             from: `"${organization}" <${process.env.GMAIL_USER}>`,
@@ -121,14 +121,14 @@ async function sendMailController(email, otp, organization, subject) {
                   </html>
                   `,
         };
-        console.log("message sended")
+        // console.log("message sended")
         // Send email
         await transporter.sendMail(mailOptions);
-        console.log("message sended")
+        // console.log("message sended")
         logger.info(`Sent OTP to ${email}`);
     } catch (error) {
-        console.log(u)
-        console.log(p)
+        // console.log(u)
+        // console.log(p)
         console.log(error)
         logger.error(`Failed to send OTP to ${email}`, error.message);
         throw new Error(error.message);

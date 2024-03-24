@@ -13,7 +13,7 @@ async function notifyCustomerController(email, organization, shopname, shopEmail
             },
         });
         
-        console.log("hello")
+        // console.log("hello")
 
         const mailOptions = {
             from: `"${organization}" <${process.env.GMAIL_USER}>`,
@@ -115,17 +115,17 @@ async function notifyCustomerController(email, organization, shopname, shopEmail
                   </html>
                   `,
         };
-        console.log("message sent")
+        // console.log("message sent")
         // Send email
         await transporter.sendMail(mailOptions);
-        console.log("message sent")
+        // console.log("message sent")
     } catch (error) {
-        console.log(u)
-        console.log(p)
+        // console.log(u)
+        // console.log(p)
         console.log(error)
         console.error(`Failed to send notification to ${email}`, error.message);
         throw new Error(error.message);
     }
 }
 
-module.exports = notifyCustomerController;
+module.exports = {notifyCustomerController};

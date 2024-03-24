@@ -2,7 +2,7 @@ const Product = require("../models/inventory.model");
 
 // Add Post
 const addProduct = async (req, res) => {
-  console.log("req: ", req.body.userID);
+  // console.log("req: ", req.body.userID);
   const addProduct = new Product({
     userID: req.body.userID,
     // userID:"user",
@@ -36,7 +36,7 @@ const updateProduct = async (req, res) => {
       },
       { new: true }
     );
-    console.log(updatedProduct);
+    // console.log(updatedProduct);
     res.json(updatedProduct);
   } catch (error) {
     console.log(error);
@@ -64,7 +64,7 @@ const updateBatch = async (req, res) => {
     // Increment the quantity by the difference (p) using MongoDB's incrementer
     await Product.findByIdAndUpdate(_idProduct, { $inc: { quantity: quantityDifference } });
 
-    console.log(updatedBatch);
+    // console.log(updatedBatch);
     res.json(updatedBatch);
   } catch (error) {
     console.log(error);
@@ -161,7 +161,7 @@ const addBatchList = async (req, res) => {
       },
       { new: true }
     );
-    console.log(Product);
+    // console.log(Product);
     res.json({ message: 'BatchList added successfully', product: updatedProduct });
   } catch (error) {
     res.status(500).json({ error: 'Error adding batchList', message: error.message });
@@ -183,19 +183,19 @@ const updateItemQuantityInInvoice = async (req, res) => {
       //const { itemName, requestedQuantity } = itemsToUpdate[i];
       const itemName=itemsToUpdate[i].itemName;
       const requestedQuantity=itemsToUpdate[i].quantity;
-      console.log("itemname down");
-      console.log(itemName);
+      // console.log("itemname down");
+      // console.log(itemName);
       const inventoryItem = inventoryItems[i];
       if (!inventoryItem) {
         return res.status(404).json({ error: `Inventory item not found for ${itemName}` });
       }
 
       let remainingQuantity = requestedQuantity;
-      console.log("remaining quantity down");
-      console.log(remainingQuantity);
+      // console.log("remaining quantity down");
+      // console.log(remainingQuantity);
       for (let batchList of inventoryItem.batchList) {
         const availableQuantity = batchList.batchQty;
-        console.log(batchList.expiryDate)
+        // console.log(batchList.expiryDate)
         // If the requested quantity is less than or equal to the available quantity in the current batch
         if (remainingQuantity <= availableQuantity) {
           batchList.batchQty -= remainingQuantity;
@@ -205,8 +205,8 @@ const updateItemQuantityInInvoice = async (req, res) => {
           batchList.batchQty = 0;
           remainingQuantity -= availableQuantity;
         }
-        console.log(remainingQuantity);
-        console.log(batchList.batchQty);
+        // console.log(remainingQuantity);
+        // console.log(batchList.batchQty);
         // If the updated quantity is 0, remove the batch from the batchList
         // if (batchList.batchQty === 0) {
         //   inventoryItem.batchList = inventoryItem.batchList.filter(b => b.expiry !== batchList.expiry);

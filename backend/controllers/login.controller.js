@@ -37,8 +37,8 @@ const loginUser = async (req, res) => {
 
     // Compare the provided password with the stored hashed password
     const passwordMatch = await bcrypt.compare(password, user.password);
-     console.log(passwordMatch)
-    console.log(password)
+    //  console.log(passwordMatch)
+    // console.log(password)
     // console.log(user.password)
     // const hashedPassword = await bcrypt.hash(password.trim(), fixedSalt);
     // console.log("")

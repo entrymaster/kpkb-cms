@@ -192,6 +192,26 @@ const AddNewInvoice = () => {
   };
   
   const addInvoice = () => {
+    getUserData()
+    .then(() => {
+      // Logic for PDF creation
+      const requestData = {
+        invoiceData: invoiceData,
+        userData: userData
+      };
+        return requestData;
+    })
+    .then((requestData)=>{
+      console.log("requestdata: ", requestData);
+      fetch("https://billing-360-dev.onrender.com/api/invoice/sendmail", {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ requestData }),
+      })
+    })
+    .then((result) => {
       fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
         method: "POST",
         headers: {
@@ -211,7 +231,8 @@ const AddNewInvoice = () => {
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
-    };
+    })}
+    
 
     const getUserData = () => {
       return new Promise((resolve, reject) => {

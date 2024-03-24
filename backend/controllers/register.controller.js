@@ -58,7 +58,7 @@ const registerUser = async (req, res) => {
       shopaddress,
       phonenumber,
     });
-    console.log(password)
+    // console.log(password)
     // Save the user to the database
     const result = await newUser.save();
 
