@@ -109,7 +109,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
             <td><input type="text" id="category" autocomplete="one-time-code" placeholder="Category" value={itemData.category} name="category" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
-                             <td className="label-cell">GST:</td>
+                             <td className="label-cell">GST (%):</td>
             <td><input type="number" id="gst" autocomplete="one-time-code" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
