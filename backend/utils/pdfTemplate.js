@@ -232,6 +232,7 @@ const invoicePDF = (requestData) => {
                       </tr>
                   </tbody>
               </table>
+              
           </div>
       </div>
   </body>
