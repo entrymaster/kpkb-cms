@@ -87,11 +87,33 @@ const AddNewInvoice = () => {
 
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
-    if(fieldName === 'quantity'){
-      setInvoiceData((prevData) => ({
-        ...prevData,
-        [fieldName] : isNaN(value) ? 0 : value,
-      }));
+    if(fieldName === 'discount'){
+      let discount = (value === '') ? 0 : value;
+      discount = discount <= 0 ? '' : discount;
+      discount = discount >=100 ? 100 : discount;
+      setInvoiceData((prevData) => {
+        const updatedItemList = [...prevData.itemList];
+        const arr = updatedItemList;
+        var subTotal = 0;
+        for(var i=0; i<arr.length; i++){
+          subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
+        }
+        var total = 0;
+        const temp = parseFloat((subTotal - (subTotal*prevData.discount)/100).toFixed(2));
+        // total = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
+        total = temp.toFixed(2);
+        return {
+          ...prevData,
+          itemList: updatedItemList,
+          totalAmount: total,
+          discount: discount,
+          // invoiceID: invoiceData.invoiceID,
+          // discount: invoiceData.discount
+        };
+        // ...prevData,
+        // [fieldName] : discount,
+        // [fieldName] : isNaN(value) ? 0 : value,
+      });
     } else {
       setInvoiceData((prevData) => ({
         ...prevData,
@@ -419,7 +441,7 @@ const AddNewInvoice = () => {
       <div className="bottom-controls">
         <button id="add-new-item" type="button" onClick={handleAddField}><strong> Add New Row </strong> </button>
         <div className='discount-input'>
-          Discount (%): <input type="number" autocomplete="one-time-code" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)'/>
+          Discount (%): <input type="number" autocomplete="one-time-code" value={invoiceData.discount} onChange={(e) => handleInputChangeCust(e, 'discount')} placeholder='Discount (%)' onWheel={event => event.target.blur()}/>
         </div>
       </div>
       <div className="customer-notes">
