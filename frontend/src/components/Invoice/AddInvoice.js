@@ -270,6 +270,7 @@ const AddNewInvoice = () => {
           userData.gstno = data.gstno;
           userData.shopname = data.shopname;
           userData.shopaddress = data.shopaddress;
+          userData.phonenumber = data.phonenumber;
           resolve(data); // Resolve the promise with the user data
         })
         .catch(error => {
