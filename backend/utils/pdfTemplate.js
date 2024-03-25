@@ -63,6 +63,9 @@ const invoicePDF = (requestData) => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Invoice</title>
       <style>
+          html{
+              zoom: 0.55;
+          }
           body {
               font-family: Arial, sans-serif;
               margin: 0;
