@@ -61,13 +61,14 @@ const AddNewInvoice = () => {
         updatedItemList[index].amount = parseFloat(amount.toFixed(2));
         // setTotalChange(true);
       }
-      if (fieldName === 'quantity') {
-        let quantity = value
+      if (fieldName === 'quantity') { 
+        let quantity = (value === '') ? 0 : value;
         if(quantity > availableQuantity) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
           quantity = 0;
         };
+        quantity = quantity <= 0 ? '' : quantity;
         const rate = parseFloat(updatedItemList[index].rate.toFixed(2));
         const gst = parseFloat(updatedItemList[index].gst.toFixed(2));
         const amount = (quantity * rate) + ((quantity * rate) * gst) / 100;
@@ -78,7 +79,7 @@ const AddNewInvoice = () => {
         ...invoiceData,
         userID: authContext.user,
         itemList: updatedItemList,
-        discount: 0,
+        // discount: 0,
       });
     }
     setTotalChange(true);
@@ -109,7 +110,8 @@ const AddNewInvoice = () => {
     const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
     invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
   }
-  setInterval(calculateTotal, 100);
+  setInterval(()=>{calculateTotal()}, 50);
+
   useEffect(()=>{
     const arr = invoiceData.itemList;
     var subTotal = 0;
@@ -130,6 +132,7 @@ const AddNewInvoice = () => {
   }
 
   const handleDeleteRow = (index) => {
+    console.log(invoiceData.discount);
     setInvoiceData((prevData) => {
       const updatedItemList = [...prevData.itemList];
       updatedItemList.splice(index, 1);
@@ -148,6 +151,7 @@ const AddNewInvoice = () => {
       return {
         itemList: updatedItemList,
         totalAmount: total,
+        discount: invoiceData.discount
         
       };
     });
@@ -390,7 +394,13 @@ const AddNewInvoice = () => {
             />
             {/* {item.itemName} */}
             </td>
-          <td><input type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index, 'quantity')} placeholder='Quantity'/></td>
+          <td><input type="number"
+                    className="no-scroll"
+                    value={item.quantity} 
+                    onChange={(e) => handleInputChange(e, index, 'quantity')}
+                    // onWheel={(e) => e.preventDefault()}
+                    onWheel={event => event.target.blur()}
+                    placeholder='Quantity'/></td>
           <td>{item.rate}</td>
           <td>{item.gst}</td>
           <td>{item.amount}</td>

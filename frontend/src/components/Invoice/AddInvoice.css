@@ -161,3 +161,8 @@
     align-items: center;
     z-index: 9999; /* Ensure it appears above other elements */
   }
+
+  /* .no-scroll {
+    touch-action: none;
+    overscroll-behavior: none;
+  } */
