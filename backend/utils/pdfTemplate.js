@@ -232,7 +232,10 @@ const invoicePDF = (requestData) => {
                       </tr>
                   </tbody>
               </table>
-              
+              <div class="customer-notes">
+                <h3>Customer Notes</h3>
+                <p>${requestData.invoiceData.customerNotes}</p>
+              </div>
           </div>
       </div>
   </body>
