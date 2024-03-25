@@ -132,7 +132,12 @@ const AddNewInvoice = () => {
     const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100).toFixed(2));
     invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
   }
-  setInterval(()=>{calculateTotal()}, 50);
+  setInterval(()=>{
+    calculateTotal(); 
+    const now = new Date();
+    const adjustedTime = new Date(now.getTime() + (5 * 60 + 30) * 60000);
+    invoiceData.createdAt = new Date(adjustedTime);}
+    ,50);
 
   useEffect(()=>{
     const arr = invoiceData.itemList;
@@ -171,9 +176,10 @@ const AddNewInvoice = () => {
       // total = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
       total = temp.toFixed(2);
       return {
+        ...prevData,
         itemList: updatedItemList,
         totalAmount: total,
-        discount: invoiceData.discount
+        // discount: invoiceData.discount
         
       };
     });
