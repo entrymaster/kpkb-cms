@@ -43,34 +43,39 @@ const updateProduct = async (req, res) => {
     res.status(402).send("Error");
   }
 };
-const updateBatch = async (req, res) => {
-  try {
-    const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
-    const quantityDifference = batchQty - initialBatchQty;
 
-    // Update the batch
-    const updatedBatch = await Product.findOneAndUpdate(
-      { "batchList._id": _id }, // Find the product with the matching batchList _id
-      { 
-        $set: {
-          "batchList.$.batchID": batchID,
-          "batchList.$.batchQty": batchQty,
-          "batchList.$.expiryDate": expiryDate,
-        }
-      },
-      { new: true }
-    );
+    const updateBatch = async (req, res) => {
+      try {
+        const { batchID, batchQty, expiryDate, _id, _idProduct, initialBatchQty } = req.body;
+        const quantityDifference = batchQty - initialBatchQty;
 
-    // Increment the quantity by the difference (p) using MongoDB's incrementer
-    await Product.findByIdAndUpdate(_idProduct, { $inc: { quantity: quantityDifference } });
+        // Update the batch
+        const updatedBatch = await Product.findOneAndUpdate(
+          { "batchList._id": _id }, // Find the product with the matching batchList _id
+          { 
+            $set: {
+              "batchList.$.batchID": batchID,
+              "batchList.$.batchQty": batchQty,
+              "batchList.$.expiryDate": expiryDate,
+            }
+          },
+          { new: true }
+        );
 
-    // console.log(updatedBatch);
-    res.json(updatedBatch);
-  } catch (error) {
-    console.log(error);
-    res.status(402).send("Error");
-  }
-};
+        // Increment the quantity by the difference (p) using MongoDB's incrementer
+        await Product.findByIdAndUpdate(_idProduct, { $inc: { quantity: quantityDifference } });
+
+        // Fetch the updated product with batch list to ensure correctness
+        const updatedProduct = await Product.findById(_idProduct).populate('batchList');
+
+        // Ensure that updatedBatchList is sent in the response
+        res.json(updatedProduct.batchList);
+      } catch (error) {
+        console.log(error);
+        res.status(402).send("Error");
+      }
+    };
+
 
 const getAllProducts = async (req, res) => {
   try {
