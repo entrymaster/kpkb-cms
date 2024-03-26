@@ -36,7 +36,18 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
       };
       const addBatch = () => {
         const { batchID, batchQty, expiryDate } = itemData; // Destructure itemData
-      
+        if (!itemData.batchID) {
+          alert("Please enter batchID.");
+          return; // Stop further execution
+        }
+        if (!itemData.batchQty) {
+          alert("Please enter quantity.");
+          return; // Stop further execution
+        }
+        if (!itemData.expiryDate) {
+          alert("Please enter expiry date.");
+          return; // Stop further execution
+        }
         fetch("https://billing-360-dev.onrender.com/api/inventory/addBatchList", {
           method: "POST",
           headers: {
@@ -93,15 +104,15 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
             
             <tbody>
             <tr>
-              <td><input type="text" id="item-name" autocomplete="one-time-code" placeholder="batchID" value={itemData.batchID} name="batchID" onChange={(e) =>
+              <td><input type="text" id="item-name" required autocomplete="one-time-code" placeholder="batchID" value={itemData.batchID} name="batchID" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
-              <td><input type="number" id="item-id" autocomplete="one-time-code" placeholder="batchQty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
+              <td><input type="number" id="item-id" required autocomplete="one-time-code" placeholder="batchQty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
             </tr>
             <tr>
-              <td><input type="date" id="expiryDate" autocomplete="one-time-code" placeholder="expiryDate" value={itemData.expiryDate} name="expiryDate" onChange={(e) =>
+              <td><input type="date" id="expiryDate" required autocomplete="one-time-code" placeholder="expiryDate" value={itemData.expiryDate} name="expiryDate" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               }/></td>
             </tr>

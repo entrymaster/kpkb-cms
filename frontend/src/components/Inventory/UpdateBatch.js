@@ -61,7 +61,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
           .then((result) => {
             alert("Batch UPDATED");
             //resetFields();
-            //handlePageUpdate();
+            // handlePageUpdate();
             //addProductModalSetting();
             on_Cancel();
           })
