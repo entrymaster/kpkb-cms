@@ -25,23 +25,6 @@ function Login() {
   const location = useLocation();
   const { email } = location.state || {}; // Destructure email from location state
   form.email = email;
-//   const authCheck = () => {
-//     setTimeout(() => {
-//       fetch("https://billing-360-dev.onrender.com/api/login/log/get")
-//         .then((response) => response.json())
-//         .then((data) => {
-//           alert("Successfully Login");
-//           localStorage.setItem("user", JSON.stringify(data));
-//           authContext.signin(data._id, () => {
-//             navigate("/dashboard");
-//           });
-//         })
-//         .catch((err) => {
-//           alert("Wrong credentials, Try again")
-//           console.log(err);
-//         });
-//     }, 3000);
-//   };
 
   const forgotpass = (e) => {
     // Cannot send empty data

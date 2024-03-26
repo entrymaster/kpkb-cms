@@ -1,8 +1,5 @@
 const Invoice = require("../models/invoice.model");
 const Customer = require("../models/customer.model");
-const { PDFDocument, rgb } = require('pdf-lib');
-const notifyCustomerController = require("./notifyCustomer.controller");
-// const sendInvoiceMailController = require("./sendInvoiceMailToCustomer.controller");
 const pdf = require('html-pdf');
 const pdfTemplate = require('../utils/pdfTemplate');
 // Add Post
@@ -282,44 +279,6 @@ const searchInvoice = async (req, res) => {
   }
 };
 
-// const getSalesData = async (req, res) => {
-//   const { userId, startDate, endDate } = req.query; // Extract userId, startDate, and endDate from query parameters
-//   try {
-//     // Convert startDate and endDate to ISO 8601 format
-//     const id = req.params.userId; 
-
-//     // Convert start and end dates to GMT
-//     const startUTC = new Date(startDate);
-//     const endUTC = new Date(endDate);
-
-//     // Adjust start date to GMT and subtract 1 day
-//     startUTC.setDate(startUTC.getDate() - 1);
-//     startUTC.setUTCHours(18, 30, 0, 0);
-
-//     // Set end date time to 18:30 GMT
-//     endUTC.setUTCHours(18, 30, 0, 0);
-
-//     // Convert dates to ISO 8601 format
-//     const isoStartDate = startUTC.toISOString();
-//     const isoEndDate = endUTC.toISOString();
-
-//     console.log(isoStartDate);
-//     console.log(isoEndDate);
-//     console.log(id);
-
-//     // Fetch sales data from database based on start date, end date, and userId
-//     const salesData = await Invoice.find({ 
-//       userID: id, // Filter by userId
-//       createdAt: { $gte: isoStartDate, $lte: isoEndDate } ,
-//     });
-    
-//     res.status(200).json(salesData);
-//   } catch (error) {
-//     console.error('Error fetching sales data:', error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
-
 const getSalesData = async (req, res) => {
   const { userId, startDate, endDate } = req.query; // Extract userId, startDate, and endDate from query parameters
   try {
@@ -340,10 +299,6 @@ const getSalesData = async (req, res) => {
     // Convert dates to ISO 8601 format
     const isoStartDate = startUTC.toISOString();
     const isoEndDate = endUTC.toISOString();
-
-    // console.log(isoStartDate);
-    // console.log(isoEndDate);
-    // console.log(id);
 
     // Fetch sales data from database based on start date, end date, and userId
     let salesData = await Invoice.find({ 
@@ -379,11 +334,6 @@ const getDashboardData = async (req, res) => {
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
     const startOfYesterday = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate());
-    // console.log("today");
-    // console.log(today);
-    // console.log(startOfDay);
-    // console.log(startOfYesterday);
-    // Find all invoices for the user with today's date
     const invoices = await Invoice.find({
       userID: userId,
       createdAt: { $gte: startOfDay }
@@ -392,7 +342,6 @@ const getDashboardData = async (req, res) => {
       userID: userId,
       createdAt: { $gte: startOfYesterday, $lt: startOfDay }
     });
-    // console.log(invoices);
     // Calculate the sum of selling prices
     const totalSellingPrice = invoices.reduce((total, invoice) => total + invoice.totalSales, 0);
     // Calculate the sum of cost prices
