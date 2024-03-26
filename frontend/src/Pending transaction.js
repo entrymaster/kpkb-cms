@@ -8,13 +8,42 @@ import { Link, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import AuthContext from "./AuthContext";
 
+
 const PendingTransactions = () => {
+  
   const [activeTab, setActiveTab] = useState("credit-tab");
   const [Entries, setEntries] = useState([]);
   const authContext = useContext(AuthContext);
+  const [sortDirection, setSortDirection] = useState('asc');
+  const [sortBy, setSortBy] = useState('');
   const openTab = (tabName) => {
     setActiveTab(tabName);
     handlePageUpdate();
+  };
+  const sortEntries = (columnName) => {
+    const sortedEntries = [...Entries];
+    let newSortOrder;
+  
+    if (sortBy === columnName) {
+      // If already sorted by the same column, reverse the order
+      sortedEntries.reverse();
+      // Toggle the direction of the arrow
+      newSortOrder = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Sort the entries based on the selected column
+      sortedEntries.sort((a, b) => {
+        if (a[columnName] > b[columnName]) return 1;
+        if (a[columnName] < b[columnName]) return -1;
+        return 0;
+      });
+      // Set the default direction of the arrow to 'asc' when changing the column
+      newSortOrder = 'asc';
+    }
+  
+    // Update state variables
+    setEntries(sortedEntries);
+    setSortBy(columnName); // Update the state to track the selected column
+    setSortDirection(newSortOrder); // Update the arrow direction
   };
   const [searchInput, setSearchInput] = useState('');
 
@@ -155,6 +184,8 @@ const PendingTransactions = () => {
       else SearchDebitSuppliers(query);
     }
   }, [updatePage]);
+  
+  
 
   const auth = useContext(AuthContext);
   if (!auth.user) {
@@ -209,10 +240,50 @@ const PendingTransactions = () => {
         <table id="inventoryTable">
           <thead style={{ backgroundColor: "lightly" }}>
             <tr className="headers">
-              <th>Customer Name</th>
-              <th>Phone No.</th>
-              <th>Email</th>
-              <th>Amount</th>
+            <th>
+  CustomerName
+  <button onClick={() =>  sortEntries('name')}>
+    {/* Arrow icon */}
+    {sortBy === 'name' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+  Phone No
+  <button onClick={() =>  sortEntries('phoneNo')}>
+    {/* Arrow icon */}
+    {sortBy === 'phoneNo' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+  Email
+  <button onClick={() =>  sortEntries('email')}>
+    {/* Arrow icon */}
+    {sortBy === 'email' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+ Amount
+  <button onClick={() =>  sortEntries('creditAmount')}>
+    {/* Arrow icon */}
+    {sortBy === 'creditAmount' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
               <th id="add-new" style={{backgroundColor:"#c4dcf4"}} onClick={() => {setEntryType("Customer");showAddNewDialog();}}>
                 Add New Customer
               </th>
@@ -281,11 +352,51 @@ const PendingTransactions = () => {
       >
         <table id="inventoryTable">
           <thead>
-            <tr className="headers">
-              <th>Supplier Name</th>
-              <th>Phone No.</th>
-              <th>Email</th>
-              <th>Amount</th>
+          <tr className="headers">
+            <th>
+  Suppliers Name
+  <button onClick={() =>  sortEntries('name')}>
+    {/* Arrow icon */}
+    {sortBy === 'name' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+  Phone No
+  <button onClick={() =>  sortEntries('phoneNo')}>
+    {/* Arrow icon */}
+    {sortBy === 'phoneNo' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+  Email
+  <button onClick={() =>  sortEntries('email')}>
+    {/* Arrow icon */}
+    {sortBy === 'email' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
+<th>
+ Amount
+  <button onClick={() =>  sortEntries('debitAmount')}>
+    {/* Arrow icon */}
+    {sortBy === 'debitAmount' ? (
+    sortDirection === 'asc' ? <>&uarr;</> : <>&darr;</>
+  ) : (
+    <>&darr;</>
+  )}
+  </button>
+</th>
               <th
                 id="add-new"
                 style={{backgroundColor:"#c4dcf4"}}
