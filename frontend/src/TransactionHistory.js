@@ -86,28 +86,27 @@ const TransactionHistory = () => {
     });
   };
 
-  const createPdf = () => {
+  const createPdf= async() =>{
     setShowLoading(true);
-    getUserData()
-      .then(() => {
-        const requestData = {
-          invoiceData: invoiceData,
-          userData: userData
-        };
-        // console.log(userData);
-        return axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
-      })
-      .then((res) => {
+    // (() => {
+    try{
+      const requestData = {
+        invoiceData: invoiceData,
+        userID: authContext.user,
+      };
+
+      const res=await axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         setShowLoading(false);
         const pdfUrl = URL.createObjectURL(pdfBlob);
         window.open(pdfUrl,'_blank');
-      })
-      .catch((error) => {
+    }
+      catch(error) {
         setShowLoading(false); // Hide loading in case of error
         console.error('Error creating PDF:', error);
-      });
-  };
+      }
+    }
+    
   const handleCustomerName = async (e) => {
     await setCustomerName(e.target.value);
     fetchSearchData();

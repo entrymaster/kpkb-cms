@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { PDFDocument,rgb } = require('pdf-lib');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./utils/pdfTemplate');
+const User = require("./models/user.model")
 
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
@@ -51,9 +52,17 @@ app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post('/api/generate-pdf', (req, res) => {
+app.post('/api/generate-pdf', async(req, res) => {
   // Generate PDF in memory
-  pdf.create(pdfTemplate(req.body), {childProcessOptions: {
+  const reqData = req.body;
+  // console.log(reqData);
+  const user = await User.findById(reqData.userID);
+  const requestData = {
+    invoiceData: reqData.invoiceData,
+    userData: user,
+  };
+  // console.log(requestData);
+  pdf.create(pdfTemplate(requestData), {childProcessOptions: {
     env: {
       OPENSSL_CONF: '/dev/null',
     },
