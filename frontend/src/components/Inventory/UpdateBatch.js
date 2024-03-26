@@ -91,7 +91,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id,  }) => {
               <td><input type="number" id="item-id" autocomplete="one-time-code" placeholder="Batch Qty" value={itemData.batchQty} name="batchQty" onChange={(e) =>
                                 handleInputChange(e.target.name, e.target.value)
                               } /></td>
-              <td><input type="text" id="expiry date" autocomplete="one-time-code"  value= {`Batch Expiry Date :  ${itemData.expiryDate}`} 
+              <td><input type="text" id="expiry date" autocomplete="one-time-code"  value= {`Expiry Date :  ${itemData.expiryDate}`} 
                                readOnly  className="read-only-input"/></td>
             </tr>
             

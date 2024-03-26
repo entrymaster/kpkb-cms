@@ -75,11 +75,11 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           <tbody>
           <tr>
           <td className="label-cell">Item Name:</td>
-            <td><input type="text" id="item-name" autocomplete="one-time-code" placeholder="Item Name" readOnly value={itemData.itemName} name="itemName" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
+            <td><input type="text"className="read-only-input" id="item-name" autocomplete="one-time-code" placeholder="Item Name" readOnly value={itemData.itemName} name="itemName" onChange={(e) =>
+                              handleInputChange(e.target.name, e.target.value) 
                             }/></td>
          <td className="label-cell">Item ID:</td>
-            <td><input type="text" id="item-id" autocomplete="one-time-code" placeholder="Item ID" readOnly value={itemData.itemID} name="itemID" onChange={(e) =>
+            <td><input type="text" className="read-only-input" id="item-id" autocomplete="one-time-code" placeholder="Item ID" readOnly value={itemData.itemID} name="itemID" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
           </tr>
@@ -97,7 +97,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           </tr>
           <tr>
           <td className="label-cell">Category:</td>
-            <td><input type="text" id="category" autocomplete="one-time-code" placeholder="Category" readOnly value={itemData.category} name="category" onChange={(e) =>
+            <td><input type="text"className="read-only-input" id="category" autocomplete="one-time-code" placeholder="Category" readOnly value={itemData.category} name="category" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
                              <td className="label-cell">GST:</td>
