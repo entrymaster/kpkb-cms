@@ -61,8 +61,10 @@ const AddNewInvoice = () => {
         updatedItemList[index].amount = parseFloat(amount.toFixed(2));
         // setTotalChange(true);
       }
-      if (fieldName === 'quantity') { 
-        let quantity = (value === '') ? 0 : value;
+      if (fieldName === 'quantity') {
+        let quantity = parseInt(value,10);
+        quantity = (quantity === '') ? 0 : quantity;
+        // quantity = (quantity != Number) ? Number(quantity) : quantity;
         if(quantity > availableQuantity) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
@@ -88,13 +90,15 @@ const AddNewInvoice = () => {
   const handleInputChangeCust = async(event, fieldName) => {
     const { value } = event.target;
     if(fieldName === 'discount'){
-      let discount = (value === '') ? 0 : value;
+      let discount = parseFloat(value);
+      discount = (discount === '') ? 0 : discount;
       discount = discount <= 0 ? '' : discount;
       discount = discount >=100 ? 100 : discount;
       setInvoiceData((prevData) => {
         const updatedItemList = [...prevData.itemList];
         const arr = updatedItemList;
         var subTotal = 0;
+        // let disc = (discount === '') ? 0 : discount;
         for(var i=0; i<arr.length; i++){
           subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
         }
@@ -102,6 +106,7 @@ const AddNewInvoice = () => {
         const temp = parseFloat((subTotal - (subTotal*prevData.discount)/100).toFixed(2));
         // total = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
         total = temp.toFixed(2);
+        total = (isNaN(total)) ? 0 : parseFloat(total);
         return {
           ...prevData,
           itemList: updatedItemList,
@@ -136,8 +141,8 @@ const AddNewInvoice = () => {
     calculateTotal(); 
     const now = new Date();
     const adjustedTime = new Date(now.getTime() + (5 * 60 + 30) * 60000);
-    invoiceData.createdAt = new Date(adjustedTime);}
-    ,50);
+    invoiceData.createdAt = new Date(adjustedTime);
+  },50);
 
   useEffect(()=>{
     const arr = invoiceData.itemList;
@@ -145,7 +150,8 @@ const AddNewInvoice = () => {
     for(var i=0; i<arr.length; i++){
       subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
     }
-    const temp = parseFloat((subTotal - (subTotal*invoiceData.discount)/100));
+    let disc = (isNaN(invoiceData.discount)) ? 0 : invoiceData.discount;
+    const temp = parseFloat((subTotal - (subTotal*disc)/100));
     // console.log(subTotal);
     // invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
     invoiceData.totalAmount = temp.toFixed(2);
@@ -187,6 +193,30 @@ const AddNewInvoice = () => {
 
   const handleGenerateBill = async () => {
     try {
+      // if (!invoiceData.customerName||!invoiceData.customerEmail||!invoiceData.phoneNo) {
+      //   alert("Please enter all the details.");
+      //   return; // Stop further execution
+      // }
+      if (!invoiceData.customerName) {
+        alert("Please fill Customer Name");
+        return;
+      } else if (!invoiceData.customerEmail) {
+        alert("Please fill Customer Email");
+        return;
+      }
+      else if(invoiceData.itemList.length > 1) {
+        // Filter out empty rows from itemList
+        invoiceData.itemList = invoiceData.itemList.filter(item => item.itemName !== "");
+        calculateTotal();
+      }
+      if (invoiceData.itemList.length === 0) {
+        alert("Please add some items. Empty invoice cannot be generated.");
+        return;
+      }
+      else if (invoiceData.totalAmount <= 0 && invoiceData.discount !== 100) {
+        alert("Empty invoice cannot be generated!");
+        return;
+      }
       setShowLoading(true);
 
       await addInvoice();
@@ -384,11 +414,11 @@ const AddNewInvoice = () => {
           <table id="customerTable">
             <tbody>
               <tr>
-                <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
+                <td className="input-box"><input type="text" required autocomplete="one-time-code" value={invoiceData.customerName} onChange={(e) => handleInputChangeCust(e, 'customerName')} placeholder='Customer Name' /></td>
                 <td className="input-box">InvoiceID : {invoiceData.invoiceID}</td>
               </tr>
               <tr>
-                <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.customerEmail} onChange={(e) => handleInputChangeCust(e, 'customerEmail')} placeholder='Customer Email' /></td>
+                <td className="input-box"><input type="text" required autocomplete="one-time-code" value={invoiceData.customerEmail} onChange={(e) => handleInputChangeCust(e, 'customerEmail')} placeholder='Customer Email' /></td>
                 <td className="input-box"><input type="text" autocomplete="one-time-code" value={invoiceData.phoneNo} onChange={(e) => handleInputChangeCust(e, 'phoneNo')} placeholder='Customer Phone No' /></td>
               </tr>
             </tbody>
@@ -425,7 +455,8 @@ const AddNewInvoice = () => {
             </td>
           <td><input type="number"
                     className="no-scroll"
-                    value={item.quantity} 
+                    value={item.quantity}
+                    // pattern="[0-9]*"
                     onChange={(e) => handleInputChange(e, index, 'quantity')}
                     // onWheel={(e) => e.preventDefault()}
                     onWheel={event => event.target.blur()}

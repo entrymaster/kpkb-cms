@@ -18,7 +18,6 @@
  * @param {number} requestData.invoiceData.itemList[].gst - The GST of the item.
  * @param {number} requestData.invoiceData.itemList[].amount - The total amount for the item.
  * @param {Date} requestData.invoiceData.createdAt - The date when the invoice was created.
- * @param {string} requestData.invoiceData.customerNotes - Note for the customer.
  * @param {Object} requestData.userData - The user data for including shop details in the invoice.
  * @param {string} requestData.userData.shopname - The name of the shop.
  * @param {string} requestData.userData.gstno - The GST number of the shop.
@@ -234,7 +233,7 @@ const invoicePDF = (requestData) => {
               </table>
               <div class="customer-notes">
                 <h3>Customer Notes</h3>
-                <p>${requestData.invoiceData.customerNotes}</p>
+                <p>${requestData.invoiceData.notes}</p>
               </div>
           </div>
       </div>
