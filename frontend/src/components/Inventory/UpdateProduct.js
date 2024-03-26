@@ -44,6 +44,10 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
         console.log(itemData);
       };
       const updateProduct = () => {
+        if (!itemData.itemID||!itemData.category||!itemData.itemGST||!itemData.costPrice||!itemData.salePrice||!itemData.itemName) {
+          alert("Please enter all the details.");
+          return; // Stop further execution
+        }
         fetch("https://billing-360-dev.onrender.com/api/inventory/update", {
           method: "POST",
           headers: {
@@ -85,12 +89,12 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           </tr>
           <tr>
           <td className="label-cell">salePrice:</td>
-            <td><input type="number" id="sales-price" autocomplete="one-time-code" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
+            <td><input type="number" id="sales-price"  required autocomplete="one-time-code" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
                             
                             <td className="label-cell">costPrice:</td>
-            <td><input type="number" id="cost-price" autocomplete="one-time-code" placeholder="Cost Price/unit" value={itemData.costPrice} name="costPrice"onChange={(e) =>
+            <td><input type="number" id="cost-price" required autocomplete="one-time-code" placeholder="Cost Price/unit" value={itemData.costPrice} name="costPrice"onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
                              
@@ -101,7 +105,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
                              <td className="label-cell">GST:</td>
-            <td><input type="number" id="gst" autocomplete="one-time-code" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>
+            <td><input type="number" id="gst" required autocomplete="one-time-code" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>
                               handleInputChange(e.target.name, e.target.value)
                             }/></td>
           </tr>
