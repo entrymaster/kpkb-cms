@@ -5,17 +5,23 @@ import UpdateBatchDialog from './UpdateBatch';
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }) => {
+  
   const productId = id;
   const [updateBatch, setUpdateBatch] = useState([]);
   const [isUpdateBatchDialogVisible, setUpdateBatchDialogVisibility] = useState(false);
-  const [updatePage, setUpdatePage] = useState(true);
+  const [updatePage1, setUpdatePage1] = useState(true);
   const [batchList, setBatchList] = useState(batches);
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [batchIdToDelete, setBatchIdToDelete] = useState(null);
+  console.log(batches);
 
   useEffect(() => {
     setBatchList(batches);
   }, [batches]);
+  const handleUpdateBatchList = (updatedBatchList) => {
+    setBatchList(updatedBatchList);
+  };
+
 
   const deleteBatch = (Batchid) => {
     console.log("Batch ID: ", Batchid);
@@ -34,12 +40,15 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
         const updatedBatchList = batchList.filter(batch => batch._id !== batchIdToDelete);
         setBatchList(updatedBatchList);
         handlePageUpdate();
-        setUpdatePage(!updatePage);
+        setUpdatePage1(!updatePage1);
         setConfirmationOpen(false);
       })
       .catch((error) => {
         console.error('Error:', error);
       });
+  };
+  const handlePageUpdate1 = () => {
+    setUpdatePage1(!updatePage1);
   };
 
   const toggleUpdateBatchDialog = () => {
@@ -75,6 +84,10 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
             on_Cancel={toggleUpdateBatchDialog}
             element={updateBatch}
             id={productId}
+            handlePageUpdate={handlePageUpdate}
+            handlePageUpdate1={handlePageUpdate1}
+            onUpdateSaved={handleUpdateBatchList}
+
           />
           {isConfirmationOpen && (
             
