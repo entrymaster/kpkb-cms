@@ -39,7 +39,7 @@ const UpdateAmt = ({
   const updateAmount = () => {
     if(DisplayData.amount > 0)
     {
-    if(amount + Data.amount > 0)
+    if(amount + Data.amount >=0)
     {
     if (DisplayData.amount > 0) {
       onCancel();
