@@ -32,7 +32,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
 
   const confirmDelete = () => {
     // Call the deleteBatch function when the user confirms
-    fetch(`https://billing-360-dev.onrender.com/api/inventory/deleteBatch/${id}/${batchIdToDelete}`, {
+    fetch(`http://localhost:5050/api/inventory/deleteBatch/${id}/${batchIdToDelete}`, {
       method: 'GET', // or 'DELETE' depending on your server implementation
     })
       .then((response) => response.json())

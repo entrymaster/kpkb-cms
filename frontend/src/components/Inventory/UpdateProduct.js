@@ -48,7 +48,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           alert("Please enter all the details.");
           return; // Stop further execution
         }
-        fetch("https://billing-360-dev.onrender.com/api/inventory/update", {
+        fetch("http://localhost:5050/api/inventory/update", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

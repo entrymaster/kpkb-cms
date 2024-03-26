@@ -26,7 +26,7 @@ const Reports = () => {
   const fetchSalesData = () => {
     if (startDate && endDate) {
   
-      axios.get(`https://billing-360-dev.onrender.com/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
+      axios.get(`http://localhost:5050/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {
           const salesData = response.data; // Assuming response.data contains sales data
           console.log(salesData);

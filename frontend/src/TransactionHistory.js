@@ -41,7 +41,7 @@ const TransactionHistory = () => {
   const userId = authContext.user;
 
   const fetchTransactionData = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/invoice/get/${userId}`)
+    fetch(`http://localhost:5050/api/invoice/get/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         setAllTransactions(data);
@@ -50,7 +50,7 @@ const TransactionHistory = () => {
   };
 
   const fetchSearchData = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/invoice/search/${userId}?customerName=${customerName}`)
+    fetch(`http://localhost:5050/api/invoice/search/${userId}?customerName=${customerName}`)
       .then((response) => response.json())
       .then((data) => {
         setAllTransactions(data);
@@ -60,7 +60,7 @@ const TransactionHistory = () => {
 
   const getUserData = () => {
     return new Promise((resolve, reject) => {
-      fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
+      fetch(`http://localhost:5050/api/user/get/${authContext.user}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -95,7 +95,7 @@ const TransactionHistory = () => {
         userID: authContext.user,
       };
 
-      const res=await axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
+      const res=await axios.post('http://localhost:5050/api/generate-pdf', requestData, { responseType: 'blob'});
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
         setShowLoading(false);
         const pdfUrl = URL.createObjectURL(pdfBlob);
