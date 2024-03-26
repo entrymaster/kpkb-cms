@@ -31,7 +31,7 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
     const handleInputChange = (key, value) => {
       if (key === 'costPrice' || key === 'salePrice' || key === 'itemGST') {
         // Check if the value is empty or a positive number
-        if ((!isNaN(parseFloat(value)) && parseFloat(value) >= 0)) {
+        if ((!isNaN(parseFloat(value)) && parseFloat(value) >= 0)|| value === '') {
           // If the value is empty or a positive number, update the state
           setItemData({ ...itemData, [key]: value });
         } else {
