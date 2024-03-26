@@ -231,6 +231,11 @@ const AddNewInvoice = () => {
   };
   
   const addInvoice = () => {
+    if (!invoiceData.customerEmail || !invoiceData.customerName || !invoiceData.itemList) {
+      alert("Please enter all the details.");
+      return; // Stop further execution
+    }
+
     getUserData()
     .then(() => {
       // Logic for PDF creation
@@ -311,6 +316,30 @@ const AddNewInvoice = () => {
     }
     
     const generatePdf = () =>{
+      // if (!invoiceData.customerEmail || !invoiceData.customerName || !invoiceData.itemList) {
+      //   alert("Please enter all the details.");
+      //   return; // Stop further execution
+      // }
+      if (!invoiceData.customerName) {
+        alert("Please fill Customer Name");
+        return;
+      } else if (!invoiceData.customerEmail) {
+        alert("Please fill Customer Email");
+        return;
+      }
+      else if(invoiceData.itemList.length > 1) {
+        // Filter out empty rows from itemList
+        invoiceData.itemList = invoiceData.itemList.filter(item => item.itemName !== "");
+        calculateTotal();
+      }
+      if (invoiceData.itemList.length === 0) {
+        alert("Please add some items. Empty invoice cannot be previewed.");
+        return;
+      }
+      else if (invoiceData.totalAmount <= 0 && invoiceData.discount !== 100) {
+        alert("Empty invoice cannot be previewed!");
+        return;
+      }
       setShowLoading(true);
       getUserData()
         .then(() => {

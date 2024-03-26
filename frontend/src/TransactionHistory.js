@@ -75,6 +75,7 @@ const TransactionHistory = () => {
           userData.gstno = data.gstno;
           userData.shopname = data.shopname;
           userData.shopaddress = data.shopaddress;
+          userData.phonenumber = data.phonenumber;
           resolve(data);
         })
         .catch(error => {
@@ -106,16 +107,6 @@ const TransactionHistory = () => {
         setShowLoading(false); // Hide loading in case of error
         console.error('Error creating PDF:', error);
       });
-      // .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', { responseType: 'blob' }))
-      // .then((res) => {
-      //   const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-      //   const pdfUrl = URL.createObjectURL(pdfBlob);
-      //   window.open(pdfUrl, '_blank');
-      //   console.log("jdj");
-      // })
-      // .catch((error) => {
-      //   console.error('Error creating PDF:', error);
-      // });
   };
   const handleCustomerName = async (e) => {
     await setCustomerName(e.target.value);
