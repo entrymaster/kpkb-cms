@@ -1,11 +1,9 @@
 import React from "react";
 import Dashboard from "./Dashboard.js";
-import SignUp from "./SignUp.js";
 import Inventory from "./Inventory.js";
 import ContactUs from "./ContactUs.js";
 import FAQ from "./FAQ.js";
 import Invoice from "./Invoice.js";
-import InvoicePDF from "./components/Invoice/InvoicePDF.js";
 import PendingTransactions from "./Pending transaction.js";
 import Reports from "./Reports.js";
 import Register from "./Register.js";
@@ -23,7 +21,6 @@ import Forgotverify from "./Forgotverify.js"
 import Profile from "./profile.js"
 // import { LibreBaskerville_400Regular, LibreBaskerville_700Bold } from '@expo-google-fonts/libre-baskerville';
 
-// import Layout from "./Layout.js";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -101,7 +98,6 @@ const App = () => {
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/TransactionHistory" element={<TransactionHistory />} />
           <Route path="/Reports" element={<Reports />} />
-          <Route path="/pdf-viewer" element={<InvoicePDF />} />
         </Routes>
       </Router>
     </AuthContext.Provider>

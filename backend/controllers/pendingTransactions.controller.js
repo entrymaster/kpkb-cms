@@ -187,7 +187,7 @@ const addNewCredit = async (req, res) => {
        phoneNo: savedCredit.phoneNo,
        customerEmail: savedCredit.email,
        totalAmount: savedCredit.creditAmount,
-       //notes: req.body.notes,
+       notes: "Dues modified",
        paymentMode: "Amount added to credit",
        itemList: [],
        //createdAt: req.body.createdAt,
@@ -199,42 +199,6 @@ const addNewCredit = async (req, res) => {
        const savedCustomer = await savedCredit.save();
       //  console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCredit.userID});
-      //  console.log(shopkeeper);
-      //  pdf.create(pdfTemplate(
-      //   {
-      //     invoiceData: {
-      //       userID: result.userID,
-      //       invoiceID: result.invoiceID,
-      //       customerName: result.customerName,
-      //       phoneNo: result.phoneNo,
-      //       customerEmail: result.customerEmail,
-      //       totalAmount: result.totalAmount,
-      //       notes:result.notes,
-      //       paymentMode:result.paymentMode,
-      //       discount: result.discount,
-      //       itemList:result.itemList,
-      //       createdAt: result.createdAt,
-      //     },
-      //     userData: {
-      //       firstname: shopkeeper[0].firstname, 
-      //       lastname: shopkeeper[0].lastname, 
-      //       email: shopkeeper[0].email, 
-      //       password: shopkeeper[0].password, 
-      //       gstno: shopkeeper[0].gstno, 
-      //       shopname: shopkeeper[0].shopname, 
-      //       shopaddress: shopkeeper[0].shopaddress,
-      //     },
-      //   }
-      //  ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
-      //   if(err) {
-      //     return console.log('error');
-      //   }
-      //   console.log("pdf saved successfully");
-      //   const pdfPath = `${__dirname}\\invoice.pdf`;
-      //   console.log(pdfPath);
-      //   const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`
-      //   notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
-      // })
       const pdfBuffer = await generatePDFBuffer(pdfTemplate({
         invoiceData: {
           userID: result.userID,
@@ -243,7 +207,7 @@ const addNewCredit = async (req, res) => {
           phoneNo: result.phoneNo,
           customerEmail: result.customerEmail,
           totalAmount: result.totalAmount,
-          notes:result.notes,
+          notes:"Dues modified",
           paymentMode:result.paymentMode,
           discount: result.discount,
           itemList:result.itemList,
@@ -257,6 +221,7 @@ const addNewCredit = async (req, res) => {
           gstno: shopkeeper[0].gstno, 
           shopname: shopkeeper[0].shopname, 
           shopaddress: shopkeeper[0].shopaddress,
+          phonenumber: shopkeeper[0].phonenumber,
         },
       }));
       const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`;
@@ -376,6 +341,7 @@ const updateSupplier  = async (req, res) => {
        customerEmail: updatedCust.email,
        totalAmount: totalAmt,
        //notes: req.body.notes,
+       notes: "Dues modified",
        paymentMode: payMode,
        itemList: [],
        //createdAt: req.body.createdAt,
@@ -387,42 +353,6 @@ const updateSupplier  = async (req, res) => {
        const savedCustomer = await updatedCust.save();
       //  console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCustomer.userID});
-      //  console.log(shopkeeper);
-      //  pdf.create(pdfTemplate(
-      //   {
-      //     invoiceData: {
-      //       userID: result.userID,
-      //       invoiceID: result.invoiceID,
-      //       customerName: result.customerName,
-      //       phoneNo: result.phoneNo,
-      //       customerEmail: result.customerEmail,
-      //       totalAmount: result.totalAmount,
-      //       notes:result.notes,
-      //       paymentMode:result.paymentMode,
-      //       discount: result.discount,
-      //       itemList:result.itemList,
-      //       createdAt: result.createdAt,
-      //     },
-      //     userData: {
-      //       firstname: shopkeeper[0].firstname, 
-      //       lastname: shopkeeper[0].lastname, 
-      //       email: shopkeeper[0].email, 
-      //       password: shopkeeper[0].password, 
-      //       gstno: shopkeeper[0].gstno, 
-      //       shopname: shopkeeper[0].shopname, 
-      //       shopaddress: shopkeeper[0].shopaddress,
-      //     },
-      //   }
-      //  ), {}).toFile(`${__dirname}\\invoice.pdf`, (err) => {
-      //   if(err) {
-      //     return console.log('error');
-      //   }
-      //   console.log("pdf saved successfully");
-      //   const pdfPath = `${__dirname}\\invoice.pdf`;
-      //   console.log(pdfPath);
-      //   const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
-      //   notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
-      // })
       const pdfBuffer = await generatePDFBuffer(pdfTemplate({
         invoiceData: {
           userID: result.userID,
@@ -431,7 +361,7 @@ const updateSupplier  = async (req, res) => {
           phoneNo: result.phoneNo,
           customerEmail: result.customerEmail,
           totalAmount: result.totalAmount,
-          notes:result.notes,
+          notes:"Dues modified",
           paymentMode:result.paymentMode,
           discount: result.discount,
           itemList:result.itemList,
@@ -445,6 +375,7 @@ const updateSupplier  = async (req, res) => {
           gstno: shopkeeper[0].gstno, 
           shopname: shopkeeper[0].shopname, 
           shopaddress: shopkeeper[0].shopaddress,
+          phonenumber: shopkeeper[0].phonenumber,
         },
       }));
       const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`

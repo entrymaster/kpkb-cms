@@ -35,31 +35,6 @@ function Verification() {
     e.preventDefault();
   };
 
-
-//   const emailexist = () => {
-//     fetch("https://billing-360-dev.onrender.com/api/forgot/ver", {
-//       method: "POST",
-//       headers: {
-//         "Content-type": "application/json",
-//       },
-//       body: JSON.stringify(form),
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         if (data.exists) {
-//           //alert("OTP has been sent to your email.");
-//           // Call the sendOTP function
-//           sendOtp();
-//           //navigate('/otp');
-//         } else {
-//           alert("Email does not exist.");
-//         }
-//       })
-//       .catch((err) => console.error(err));
-//       //console.log(err);
-
-//   };
-
 const emailexist = () => {
     // Check if the email is empty
     if (!form.email) {

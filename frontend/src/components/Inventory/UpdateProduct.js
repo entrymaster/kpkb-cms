@@ -79,35 +79,23 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
           <tbody>
           <tr>
           <td className="label-cell">Item Name:</td>
-            <td><input type="text"className="read-only-input" id="item-name" autocomplete="one-time-code" placeholder="Item Name" readOnly value={itemData.itemName} name="itemName" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value) 
-                            }/></td>
+            <td><input type="text"className="read-only-input" id="item-name" autocomplete="one-time-code" placeholder="Item Name" readOnly value={itemData.itemName} name="itemName" onChange={(e) =>handleInputChange(e.target.name, e.target.value) }/></td>
          <td className="label-cell">Item ID:</td>
-            <td><input type="text" className="read-only-input" id="item-id" autocomplete="one-time-code" placeholder="Item ID" readOnly value={itemData.itemID} name="itemID" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
-                            }/></td>
+            <td><input type="text" className="read-only-input" id="item-id" autocomplete="one-time-code" placeholder="Item ID" readOnly value={itemData.itemID} name="itemID" onChange={(e) =>handleInputChange(e.target.name, e.target.value)}/></td>
           </tr>
           <tr>
           <td className="label-cell">salePrice:</td>
-            <td><input type="number" id="sales-price"  required autocomplete="one-time-code" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
-                            }/></td>
+            <td><input type="number" id="sales-price"  required autocomplete="one-time-code" placeholder="Sales Price/unit" value={itemData.salePrice} name="salePrice" onChange={(e) =>handleInputChange(e.target.name, e.target.value)}/></td>
                             
                             <td className="label-cell">costPrice:</td>
-            <td><input type="number" id="cost-price" required autocomplete="one-time-code" placeholder="Cost Price/unit" value={itemData.costPrice} name="costPrice"onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
-                            }/></td>
+            <td><input type="number" id="cost-price" required autocomplete="one-time-code" placeholder="Cost Price/unit" value={itemData.costPrice} name="costPrice"onChange={(e) =>handleInputChange(e.target.name, e.target.value)}/></td>
                              
           </tr>
           <tr>
           <td className="label-cell">Category:</td>
-            <td><input type="text"className="read-only-input" id="category" autocomplete="one-time-code" placeholder="Category" readOnly value={itemData.category} name="category" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
-                            }/></td>
-                             <td className="label-cell">GST:</td>
-            <td><input type="number" id="gst" required autocomplete="one-time-code" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>
-                              handleInputChange(e.target.name, e.target.value)
-                            }/></td>
+            <td><input type="text"className="read-only-input" id="category" autocomplete="one-time-code" placeholder="Category" readOnly value={itemData.category} name="category" onChange={(e) => handleInputChange(e.target.name, e.target.value)}/></td>
+            <td className="label-cell">GST (%):</td>
+            <td><input type="number" id="gst" required autocomplete="one-time-code" placeholder="GST" value={itemData.itemGST} name="itemGST" onChange={(e) =>handleInputChange(e.target.name, e.target.value)}/></td>
           </tr>
           </tbody>
           </table>
