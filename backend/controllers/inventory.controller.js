@@ -178,8 +178,8 @@ const updateItemQuantityInInvoice = async (req, res) => {
 
     // Fetch inventory items for all requested items
     const inventoryItems = await Promise.all(
-      itemsToUpdate.map(async ({ itemName }) => {
-        const item = await Product.findOne({ 'itemName': itemName });
+      itemsToUpdate.map(async ({ _id }) => {
+        const item = await Product.findOne({ '_id': _id });
         return item;
       })
     );
