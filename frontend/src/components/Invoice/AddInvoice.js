@@ -261,7 +261,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          window.location.reload(); 
+          // window.location.reload(); 
         })
         .catch((err) => console.log(err));
 
