@@ -7,7 +7,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     partyName: "",
     phoneNumber: "",
     email: "",
-    amount: 0,
+    amount: '',
   });
 
   const [existingEmail,setExistingEmail] = useState([]);
