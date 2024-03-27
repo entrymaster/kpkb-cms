@@ -123,7 +123,7 @@ const PendingTransactions = () => {
   const [entry, setEntry] = useState([]);
   const [isUpdateAmtDialogOpen, setIsUpdateAmtDialogOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [amount,setAmount] = useState(0);
+  const [amount,setAmount] = useState('');
 
   const showUpdateAmtDialog = () => {
     setIsUpdateAmtDialogOpen(true);
