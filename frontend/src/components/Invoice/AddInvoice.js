@@ -239,7 +239,7 @@ const AddNewInvoice = () => {
         invoiceData: invoiceData,
         userID: authContext.user,
       };
-      fetch("http://localhost:5050/api/invoice/sendmail", {
+      fetch("https://billing-360-dev.onrender.com/api/invoice/sendmail", {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
@@ -247,7 +247,7 @@ const AddNewInvoice = () => {
         body: JSON.stringify( requestData ),
       })
     
-      fetch("http://localhost:5050/api/invoice/add", {
+      fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -297,7 +297,7 @@ const AddNewInvoice = () => {
           userID: authContext.user,
         };
 
-        const res=await axios.post('http://localhost:5050/api/generate-pdf', requestData, { responseType: 'blob'});
+        const res=await axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
           setShowLoading(false);
           const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -310,7 +310,7 @@ const AddNewInvoice = () => {
       }
 
     const updateInventory = () => {
-      fetch("http://localhost:5050/api/inventory/updateItemQuantity",{
+      fetch("https://billing-360-dev.onrender.com/api/inventory/updateItemQuantity",{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -325,7 +325,7 @@ const AddNewInvoice = () => {
     }
 
     const getInvoiceCount = async() =>{
-      fetch(`http://localhost:5050/api/invoice/count/${authContext.user}`, {
+      fetch(`https://billing-360-dev.onrender.com/api/invoice/count/${authContext.user}`, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
@@ -361,7 +361,7 @@ const AddNewInvoice = () => {
     // const userId='user';
 
     const fetchItemsData = () => {
-      fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
+      fetch(`https://billing-360-dev.onrender.com/api/inventory/get/${authContext.user}`)
       .then((response) => response.json())
       .then((data) => {
         setAllItems(data);

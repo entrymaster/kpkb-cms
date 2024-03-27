@@ -24,7 +24,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
   const findExistingEmail = () => {
     if(entryType === "Customer")
     {
-    fetch(`http://localhost:5050/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
+    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
         setExistingEmail(data);
@@ -34,7 +34,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     }
     else
     {
-      fetch(`http://localhost:5050/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
+      fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
         setExistingEmail(data);
@@ -66,7 +66,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
   };
 
   const addNewCredit = () => {
-    fetch(`http://localhost:5050/api/pendingTransactions/addNewCredit`, {
+    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/addNewCredit`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -75,7 +75,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     })
       .then((result) => {
         alert("Successfully added new customer!");
-        fetch("http://localhost:5050/api/invoice/add", {
+        fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
@@ -108,7 +108,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
   };
 
   const addNewDebit = () => {
-    fetch("http://localhost:5050/api/pendingTransactions/addNewDebit", {
+    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/addNewDebit", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

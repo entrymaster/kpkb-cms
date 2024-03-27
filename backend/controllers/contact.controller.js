@@ -19,7 +19,7 @@ const sendmail = async (req, res) => {
   // Email message options
   const mailOptions = {
     from: process.env.GMAIL_USER,    // Sender address
-    to: email,     // Recipient address
+    to: process.env.GMAIL_USER,     // Recipient address
     subject: 'New Message from ContactUs Form',
     text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
   };

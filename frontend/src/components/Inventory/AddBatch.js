@@ -48,7 +48,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
           alert("Please enter expiry date.");
           return; // Stop further execution
         }
-        fetch("http://localhost:5050/api/inventory/addBatchList", {
+        fetch("https://billing-360-dev.onrender.com/api/inventory/addBatchList", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
