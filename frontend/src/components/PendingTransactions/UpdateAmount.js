@@ -117,6 +117,19 @@ const UpdateAmt = ({
       })
       .catch((err) => console.log(err));
   };
+  const handleCancel = () => {
+    onCancel();
+    setData({
+      amount: 0,
+      // Resetting fields to initial state
+  
+    });
+    setDisplayData({
+      amount: 0,
+      // Resetting fields to initial state  
+    });
+
+  }
 
   return (
     <Modal
@@ -192,7 +205,7 @@ const UpdateAmt = ({
           </button>
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
             style={{
               width: "45%",
               backgroundColor: "#eee",

@@ -71,6 +71,17 @@ const UpdateEntry = ({
       })
       .catch((err) => console.log(err));
   };
+  const handleCancel = () => {
+    onCancel();
+    setData({
+      phoneNo: entry.phoneNo,
+      email: entry.email,
+      // Resetting fields to initial state
+  
+    });
+   
+
+  }
 
   return (
     <Modal
@@ -165,7 +176,7 @@ const UpdateEntry = ({
           </button>
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
             style={{
               width: "45%",
               backgroundColor: "#eee",

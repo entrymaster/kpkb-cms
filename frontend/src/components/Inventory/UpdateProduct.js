@@ -66,6 +66,17 @@ const UpdateItemDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) =>
       };
       const handleCancel = () => {
         onCancel();
+        setItemData({ // Resetting fields to initial state
+          _id: element._id,
+          itemID: element.itemID,
+             itemName: element.itemName,
+          salePrice: element.salePrice,
+          costPrice: element.costPrice,
+          itemGST: element.itemGST,
+          category: element.category,
+          discount: element.discount,
+          quantity: element.quantity,
+        });
         //resetFields();
       };
   return (

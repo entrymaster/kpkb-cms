@@ -43,6 +43,18 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
       .catch((err) => console.log(err));
     }
   }
+  const handleCancel = () => {
+    onCancel();
+    setData({
+      userID: '',
+      partyName: "",
+      phoneNumber: "",
+      email: "",
+      amount: 0,
+      // Resetting fields to initial state
+      
+    });
+  }
 
   const handleSave = () => {
     if(email !== "")
@@ -255,7 +267,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
           </button>
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
             style={{
               width: "45%",
               backgroundColor: "#eee",

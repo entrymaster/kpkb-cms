@@ -64,6 +64,15 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id, handlePageUpdate
 
   const handleCancel = () => {
     on_Cancel();
+    setItemData({
+      _idProduct: id,
+      _id: element._id,
+      batchID: element.batchID,
+      batchQty: element.batchQty,
+      expiryDate: element.expiryDate,
+      initialBatchQty: element.batchQty, // Resetting fields to initial state
+      
+    });
     //resetFields();
   };
 
