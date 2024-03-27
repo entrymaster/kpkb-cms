@@ -158,6 +158,7 @@ const UpdateAmt = ({
             value={DisplayData.amount}
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            onWheel={event => event.target.blur()}
             className="form-control"
             style={{
               width: "90%",

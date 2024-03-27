@@ -169,6 +169,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
             type="text"
             autocomplete="one-time-code"
             value={Data.partyName}
+            required
             name="partyName"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             className="form-control"
@@ -186,6 +187,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
             type="text"
             autocomplete="one-time-code"
             value={Data.phoneNumber}
+            required
             name="phoneNumber"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             className="form-control"
@@ -203,6 +205,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
             type="text"
             autocomplete="one-time-code"
             value={Data.email}
+            required
             name="email"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
             className="form-control"
@@ -217,11 +220,13 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
         <div className="form-group" style={{ marginBottom: "15px" }}>
           <label htmlFor="amount">Amount:</label>
           <input
-            type="text"
+            type="number"
             autocomplete="one-time-code"
             value={Data.amount}
+            required
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            onWheel={event => event.target.blur()}
             className="form-control"
             style={{
               width: "90%",

@@ -131,9 +131,19 @@ const TransactionHistory = () => {
   };
 
   const formatDate = (date) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-    return new Date(date).toLocaleDateString('en-IN', options);
-  };
+    const newDate= new Date(date);
+    const options = {
+        weekday: 'short',
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'UTC'
+    };
+    const formatter = new Intl.DateTimeFormat('en', options);
+    return formatter.format(newDate);
+};
 
   return (
     <>
