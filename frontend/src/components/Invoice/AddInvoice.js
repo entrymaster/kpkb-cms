@@ -226,7 +226,7 @@ const AddNewInvoice = () => {
       console.error('Error generating bill:', error);
     } finally {
       setShowLoading(false);
-      // window.location.reload(); 
+      window.location.reload(); 
     }
   };
   
@@ -261,7 +261,7 @@ const AddNewInvoice = () => {
         })
         .then(() => {
           setIncInvoiceID(true);
-          // window.location.reload(); 
+          window.location.reload(); 
         })
         .catch((err) => console.log(err));
 

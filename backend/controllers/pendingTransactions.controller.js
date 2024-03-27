@@ -271,6 +271,7 @@ async function generatePDFBuffer(pdfContent) {
         });
     });
 }
+
 // Update Existing Customer Credit
 const updateCustomer  = async (req, res) => {
   try {
