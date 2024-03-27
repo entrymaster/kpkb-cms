@@ -26,18 +26,56 @@ const PendingTransactions = () => {
   
     if (sortBy === columnName) {
       // If already sorted by the same column, reverse the order
-      sortedEntries.reverse();
-      // Toggle the direction of the arrow
+      sortedEntries.sort((a, b) => {
+        let valueA, valueB;
+        if (columnName === 'name') {
+          valueA = a[columnName].toLowerCase();
+          valueB = b[columnName].toLowerCase();
+        } else {
+          valueA = a[columnName];
+          valueB = b[columnName];
+        }
+        
+        if (valueA < valueB) {
+          return sortDirection === 'asc' ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
       newSortOrder = sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
       // Sort the entries based on the selected column
       sortedEntries.sort((a, b) => {
-        if (a[columnName] > b[columnName]) return 1;
-        if (a[columnName] < b[columnName]) return -1;
+        let valueA, valueB;
+        if (columnName === 'name' ) {
+          valueA = a[columnName].toLowerCase();
+          valueB = b[columnName].toLowerCase();
+        } else {
+          valueA = a[columnName];
+          valueB = b[columnName];
+        }
+        
+        if (sortDirection === 'asc') {
+          if (valueA < valueB) {
+            return -1;
+          }
+          if (valueA > valueB) {
+            return 1;
+          }
+        } else { // sortDirection === 'desc'
+          if (valueA > valueB) {
+            return -1;
+          }
+          if (valueA < valueB) {
+            return 1;
+          }
+        }
         return 0;
       });
-      // Set the default direction of the arrow to 'asc' when changing the column
-      newSortOrder = 'asc';
+      // Toggle the direction
+      newSortOrder = sortDirection === 'asc' ? 'desc' : 'asc';
     }
   
     // Update state variables
