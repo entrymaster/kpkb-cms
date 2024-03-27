@@ -45,6 +45,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           .then((result) => {
             alert("Product ADDED");
             handlePageUpdate();
+           
             //addProductModalSetting();
             onCancel();
             setItemData({ // Resetting fields to initial state

@@ -30,6 +30,10 @@ const Inventory = () =>
   const [searchInput, setSearchInput] = useState('');
   const authContext = useContext(AuthContext);
   console.log(authContext.user);
+  // useEffect(() => {
+  //   // Sort products whenever the products state changes
+  //   sortProducts(sortBy);
+  // }, [products]);
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -95,7 +99,7 @@ const Inventory = () =>
 
   useEffect(() => {
     fetchProductsData();
-
+    sortProducts(sortBy);
     // fetchSalesData();
   }, [updatePage]);
   const fetchProductsData = () => {
@@ -134,18 +138,68 @@ const sortProducts = (heading) => {
   const sortedProducts = [...products];
   let newSortDirection;
 
-  if (sortBy === heading) {
-    // If already sorted by the same heading, reverse the order
-    sortedProducts.reverse();
-    // Toggle the direction of the arrow
-    newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-  } else {
+  // if (sortBy === heading) {
+  //   // If already sorted by the same heading, reverse the order
+  //   sortedProducts.reverse();
+  //   // Toggle the direction of the arrow
+  //   newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+  // } else {
     // Sort the products based on the selected heading
-    sortedProducts.sort((a, b) => a[heading] > b[heading] ? 1 : -1);
-    // Set the default direction of the arrow to 'asc' when changing the heading
-    newSortDirection = 'asc';
-  }
-  
+    if (sortBy === heading) {
+      // If already sorted by the same heading, toggle the direction
+      sortedProducts.sort((a, b) => {
+        let valueA, valueB;
+        if (heading === 'itemName' || heading === 'itemID') {
+          valueA = a[heading].toLowerCase();
+          valueB = b[heading].toLowerCase();
+        } else {
+          valueA = a[heading];
+          valueB = b[heading];
+        }
+        
+        if (valueA < valueB) {
+          return sortDirection === 'asc' ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+      newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    }
+    else {
+      // Sort the products based on the selected heading
+      sortedProducts.sort((a, b) => {
+        let valueA, valueB;
+        if (heading === 'itemName' || heading === 'itemID') {
+          valueA = a[heading].toLowerCase();
+          valueB = b[heading].toLowerCase();
+        } else {
+          valueA = a[heading];
+          valueB = b[heading];
+        }
+        
+        if (sortDirection === 'asc') {
+          if (valueA < valueB) {
+            return -1;
+          }
+          if (valueA > valueB) {
+            return 1;
+          }
+        } else { // sortDirection === 'desc'
+          if (valueA > valueB) {
+            return -1;
+          }
+          if (valueA < valueB) {
+            return 1;
+          }
+        }
+        return 0;
+      });
+      // Toggle the direction
+      newSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    }
+    
   // Update state variables
   setAllProducts(sortedProducts);
   setSortBy(heading); // Update the state to track the selected heading
