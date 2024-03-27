@@ -35,7 +35,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           alert("Please enter all the details.");
           return; // Stop further execution
         }
-        fetch("http://localhost:5050/api/inventory/add", {
+        fetch("https://billing-360-dev.onrender.com/api/inventory/add", {
           method: "POST",
           headers: {
             "Content-type": "application/json",

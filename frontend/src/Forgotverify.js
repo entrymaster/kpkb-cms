@@ -16,7 +16,7 @@ function Verification() {
 
 
   const sendOtp = () => {
-    fetch("http://localhost:5050/api/otp/gen", {
+    fetch("https://billing-360-dev.onrender.com/api/otp/gen", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -49,7 +49,7 @@ const emailexist = () => {
         return; // Stop further execution
     }
 
-    fetch("http://localhost:5050/api/forgot/ver", {
+    fetch("https://billing-360-dev.onrender.com/api/forgot/ver", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
