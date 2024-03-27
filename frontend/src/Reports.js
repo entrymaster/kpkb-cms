@@ -25,7 +25,10 @@ const Reports = () => {
   }, [startDate, endDate]);
   const fetchSalesData = () => {
     if (startDate && endDate) {
-  
+      if(startDate>endDate){
+        alert("Start Date must be before the End date");
+        return;
+      }
       axios.get(`https://billing-360-dev.onrender.com/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {
           const salesData = response.data; // Assuming response.data contains sales data
