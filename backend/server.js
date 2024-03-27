@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { PDFDocument,rgb } = require('pdf-lib');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./utils/pdfTemplate');
+const User = require("./models/user.model")
 
 const inventoryRouter = require("./routes/inventory.route");
 const invoiceRouter = require("./routes/invoice.route");
@@ -15,6 +16,7 @@ const loginRouter = require("./routes/login.route")
 const verifyRouter = require("./routes/verify.route")
 const forgotRouter = require("./routes/forgot.route")
 const userRouter = require("./routes/user.route")
+const contactRouter = require("./routes/contact.route")
 //const {User} = require("./models/user.model")
 // const registerRouter = require("./routes/register.route");
 
@@ -40,6 +42,7 @@ app.use("/api/login" , loginRouter);
 app.use("/api/otp" , verifyRouter);
 app.use("/api/forgot" , forgotRouter);
 app.use("/api/user", userRouter);
+app.use("/api/contact" , contactRouter);
 
 
 // Middleware to parse JSON bodies
@@ -51,9 +54,17 @@ app.get("/api/login", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post('/api/generate-pdf', (req, res) => {
+app.post('/api/generate-pdf', async(req, res) => {
   // Generate PDF in memory
-  pdf.create(pdfTemplate(req.body), {childProcessOptions: {
+  const reqData = req.body;
+  // console.log(reqData);
+  const user = await User.findById(reqData.userID);
+  const requestData = {
+    invoiceData: reqData.invoiceData,
+    userData: user,
+  };
+  // console.log(requestData);
+  pdf.create(pdfTemplate(requestData), {childProcessOptions: {
     env: {
       OPENSSL_CONF: '/dev/null',
     },

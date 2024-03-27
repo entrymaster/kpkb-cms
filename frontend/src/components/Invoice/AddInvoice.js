@@ -235,27 +235,18 @@ const AddNewInvoice = () => {
       alert("Please enter all the details.");
       return; // Stop further execution
     }
-
-    getUserData()
-    .then(() => {
-      // Logic for PDF creation
       const requestData = {
         invoiceData: invoiceData,
-        userData: userData
+        userID: authContext.user,
       };
-        return requestData;
-    })
-    .then((requestData)=>{
-      console.log("requestdata: ", requestData);
       fetch("https://billing-360-dev.onrender.com/api/invoice/sendmail", {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ requestData }),
+        body: JSON.stringify( requestData ),
       })
-    })
-    .then((result) => {
+    
       fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
         method: "POST",
         headers: {
@@ -263,63 +254,21 @@ const AddNewInvoice = () => {
         },
         body: JSON.stringify(invoiceData),
       })
-        .then((result) => {
+        .then(() => {
           alert("Invoice ADDED");
           setInvoiceData(initialState);
           setCurrItem(null);
         })
         .then(() => {
           setIncInvoiceID(true);
-          window.location.reload(); 
+          // window.location.reload(); 
         })
         .catch((err) => console.log(err));
 
         setUpdatePage(false);
-    })}
-    
-
-    const getUserData = () => {
-      return new Promise((resolve, reject) => {
-        console.log(authContext.user);
-        fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-       
-        .then(response => {
-          console.log(response);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // console.log(data);
-          // setUserData(data);
-          userData.firstname = data.firstname;
-          userData.lastname = data.lastname;
-          userData.email = data.email;
-          userData.password = data.password;
-          userData.gstno = data.gstno;
-          userData.shopname = data.shopname;
-          userData.shopaddress = data.shopaddress;
-          userData.phonenumber = data.phonenumber;
-          resolve(data); // Resolve the promise with the user data
-        })
-        .catch(error => {
-          console.log('There was a problem with the fetch operation:', error);
-          reject(error); // Reject the promise with the error
-        });
-      });
     }
     
-    const generatePdf = () =>{
-      // if (!invoiceData.customerEmail || !invoiceData.customerName || !invoiceData.itemList) {
-      //   alert("Please enter all the details.");
-      //   return; // Stop further execution
-      // }
+    const generatePdf = async() =>{
       if (!invoiceData.customerName) {
         alert("Please fill Customer Name");
         return;
@@ -341,26 +290,23 @@ const AddNewInvoice = () => {
         return;
       }
       setShowLoading(true);
-      getUserData()
-        .then(() => {
-          // Logic for PDF creation
-          const requestData = {
-            invoiceData: invoiceData,
-            userData: userData
-          };
-          return axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
-        })
-        // .then(() => axios.get('https://billing-360-dev.onrender.com/api/fetch-pdf', ))
-        .then((res) => {
+      // (() => {
+      try{
+        const requestData = {
+          invoiceData: invoiceData,
+          userID: authContext.user,
+        };
+
+        const res=await axios.post('https://billing-360-dev.onrender.com/api/generate-pdf', requestData, { responseType: 'blob'});
           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
           setShowLoading(false);
           const pdfUrl = URL.createObjectURL(pdfBlob);
           window.open(pdfUrl,'_blank');
-        })
-        .catch((error) => {
+      }
+        catch(error) {
           setShowLoading(false); // Hide loading in case of error
           console.error('Error creating PDF:', error);
-        });
+        }
       }
 
     const updateInventory = () => {

@@ -91,28 +91,28 @@ const PendingTransactions = () => {
 
   const SearchCreditCustomers = (query) => {
     const q = query;
-    const userID = "user";
+    // const userID = "user";
     fetch(
       `https://billing-360-dev.onrender.com/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`
     )
       .then((response) => response.json())
       .then((data) => {
         setEntries(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
   };
 
   const SearchDebitSuppliers = (query) => {
     const q = query;
-    const userID = "user";
+    // const userID = "user";
     fetch(
       `https://billing-360-dev.onrender.com/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`
     )
       .then((response) => response.json())
       .then((data) => {
         setEntries(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
   };

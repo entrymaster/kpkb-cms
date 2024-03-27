@@ -1,5 +1,6 @@
 const Invoice = require("../models/invoice.model");
 const Customer = require("../models/customer.model");
+const User = require("../models/user.model")
 const pdf = require('html-pdf');
 const pdfTemplate = require('../utils/pdfTemplate');
 // Add Post
@@ -35,6 +36,7 @@ async function sendInvoiceMailController(email, organization, shopname, invoiceI
         });
         
         // console.log("hello")
+        // console.log(email);
 
         const mailOptions = {
             from: `"${organization}" <${process.env.GMAIL_USER}>`,
@@ -150,15 +152,19 @@ async function sendInvoiceMailController(email, organization, shopname, invoiceI
         throw new Error(error.message);
     }
 }
-module.exports = {sendInvoiceMailController};
-
 
 const sendInvoiceMail = async(req,res) => {
   // console.log(req.body);
-  const requestData = req.body.requestData;
+  const reqData = req.body;
+  const user = await User.findById(reqData.userID);
+  const requestData = {
+    invoiceData: reqData.invoiceData,
+    userData: user,
+  };
   // console.log(requestData);
   try{
   const pdfBuffer = await generatePDFBuffer(pdfTemplate(requestData));
+  // console.log(pdfBuffer);
   await sendInvoiceMailController(requestData.invoiceData.customerEmail, "Billing 360", requestData.userData.shopname,  requestData.invoiceData.invoiceID, requestData.userData.email, pdfBuffer, requestData.userData.shopaddress);
   // await notifyCustomerController(requestData.invoiceData.customerEmail, 'Billing 360', requestData.userData.shopname, requestData.userData.email, requestData.userData.shopaddress, body, requestData.invoiceData.totalAmount, pdfBuffer);
   }
@@ -359,4 +365,4 @@ const getDashboardData = async (req, res) => {
 
 
 
-module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, getDashboardData, sendInvoiceMail};
+module.exports={addInvoice, getInvoiceCount,getAllInvoice,searchInvoice, getSalesData, getDashboardData, sendInvoiceMail, sendInvoiceMailController};

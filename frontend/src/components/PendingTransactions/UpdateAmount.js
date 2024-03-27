@@ -11,11 +11,11 @@ const UpdateAmt = ({
   handlePageUpdate,
 }) => {
   const [DisplayData, setDisplayData] = useState({
-    amount: 0,
+    amount: '',
   });
 
   const [Data, setData] = useState({
-    amount: 0,
+    amount: '',
   });
 
   const handleInputChange = (key, value) => {
@@ -43,7 +43,7 @@ const UpdateAmt = ({
     {
     if (DisplayData.amount > 0) {
       onCancel();
-      setDisplayData({ amount: 0 });
+      setDisplayData({ amount: '' });
       if (entryType === "Customer") updateCustAmount(); 
       else updateSuppAmount();
       }
@@ -53,6 +53,8 @@ const UpdateAmt = ({
     }
     else
       alert("Please enter amount greater than zero");
+      setDisplayData({ amount: '' });
+      setData({ amount: '' });   
   };
 
   const updateCustAmount = () => {
@@ -171,6 +173,7 @@ const UpdateAmt = ({
             value={DisplayData.amount}
             name="amount"
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+            onWheel={event => event.target.blur()}
             className="form-control"
             style={{
               width: "90%",
