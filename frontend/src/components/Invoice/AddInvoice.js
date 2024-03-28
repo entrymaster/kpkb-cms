@@ -226,7 +226,7 @@ const AddNewInvoice = () => {
       console.error('Error generating bill:', error);
     } finally {
       setShowLoading(false);
-      window.location.reload(); 
+      // window.location.reload(); 
     }
   };
   
