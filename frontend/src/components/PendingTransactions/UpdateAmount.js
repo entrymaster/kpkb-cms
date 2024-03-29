@@ -30,6 +30,11 @@ const UpdateAmt = ({
         ...Data,
         amount: Data.amount < 0 ? Data.amount : -Data.amount,
       });
+    else
+      setData({
+          ...Data,
+          amount: Data.amount > 0 ? Data.amount : -Data.amount,
+      }); 
   };
 
   useEffect(() => {
@@ -37,9 +42,11 @@ const UpdateAmt = ({
   }, [DisplayData]);
 
   const updateAmount = () => {
+    console.log(amount);
+    console.log(Data.amount);
     if(DisplayData.amount > 0)
     {
-    if(amount + Data.amount >=0)
+    if(Number(amount) + Number(Data.amount) >= 0)
     {
     if (DisplayData.amount > 0) {
       onCancel();
@@ -49,12 +56,14 @@ const UpdateAmt = ({
       }
     }
     else
+    {
       alert("Amount entered exceeds the pending amount");
+    }
     }
     else
       alert("Please enter amount greater than zero");
-      setDisplayData({ amount: '' });
-      setData({ amount: '' });   
+    setDisplayData({ amount: '' });
+    setData({ amount: '' });   
   };
 
   const updateCustAmount = () => {
@@ -72,31 +81,6 @@ const UpdateAmt = ({
       .then((result) => {
         alert("Transaction successful!");
         handlePageUpdate();
-        fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: result.body.userID,
-            invoiceID: 0,
-            customerName: result.body.name,
-            phoneNo: result.body.phoneNo,
-            customerEmail: result.body.email,
-            totalAmount: Data.amount < 0 ? -Data.amount : Data.amount,
-            notes:
-              Data.amount < 0 ? "Amount received" : "Amount added to credit",
-            paymentMode: Data.amount < 0 ? "Paid" : "Credit",
-            discount: 0,
-            itemList: [],
-            createdAt: new Date(),
-          }),
-        })
-          .then((result) => {
-            alert("Invoice ADDED");
-            console.log(result);
-          })
-          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
@@ -122,12 +106,12 @@ const UpdateAmt = ({
   const handleCancel = () => {
     onCancel();
     setData({
-      amount: 0,
+      amount: '',
       // Resetting fields to initial state
   
     });
     setDisplayData({
-      amount: 0,
+      amount: '',
       // Resetting fields to initial state  
     });
 

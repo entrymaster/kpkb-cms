@@ -138,7 +138,7 @@ const existingCustEmail = async(req,res) => {
   try{
     const user = req.params.userID;
     const {email} = req.query;
-    const redundantEmail = await Customer.find({userID: user, email: email});
+    const redundantEmail = await Customer.findOne({userID: user, email: email});
     // console.log(redundantEmail); 
     res.json(redundantEmail);
     }
@@ -152,7 +152,7 @@ const existingSuppEmail = async(req,res) => {
   try{
     const user = req.params.userID;
     const {email} = req.query;
-    const redundantEmail = await Supplier.find({userID: user, email: email});
+    const redundantEmail = await Supplier.findOne({userID: user, email: email});
     // console.log(redundantEmail); 
     res.json(redundantEmail);
     }
@@ -171,7 +171,7 @@ const addNewCredit = async (req, res) => {
       name: req.body.partyName,
       phoneNo: req.body.phoneNumber,
       email: req.body.email,
-      creditAmount: req.body.amount,
+      creditAmount: Number(req.body.amount).toFixed(2),
     });
 
     const savedCredit = await newCredit.save();
@@ -179,9 +179,13 @@ const addNewCredit = async (req, res) => {
 
     const id = savedCredit.userID;
     const count = await Invoice.countDocuments({userID : id});
+    const date = (() => {
+      const now = new Date();
+      const adjustedTime = new Date(now.getTime() + (5 * 60 + 30) * 60000);
+      return new Date(adjustedTime);
+     })();
      const addInvoice = new Invoice({
        userID: savedCredit.userID,
-       //invoiceID: req.body.invoiceID,
        invoiceID: count,
        customerName: savedCredit.name,
        phoneNo: savedCredit.phoneNo,
@@ -190,7 +194,7 @@ const addNewCredit = async (req, res) => {
        notes: "Dues modified",
        paymentMode: "Amount added to credit",
        itemList: [],
-       //createdAt: req.body.createdAt,
+       createdAt: date,
      });
      addInvoice.save()
      .then(async(result)=> {
@@ -238,6 +242,7 @@ const addNewCredit = async (req, res) => {
 
 // Add New Debit
 const addNewDebit = async (req, res) => {
+    //console.log(req.body);
     try {
       const newDebit = new Supplier({
         //userID: 'user',
@@ -245,7 +250,7 @@ const addNewDebit = async (req, res) => {
         name: req.body.partyName,
         phoneNo: req.body.phoneNumber,
         email: req.body.email,
-        debitAmount: req.body.amount,
+        debitAmount: Number(req.body.amount).toFixed(2) ,
       });
       const savedDebit = await newDebit.save();
       res.status(201).json(savedDebit);
@@ -325,14 +330,19 @@ const updateSupplier  = async (req, res) => {
 
   const updateCustomerAmount = async (req, res) => {
     try {
-      const amt = req.body.amount;
-     const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
+      const amt = Number(req.body.amount).toFixed(2);
+     const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: Number(req.body.amount).toFixed(2)}},{new:true});
      const id=updatedCust.userID;
     //  console.log(updatedCust);
      res.json(updatedCust);
      const count = await Invoice.countDocuments({userID : id});
      const totalAmt = amt > 0 ? amt : -amt;
      const payMode = amt > 0 ? "Amount added to credit" : "Credit dues cleared";
+     const date = (() => {
+      const now = new Date();
+      const adjustedTime = new Date(now.getTime() + (5 * 60 + 30) * 60000);
+      return new Date(adjustedTime);
+     })();
      const addInvoice = new Invoice({
        userID: updatedCust.userID,
        //invoiceID: req.body.invoiceID,
@@ -345,7 +355,7 @@ const updateSupplier  = async (req, res) => {
        notes: "Dues modified",
        paymentMode: payMode,
        itemList: [],
-       //createdAt: req.body.createdAt,
+       createdAt: date,
      });
      addInvoice.save()
      .then(async(result)=> {
@@ -395,7 +405,7 @@ const updateSupplier  = async (req, res) => {
  
   const updateSupplierAmount = async (req, res) => {
    try {
-    const updatedSupp = await Supplier.findByIdAndUpdate({ _id: req.body._id},{$inc : {debitAmount: req.body.amount}},{new:true});
+    const updatedSupp = await Supplier.findByIdAndUpdate({ _id: req.body._id},{$inc : {debitAmount: Number(req.body.amount).toFixed(2)}},{new:true});
     // console.log(updatedSupp);
     res.json(updatedSupp);
    }

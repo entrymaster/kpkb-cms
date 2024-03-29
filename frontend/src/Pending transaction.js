@@ -199,7 +199,7 @@ const PendingTransactions = () => {
         (accumulator, currentValue) => accumulator + currentValue,
         0
       );
-      setTotalAmt(total);
+      setTotalAmt(total.toFixed(2));
     }
   };
 
@@ -502,6 +502,7 @@ const PendingTransactions = () => {
       <AddNewEntry
         isVisible={isAddNewDialogOpen}
         onCancel={hideAddNewDialog}
+        addNewDialog={showAddNewDialog}
         entryType={entryType}
         handlePageUpdate={handlePageUpdate}
         id={userID}

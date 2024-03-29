@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
+import ExistingEntry from "./ExistingEntry";
 
-const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) => {
+const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageUpdate, id }) => {
   const [Data, setData] = useState({
     userID: '',
     partyName: "",
@@ -10,9 +11,23 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     amount: '',
   });
 
-  const [existingEmail,setExistingEmail] = useState([]);
+  const [existingEntry,setExistingEntry] = useState(null);
+  const [existingEntryDialog, setExistingEntryDialog] = useState(false);
+
+  const hideExistingEntryDialog = () => {
+    setExistingEntryDialog(false);
+  }
+
+  const openExistingEntryDialog = () => {
+    setExistingEntryDialog(true);
+  }
 
   const [email, setEmail] = useState("");
+  const [callSave, setcallSave] = useState(false);
+
+  const toggleCallSave = () => {
+    setcallSave(!callSave);
+  }
 
   const handleInputChange = (key, value) => {
     setData({ ...Data, userID: id, [key]: value });
@@ -21,26 +36,30 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     console.log(Data);
   };
 
-  const findExistingEmail = () => {
+  const findExistingEntry = async () => {
     if(entryType === "Customer")
     {
-    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
+    await fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
-        setExistingEmail(data);
+        setExistingEntry(data);
         console.log(data);
       })
       .catch((err) => console.log(err));
+
+    toggleCallSave();
     }
     else
     {
-      fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
+      await fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
-        setExistingEmail(data);
+        setExistingEntry(data);
         console.log(data);
       })
       .catch((err) => console.log(err));
+
+    toggleCallSave();
     }
   }
   const handleCancel = () => {
@@ -50,30 +69,42 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
       partyName: "",
       phoneNumber: "",
       email: "",
-      amount: 0,
+      amount: '',
       // Resetting fields to initial state
       
     });
   }
 
   const handleSave = () => {
+    console.log(existingEntry);
     if(email !== "")
     {
-    if (existingEmail.length === 0) {
+    if (!existingEntry) {
+      console.log(existingEntry);
       if(Data.amount >0)
       {
       if (entryType === "Customer") addNewCredit();
       else addNewDebit();
       }
       else
+      {
+        handleCancel();
         alert("Please enter amount greater than zero");
+        //addNewDialog();
+      }
     } else {
-      onCancel();
-      setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
-      setEmail("");
-      if (entryType === "Customer") alert("This email is already associated with a customer");
-      else alert("This email is already associated with a supplier");  
+      console.log(existingEntry);
+      if(Data.amount >0)
+      {
+      openExistingEntryDialog(); 
+      }
+      else
+        alert("Please enter amount greater than zero");
+        onCancel();
     }
+    // setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: '' });
+    // setEmail(""); 
+    // setExistingEntry(null);
   }
   };
 
@@ -87,34 +118,10 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
     })
       .then((result) => {
         alert("Successfully added new customer!");
-        fetch("https://billing-360-dev.onrender.com/api/invoice/add", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: result.body.userID,
-            invoiceID: 0,
-            customerName: result.body.name,
-            phoneNo: result.body.phoneNo,
-            customerEmail: result.body.email,
-            totalAmount: Data.amount,
-            notes: "Amount added to credit",
-            paymentMode: "Credit",
-            discount: 0,
-            itemList: [],
-            createdAt: new Date(),
-          }),
-        })
-          .then((result) => {
-            alert("Invoice ADDED");
-            console.log(result);
-            handlePageUpdate();
-            onCancel();
-            setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
-            setEmail("");
-          })
-          .catch((err) => {console.log(err)});
+        handlePageUpdate();
+        onCancel();
+        setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: '' });
+        setEmail("");
       })
       .catch((err) => console.log(err));
   };
@@ -131,7 +138,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
         alert("Successfully added new supplier!");
         handlePageUpdate();
         onCancel();
-        setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: 0 });
+        setData({userID: id, partyName: "", phoneNumber: "", email: "", amount: '' });
         setEmail("");
       })
       .catch((err) => console.log(err));
@@ -139,9 +146,10 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
 
   useEffect(() => {
     handleSave();
-  },[existingEmail]);
+  },[callSave]);
 
   return (
+    <div>
     <Modal
       isOpen={isVisible}
       contentLabel="New Entry Dialog"
@@ -171,7 +179,7 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          findExistingEmail();
+          findExistingEntry();
           onCancel();
         }}
       >
@@ -288,6 +296,20 @@ const AddNewEntry = ({ isVisible, onCancel, entryType, handlePageUpdate, id }) =
         </div>
       </form>
     </Modal>
+
+{existingEntry && (
+  <ExistingEntry
+    isVisible={existingEntryDialog}
+    entryType={entryType}
+    handleExistingEntryDialog={hideExistingEntryDialog}
+    handlePageUpdate={handlePageUpdate}
+    amount={Data.amount}
+    existingEntryName={existingEntry.name}
+    existingEntryId={existingEntry._id}
+  />
+)}
+
+    </div>
   );
 };
 

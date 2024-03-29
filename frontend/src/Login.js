@@ -26,7 +26,7 @@ function Login() {
       fetch("https://billing-360-dev.onrender.com/api/login/log/get")
         .then((response) => response.json())
         .then((data) => {
-          alert("Successfully Login");
+          alert("Successfully Logged in");
           localStorage.setItem("user", JSON.stringify(data));
           authContext.signin(data._id, () => {
             navigate("/dashboard");
@@ -44,7 +44,7 @@ function Login() {
     // Cannot send empty data
 
     if (form.email === "" || form.password === "") {
-      alert("To login user, enter details to proceed...");
+      alert("Please enter all details to proceed...");
     } else {
       fetch("https://billing-360-dev.onrender.com/api/login/log/in", {
         method: "POST",
@@ -96,7 +96,7 @@ function Login() {
               //alt="Your Company"
             />
             <h2 className="logintext">
-              login to your account
+              Login to your account
             </h2>
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -156,11 +156,10 @@ function Login() {
                 </span>
               </div>
               <p className="mt-2 text-center text-sm text-gray-600">
-                Or{" "}
                 <span
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  Don't Have an Account, Please{" "}
+                  Don't Have an Account? Please{" "}
                   <Link to="/register"> Register now </Link>
                 </span>
               </p>
