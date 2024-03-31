@@ -48,7 +48,7 @@ function Login() {
         body: JSON.stringify(form),
       })
         .then((result) => {
-          console.log("User login", result);
+          // console.log("User login", result);
         })
         .catch((error) => {
           console.log("Something went wrong ", error);

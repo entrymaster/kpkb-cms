@@ -11,7 +11,7 @@ const existingCustEmail = async(req,res) => {
     const user = req.params.userID;
     const {email} = req.query;
     const redundantEmail = await Customer.find({userID: user, email: email});
-    console.log(redundantEmail); 
+    // console.log(redundantEmail); 
     res.json(redundantEmail);
     }
     catch (error) {
@@ -25,7 +25,7 @@ const existingSuppEmail = async(req,res) => {
     const user = req.params.userID;
     const {email} = req.query;
     const redundantEmail = await Supplier.find({userID: user, email: email});
-    console.log(redundantEmail); 
+    // console.log(redundantEmail); 
     res.json(redundantEmail);
     }
     catch (error) {
@@ -69,9 +69,9 @@ const addNewCredit = async (req, res) => {
        const newInvoiceId = result._id;
        savedCredit.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
        const savedCustomer = await savedCredit.save();
-       console.log(savedCustomer);
+      //  console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCredit.userID});
-       console.log(shopkeeper);
+      //  console.log(shopkeeper);
        pdf.create(pdfTemplate(
         {
           invoiceData: {
@@ -101,9 +101,9 @@ const addNewCredit = async (req, res) => {
         if(err) {
           return console.log('error');
         }
-        console.log("pdf saved successfully");
+        // console.log("pdf saved successfully");
         const pdfPath = `${__dirname}\\invoice.pdf`;
-        console.log(pdfPath);
+        // console.log(pdfPath);
         const body = `Rs. ${savedCustomer.creditAmount} was added to your total credit amount.`
         notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
       })
@@ -142,7 +142,7 @@ const updateCustomer  = async (req, res) => {
     const { phoneNo, email } = req.body;
 
     const updatedCustomer = await Customer.findByIdAndUpdate({_id:req.body._id},{phoneNo: phoneNo, email: email},{new: true});
-    console.log(updatedCustomer);
+    // console.log(updatedCustomer);
     res.json(updatedCustomer);
   } catch (error) {
     console.error("Error updating Customer:", error);
@@ -166,7 +166,7 @@ const updateSupplier  = async (req, res) => {
   const getCreditCustomers = async (req, res) => {
     try{
     const CreditCustomers = await Customer.find({ creditAmount : {$gt : 0}, userID : req.params.userID}).sort({ creditAmountmount: -1});
-    console.log(CreditCustomers); 
+    // console.log(CreditCustomers); 
     res.json(CreditCustomers);
     }
     catch (error) {
@@ -178,7 +178,7 @@ const updateSupplier  = async (req, res) => {
   const getDebitSuppliers = async (req, res) => {
     try{
     const DebitSuppliers = await Supplier.find({ debitAmount : {$gt : 0}, userID : req.params.userID}).sort({ debitAmount: -1 });
-    console.log(DebitSuppliers); 
+    // console.log(DebitSuppliers); 
     res.json(DebitSuppliers);
     }
     catch (error) {
@@ -192,7 +192,7 @@ const updateSupplier  = async (req, res) => {
       const amt = req.body.amount;
      const updatedCust = await Customer.findByIdAndUpdate({ _id: req.body._id},{ $inc : {creditAmount: req.body.amount}},{new:true});
      const id=updatedCust.userID;
-     console.log(updatedCust);
+    //  console.log(updatedCust);
      res.json(updatedCust);
      const count = await Invoice.countDocuments({userID : id});
      const totalAmt = amt > 0 ? amt : -amt;
@@ -215,9 +215,9 @@ const updateSupplier  = async (req, res) => {
        const newInvoiceId = result._id;
        updatedCust.invoiceList.push(newInvoiceId); // Add new invoice _id to the customer's invoices array
        const savedCustomer = await updatedCust.save();
-       console.log(savedCustomer);
+      //  console.log(savedCustomer);
        const shopkeeper = await User.find({_id : savedCustomer.userID});
-       console.log(shopkeeper);
+      //  console.log(shopkeeper);
        pdf.create(pdfTemplate(
         {
           invoiceData: {
@@ -247,9 +247,9 @@ const updateSupplier  = async (req, res) => {
         if(err) {
           return console.log('error');
         }
-        console.log("pdf saved successfully");
+        // console.log("pdf saved successfully");
         const pdfPath = `${__dirname}\\invoice.pdf`;
-        console.log(pdfPath);
+        // console.log(pdfPath);
         const body = result.paymentMode === "Amount added to credit" ? `Rs. ${result.totalAmount} was added to your total credit amount.` : `You have paid Rs. ${result.totalAmount}.`
         notifyCustomerController(savedCustomer.email, "Billing 360", shopkeeper[0].shopname, shopkeeper[0].email, shopkeeper[0].shopaddress, body, savedCustomer.creditAmount, pdfPath);
       })
@@ -268,7 +268,7 @@ const updateSupplier  = async (req, res) => {
   const updateSupplierAmount = async (req, res) => {
    try {
     const updatedSupp = await Supplier.findByIdAndUpdate({ _id: req.body._id},{$inc : {debitAmount: req.body.amount}},{new:true});
-    console.log(updatedSupp);
+    // console.log(updatedSupp);
     res.json(updatedSupp);
    }
    catch(error) {
@@ -282,7 +282,7 @@ const updateSupplier  = async (req, res) => {
     const user= req.params.userID;
     const {custName} = req.query;
     const CreditCustomers = await Customer.find({ creditAmount : {$gt : 0}, userID : user, name: { $regex: new RegExp(custName, 'i') }});
-    console.log(CreditCustomers); 
+    // console.log(CreditCustomers); 
     res.json(CreditCustomers);
     }
     catch (error) {
@@ -296,7 +296,7 @@ const updateSupplier  = async (req, res) => {
     const user= req.params.userID;
     const {suppName} = req.query;
     const DebitSuppliers = await Supplier.find({ debitAmount : {$gt : 0}, userID : user, name: { $regex: new RegExp(suppName, 'i') }});
-    console.log(DebitSuppliers); 
+    // console.log(DebitSuppliers); 
     res.json(DebitSuppliers);
     }
     catch (error) {

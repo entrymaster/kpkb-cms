@@ -29,7 +29,7 @@ const Inventory = () =>
   const [itemName, setItemName] = useState();
   const [searchInput, setSearchInput] = useState('');
   const authContext = useContext(AuthContext);
-  console.log(authContext.user);
+  // console.log(authContext.user);
   // useEffect(() => {
   //   // Sort products whenever the products state changes
   //   sortProducts(sortBy);
@@ -45,22 +45,22 @@ const Inventory = () =>
 
   const toggleAddItemDialog = () => {
     setAddItemDialogVisibility(!isAddItemDialogVisible);
-    console.log({isAddItemDialogVisible});
+    // console.log({isAddItemDialogVisible});
   };
   const toggleUpdateItemDialog = () => {
     setUpdateItemDialogVisibility(!isUpdateItemDialogVisible);
-    console.log({isUpdateItemDialogVisible});
+    // console.log({isUpdateItemDialogVisible});
   };
   const toggleViewBatchDialog = () => {
     setViewBatchDialogVisibility(!isViewBatchDialogVisible);
-    console.log({isViewBatchDialogVisible});
+    // console.log({isViewBatchDialogVisible});
   }
   const toggleAddBatchDialog = () => {
     setAddBatchDialogVisibility(!isAddBatchDialogVisible);
-    console.log({isAddBatchDialogVisible});
+    // console.log({isAddBatchDialogVisible});
   };
   const updateProductModalSetting = (selectedProductData) => {
-    console.log("Clicked: edit");
+    // console.log("Clicked: edit");
     setUpdateProduct(selectedProductData);
     toggleUpdateItemDialog ();
   };
@@ -69,13 +69,13 @@ const Inventory = () =>
   };
 
   const addBatchModalSetting = (selectedProductData) => {
-    console.log("Clicked:add batch");
-    console.log(selectedProductData);
+    // console.log("Clicked:add batch");
+    // console.log(selectedProductData);
     setAddBatch(selectedProductData._id);
     toggleAddBatchDialog ();
   };
   const viewBatchModalSetting = (selectedProductData) => {
-    console.log("Clicked:update batch");
+    // console.log("Clicked:update batch");
     setUpdateBatch(selectedProductData);
     toggleViewBatchDialog ();
   };
@@ -107,7 +107,7 @@ const Inventory = () =>
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
-      console.log(data);
+      // console.log(data);
     })
     .catch((err) => console.log(err));
 
@@ -117,7 +117,7 @@ const fetchSearchData = () => {
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
-      console.log(data);
+      // console.log(data);
     })
     .catch((err) => console.log(err));
 };

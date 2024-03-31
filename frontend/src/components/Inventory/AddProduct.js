@@ -28,7 +28,7 @@ const AddItemDialog = ({ isVisible, onCancel,handlePageUpdate, }) => {
           // For other fields, update the state directly
           setItemData({ ...itemData, [key]: value });
         }
-  console.log(itemData);
+  // console.log(itemData);
       };
       const addProduct = () => {
         if (!itemData.itemID||!itemData.category||!itemData.itemGST||!itemData.costPrice||!itemData.salePrice||!itemData.itemName) {

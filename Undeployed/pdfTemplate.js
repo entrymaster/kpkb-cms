@@ -34,7 +34,7 @@ const formatDate = (date) => {
 const invoicePDF = (requestData) => {
     
     const billDate = formatDate(requestData.invoiceData.createdAt); 
-    console.log(requestData);
+    // console.log(requestData);
   
   return (`<!DOCTYPE html>
   <html>

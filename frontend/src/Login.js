@@ -15,7 +15,7 @@ function Login() {
 
 
   const handleInputChange = (e) => {
-    const maxLength = 25; // Maximum allowed length
+    const maxLength = 50; // Maximum allowed length
     const name = e.target.name;
     const value = e.target.value.slice(0, maxLength); // Truncate the input if it exceeds maxLength
     setForm({ ...form, [name]: value });
@@ -34,7 +34,7 @@ function Login() {
         })
         .catch((err) => {
           alert("Wrong credentials, Try again")
-          console.log(err);
+          // console.log(err);
         });
         setShowLoading(false);  //added
     }, 3000);
@@ -54,7 +54,7 @@ function Login() {
         body: JSON.stringify(form),
       })
         .then((result) => {
-          console.log("User login", result);
+          // console.log("User login", result);
         })
         .catch((error) => {
           console.log("Something went wrong ", error);

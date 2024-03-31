@@ -23,7 +23,7 @@ function Register() {
   const { email } = location.state || {}; // Destructure email from location state
 
   const handleInputChange = (e) => {
-    const maxLength = 35; // Maximum allowed length
+    const maxLength = 50; // Maximum allowed length
     const name = e.target.name;
     const value = e.target.value.slice(0, maxLength); // Truncate the input if it exceeds maxLength
     setForm({ ...form, [name]: value });

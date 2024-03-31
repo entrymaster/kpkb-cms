@@ -17,7 +17,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
         expiryDate: '',
       });
 
-     console.log(element);
+     // console.log(element);
      
     const handleInputChange = (key, value) => {
       if (key === 'batchQty') {
@@ -32,7 +32,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
         // For other fields, update the state directly
         setItemData({ ...itemData, [key]: value });
       }
-        console.log(itemData);
+        // console.log(itemData);
       };
       const addBatch = () => {
         const { batchID, batchQty, expiryDate } = itemData; // Destructure itemData
@@ -89,7 +89,7 @@ const AddBatchDialog = ({ isVisible, onCancel, element,handlePageUpdate, }) => {
       };
     
       useEffect(() => {
-        console.log("Updated itemData:", itemData);
+        // console.log("Updated itemData:", itemData);
       }, [itemData]);
   return (
     isVisible && (

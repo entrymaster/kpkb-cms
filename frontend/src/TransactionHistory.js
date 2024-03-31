@@ -82,7 +82,7 @@ const TransactionHistory = () => {
           console.log('There was a problem with the fetch operation:', error);
           reject(error);
         });
-        console.log(userData);
+        // console.log(userData);
     });
   };
 
@@ -126,7 +126,7 @@ const TransactionHistory = () => {
     invoiceData.createdAt = element.createdAt;
     // setInvoiceData(element);
     // console.log(element);
-    console.log(invoiceData);
+    // console.log(invoiceData);
      createPdf(); // Remove calling createPdf here
   };
 
