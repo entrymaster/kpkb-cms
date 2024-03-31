@@ -21,24 +21,24 @@ function Login() {
     setForm({ ...form, [name]: value });
   };
 
-  const authCheck = () => {
-    setTimeout(() => {
-      fetch("http://localhost:5050/api/login/log/get")
-        .then((response) => response.json())
-        .then((data) => {
-          alert("Successfully Logged in");
-          localStorage.setItem("user", JSON.stringify(data));
-          authContext.signin(data._id, () => {
-            navigate("/dashboard");
-          });
-        })
-        .catch((err) => {
-          alert("Wrong credentials, Try again")
-          // console.log(err);
-        });
-        setShowLoading(false);  //added
-    }, 3000);
-  };
+  // const authCheck = () => {
+  //   setTimeout(() => {
+  //     fetch("https://billing-360-dev.onrender.com/api/login/log/get")
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         alert("Successfully Logged in");
+  //         localStorage.setItem("user", JSON.stringify(data));
+  //         authContext.signin(data._id, () => {
+  //           navigate("/dashboard");
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         alert("Wrong credentials, Try again")
+  //         // console.log(err);
+  //       });
+  //       setShowLoading(false);  //added
+  //   }, 3000);
+  // };
 
   const loginUser = (e) => {
     // Cannot send empty data
@@ -46,7 +46,7 @@ function Login() {
     if (form.email === "" || form.password === "") {
       alert("Please enter all details to proceed...");
     } else {
-      fetch("http://localhost:5050/api/login/log/in", {
+      fetch("https://billing-360-dev.onrender.com/api/login/log/in", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

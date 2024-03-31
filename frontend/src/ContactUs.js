@@ -14,7 +14,7 @@ const ContactUs = () => {
     event.preventDefault();
     // Send message to backend here
     // You can use fetch or Axios to send a POST request to your backend server
-    fetch('http://localhost:5050/api/contact/bill/sendmail', {
+    fetch('https://billing-360-dev.onrender.com/api/contact/bill/sendmail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

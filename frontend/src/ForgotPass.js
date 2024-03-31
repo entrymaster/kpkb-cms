@@ -40,7 +40,7 @@ function Login() {
      else {
         // console.log(form.password)
         // console.log(form.email)
-      fetch("http://localhost:5050/api/forgot/for", {
+      fetch("https://billing-360-dev.onrender.com/api/forgot/for", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

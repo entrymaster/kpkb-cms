@@ -44,7 +44,7 @@ const UpdateBatchDialog = ({ isVisible, on_Cancel, element, id, handlePageUpdate
       alert("Please enter batch quantity.");
       return; // Stop further execution
     }
-    fetch("http://localhost:5050/api/inventory/updateBatch", {
+    fetch("https://billing-360-dev.onrender.com/api/inventory/updateBatch", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

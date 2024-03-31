@@ -68,7 +68,7 @@ const UpdateAmt = ({
 
   const updateCustAmount = () => {
     const { amount } = Data;
-    fetch("http://localhost:5050/api/pendingTransactions/updateCustAmt", {
+    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateCustAmt", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -87,7 +87,7 @@ const UpdateAmt = ({
 
   const updateSuppAmount = () => {
     const { amount } = Data;
-    fetch("http://localhost:5050/api/pendingTransactions/updateSuppAmt", {
+    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateSuppAmt", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
