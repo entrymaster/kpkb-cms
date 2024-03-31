@@ -51,13 +51,14 @@ const loginUser = async (req, res) => {
     }
     else{
       //console.log("Hash matched")
-      if (user){
-              res.send(user);
-               userAuthCheck = user;
-             } else {
-              res.status(401).send("Invalid Credentials");
-               userAuthCheck = null;
-             }
+      // if (user){
+      //         res.send(user);
+      //          userAuthCheck = user;
+      //        } else {
+      //         res.status(401).send("Invalid Credentials");
+      //          userAuthCheck = null;
+      //        }
+      return res.status(200).json(user);
     }
 
     // Password is correct, you can proceed with authentication or generate a token

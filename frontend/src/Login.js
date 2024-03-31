@@ -23,7 +23,7 @@ function Login() {
 
   const authCheck = () => {
     setTimeout(() => {
-      fetch("https://billing-360-dev.onrender.com/api/login/log/get")
+      fetch("http://localhost:5050/api/login/log/get")
         .then((response) => response.json())
         .then((data) => {
           alert("Successfully Logged in");
@@ -46,21 +46,46 @@ function Login() {
     if (form.email === "" || form.password === "") {
       alert("Please enter all details to proceed...");
     } else {
-      fetch("https://billing-360-dev.onrender.com/api/login/log/in", {
+      fetch("http://localhost:5050/api/login/log/in", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify(form),
       })
-        .then((result) => {
-          // console.log("User login", result);
+        // .then((result) => {
+        //   // console.log("User login", result);
+        // })
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 401) {
+              setShowLoading(false);
+              alert("Wrong credentials, Try again");
+              throw new Error("Wrong credentials");
+            }
+
+            setShowLoading(false);
+            alert("Wrong credentials, Try again");
+            throw new Error("Server error");
+          }
+          return response.json(); // Assuming server responds with JSON
+        })
+        .then((data) => {
+          alert("Successfully Logged in");
+          localStorage.setItem("user", JSON.stringify(data));
+          authContext.signin(data._id, () => {
+            navigate("/dashboard");
+          });
+          // Handle successful login here
+          //console.log("User logged in successfully:", data);
+          setShowLoading(false); // Set loading state to false
+          // Do whatever you want with the user data
         })
         .catch((error) => {
           console.log("Something went wrong ", error);
         });
         setShowLoading(true);
-        authCheck();
+        //authCheck();
     }
     
   };

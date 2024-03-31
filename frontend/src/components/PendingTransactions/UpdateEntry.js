@@ -49,7 +49,7 @@ const UpdateEntry = ({
   const updateCustomer = () => {
     onCancel();
     const { phoneNo, email } = Data;
-    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateCustomer", {
+    fetch("http://localhost:5050/api/pendingTransactions/updateCustomer", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -70,7 +70,7 @@ const UpdateEntry = ({
   const updateSupplier = () => {
     onCancel();
     const { phoneNo, email } = Data;
-    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateSupplier", {
+    fetch("http://localhost:5050/api/pendingTransactions/updateSupplier", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
