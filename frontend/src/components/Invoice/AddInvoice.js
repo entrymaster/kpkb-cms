@@ -48,7 +48,6 @@ const AddNewInvoice = () => {
         updatedItemList[index].gst=value['itemGST'];
         updatedItemList[index]._id=value['_id'];
         handleItemSelection(value);
-        // console.log((updatedItemList[index].quantity));
         let quantity = (isNaN(updatedItemList[index].quantity) || updatedItemList[index].quantity)?parseFloat(updatedItemList[index].quantity):0;
         if(quantity > value['quantity']) {
           alert("Quantity entered exceeds available stock !");
@@ -64,7 +63,6 @@ const AddNewInvoice = () => {
       if (fieldName === 'quantity') {
         let quantity = parseInt(value,10);
         quantity = (quantity === '') ? 0 : quantity;
-        // quantity = (quantity != Number) ? Number(quantity) : quantity;
         if(quantity > availableQuantity) {
           alert("Quantity entered exceeds available stock !");
           updatedItemList[index].quantity = 0;
@@ -98,13 +96,11 @@ const AddNewInvoice = () => {
         const updatedItemList = [...prevData.itemList];
         const arr = updatedItemList;
         var subTotal = 0;
-        // let disc = (discount === '') ? 0 : discount;
         for(var i=0; i<arr.length; i++){
           subTotal = subTotal + parseFloat(arr[i].amount.toFixed(2));
         }
         var total = 0;
         const temp = parseFloat((subTotal - (subTotal*prevData.discount)/100).toFixed(2));
-        // total = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
         total = temp.toFixed(2);
         total = (isNaN(total)) ? 0 : parseFloat(total);
         return {
@@ -112,12 +108,7 @@ const AddNewInvoice = () => {
           itemList: updatedItemList,
           totalAmount: total,
           discount: discount,
-          // invoiceID: invoiceData.invoiceID,
-          // discount: invoiceData.discount
         };
-        // ...prevData,
-        // [fieldName] : discount,
-        // [fieldName] : isNaN(value) ? 0 : value,
       });
     } else {
       setInvoiceData((prevData) => ({
@@ -153,7 +144,6 @@ const AddNewInvoice = () => {
     let disc = (isNaN(invoiceData.discount)) ? 0 : invoiceData.discount;
     const temp = parseFloat((subTotal - (subTotal*disc)/100));
     // console.log(subTotal);
-    // invoiceData.totalAmount = (isNaN(temp)) ? 0 : parseFloat(temp.toFixed(2));
     invoiceData.totalAmount = temp.toFixed(2);
     setTotalChange(false);
   }, [totalChange]);
@@ -165,13 +155,10 @@ const AddNewInvoice = () => {
   }
 
   const handleDeleteRow = (index) => {
-    console.log(invoiceData.discount);
+    // console.log(invoiceData.discount);
     setInvoiceData((prevData) => {
       const updatedItemList = [...prevData.itemList];
       updatedItemList.splice(index, 1);
-
-      // setTotalChange(true);
-      // calculateTotal();
       const arr = updatedItemList;
       var subTotal = 0;
       for(var i=0; i<arr.length; i++){
@@ -190,18 +177,26 @@ const AddNewInvoice = () => {
       };
     });
   };
-
+  
+  
   const handleGenerateBill = async () => {
     try {
-      // if (!invoiceData.customerName||!invoiceData.customerEmail||!invoiceData.phoneNo) {
-      //   alert("Please enter all the details.");
-      //   return; // Stop further execution
-      // }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phonePattern = /^\d{10}$/;
       if (!invoiceData.customerName) {
         alert("Please fill Customer Name");
         return;
       } else if (!invoiceData.customerEmail) {
         alert("Please fill Customer Email");
+        return;
+      } else if (!emailRegex.test(invoiceData.customerEmail)) {
+        alert("Please enter a valid email address");
+        return;
+      } else if (!invoiceData.phoneNo) {
+        alert("Please fill phone number");
+        return;
+      } else if (!phonePattern.test(invoiceData.phoneNo)) {
+        alert("Please enter a valid phone number");
         return;
       }
       else if(invoiceData.itemList.length > 1) {
@@ -213,10 +208,6 @@ const AddNewInvoice = () => {
         alert("Please add some items. Empty invoice cannot be generated.");
         return;
       }
-      else if (invoiceData.totalAmount <= 0 && invoiceData.discount !== 100) {
-        alert("Empty invoice cannot be generated!");
-        return;
-      }
       setShowLoading(true);
 
       await addInvoice();
@@ -226,7 +217,7 @@ const AddNewInvoice = () => {
       console.error('Error generating bill:', error);
     } finally {
       setShowLoading(false);
-      window.location.reload(); 
+      // window.location.reload(); 
     }
   };
   
@@ -269,11 +260,22 @@ const AddNewInvoice = () => {
     }
     
     const generatePdf = async() =>{
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phonePattern = /^\d{10}$/;
       if (!invoiceData.customerName) {
         alert("Please fill Customer Name");
         return;
       } else if (!invoiceData.customerEmail) {
         alert("Please fill Customer Email");
+        return;
+      } else if (!emailRegex.test(invoiceData.customerEmail)) {
+        alert("Please enter a valid email address");
+        return;
+      } else if (!invoiceData.phoneNo) {
+        alert("Please fill phone number");
+        return;
+      } else if (!phonePattern.test(invoiceData.phoneNo)) {
+        alert("Please enter a valid phone number");
         return;
       }
       else if(invoiceData.itemList.length > 1) {
@@ -282,11 +284,7 @@ const AddNewInvoice = () => {
         calculateTotal();
       }
       if (invoiceData.itemList.length === 0) {
-        alert("Please add some items. Empty invoice cannot be previewed.");
-        return;
-      }
-      else if (invoiceData.totalAmount <= 0 && invoiceData.discount !== 100) {
-        alert("Empty invoice cannot be previewed!");
+        alert("Please add some items. Empty invoice cannot be generated.");
         return;
       }
       setShowLoading(true);
@@ -319,7 +317,7 @@ const AddNewInvoice = () => {
       })
       .then(() => {
         setUpdatePage(false);
-        // window.location.reload(); // Reload the webpage
+        window.location.reload(); // Reload the webpage
       })
 
     }

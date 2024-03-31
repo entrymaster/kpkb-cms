@@ -27,7 +27,7 @@ const Navbar = () => {
     const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''});
     const getUserData = () => {
       return new Promise((resolve, reject) => {
-        console.log(authContext.user);
+        // console.log(authContext.user);
         fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
           method: "GET",
           headers: {
@@ -36,7 +36,7 @@ const Navbar = () => {
         })
        
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

@@ -32,28 +32,28 @@ const Reports = () => {
       axios.get(`https://billing-360-dev.onrender.com/api/invoice/sales/${userId}?startDate=${startDate}&endDate=${endDate}`)
         .then((response) => {
           const salesData = response.data; // Assuming response.data contains sales data
-          console.log(salesData);
+          // console.log(salesData);
          
           
           const salesByDay = calculateSalesByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData = prepareChartData(salesByDay); // Prepare chart data
-          console.log(salesByDay)
+          // console.log(salesByDay)
           setChartData(preparedChartData); // Set chart data
           const profitsByDay = calculateProfitsByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData1 = prepareChartData1(profitsByDay); // Prepare chart data
-          console.log(profitsByDay);
+          // console.log(profitsByDay);
           setChartData1(preparedChartData1); // Set chart data
           const invoicesByDay = calculateInvoicesByDay(salesData, startDate, endDate); // Calculate sales by day
           const preparedChartData2 = prepareChartData2(invoicesByDay); // Prepare chart data
-          console.log(invoicesByDay);
+          // console.log(invoicesByDay);
           setChartData2(preparedChartData2);
           const paymentModeDistributionData = calculatePaymentModeDistribution(salesData);
-          console.log(paymentModeDistributionData);
+          // console.log(paymentModeDistributionData);
           const preparedChartData3 = prepareChartData3(paymentModeDistributionData);
-          console.log(preparedChartData3);
+          // console.log(preparedChartData3);
           setChartData3(preparedChartData3);
           const topCustomersData = calculateTopCustomers(salesData);
-          console.log(topCustomersData);
+          // console.log(topCustomersData);
           setTopCustomers(topCustomersData);
           setFlag(1);
         })

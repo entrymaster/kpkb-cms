@@ -119,7 +119,7 @@ const SearchableDropdown = ({
   const toggle = (e) => {
     if (inputRef.current && inputRef.current.contains(e.target)) {
       setIsOpen(true);
-      console.log(options);
+      // console.log(options);
     } else {
       setIsOpen(false);
     }

@@ -54,12 +54,12 @@ function Profile() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData);
+    // console.log(formData);
   };
 
   const handleSaveClick = () => {
-    console.log("Save button clicked"); 
-    console.log(formData);
+    // console.log("Save button clicked"); 
+    // console.log(formData);
     // Check if the function is called
     // Send POST request to save updated user data
     fetch(`https://billing-360-dev.onrender.com/api/user/update/${authContext.user}`, {
@@ -76,7 +76,7 @@ function Profile() {
         return response.json();
       })
     .then((data) => {
-        console.log("User data updated successfully:", data);
+        // console.log("User data updated successfully:", data);
         setUserData(formData); // Update user data in UI
         setEditable(false); // Disable edit mode
       })

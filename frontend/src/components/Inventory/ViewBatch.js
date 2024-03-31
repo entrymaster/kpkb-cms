@@ -13,7 +13,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
   const [batchList, setBatchList] = useState(batches);
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [batchIdToDelete, setBatchIdToDelete] = useState(null);
-  console.log(batches);
+  // console.log(batches);
 
   useEffect(() => {
     setBatchList(batches);
@@ -24,7 +24,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
 
 
   const deleteBatch = (Batchid) => {
-    console.log("Batch ID: ", Batchid);
+    // console.log("Batch ID: ", Batchid);
     setBatchIdToDelete(Batchid);
     setConfirmationOpen(true);
   
@@ -56,7 +56,7 @@ const ViewBatchDialog = ({ isVisible, onCancel, batches, id, handlePageUpdate, }
   };
   
   const updateBatchModalSetting = (selectedProductData) => {
-    console.log("Clicked: edit");
+    // console.log("Clicked: edit");
     setUpdateBatch(selectedProductData);
     toggleUpdateBatchDialog();
   };

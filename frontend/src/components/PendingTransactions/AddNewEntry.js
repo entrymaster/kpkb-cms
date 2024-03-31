@@ -33,7 +33,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
     setData({ ...Data, userID: id, [key]: value });
     if(key==="email")
       setEmail(value);
-    console.log(Data);
+    // console.log(Data);
   };
 
   const findExistingEntry = async () => {
@@ -43,7 +43,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
       .then((response) => response.json())
       .then((data) => {
         setExistingEntry(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
 
@@ -55,7 +55,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
       .then((response) => response.json())
       .then((data) => {
         setExistingEntry(data);
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
 
@@ -76,7 +76,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
   }
 
   const handleSave = () => {
-    console.log(existingEntry);
+    // console.log(existingEntry);
     if(email !== "")
     {
     if (!existingEntry) {
@@ -108,7 +108,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
         alert("Please enter valid email");
     }
     } else {
-      console.log(existingEntry);
+      // console.log(existingEntry);
       if(Data.amount >0)
       {
       openExistingEntryDialog(); 

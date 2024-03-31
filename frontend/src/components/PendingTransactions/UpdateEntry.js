@@ -22,7 +22,7 @@ const UpdateEntry = ({
 
   const handleInputChange = (key, value) => {
     setData({ ...Data, [key]: value });
-    console.log(Data);
+    // console.log(Data);
   };
 
   const handleSave = () => {

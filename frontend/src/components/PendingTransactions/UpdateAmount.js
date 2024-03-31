@@ -21,7 +21,7 @@ const UpdateAmt = ({
   const handleInputChange = (key, value) => {
     setData({ ...Data, [key]: value });
     setDisplayData({ ...DisplayData, [key]: value });
-    console.log(Data);
+    // console.log(Data);
   };
 
   const setAmountSign = () => {
@@ -42,8 +42,8 @@ const UpdateAmt = ({
   }, [DisplayData]);
 
   const updateAmount = () => {
-    console.log(amount);
-    console.log(Data.amount);
+    // console.log(amount);
+    // console.log(Data.amount);
     if(DisplayData.amount > 0)
     {
     if(Number(amount) + Number(Data.amount) >= 0)

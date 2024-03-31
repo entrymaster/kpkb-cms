@@ -12,7 +12,6 @@ const ContactUs = () => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    //console.log("hii")
     // Send message to backend here
     // You can use fetch or Axios to send a POST request to your backend server
     fetch('https://billing-360-dev.onrender.com/api/contact/bill/sendmail', {
@@ -26,7 +25,7 @@ const ContactUs = () => {
       if (response.ok) {
         // Handle success, e.g., show a success message to the user
         alert("Message sent successfully");
-        console.log('Message sent successfully');
+        // console.log('Message sent successfully');
       } else {
         // Handle error, e.g., show an error message to the user
         //console.log(error);
@@ -38,6 +37,9 @@ const ContactUs = () => {
       //console.log(error);
       console.error('Error sending message:', error);
     });
+    setName('');
+    setEmail('');
+    setMessage('');
   };
 
   return (
