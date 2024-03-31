@@ -32,6 +32,7 @@ import { setSignout } from "./auth";
 
 const App = () => {
   const [user, setUser] = useState("");
+  const [userData,setUserData]=useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''});
   const [loader, setLoader] = useState(true);
   let myLoginUser = JSON.parse(localStorage.getItem("user"));
   // console.log("USER: ", user);
@@ -39,6 +40,16 @@ const App = () => {
   useEffect(() => {
     if (myLoginUser) {
       setUser(myLoginUser._id);
+      setUserData(prevUserData => ({
+        ...prevUserData,
+        firstname: myLoginUser.firstname,
+        lastname: myLoginUser.lastname,
+        email: myLoginUser.email,
+        password: myLoginUser.password,
+        gstno: myLoginUser.gstno,
+        shopname: myLoginUser.shopname,
+        shopaddress: myLoginUser.shopaddress
+      }));
       setLoader(false);
       // console.log("inside effect", myLoginUser);
     } else {
@@ -60,7 +71,7 @@ const App = () => {
 
   setSignout(signout);
 
-  let value = { user, signin, signout };
+  let value = { user, userData, signin, signout };
 
   if (loader)
     return (

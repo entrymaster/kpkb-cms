@@ -26,31 +26,32 @@ const Navbar = () => {
     const authContext = useContext(AuthContext);
     const [userData, setUserData] = useState({firstname: '', lastname: '', email: '', password: '', gstno: '', shopname: '', shopaddress: ''});
     const getUserData = () => {
-      return new Promise((resolve, reject) => {
-        console.log(authContext.user);
-        fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
+      setUserData(authContext.userData);
+      // return new Promise((resolve, reject) => {
+      //   console.log(authContext.user);
+      //   fetch(`https://billing-360-dev.onrender.com/api/user/get/${authContext.user}`, {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-type": "application/json",
+      //     },
+      //   })
        
-        .then(response => {
-          console.log(response);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setUserData(data); // Set userData state with fetched data
-          resolve(data); // Resolve the promise with the user data
-        })
-        .catch(error => {
-          console.log('There was a problem with the fetch operation:', error);
-          reject(error); // Reject the promise with the error
-        });
-      });
+      //   .then(response => {
+      //     console.log(response);
+      //     if (!response.ok) {
+      //       throw new Error('Network response was not ok');
+      //     }
+      //     return response.json();
+      //   })
+      //   .then(data => {
+      //     setUserData(data); // Set userData state with fetched data
+      //     resolve(data); // Resolve the promise with the user data
+      //   })
+      //   .catch(error => {
+      //     console.log('There was a problem with the fetch operation:', error);
+      //     reject(error); // Reject the promise with the error
+      //   });
+      // });
     }
     
     useEffect(() => {
