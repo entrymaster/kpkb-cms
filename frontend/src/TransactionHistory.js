@@ -158,7 +158,7 @@ const TransactionHistory = () => {
         <div className="top" style={{ marginTop: '3.5%' }}>
 
           <div className="search-bar-container">
-            <input type="text" className="search-bar" placeholder="Search"
+            <input type="text" className="search-bar" placeholder="Search by customer name"
               value={searchInput}
               onChange={handleSearchInputChange}
             />
