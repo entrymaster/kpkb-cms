@@ -7,7 +7,7 @@
 Billing 360 is a billing software built for microenterprises and offers facilities like invoice generation, inventory management, credit management and data analytics. It has been built using MERN stack (MongoDB, Express, React, Node.js).
 
 ## IMPORTANT NOTE
-The current code which is deployed on [website]{https://billing-360-dev-1.onrender.com/} uses free hosting services due to the requests sent after long time takes delay upto a minute to switch on the server from hibernation mode and during these time some unexpected results may come.
+The current code which is deployed on [website](https://billing-360-dev-1.onrender.com/) uses free hosting services due to the requests sent after long time takes delay upto a minute to switch on the server from hibernation mode and during these time some unexpected results may come.
 
 The process for running on localhost involves:
 
