@@ -17,16 +17,12 @@ function FAQ() {
       <Navbar />
       <div className="faq-container">
       <div className="faq-section">
-        <p className="question"><strong>Q. How to change my password?</strong></p>
-        <p className="answer">A. Click on the settings icon in the top right corner. Then select the "Change Password" option from the dropdown menu. An OTP will be sent to your registered Email ID. Enter this OTP and create a new password.</p>
+        <p className="question"><strong>Q. What is the meaning of different colour in inventory?</strong></p>
+        <p className="answer">A. The red colour denotes that the item has a batch which has been expired, the yellow colour denotes that there is a batch which is about to expire in 3 days and other items are shown in green colour.</p>
       </div>
       <div className="faq-section">
         <p className="question"><strong>Q. How to edit my profile?</strong></p>
         <p className="answer">A. Click on the Profile icon in the top right corner to open your profile page. Click on the ‘Edit Profile’ button, make all the changes, then click ‘Save Profile’ button to save the changes.</p>
-      </div>
-      <div className="faq-section">
-        <p className="question"><strong>Q. How to switch OFF/ON the notifications?</strong></p>
-        <p className="answer">A. Click on the settings icon in the top right corner. Then click on the ON/OFF toggle button in front of the Notifications option in the dropdown menu.</p>
       </div>
       <div className="faq-section">
         <p className="question"><strong>Q. How do I search items in the inventory?</strong></p>
