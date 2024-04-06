@@ -79,6 +79,7 @@ function Profile() {
         // console.log("User data updated successfully:", data);
         setUserData(formData); // Update user data in UI
         setEditable(false); // Disable edit mode
+        localStorage.setItem("user", JSON.stringify(formData));
       })
     .catch((error) => {
         console.log("There was a problem with the fetch operation:", error);
