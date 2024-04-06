@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Register.css"; 
+import ReactLoading from "react-loading";
 
 function Verification() {
   const [form, setForm] = useState({
@@ -9,6 +10,7 @@ function Verification() {
   });
 
   const navigate = useNavigate();
+  const [showLoading, setShowLoading] = useState(false); 
 
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,6 +24,7 @@ function Verification() {
 
   const verifyOtp = (req , res) => {
     //const source = req.query.source;
+    setShowLoading(true);
     fetch("https://billing-360-dev.onrender.com/api/otp/ver", {
       method: "POST",
       headers: {
@@ -48,13 +51,16 @@ function Verification() {
       // }
         if (response.ok) {
           // If OTP verification is successful, navigate to register page
+          setShowLoading(false);
           navigate('/forgotpass', { state: { email: form.email } });
         } else {
           // If OTP verification fails, display error message or handle accordingly
+          setShowLoading(false);
           alert("OTP verification failed.");
         }
       })
       .catch((err) => {
+        setShowLoading(false);
         console.error("Error during OTP verification:", err);
         // Handle the error and display an error message
       });
@@ -66,6 +72,11 @@ function Verification() {
 
   return (
     <>
+    {showLoading && ( 
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
     <div className="parent-div">
     <div className="left-div">
   <div className="image-container">

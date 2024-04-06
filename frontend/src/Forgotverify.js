@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import ReactLoading from "react-loading";
 
 function Verification() {
   //va confirmpassword = ""
@@ -9,7 +10,7 @@ function Verification() {
   });
 
   const navigate = useNavigate();
-
+  const [showLoading, setShowLoading] = useState(false); 
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -37,18 +38,20 @@ function Verification() {
 
 const emailexist = () => {
     // Check if the email is empty
+    setShowLoading(true);
+
     if (!form.email) {
       alert("Please enter your email.");
       return; // Stop further execution
     }
-  
     // Check if the email is in a valid format
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(form.email)) {
+      setShowLoading(false);
         alert("Please enter a valid email address.");
         return; // Stop further execution
     }
-
+    console.log("check1")
     fetch("https://billing-360-dev.onrender.com/api/forgot/ver", {
       method: "POST",
       headers: {
@@ -61,15 +64,23 @@ const emailexist = () => {
         if (data.exists) {
           // Email exists, call the sendOTP function
           sendOtp();
+          setShowLoading(false);
         } else {
+          setShowLoading(false);
           alert("Email does not exist.");
         }
       })
       .catch((err) => console.error(err));
+      console.log("check2")
 };
   
   return (
     <>
+     {showLoading && ( 
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
     <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">

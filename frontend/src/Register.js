@@ -15,7 +15,7 @@ function Register() {
     shopaddress: "",
     phonenumber: "",
   });
-
+  const phonePattern = /^\d{10}$/;
   const [agreeTerms, setAgreeTerms] = useState(false); // State to track if terms are agreed
   const navigate = useNavigate();
   const [showLoading, setShowLoading] = useState(false); 
@@ -33,14 +33,22 @@ function Register() {
     // Check if passwords match
     form.email = email;
     if (form.password !== form.confirmpassword) {
+      setShowLoading(false);
       alert("Password and Confirm Password do not match");
       return; // Exit function if passwords don't match
     }
+  if (!phonePattern.test(form.phonenumber)) {
+    setShowLoading(false);
+    alert("Please enter a valid phone number");
+    return;
+  }
     if (!form.email.includes("@")) {
+      setShowLoading(false);
       alert("Invalid Email, doesn't include @");
       return; // Exit function if email is invalid
     }
     if (form.password.length < 6) {
+      setShowLoading(false);
       alert("Password should be at least 6 characters");
       return; // Exit function if password is too short
     }
@@ -52,17 +60,23 @@ function Register() {
       body: JSON.stringify(form),
     })
       .then((result) => {
+        setShowLoading(false);
         alert("Successfully Registered, Now Login with your details");
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{ 
+        setShowLoading(false);
+        console.log(err)
+      });
   };
 
   const handleSubmit = (e) => {
+    setShowLoading(true);
     e.preventDefault();
     setForm({ ...form, email: email || '' });
      // Check if terms are agreed
      if (!agreeTerms) {
+      setShowLoading(false);
       alert("Please agree to the Terms & Conditions to proceed.");
       return;
     }
