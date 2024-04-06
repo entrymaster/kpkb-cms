@@ -31,8 +31,9 @@ const fixedSalt = '$2b$10$abcdefghijklmnopqrstuv';
 
 
 const registerUser = async (req, res) => {
-  const { firstname, lastname, email, password, gstno , shopname , shopaddress , phonenumber } = req.body;
+  console.log(req.body);
 
+  const { firstname, lastname, email, password, gstno , shopname , shopaddress , phonenumber } = req.body;
   try {
     // Check if the user with the given email already exists
     const existingUser = await User.findOne({ email });
@@ -67,6 +68,7 @@ const registerUser = async (req, res) => {
     console.error('Registration error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+  
 };
 
 

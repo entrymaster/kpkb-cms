@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate , Navigate, useLocation} from "react-router-dom";
 import AuthContext from "./AuthContext";
 import "./Register.css";
+import ReactLoading from "react-loading";
 
 function Login() {
   const [form, setForm] = useState({
@@ -12,6 +13,7 @@ function Login() {
 
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showLoading, setShowLoading] = useState(false); 
 
 
   const handleInputChange = (e) => {
@@ -29,11 +31,13 @@ function Login() {
   const forgotpass = (e) => {
     // Cannot send empty data
     //form.email = email;
+    setShowLoading(true);
     if (form.email === "" || form.password === "") {
+      setShowLoading(false);
       alert("To change password, enter details to proceed...");
-      
     }
     else if (form.password.length < 6) {
+      setShowLoading(false);
       alert("Password should be at least 6 characters");
       return; // Exit function if password is too short
     }
@@ -48,11 +52,13 @@ function Login() {
         body: JSON.stringify(form),
       })
         .then((result) => {
+          setShowLoading(false);
           alert("Successfully changed password");
           // console.log("Successfully changed password", result);
           navigate("/")
         })
         .catch((error) => {
+          setShowLoading(false);
           // console.log("Something went wrong ", error);
         });
     }
@@ -69,6 +75,11 @@ if (!(location.state && location.state.email)) {
   
   return (
     <>
+    {showLoading && ( 
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
     <div className="parent-div">
     <div className="left-div">
   <div className="image-container">

@@ -181,6 +181,7 @@ const AddNewInvoice = () => {
   
   const handleGenerateBill = async () => {
     try {
+      setShowLoading(true);
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const phonePattern = /^\d{10}$/;
       if (!invoiceData.customerName) {
@@ -208,7 +209,7 @@ const AddNewInvoice = () => {
         alert("Please add some items. Empty invoice cannot be generated.");
         return;
       }
-      setShowLoading(true);
+      //setShowLoading(true);
 
       await addInvoice();
       await updateInventory();

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./verify.css";
+import ReactLoading from "react-loading";
 
 function Verification() {
   //va confirmpassword = ""
   const [form, setForm] = useState({
     email: "",
   });
+  const [showLoading, setShowLoading] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -44,7 +46,9 @@ function Verification() {
 
   const emailexist = () => {
     // Check if the email is empty
+    setShowLoading(true);
     if (!form.email) {
+      setShowLoading(false);
       alert("Please enter your email.");
       return; // Stop further execution
     }
@@ -52,6 +56,7 @@ function Verification() {
     // Check if the email is in a valid format
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(form.email)) {
+      setShowLoading(false);
         alert("Please enter a valid email address.");
         return; // Stop further execution
     }
@@ -67,9 +72,11 @@ function Verification() {
       .then((data) => {
         if (data.exists) {
           // Email exists, call the sendOTP function
+          setShowLoading(false);
           alert("Account already exists with this Email.")
         } else {
           //alert("");
+          setShowLoading(false);
           sendOtp();
         }
       })
@@ -87,6 +94,11 @@ function Verification() {
 
   return (
     <>
+    {showLoading && ( 
+       <div className="loading-overlay">
+       <ReactLoading type="spin" color="#000" height={50} width={50} />
+     </div>
+    )}
   <div className="parent-div" style={{overflowX:"hidden",overflowY:"hidden"}}>
     <div className="left-div">
   <div className="image-container">
