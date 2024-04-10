@@ -244,10 +244,9 @@ const PendingTransactions = () => {
             />
           </div>
           <div className="TotalAmount">
-            <h2>
-              {activeTab === "credit-tab" ? "Total Credit" : "Total Debit"}
-            </h2>
-            <p className="credit">{totalAmt}</p>
+          {activeTab === "credit-tab" ? "Total Credit:" : "Total Debit:"}
+              {"   "}
+            {totalAmt}
           </div>
         </div>
       </div>
@@ -339,7 +338,7 @@ const PendingTransactions = () => {
                     <td>{element.name}</td>
                     <td>{element.phoneNo}</td>
                     <td>{element.email}</td>
-                    <td>{element.creditAmount}</td>
+                    <td>{element.creditAmount !== undefined ? element.creditAmount.toFixed(2) : ''}</td>
                     <td>
                       {" "}
                       <button
@@ -455,7 +454,7 @@ const PendingTransactions = () => {
                     <td>{element.name}</td>
                     <td>{element.phoneNo}</td>
                     <td>{element.email}</td>
-                    <td>{element.debitAmount}</td>
+                    <td>{element.debitAmount !== undefined ? element.debitAmount.toFixed(2) : ''}</td>
                     <td>
                       {" "}
                       <button
