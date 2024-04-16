@@ -316,8 +316,8 @@ const getSalesData = async (req, res) => {
     // Adjust createdAt parameter of each invoice by adding 5 hours and 30 minutes
     salesData = salesData.map(invoice => {
       const adjustedCreatedAt = new Date(invoice.createdAt);
-      adjustedCreatedAt.setHours(adjustedCreatedAt.getHours() + 5); // Add 5 hours
-      adjustedCreatedAt.setMinutes(adjustedCreatedAt.getMinutes() + 30); // Add 30 minutes
+      adjustedCreatedAt.setHours(adjustedCreatedAt.getHours()); // Add 5 hours
+      adjustedCreatedAt.setMinutes(adjustedCreatedAt.getMinutes()); // Add 30 minutes
       invoice.createdAt = adjustedCreatedAt.toISOString();
       return invoice;
     });
