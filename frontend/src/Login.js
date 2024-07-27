@@ -23,7 +23,7 @@ function Login() {
 
   // const authCheck = () => {
   //   setTimeout(() => {
-  //     fetch("https://billing-360-dev.onrender.com/api/login/log/get")
+  //     fetch("http://localhost:5050/api/login/log/get")
   //       .then((response) => response.json())
   //       .then((data) => {
   //         alert("Successfully Logged in");
@@ -46,7 +46,7 @@ function Login() {
     if (form.email === "" || form.password === "") {
       alert("Please enter all details to proceed...");
     } else {
-      fetch("https://billing-360-dev.onrender.com/api/login/log/in", {
+      fetch("http://localhost:5050/api/login/log/in", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

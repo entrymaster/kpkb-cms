@@ -39,7 +39,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
   const findExistingEntry = async () => {
     if(entryType === "Customer")
     {
-    await fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
+    await fetch(`http://localhost:5050/api/pendingTransactions/getCustExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
         setExistingEntry(data);
@@ -51,7 +51,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
     }
     else
     {
-      await fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
+      await fetch(`http://localhost:5050/api/pendingTransactions/getSuppExistingEmail/${id}?email=${email}`)
       .then((response) => response.json())
       .then((data) => {
         setExistingEntry(data);
@@ -124,7 +124,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
   };
 
   const addNewCredit = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/addNewCredit`, {
+    fetch(`http://localhost:5050/api/pendingTransactions/addNewCredit`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -142,7 +142,7 @@ const AddNewEntry = ({ isVisible, onCancel, addNewDialog, entryType, handlePageU
   };
 
   const addNewDebit = () => {
-    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/addNewDebit", {
+    fetch("http://localhost:5050/api/pendingTransactions/addNewDebit", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

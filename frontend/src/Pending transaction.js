@@ -108,7 +108,7 @@ const PendingTransactions = () => {
   };
 
   const fetchCreditCustomers = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getCust/${userID}`)
+    fetch(`http://localhost:5050/api/pendingTransactions/getCust/${userID}`)
       .then((response) => response.json())
       .then((data) => {
         setEntries(data);
@@ -118,7 +118,7 @@ const PendingTransactions = () => {
   };
 
   const fetchDebitSuppliers = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/pendingTransactions/getSupp/${userID}`)
+    fetch(`http://localhost:5050/api/pendingTransactions/getSupp/${userID}`)
       .then((response) => response.json())
       .then((data) => {
         setEntries(data);
@@ -131,7 +131,7 @@ const PendingTransactions = () => {
     const q = query;
     // const userID = "user";
     fetch(
-      `https://billing-360-dev.onrender.com/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`
+      `http://localhost:5050/api/pendingTransactions/SearchCreditCust/${userID}?custName=${q}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -145,7 +145,7 @@ const PendingTransactions = () => {
     const q = query;
     // const userID = "user";
     fetch(
-      `https://billing-360-dev.onrender.com/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`
+      `http://localhost:5050/api/pendingTransactions/SearchDebitSupp/${userID}?suppName=${q}`
     )
       .then((response) => response.json())
       .then((data) => {

@@ -9,7 +9,7 @@ const updateExisting = () => {
 }
 
 const updateCustAmount = () => {
-    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateCustAmt", {
+    fetch("http://localhost:5050/api/pendingTransactions/updateCustAmt", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -27,7 +27,7 @@ const updateCustAmount = () => {
   };
 
   const updateSuppAmount = () => {
-    fetch("https://billing-360-dev.onrender.com/api/pendingTransactions/updateSuppAmt", {
+    fetch("http://localhost:5050/api/pendingTransactions/updateSuppAmt", {
       method: "PUT",
       headers: {
         "Content-type": "application/json",

@@ -19,7 +19,7 @@ The process for running on localhost involves:
 
 4) cd frontend to go inside the frontend folder and npm install to install the dependencies.
 
-5) Replacing all the occurenses of https://billing-360-dev.onrender.com with http://localhost:5050
+5) Replacing all the occurenses of http://localhost:5050 with http://localhost:5050
 6) Go inside the backend folder and perform node server.js
 
 7) Go inside the frontend folder and perform npm start

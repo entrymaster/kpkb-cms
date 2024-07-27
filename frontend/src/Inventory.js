@@ -103,7 +103,7 @@ const Inventory = () =>
     // fetchSalesData();
   }, [updatePage]);
   const fetchProductsData = () => {
-    fetch(`https://billing-360-dev.onrender.com/api/inventory/get/${authContext.user}`)
+    fetch(`http://localhost:5050/api/inventory/get/${authContext.user}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -113,7 +113,7 @@ const Inventory = () =>
 
 };
 const fetchSearchData = () => {
-  fetch(`https://billing-360-dev.onrender.com/api/inventory/search/${authContext.user}?itemName=${itemName}`)
+  fetch(`http://localhost:5050/api/inventory/search/${authContext.user}?itemName=${itemName}`)
     .then((response) => response.json())
     .then((data) => {
       setAllProducts(data);
@@ -128,7 +128,7 @@ const handleItemName = (e) => {
 
 const deleteItem = (id) => {
   console.log("Product ID: ", id);
-  fetch(`https://billing-360-dev.onrender.com/api/inventory/delete/${id}`)
+  fetch(`http://localhost:5050/api/inventory/delete/${id}`)
     .then((response) => response.json())
     .then((data) => {
       setUpdatePage(!updatePage);
